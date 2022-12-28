@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-
+import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -57,7 +57,7 @@ import javax.swing.SwingConstants;
  */
 public class RobotContainer {
   // The robot's subsystems
-  
+  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort);
@@ -66,9 +66,32 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
+  private void configureButtonBindings() {
+
+    // Set the default drive command to split-stick arcade drive
+        // A split-stick arcade command, with forward/backward controlled by the left
+        // hand, and turning controlled by the right.
+      }
+      
+      // public Command getAutonomousCommand(){
+      //   /**
+      //     * Use this to pass the autonomous command to the main {@link Robot} class.
+      //     *
+      //     * @return the command to run in autonomous
+      //     */
+       
+      //      }
   public RobotContainer() {
   
-
+    m_robotDrive.setDefaultCommand(
+      new RunCommand(() ->
+          m_robotDrive.tankDrive(
+              m_driverController.getLeftY(),
+             m_driverController.getRightY()),
+              m_robotDrive));
+      
+      
+    
    
   }
 }
