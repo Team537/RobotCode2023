@@ -18,12 +18,15 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 
 public class DriveSubsystem extends SubsystemBase {
   private final WPI_TalonFX m_frontLeft = new WPI_TalonFX(DriveConstants.kFrontLeft);
   private final WPI_TalonFX m_rearLeft = new WPI_TalonFX(DriveConstants.kRearLeft);
   private final WPI_TalonFX m_frontRight = new WPI_TalonFX(DriveConstants.kFrontRight);
   private final WPI_TalonFX m_rearRight = new WPI_TalonFX(DriveConstants.kRearRight);
+  PowerDistribution PDP = new PowerDistribution(0, ModuleType.kCTRE);
 
   // The motors on the left side of the drive.
   private final MotorControllerGroup m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
@@ -210,6 +213,16 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Front Right Motor Position", m_frontRight.getSelectedSensorPosition());
     SmartDashboard.putNumber("Rear Left Motor Position", m_rearLeft.getSelectedSensorPosition());
     SmartDashboard.putNumber("Rear Right Motor Position", m_rearRight.getSelectedSensorPosition());
+
+    SmartDashboard.putNumber("Front Left Motor Current", PDP.getCurrent(DriveConstants.kFrontLeft));
+    SmartDashboard.putNumber("Front Right Motor Current", PDP.getCurrent(DriveConstants.kFrontRight));
+    SmartDashboard.putNumber("Rear Left Motor Current", PDP.getCurrent(DriveConstants.kRearLeft));
+    SmartDashboard.putNumber("Rear Right Motor Current", PDP.getCurrent(DriveConstants.kRearRight));
+
+    SmartDashboard.putNumber("Front Left Motor Voltage", m_frontLeft.getBusVoltage());
+    SmartDashboard.putNumber("Front Right Motor Voltage", m_frontRight.getBusVoltage());
+    SmartDashboard.putNumber("Rear Left Motor Voltage", m_rearLeft.getBusVoltage());
+    SmartDashboard.putNumber("Rear Right Motor Voltage", m_rearRight.getBusVoltage());
 
     SmartDashboard.putNumber("Heading", m_gyro.getRotation2d().getDegrees());
 
