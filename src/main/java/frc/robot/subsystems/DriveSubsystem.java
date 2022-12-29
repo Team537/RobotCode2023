@@ -43,6 +43,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final DifferentialDriveOdometry m_odometry;
 
   private boolean fastModeEnabled = true; 
+  private boolean slowModeEnabled = true;
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
     // m_frontLeft
@@ -179,7 +180,20 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void toggleFastMode() {
     fastModeEnabled = !fastModeEnabled;
+
+    if (fastModeEnabled = true) {
+      slowModeEnabled = false;
+    }
   }
+  public void toggleSlowMode() {
+    slowModeEnabled = !slowModeEnabled;
+    if (slowModeEnabled = true) {
+      fastModeEnabled = false;
+    }
+  }
+
+
+
   @Override
   public void periodic() {
     //Update the odometry in the periodic block
@@ -278,8 +292,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Called continuously when driving in auto or teleop
   public void setMotors(double leftSpeed, double rightSpeed) {
-    double clampedLeftSpeed = fastModeEnabled ? leftSpeed: leftSpeed*.15;
-    double clampedRightSpeed = fastModeEnabled ? rightSpeed: rightSpeed*.15;
+    double clampedLeftSpeed = fastModeEnabled ? leftSpeed*1.2: slowModeEnabled ? leftSpeed*0.5:leftSpeed;
+    double clampedRightSpeed = fastModeEnabled ? rightSpeed*1.2:slowModeEnabled ? rightSpeed*0.5 :rightSpeed;
+
     
     m_frontLeft.set(clampedLeftSpeed);
     m_frontRight.set(clampedRightSpeed);

@@ -37,8 +37,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-
+import frc.robot.commands.toggleFastMode;
+import frc.robot.commands.toggleSlowMode; 
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -79,10 +79,15 @@ public class RobotContainer {
      
   public RobotContainer() {
 
-  //   configureButtonBindings(); { 
-  //     new JoystickButton(m_driverController, Button.kStart.value).whenPressed
-  //     (new toggleFastMode( m_robotDrive));
-  //  }
+    configureButtonBindings(); { 
+      new JoystickButton(m_driverController, Button.kStart.value).onTrue
+      (new toggleFastMode(m_robotDrive));
+   }
+   
+   configureButtonBindings(); { 
+    new JoystickButton(m_driverController, Button.kBack.value).onTrue
+    (new toggleSlowMode(m_robotDrive));
+ }
    
 
     m_robotDrive.setDefaultCommand(
