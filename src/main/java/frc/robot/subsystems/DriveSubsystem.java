@@ -45,8 +45,10 @@ public class DriveSubsystem extends SubsystemBase {
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
 
+  // Toggle Booleans
   private boolean fastModeEnabled = true; 
   private boolean slowModeEnabled = true;
+
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
     // m_frontLeft
@@ -219,7 +221,7 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Rear Left Motor Current", PDP.getCurrent(DriveConstants.kRearLeft));
     SmartDashboard.putNumber("Rear Right Motor Current", PDP.getCurrent(DriveConstants.kRearRight));
 
-    SmartDashboard.putNumber("Front Left Motor Voltage", m_frontLeft.getBusVoltage());
+    SmartDashboard.putNumber("Front Left Motor Voltage", m_frontLeft.getBusVoltage());    
     SmartDashboard.putNumber("Front Right Motor Voltage", m_frontRight.getBusVoltage());
     SmartDashboard.putNumber("Rear Left Motor Voltage", m_rearLeft.getBusVoltage());
     SmartDashboard.putNumber("Rear Right Motor Voltage", m_rearRight.getBusVoltage());

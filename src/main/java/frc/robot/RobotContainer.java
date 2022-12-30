@@ -59,13 +59,15 @@ import javax.swing.SwingConstants;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final camera m_camera = new camera();
+  
+
   // SlewRateLimiter for Joystick Motion Profiling
   private final SlewRateLimiter Left = new SlewRateLimiter(3);
   private final SlewRateLimiter Right = new SlewRateLimiter(3);
-  //Toggle Booleans
   
   // The driver controllers
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -74,10 +76,17 @@ public class RobotContainer {
      
     
   public RobotContainer() {
+
+    //Toggle Booleans
     boolean toggleFastMode = true;
     boolean toggleSlowMode = true;
+
+    //Joystick Buttons
     JoystickButton startButton = new JoystickButton(m_driverController, Button.kStart.value);
     JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
+
+
+   //Button Bindings
 
     if(toggleFastMode = true){
         startButton.onTrue
@@ -92,7 +101,7 @@ public class RobotContainer {
 
 
 
-   
+   //Drive Commands
 
     m_robotDrive.setDefaultCommand(
       new RunCommand(() ->

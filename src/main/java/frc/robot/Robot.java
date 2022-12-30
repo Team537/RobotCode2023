@@ -21,7 +21,7 @@ public class Robot extends TimedRobot {
 
      
   private RobotContainer m_robotContainer;
-  //private Intake m_intake = new Intake();
+  
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -29,12 +29,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-  //   try {
-  //     Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(RedBallDriveOut);
-  //     RedBallDriveOutTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-  //  } catch (IOException ex) {
-  //     DriverStation.reportError("Unable to open trajectory: " + RedBallDriveOut, ex.getStackTrace());
-  //  }
+  
 
     
     
