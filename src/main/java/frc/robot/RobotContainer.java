@@ -68,12 +68,19 @@ public class RobotContainer {
   // SlewRateLimiter for Joystick Motion Profiling
   private final SlewRateLimiter Left = new SlewRateLimiter(3);
   private final SlewRateLimiter Right = new SlewRateLimiter(3);
+
+ 
   
   // The driver controllers
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort);
 
-     
+   // Drive Speeds
+   private double forwardSpeed =  -Left.calculate( m_driverController.getLeftY());
+   private double turnSpeed =  -Right.calculate(m_driverController.getRightY());
+
+   private double leftSpeed =  -Left.calculate( m_driverController.getLeftY());
+   private double rightSpeed =  -Right.calculate(m_driverController.getRightY());
     
   public RobotContainer() {
 
@@ -106,14 +113,14 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(
       new RunCommand(() ->
           m_robotDrive.tankDrive(
-             -Left.calculate( m_driverController.getLeftY()),
-             -Right.calculate(m_driverController.getRightY())),
+            leftSpeed,
+             rightSpeed),
               m_robotDrive)
       
       // new ArcadeDriveCommand(
       //   m_robotDrive,
-      //   () -> -Left.calculate( m_driverController.getLeftY()),
-      //   () -> -Right.calculate(m_driverController.getRightY()))
+      //   () -> forwardSpeed,
+      //   () -> turnSpeed)
 );
       
 
