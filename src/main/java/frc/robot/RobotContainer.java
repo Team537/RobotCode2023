@@ -29,6 +29,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.camera;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -37,6 +38,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.toggleFastMode;
 import frc.robot.commands.toggleSlowMode; 
 
@@ -59,35 +61,37 @@ import javax.swing.SwingConstants;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final camera m_camera = new camera();
   // SlewRateLimiter for Joystick Motion Profiling
   private final SlewRateLimiter Left = new SlewRateLimiter(3);
   private final SlewRateLimiter Right = new SlewRateLimiter(3);
+  //Toggle Booleans
+  
   // The driver controllers
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort);
 
-
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  private void configureButtonBindings() {
-
-    // Allows Buttons to be defined for running actions
-        
-      }
-      
      
+    
   public RobotContainer() {
+    boolean toggleFastMode = true;
+    boolean toggleSlowMode = true;
+    JoystickButton startButton = new JoystickButton(m_driverController, Button.kStart.value);
+    JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
 
-    configureButtonBindings(); { 
-      new JoystickButton(m_driverController, Button.kStart.value).onTrue
-      (new toggleFastMode(m_robotDrive));
-   }
-   
-   configureButtonBindings(); { 
-    new JoystickButton(m_driverController, Button.kBack.value).onTrue
-    (new toggleSlowMode(m_robotDrive));
- }
+    if(toggleFastMode = true){
+        startButton.onTrue
+        (new toggleFastMode(m_robotDrive));
+    }
+
+    if(toggleSlowMode = true){
+        backButton.onTrue
+        (new toggleSlowMode(m_robotDrive));
+    }
+
+
+
+
    
 
     m_robotDrive.setDefaultCommand(
@@ -95,8 +99,16 @@ public class RobotContainer {
           m_robotDrive.tankDrive(
              -Left.calculate( m_driverController.getLeftY()),
              -Right.calculate(m_driverController.getRightY())),
-              m_robotDrive));
+              m_robotDrive)
       
+      // new ArcadeDriveCommand(
+      //   m_robotDrive,
+      //   () -> -Left.calculate( m_driverController.getLeftY()),
+      //   () -> -Right.calculate(m_driverController.getRightY()))
+);
+      
+
+//Choose Which Drive Based on what is chosen by Drivers
       
     
    
