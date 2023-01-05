@@ -4,7 +4,15 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -17,11 +25,19 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
- 
+
+  String trajectoryJSON1 =  "paths/Test1.wpilib.json";
+  String trajectoryJSON2 =  "paths/Test 2.wpilib.json";
 
      
   private RobotContainer m_robotContainer;
-  
+
+  Trajectory trajectory = new Trajectory();
+  Trajectory trajectory1 = new Trajectory();
+  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private static final String test1 = "Test1";
+  private static final String test2 = "Test2";
+  private String m_autoSelected;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -29,9 +45,27 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
   
 
-    
+    try {
+      Path trajectoryPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON1);
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath1);
+   } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON1, ex.getStackTrace());
+   }
+
+   try {
+    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON2);
+    trajectory1 = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+ } catch (IOException ex) {
+    DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON2, ex.getStackTrace());
+ }
+
+ m_chooser.addOption("Test 1", test1);
+ m_chooser.addOption("Test 2", test2);
+
+ SmartDashboard.putData(m_chooser);
     
   
     m_robotContainer = new RobotContainer();
@@ -72,7 +106,27 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
+
+    m_autoSelected = m_chooser.getSelected();
+
+
+    switch(m_autoSelected){
+
+      case(test1):
+        m_autonomousCommand = m_robotContainer.getAutonomousCommand(trajectory);
+      break;
+
+      case(test2):
+        m_autonomousCommand = m_robotContainer.getAutonomousCommand(trajectory1);
+      break;
+    }
+ 
   
+
+
+ if (m_autonomousCommand != null) {
+  m_autonomousCommand.schedule();
+}
   }
   
 
@@ -86,11 +140,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
-    // M_arm.ArmDown();
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
    
   }
 
