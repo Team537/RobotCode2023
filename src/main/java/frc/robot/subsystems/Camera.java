@@ -15,7 +15,9 @@ public class Camera {
     
 public void camera(){
 
+
 SmartDashboard.putBoolean("Target Spotted", hasTargets);
+SmartDashboard.putNumber("Target ID", target.getFiducialId());
 SmartDashboard.putNumber("Target Yaw", target.getYaw());
 SmartDashboard.putNumber("Target Pitch", target.getPitch());
 SmartDashboard.putNumber("Target Skew", target.getSkew());
