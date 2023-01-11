@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
 
-public class toggleFastMode extends CommandBase {
+public class ToggleFastMode extends CommandBase {
   /** Creates a new toggleFastModer. */
   DriveSubsystem drive;
-  public toggleFastMode(DriveSubsystem drive) {
+  public ToggleFastMode(DriveSubsystem drive) {
     this.drive = drive;
     addRequirements(drive);
     // Use addRequirements() here to declare subsystem dependencies.

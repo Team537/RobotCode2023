@@ -1,20 +1,6 @@
 {
-  "HALProvider": {
-    
-    "RoboRIO": {
-      "window": {
-        "visible": true
-      }
-    }
-  },
-  "NetworkTables": {
-    "Persistent Values": {
-      "open": false
-    },
-    "Retained Values": {
-      "open": false
-    },
-    "Transitory Values": {
+  "NetworkTables Info": {
+    "Connections": {
       "open": false
     }
   }
