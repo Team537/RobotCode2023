@@ -111,10 +111,7 @@ public class RobotContainer {
     
     
 
-    //Joystick Buttons
-
-    JoystickButton startButton = new JoystickButton(m_driverController, Button.kStart.value);
-    JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
+    
     
 
 
