@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -7,6 +9,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.SPI;
 
 /** Represents a swerve drive style drivetrain. */
 public class DriveSubsystem extends SubsystemBase {
@@ -23,7 +26,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final SwerveModule m_backLeft = new SwerveModule(5, 6, 8, 9, 10, 11);
   private final SwerveModule m_backRight = new SwerveModule(7, 8, 12, 13, 14, 15);
 
-  private final AnalogGyro m_gyro = new AnalogGyro(0);
+  private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
   private final SwerveDriveKinematics m_kinematics =
       new SwerveDriveKinematics(
