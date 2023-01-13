@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
@@ -213,4 +214,18 @@ public final class Constants {
     public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
     public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
   }
+
+
+  public static class SwerveConstants {
+    public static final double kWheelRadius = 0.0508;
+    public static final int kEncoderResolution = 4096;
+    public static final double kMaxSpeed = 3.0;
+    public static final double kModuleMaxAngularVelocity = Math.PI;
+    public static final double kModuleMaxAngularAcceleration = 2 * Math.PI; 
+
+  
+  
+  }
 }
+
+

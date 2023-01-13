@@ -6,6 +6,7 @@ package frc.robot;
 
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -32,6 +33,7 @@ import frc.robot.Constants.GyroPID;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
+import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -42,9 +44,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ArcadeDriveCommand;
-import frc.robot.commands.ToggleFastMode;
-import frc.robot.commands.ToggleSlowMode; 
+
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -75,13 +75,13 @@ public class RobotContainer {
 
   // SlewRateLimiter for Joystick Motion Profiling
 
-  private final SlewRateLimiter Left = new SlewRateLimiter(3);
-  private final SlewRateLimiter Right = new SlewRateLimiter(3);
+  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(3);
+  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(3);
+  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(3);
 
- //Drive PID Controllers
-
-  PIDController forwardController = new PIDController(kGains.kP, kGains.kI, kGains.kD);
-  PIDController turnController = new PIDController(GyroPID.kP, GyroPID.kI, GyroPID.kD);
+ 
+ 
+ 
   
 // The driver controllers
 
@@ -89,19 +89,26 @@ public class RobotContainer {
   XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort);
 
    // Drive Speeds
+   final double xSpeed =
+   -m_xspeedLimiter.calculate(MathUtil.applyDeadband(m_driverController.getLeftY(), 0.02))
+       * DriveSubsystem.kMaxSpeed;
+        
+    final double ySpeed =
+       -m_yspeedLimiter.calculate(MathUtil.applyDeadband(m_driverController.getLeftX(), 0.02))
+           * DriveSubsystem.kMaxSpeed; 
+             
+    final double rot =
+        -m_rotLimiter.calculate(MathUtil.applyDeadband(m_driverController.getRightX(), 0.02))
+            * DriveSubsystem.kMaxAngularSpeed;
 
-   private double forwardSpeed;
-   private double turnSpeed;
+  
 
   //  private double leftSpeed =  -Left.calculate( m_driverController.getLeftY());
   //  private double rightSpeed =  -Right.calculate(m_driverController.getRightY());
     
   public RobotContainer() {
 
-    //Toggle Booleans
-
-    boolean toggleFastMode = true;
-    boolean toggleSlowMode = true;
+    
     
 
     //Joystick Buttons
@@ -111,67 +118,16 @@ public class RobotContainer {
     
 
 
-   //Button Bindings
-
-    if(toggleFastMode = true){
-        startButton.onTrue
-        (new ToggleFastMode(m_robotDrive));
-    }
-
-    if(toggleSlowMode = true){
-        backButton.onTrue
-        (new ToggleSlowMode(m_robotDrive));
-    }
-
+  m_robotDrive.setDefaultCommand( 
     
-    if (m_driverController.getAButton()) {
-      
-      var result = camera.getLatestResult();
-
-      if (result.hasTargets()) {
-        
-        double range = PhotonUtils.calculateDistanceToTargetMeters(
-          VisionConstants.CAMERA_HEIGHT_METERS, 
-          VisionConstants.TARGET_HEIGHT_METERS, 
-          VisionConstants.CAMERA_PITCH_RADIANS,  
-          Units.degreesToRadians(result.getBestTarget().getPitch()));
-
-          forwardSpeed = -forwardController.calculate(range, VisionConstants.GOAL_RANGE_METERS);
-
-          turnSpeed = -turnController.calculate(result.getBestTarget().getYaw(), 0);
-
-      } else {
-          forwardSpeed = 0;
-          turnSpeed = 0;
-          
-      }  
-
-        
-      
-  }
-
-  forwardSpeed = -Left.calculate( m_driverController.getLeftY());
-  turnSpeed = -Right.calculate(m_driverController.getRightX());
-
-   //Drive Commands
-
-    m_robotDrive.setDefaultCommand(
-      // new RunCommand(() ->
-      //     m_robotDrive.tankDrive(
-      //       leftSpeed,
-      //        rightSpeed),
-      //         m_robotDrive)
-      
-      new ArcadeDriveCommand(
-        m_robotDrive,
-        () -> forwardSpeed,
-        () -> turnSpeed)
-);
-      
-
-//Choose Which Drive Based on what is chosen by Drivers
+  new DriveCommand( () -> xSpeed, () -> ySpeed, () -> rot, true, m_robotDrive)
+  
+  
+  
+  );
       
     
    
   }
+ 
 }
