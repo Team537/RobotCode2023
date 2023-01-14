@@ -38,6 +38,7 @@ import frc.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -102,10 +103,10 @@ public class RobotContainer {
 
     //Toggle Booleans
 
-    boolean toggleFastMode = true;
+    boolean toggleReflectiveTape = true;
     boolean toggleSlowMode = true;
     
-
+   
     //Joystick Buttons
 
     JoystickButton startButton = new JoystickButton(m_driverController, Button.kStart.value);
@@ -126,7 +127,7 @@ public class RobotContainer {
     // }
 
     
-   
+ 
         
       
   
