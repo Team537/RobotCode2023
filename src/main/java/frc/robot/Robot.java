@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,7 +21,7 @@ public class Robot extends TimedRobot {
  
 
      
-  private RobotContainer m_robotContainer;
+  private RobotContainer m_robotContainer = new RobotContainer();;
   
 
   /**
@@ -30,11 +31,11 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
   
-
+ 
     
     
+  m_robotContainer.getClass();
   
-    m_robotContainer = new RobotContainer();
   }
 
   /**
@@ -119,4 +120,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
+
+  
 }
+

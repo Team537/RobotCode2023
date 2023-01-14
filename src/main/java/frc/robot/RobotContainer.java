@@ -33,6 +33,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
 import frc.robot.subsystems.Camera;
+// import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -44,8 +45,8 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArcadeDriveCommand;
-import frc.robot.commands.ToggleFastMode;
-import frc.robot.commands.ToggleSlowMode; 
+// import frc.robot.commands.ToggleFastMode;
+// import frc.robot.commands.ToggleSlowMode; 
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -71,7 +72,7 @@ public class RobotContainer {
   // The robot's subsystems
 
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  // private final Camera m_camera = new Camera();
+  private final Camera m_camera = new Camera();
   
 
   // SlewRateLimiter for Joystick Motion Profiling
@@ -114,15 +115,15 @@ public class RobotContainer {
 
    //Button Bindings
 
-    if(toggleFastMode = true){
-        startButton.onTrue
-        (new ToggleFastMode(m_robotDrive));
-    }
+    // if(toggleFastMode = true){
+    //     startButton.onTrue
+    //     (new ToggleFastMode(m_robotDrive));
+    // }
 
-    if(toggleSlowMode = true){
-        backButton.onTrue
-        (new ToggleSlowMode(m_robotDrive));
-    }
+    // if(toggleSlowMode = true){
+    //     backButton.onTrue
+    //     (new ToggleSlowMode(m_robotDrive));
+    // }
 
     
    
