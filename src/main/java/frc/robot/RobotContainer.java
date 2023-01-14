@@ -32,6 +32,7 @@ import frc.robot.Constants.GyroPID;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
+import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -70,7 +71,7 @@ public class RobotContainer {
   // The robot's subsystems
 
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  PhotonCamera camera = new PhotonCamera("USB Camera 0");
+  // private final Camera m_camera = new Camera();
   
 
   // SlewRateLimiter for Joystick Motion Profiling
@@ -124,31 +125,10 @@ public class RobotContainer {
     }
 
     
-    if (m_driverController.getAButton()) {
-      
-      var result = camera.getLatestResult();
-
-      if (result.hasTargets()) {
-        
-        double range = PhotonUtils.calculateDistanceToTargetMeters(
-          VisionConstants.CAMERA_HEIGHT_METERS, 
-          VisionConstants.TARGET_HEIGHT_METERS, 
-          VisionConstants.CAMERA_PITCH_RADIANS,  
-          Units.degreesToRadians(result.getBestTarget().getPitch()));
-
-          forwardSpeed = -forwardController.calculate(range, VisionConstants.GOAL_RANGE_METERS);
-
-          turnSpeed = -turnController.calculate(result.getBestTarget().getYaw(), 0);
-
-      } else {
-          forwardSpeed = 0;
-          turnSpeed = 0;
-          
-      }  
-
+   
         
       
-  }
+  
 
   forwardSpeed = -Left.calculate( m_driverController.getLeftY());
   turnSpeed = -Right.calculate(m_driverController.getRightX());
