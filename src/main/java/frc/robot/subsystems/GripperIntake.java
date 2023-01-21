@@ -14,7 +14,7 @@ import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class GripperIntake extends SubsystemBase {
-  WPI_TalonSRX m_Gripper = new WPI_TalonSRX(GripperConstants.kGripper);
+  private final WPI_TalonSRX m_Gripper = new WPI_TalonSRX(GripperConstants.kGripper);
 
   /** Creates a new GripperIntake. */
   public GripperIntake() {
