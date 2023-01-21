@@ -33,7 +33,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
 import frc.robot.subsystems.DriveSubsystem;
-
+import frc.robot.subsystems.GripperIntake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -43,13 +43,13 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArcadeDriveCommand;
-import frc.robot.commands.ToggleFastMode;
-import frc.robot.commands.ToggleSlowMode; 
+
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import javax.print.attribute.standard.JobHoldUntil;
 import javax.swing.SwingConstants;
 
 import org.photonvision.PhotonCamera;
@@ -70,6 +70,7 @@ public class RobotContainer {
   // The robot's subsystems
 
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final GripperIntake m_Gripper = new GripperIntake();
   PhotonCamera camera = new PhotonCamera("USB Camera 0");
   
 
@@ -95,9 +96,16 @@ public class RobotContainer {
 
   //  private double leftSpeed =  -Left.calculate( m_driverController.getLeftY());
   //  private double rightSpeed =  -Right.calculate(m_driverController.getRightY());
+
+  //Buttons
+  JoystickButton aButton = new JoystickButton(m_driverController2, Button.kA.value);
+  JoystickButton bButton = new JoystickButton(m_driverController2, Button.kB.value);
     
   public RobotContainer() {
 
+
+    aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
+    bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
     //Toggle Booleans
 
     boolean toggleFastMode = true;
@@ -112,16 +120,6 @@ public class RobotContainer {
 
 
    //Button Bindings
-
-    if(toggleFastMode = true){
-        startButton.onTrue
-        (new ToggleFastMode(m_robotDrive));
-    }
-
-    if(toggleSlowMode = true){
-        backButton.onTrue
-        (new ToggleSlowMode(m_robotDrive));
-    }
 
     
     if (m_driverController.getAButton()) {
