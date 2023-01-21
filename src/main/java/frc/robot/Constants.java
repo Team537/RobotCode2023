@@ -72,7 +72,7 @@ public final class Constants {
   }
 
   public static final class GripperConstants{
-    public static final int kGripper = 1; // subject to change
+    public static final int kGripper = 3; // subject to change
 
   }
 
@@ -140,6 +140,7 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kDriverControllerPort2 = 1;
   }
 
   public final static class Conversions {
