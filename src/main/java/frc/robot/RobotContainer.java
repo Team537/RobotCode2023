@@ -101,8 +101,8 @@ public class RobotContainer {
    private double turnSpeed;
 
 
-   JoystickButton buttonA = new JoystickButton(m_driverController, Button.kA.value);
-   JoystickButton buttonB = new JoystickButton(m_driverController, Button.kB.value);
+   JoystickButton leftBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
+   JoystickButton rightBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
 
   //  private double leftSpeed =  -Left.calculate( m_driverController.getLeftY());
   //  private double rightSpeed =  -Right.calculate(m_driverController.getRightY());
@@ -111,12 +111,11 @@ public class RobotContainer {
 
 
     
-      buttonA.toggleOnTrue(new StartEndCommand(m_camera::CameraToLimelight,m_camera::CameraPipeline,m_camera));
-      buttonB.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
+      leftBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToLimelight,m_camera::CameraPipeline,m_camera));
+      rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
     //Toggle Booleans
 
-    boolean toggleReflectiveTape = true;
-    boolean toggleSlowMode = true;
+    
     
    
     //Joystick Buttons
