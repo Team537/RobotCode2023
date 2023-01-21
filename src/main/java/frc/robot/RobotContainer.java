@@ -43,8 +43,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArcadeDriveCommand;
-import frc.robot.commands.ToggleFastMode;
-import frc.robot.commands.ToggleSlowMode; 
+
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -113,15 +112,7 @@ public class RobotContainer {
 
    //Button Bindings
 
-    if(toggleFastMode = true){
-        startButton.onTrue
-        (new ToggleFastMode(m_robotDrive));
-    }
-
-    if(toggleSlowMode = true){
-        backButton.onTrue
-        (new ToggleSlowMode(m_robotDrive));
-    }
+    
 
     
     if (m_driverController.getAButton()) {
