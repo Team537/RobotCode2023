@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFXPIDSetConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -18,7 +19,10 @@ public class Arm_In_Out extends SubsystemBase {
    public void ArmInOut() {
     m_ArmInOut.configFactoryDefault();
     m_ArmInOut.setNeutralMode(NeutralMode.Brake);
-
+    m_ArmInOut.configMotionAcceleration(0,Constants.kTimeoutMs);
+    m_ArmInOut.configMotionCruiseVelocity(2000,Constants.kTimeoutMs);
+    m_ArmInOut.configPeakOutputForward(1.0,Constants.kTimeoutMs);
+    m_ArmInOut.configPeakOutputReverse(-1.0,Constants.kTimeoutMs);
   }
 
   @Override
@@ -29,13 +33,23 @@ public class Arm_In_Out extends SubsystemBase {
 
   // Issues with slotIDX, and configure pid 
  public void ArmOut() {
-  m_ArmInOut.config_kP(0, Constants.ClimberConstants.kP);
-	m_ArmInOut.config_kI(Constants.kSlot_Distanc, Constants.kGains_Distanc.kI, Constants.kTimeoutMs);
-	m_ArmInOut.config_kD(Constants.kSlot_Distanc, Constants.kGains_Distanc.kD, Constants.kTimeoutMs);
-	m_ArmInOut.config_kF(Constants.kSlot_Distanc, Constants.kGains_Distanc.kF, Constants.kTimeoutMs);
-	m_ArmInOut.config_IntegralZone(Constants.kSlot_Distanc, Constants.kGains_Distanc.kIzone, Constants.kTimeoutMs);
-	m_ArmInOut.configClosedLoopPeakOutput(Constants.kSlot_Distanc, Constants.kGains_Distanc.kPeakOutput, Constants.kTimeoutMs);
-  m_ArmInOut.set
+  m_ArmInOut.set(ControlMode.MotionMagic, Constants.ArmInOutConstants.kOutPos);
+  m_ArmInOut.config_kP(0, Constants.ArmInOutConstants.kP);
+	m_ArmInOut.config_kI(0, Constants.ArmInOutConstants.kI, Constants.kTimeoutMs);
+	m_ArmInOut.config_kD(0, Constants.ArmInOutConstants.kD, Constants.kTimeoutMs);
+	m_ArmInOut.config_kF(0, Constants.ArmInOutConstants.kFF, Constants.kTimeoutMs);
+	m_ArmInOut.config_IntegralZone(0, Constants.ArmInOutConstants.kIz, Constants.kTimeoutMs);
+	m_ArmInOut.configClosedLoopPeakOutput(0, Constants.ArmInOutConstants.kMaxOutput, Constants.kTimeoutMs);
+ }
+
+ public void ArmIn() {
+  m_ArmInOut.set(ControlMode.MotionMagic, Constants.ArmInOutConstants.kInPos);
+  m_ArmInOut.config_kP(0, Constants.ArmInOutConstants.kP);
+	m_ArmInOut.config_kI(0, Constants.ArmInOutConstants.kI, Constants.kTimeoutMs);
+	m_ArmInOut.config_kD(0, Constants.ArmInOutConstants.kD, Constants.kTimeoutMs);
+	m_ArmInOut.config_kF(0, Constants.ArmInOutConstants.kFF, Constants.kTimeoutMs);
+	m_ArmInOut.config_IntegralZone(0, Constants.ArmInOutConstants.kIz, Constants.kTimeoutMs);
+	m_ArmInOut.configClosedLoopPeakOutput(0, Constants.ArmInOutConstants.kMaxOutput, Constants.kTimeoutMs);
  }
  
 

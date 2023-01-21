@@ -79,6 +79,17 @@ public final class Constants {
 
   public static final class ArmInOutConstants {
     public static final int kArmInOut = 1;
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kIz = 0;
+    public static final double kFF = 0.000156;
+    public static final double kMaxOutput = 1;
+    public static final double kMinOutput = -1;
+    public static final double kMaxV = 3000;
+    public static final double kOutPos = 0;
+    public static final double kInPos = 0;
+
   }
   
   public static final class ArmConstants {
