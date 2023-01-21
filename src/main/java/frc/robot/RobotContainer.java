@@ -33,7 +33,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.GripperIntake;
+// import frc.robot.subsystems.GripperIntake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -69,7 +69,7 @@ public class RobotContainer {
   // The robot's subsystems
 
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final GripperIntake m_Gripper = new GripperIntake();
+  // private final GripperIntake m_Gripper = new GripperIntake();
   PhotonCamera camera = new PhotonCamera("USB Camera 0");
   
 
@@ -103,8 +103,8 @@ public class RobotContainer {
   public RobotContainer() {
 
 
-    aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
-    bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
+    // aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
+    // bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
     //Toggle Booleans
 
     boolean toggleFastMode = true;

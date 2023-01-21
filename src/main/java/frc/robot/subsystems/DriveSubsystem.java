@@ -40,10 +40,10 @@ public class DriveSubsystem extends SubsystemBase {
  private double m_left_setpoint, m_right_setpoint;
 
   // The gyro sensor
-  private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+  // private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
   // Odometry class for tracking robot pose
-  private final DifferentialDriveOdometry m_odometry;
+  // private final DifferentialDriveOdometry m_odometry;
 
   // Toggle Booleans
   private boolean fastModeEnabled = true; 
@@ -178,7 +178,7 @@ public class DriveSubsystem extends SubsystemBase {
     // m_frontRight.configPulseWidthPeriod_EdgesPerRot(4096, Constants.kTimeoutMs);
 
     resetEncoders();
-    m_odometry = new DifferentialDriveOdometry(null, m_right_setpoint, m_left_setpoint);
+    // m_odometry = new DifferentialDriveOdometry(null, m_right_setpoint, m_left_setpoint);
 
     SmartDashboard.putData(this);
   }
@@ -202,9 +202,9 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     //Update the odometry in the periodic block
-    m_odometry.update(
-        m_gyro.getRotation2d(), m_frontLeft.getSelectedSensorPosition(Constants.kPIDLoopIdx),
-        m_frontRight.getSelectedSensorPosition(Constants.kPIDLoopIdx));
+    // m_odometry.update(
+    //     m_gyro.getRotation2d(), m_frontLeft.getSelectedSensorPosition(Constants.kPIDLoopIdx),
+    //     m_frontRight.getSelectedSensorPosition(Constants.kPIDLoopIdx));
 
     SmartDashboard.putNumber("Front Left Motor Velocity", m_frontLeft.getSelectedSensorVelocity());
     SmartDashboard.putNumber("Front Right Motor Velocity", m_frontRight.getSelectedSensorVelocity());
@@ -226,7 +226,7 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Rear Left Motor Voltage", m_rearLeft.getBusVoltage());
     SmartDashboard.putNumber("Rear Right Motor Voltage", m_rearRight.getBusVoltage());
 
-    SmartDashboard.putNumber("Heading", m_gyro.getRotation2d().getDegrees());
+    // SmartDashboard.putNumber("Heading", m_gyro.getRotation2d().getDegrees());
 
   }
 
@@ -235,9 +235,9 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return The pose.
    */
-  public Pose2d getPose() {
-  return m_odometry.getPoseMeters();
-  }
+  // public Pose2d getPose() {
+  // return m_odometry.getPoseMeters();
+  // }
 
   // /**
   // * Returns the current wheel speeds of the robot.
@@ -254,10 +254,10 @@ public class DriveSubsystem extends SubsystemBase {
   // *
   // * @param pose The pose to which to set the odometry.
   // */
-  public void resetOdometry(Pose2d pose) {
-  resetEncoders();
-  m_odometry.resetPosition(null, m_right_setpoint, m_left_setpoint, pose);
-  }
+  // public void resetOdometry(Pose2d pose) {
+  // resetEncoders();
+  // m_odometry.resetPosition(null, m_right_setpoint, m_left_setpoint, pose);
+  // }
 
   /**
    * Drives the robot using arcade controls.
@@ -318,9 +318,9 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   /** Zeroes the heading of the robot. */
-  public void zeroHeading() {
-    m_gyro.reset();
-  }
+  // public void zeroHeading() {
+  //   m_gyro.reset();
+  // }
 
   public void motion_magic_start_config_drive(boolean isForward, double lengthInTicks){
 		m_left_setpoint = m_frontLeft.getSelectedSensorPosition() + lengthInTicks;
@@ -374,19 +374,19 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return the robot's heading in degrees, from -180 to 180
    */
-  public double getHeading() {
-    return m_gyro.getRotation2d().getDegrees();
-  }
+  // public double getHeading() {
+  //   return m_gyro.getRotation2d().getDegrees();
+  // }
 
-  /**
-   * Returns the turn rate of the robot.
-   *
-   * @return The turn rate of the robot, in degrees per second
-   */
-  public double getTurnRate() {
-    return -m_gyro.getRate();
+  // /**
+  //  * Returns the turn rate of the robot.
+  //  *
+  //  * @return The turn rate of the robot, in degrees per second
+  //  */
+  // public double getTurnRate() {
+  //   return -m_gyro.getRate();
 
-  }
+  // }
 
   public void DriveSlow() { 
     m_frontLeft.set(TalonFXControlMode.PercentOutput, .25);
