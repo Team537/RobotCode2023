@@ -88,18 +88,19 @@ public class RobotContainer {
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort);
 
+
+  JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
+
    // Drive Speeds
    final double xSpeed =
-   -m_xspeedLimiter.calculate(MathUtil.applyDeadband(m_driverController.getLeftY(), 0.02))
-       * DriveSubsystem.kMaxSpeed;
+   -m_xspeedLimiter.calculate(m_driverController.getLeftY());
         
     final double ySpeed =
-       -m_yspeedLimiter.calculate(MathUtil.applyDeadband(m_driverController.getLeftX(), 0.02))
-           * DriveSubsystem.kMaxSpeed; 
+       -m_yspeedLimiter.calculate(m_driverController.getLeftX());
+           
              
     final double rot =
-        -m_rotLimiter.calculate(MathUtil.applyDeadband(m_driverController.getRightX(), 0.02))
-            * DriveSubsystem.kMaxAngularSpeed;
+        -m_rotLimiter.calculate(m_driverController.getRightX());
 
   
 
@@ -109,7 +110,7 @@ public class RobotContainer {
   public RobotContainer() {
 
     
-    
+  starButton.toggleOnTrue(new StartEndCommand(m_robotDrive :: slowMode, m_robotDrive :: resetSpeed,m_robotDrive));
 
     
     
