@@ -6,7 +6,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import frc.robot.Constants.limelight;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.*;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -18,11 +18,14 @@ public class Camera extends SubsystemBase {
     private NetworkTable m_networkTable;
      
     public double pipeline = 0;
+    public double aprilTagPipeline;
+    public String Alliance;
+
+    DriverStation.Alliance alliance;
     
 public void camera(){
-
-
-
+    
+    
    
     CameraServer.startAutomaticCapture();
    
@@ -40,8 +43,14 @@ public void CameraToLimelight() {
 }
 
 public void CameraToAprilTag() {
-    pipeline = 2;  
+    pipeline = aprilTagPipeline;  
 }
+
+
+
+
+
+
 @Override
 public void periodic() {
 
@@ -50,9 +59,24 @@ public void periodic() {
     double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
-
     m_networkTable.getEntry("pipeline").setNumber(pipeline);
     //m_networkTable.getEntry("camMode").setNumber(0);
+    
+    alliance = DriverStation.getAlliance();
+
+
+
+    if(alliance == DriverStation.Alliance.Red){
+
+        aprilTagPipeline = 2;
+        Alliance = "Red";
+
+    } else if(alliance == DriverStation.Alliance.Blue){
+
+        aprilTagPipeline = 3;
+        Alliance = "Blue";
+    }
+    
     
     
 if (tv < 1.0)
