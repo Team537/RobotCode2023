@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -205,5 +206,11 @@ public final class Constants {
 
     public static final int kIntake = 20;
 
+  }
+  public static class VisionConstants {
+    public static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
+    public static final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
+    public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
+    public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
   }
 }
