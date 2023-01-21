@@ -212,5 +212,13 @@ public final class Constants {
     public static final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
     public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
     public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
+  } 
+  public static class limelight {
+    public static final int kCamera = 0;
+    public static final int kLimelight = 1;
+    public static final int kAprilTagRed = 2;
+    public static final int kAprilTagBlue = 3;
+
+
   }
 }

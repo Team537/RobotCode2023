@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
-
+import frc.robot.Constants.limelight;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.*;
 
@@ -17,22 +17,31 @@ public class Camera extends SubsystemBase {
 
     private NetworkTable m_networkTable;
      
-    public static double pipeline = 0;
+    public double pipeline = 0;
     
 public void camera(){
 
 
 
    
-
+    CameraServer.startAutomaticCapture();
    
 
     
 }
 
 
+public void CameraPipeline() {
+    pipeline = 0;  
+}
 
+public void CameraToLimelight() {
+    pipeline = 1;  
+}
 
+public void CameraToAprilTag() {
+    pipeline = 2;  
+}
 @Override
 public void periodic() {
 
@@ -43,7 +52,7 @@ public void periodic() {
     double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
 
     m_networkTable.getEntry("pipeline").setNumber(pipeline);
-    m_networkTable.getEntry("camMode").setNumber(0);
+    //m_networkTable.getEntry("camMode").setNumber(0);
     
     
 if (tv < 1.0)
@@ -58,14 +67,13 @@ if (tv < 1.0)
     SmartDashboard.putNumber("Horizontal Offset: ", tx);
     SmartDashboard.putNumber("Verticle Offset: ", ty);
     SmartDashboard.putNumber("Target Area: ", ta);
-    CameraServer.startAutomaticCapture();
+    
 
 
 }
 
-public void setPipeline(int pipeline){
-Camera.pipeline = pipeline;
 
-}
+
+
     
 }
