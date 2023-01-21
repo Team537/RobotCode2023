@@ -77,7 +77,9 @@ public final class Constants {
   }
   
 
-  public static final class 
+  public static final class ArmInOutConstants {
+    public static final int kArmInOut = 1;
+  }
   
   public static final class ArmConstants {
 
@@ -187,7 +189,7 @@ public final class Constants {
   }
 
   public static class kGains {
-
+    
     public static final double kP = 0.000102;
     public static final double kI = 0.0;
     public static final double kD = 0.000438;
