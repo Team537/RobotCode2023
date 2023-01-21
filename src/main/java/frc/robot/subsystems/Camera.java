@@ -91,7 +91,7 @@ if (tv < 1.0)
     SmartDashboard.putNumber("Horizontal Offset: ", tx);
     SmartDashboard.putNumber("Verticle Offset: ", ty);
     SmartDashboard.putNumber("Target Area: ", ta);
-    
+    SmartDashboard.putString("Alliance", Alliance);
 
 
 }
