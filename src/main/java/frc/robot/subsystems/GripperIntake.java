@@ -9,11 +9,12 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 import frc.robot.Constants;
-
+import frc.robot.Constants.GripperConstants;
+import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class GripperIntake extends SubsystemBase {
-  WPI_TalonSRX m_Gripper = new WPI_TalonSRX(Constants.GripperConstants.kGripper);
+  WPI_TalonSRX m_Gripper = new WPI_TalonSRX(GripperConstants.kGripper);
 
   /** Creates a new GripperIntake. */
   public GripperIntake() {
