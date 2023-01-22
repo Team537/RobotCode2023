@@ -221,12 +221,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d pose, Rotation2d rotation) {
-        m_odometry.resetPosition(rotation, new SwerveModulePosition[] {
-          mSwerveModules[0].getPosition(),
-          mSwerveModules[1].getPosition(), 
-          mSwerveModules[2].getPosition(), 
-          mSwerveModules[3].getPosition(),
-          }, pose);
+        m_odometry.resetPosition(rotation, swerveModulePositions, pose);
 
         for(int i = 0; i < mSwerveModules.length; i++) {
             mSwerveModules[i].setPose(pose);
