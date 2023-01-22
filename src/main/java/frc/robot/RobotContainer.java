@@ -83,9 +83,9 @@ public class RobotContainer {
 
   // SlewRateLimiter for Joystick Motion Profiling
 
-  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(1);
-  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(1);
-  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(1);
+  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(5);
+  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(5);
+  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(5);
 
  
  
@@ -100,23 +100,23 @@ public class RobotContainer {
   JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
 
    // Drive Speeds
-   final double xSpeed =
-   m_xspeedLimiter.calculate(m_driverController.getLeftY());
-        
-    final double ySpeed =
-       m_yspeedLimiter.calculate(m_driverController.getLeftX());
-           
-             
-    final double rot =
-        m_rotLimiter.calculate(m_driverController.getRightX());
-
+  
   
 
   //  private double leftSpeed =  -Left.calculate( m_driverController.getLeftY());
   //  private double rightSpeed =  -Right.calculate(m_driverController.getRightY());
     
   public RobotContainer() {
-
+    // double xSpeed =
+    // m_xspeedLimiter.calculate(m_driverController.getLeftY());
+         
+    //   double ySpeed =
+    //     m_yspeedLimiter.calculate(m_driverController.getLeftX());
+            
+              
+    //  double rot =
+    //      m_rotLimiter.calculate(m_driverController.getRightX());
+ 
     
   
 
@@ -126,10 +126,10 @@ public class RobotContainer {
   m_robotDrive.setDefaultCommand( 
     new SwerveDriveCommand(
       m_robotDrive,
-      ()-> m_driverController.getLeftY(),
-      ()-> m_driverController.getLeftX(),
-      ()-> m_driverController.getRightX(),
-      true));
+      ()-> -m_xspeedLimiter.calculate(m_driverController.getLeftY()),
+      ()->  -m_yspeedLimiter.calculate(m_driverController.getLeftX()),
+      ()->  m_rotLimiter.calculate(m_driverController.getRightX()),
+      false));
   
   
       m_FieldSim.initSim();

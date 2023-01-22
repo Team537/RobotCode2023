@@ -1,34 +1,7 @@
 {
-  "HALProvider": {
-    "Other Devices": {
-      "ADXRS450[4]": {
-        "header": {
-          "open": true
-        }
-      },
-      "Talon FX[13]": {
-        "header": {
-          "open": true
-        }
-      }
-    }
-  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/LiveWindow/SwerveModule": "Subsystem",
-      "/LiveWindow/Ungrouped/ADXRS450_Gyro[4]": "Gyro",
-      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
-      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
-      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
-      "/LiveWindow/Ungrouped/Talon FX [12]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [13]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [15]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [21]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [24]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [25]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [26]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [27]": "Motor Controller",
       "/SmartDashboard/Field2d": "Field2d",
       "/SmartDashboard/Scheduler": "Scheduler"
     },
@@ -37,16 +10,6 @@
         "window": {
           "visible": true
         }
-      }
-    }
-  },
-  "NetworkTables": {
-    "transitory": {
-      "Shuffleboard": {
-        "open": true
-      },
-      "SmartDashboard": {
-        "open": true
       }
     }
   }
