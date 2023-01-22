@@ -5,11 +5,14 @@
 package frc.robot;
 
 
+import java.util.Map;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.robot.utils.ModuleMap;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -39,7 +42,7 @@ public final class Constants {
      public static final int kRearRight = 4;*/
 
     public static final double kTrackwidthMeters = 0.8509;
-    public static final double kWheelBase = 30;
+    public static final double kWheelBase =  0.8509;
     public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
         kTrackwidthMeters);
 
@@ -232,8 +235,8 @@ public final class Constants {
     public static final int kEncoderResolution = 4096;
     public static final double  kDriveMotorGearRatio = 10; 
     public static final double kTurningMotorGearRatio = 12;
-    public static final double kMaxSpeed = 3.0;
-    public static final double kModuleMaxAngularVelocity = Math.PI;
+    public static final double kMaxSpeed = 7.0;
+    public static final double kModuleMaxAngularVelocity = Math.PI*2;
     public static final double kModuleMaxAngularAcceleration = 2 * Math.PI; 
 
     public static final double kPModuleTurningController = 0;
@@ -246,41 +249,73 @@ public final class Constants {
     public static final double kVDrive = 2.3;
     public static final double kADrive = 0.0917;
 
-    public static final double kVoltSecondsSquaredPerRadian = 0.0348;
+    public static final double ksDriveVoltSecondsPerMeter = 0.7 / 12;
+    public static final double kvDriveVoltSecondsSquaredPerMeter = 3 / 12;
+    public static final double kaDriveVoltSecondsSquaredPerMeter = 0.5 / 12;
+
 
     public static final double kTurningEncoderDistancePerPulse =
     
-    (2.0 * Math.PI) / (DriveConstants.kEncoderCPR* kTurningMotorGearRatio);
+    360 / (DriveConstants.kEncoderCPR* kTurningMotorGearRatio);
 
     public static final double kDriveEncoderDistancePerPulse =
     (2*kWheelRadius * Math.PI) / (DriveConstants.kEncoderCPR * kDriveMotorGearRatio);
 
-    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxSpeedMetersPerSecond = 10;
+    public static final double kMaxRotationRadiansPerSecond = Math.PI * 4.0;
+    public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 4.0;
+    
 
-    public static final double kMaxChassisRotationSpeed = 10 * Math.PI;
+    public static final int kFrontLeftDrive = 12;
+    public static final int kFrontLeftTurn = 13;
+    public static final int kFrontRightDrive = 15;
+    public static final int kFrontRightTurn = 26;
+    public static final int kBackLeftDrive = 24;
+    public static final int kBackLeftTurn = 25;
+    public static final int kBackRightDrive = 21;
+    public static final int kBackRightTurn = 27;
 
-    public static final int frontLeftDrive = 12;
-    public static final int frontLeftTurn = 13;
-    public static final int frontRightDrive = 15;
-    public static final int frontRightTurn = 26;
-    public static final int backLeftDrive = 24;
-    public static final int backLeftTurn = 25;
-    public static final int backRightDrive = 21;
-    public static final int backRightTurn = 27;
+    public static final int kFrontLeftCanCoder = 10;
+    public static final int kFrontRightCanCoder = 11;
+    public static final int kBackLeftCanCoder = 12;
+    public static final int kBackRightCanCoder = 13;
 
-    public static Translation2d[] modulePositions = {
-      new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters/ 2),
-      new Translation2d(DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
-      new Translation2d(-DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
-      new Translation2d(-DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters/ 2)
-  };
+    public static final double kFrontLeftCANCoderOffset = 0;
+    public static final double kFrontRightCANCoderOffset = 0;
+    public static final double kBackLeftCANCoderOffset = 0;
+    public static final double kBackRightCANCoderOffset = 0;
 
-    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-            modulePositions[0],
-            modulePositions[1],
-            modulePositions[2],
-            modulePositions[3]
-        );
+    public static final double kP_X = 1;
+    public static final double kI_X = 0;
+    public static final double kD_X = 0;
+    public static final double kP_Y = 1;
+    public static final double kI_Y = 0;
+    public static final double kD_Y = 0;
+    public static final double kP_Theta = 1;
+    public static final double kI_Theta = 0;
+    public static final double kD_Theta = 0;
+
+    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
+        kMaxRotationRadiansPerSecond, kMaxRotationRadiansPerSecondSquared);
+
+
+        public static final Map<ModulePosition, Translation2d> kModuleTranslations =
+        Map.of(
+            ModulePosition.FRONT_LEFT, new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
+            ModulePosition.FRONT_RIGHT, new Translation2d(DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
+            ModulePosition.BACK_LEFT, new Translation2d(-DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
+            ModulePosition.BACK_RIGHT, new Translation2d(-DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2));
+
+    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics( 
+      ModuleMap.orderedValues(kModuleTranslations, new Translation2d[0]));
+           
+
+        public enum ModulePosition {
+          FRONT_LEFT,
+          FRONT_RIGHT,
+          BACK_LEFT,
+          BACK_RIGHT
+        }
   }
 }
 

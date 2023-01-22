@@ -35,10 +35,10 @@ import frc.robot.Constants.GyroPID;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
-import frc.robot.commands.AutoNavSlalom;
-import frc.robot.commands.DriveCommand;
+
+import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.simulation.FieldSim;
-import frc.robot.simulation.ReferencePose;
+
 import frc.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -77,7 +77,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
-  private ReferencePose m_referencePose = new ReferencePose(m_FieldSim);
+  
   
 
   // SlewRateLimiter for Joystick Motion Profiling
@@ -123,59 +123,23 @@ public class RobotContainer {
 
 
   m_robotDrive.setDefaultCommand( 
-    
-  new DriveCommand( () -> xSpeed, () -> ySpeed, () -> rot, true, m_robotDrive)
+    new SwerveDriveCommand(
+      m_robotDrive,
+      ()-> m_driverController.getLeftY(),
+      ()-> m_driverController.getLeftX(),
+      ()-> m_driverController.getRightX(),
+      true));
+  
+  
+      m_FieldSim.initSim();
   
   
   
-  );
-  
-      
-    
    
   }
-  public Command getAutonomousCommand() {
-    return new AutoNavSlalom(m_robotDrive, m_FieldSim);
 
-  
+  public void periodic() {
+    m_FieldSim.periodic();
+  }
 }
-
-public void disabledInit() {
  
-  m_robotDrive.setSwerveDriveNeutralMode(true);
-  m_FieldSim.disabledInit();
-}
-
-public void teleOpInit() {
-  if(RobotBase.isReal()) {
-    m_robotDrive.resetEncoders();
-    m_robotDrive.resetOdometry(m_FieldSim.getRobotPose(), m_FieldSim.getRobotPose().getRotation());
-    m_robotDrive.setSwerveDriveNeutralMode(false);
-  } else {
-    m_robotDrive.resetEncoders();
-    m_robotDrive.resetOdometry(m_FieldSim.getRobotPose(), m_FieldSim.getRobotPose().getRotation());
-  }
-}
-
-public void autonomousInit() {
-    if (RobotBase.isReal()) {
-      m_robotDrive.resetEncoders();
-      m_robotDrive.resetOdometry(m_robotDrive.getPose(), m_FieldSim.getRobotPose().getRotation());
-    } else {
-      m_FieldSim.initSim();
-      m_robotDrive.resetEncoders();
-      m_robotDrive.resetOdometry(m_FieldSim.getRobotPose(), m_FieldSim.getRobotPose().getRotation());
-    }
-  }
-
-  public void simulationInit() {
-    m_FieldSim.initSim();
-  }
-
-  public void simulationPeriodic() {
-    if(!RobotState.isTest())
-      m_FieldSim.simulationPeriodic();
-  }
-
- 
-}

@@ -4,79 +4,69 @@
 
 package frc.robot.simulation;
 
-import edu.wpi.first.hal.SimDouble;
-import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.SwerveModule;
+import frc.robot.Constants.SwerveConstants;
+import frc.robot.Constants.SwerveConstants.ModulePosition;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.ModuleMap;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.Map;
 
-/** Add your docs here. */
+
 public class FieldSim {
+  private final DriveSubsystem m_drive;
 
-    private Field2d m_field2d;
-    private DriveSubsystem m_drive =  new DriveSubsystem();
+  private final Field2d m_field2d = new Field2d();
 
-    public FieldSim(DriveSubsystem drive){
+  private final Map<ModulePosition, Pose2d> m_swerveModulePoses =
+      ModuleMap.of(new Pose2d(), new Pose2d(), new Pose2d(), new Pose2d());
 
-    m_drive = drive;
-    m_field2d = new Field2d();
+  public FieldSim(DriveSubsystem m_drive) {
+    this.m_drive = m_drive;
+  }
 
+  public void initSim() {}
+
+  public Field2d getField2d() {
+    return m_field2d;
+  }
+
+  private void updateRobotPoses() {
+    m_field2d.setRobotPose(m_drive.getPoseMeters());
+
+    for (ModulePosition i : ModulePosition.values()) {
+      Translation2d updatedPositions =
+          SwerveConstants.kModuleTranslations
+              .get(i)
+              .rotateBy(m_drive.getPoseMeters().getRotation())
+              .plus(m_drive.getPoseMeters().getTranslation());
+      m_swerveModulePoses.put(
+          i,
+          new Pose2d(
+              updatedPositions,
+              m_drive
+                  .getSwerveModule(i)
+                  .getHeadingRotation2d()
+                  .plus(m_drive.getHeadingRotation2d())));
     }
 
-    public Field2d getField2d() {
-        return m_field2d;
-    }
+    m_field2d
+        .getObject("Swerve Modules")
+        .setPoses(ModuleMap.orderedValues(m_swerveModulePoses, new Pose2d[0]));
+  }
 
-    public void initSim() {
+  public void periodic() {
+    updateRobotPoses();
 
-        Pose2d startPosition = new Pose2d(Units.inchesToMeters(30),Units.inchesToMeters(30), new Rotation2d(Units.degreesToRadians(0)));
-        m_field2d.setRobotPose(startPosition);
+    if (RobotBase.isSimulation()) simulationPeriodic();
 
-        m_drive.resetOdometry(m_field2d.getRobotPose(), startPosition.getRotation());
+    SmartDashboard.putData("Field2d", m_field2d);
+  }
 
-        m_field2d.getObject("trajectory").setPose(new Pose2d());
-    }
-
-    public void disabledInit() {
-        
-            }
-
-    private void updateModulePoses() {
-
-
-    }
-    public void simulationPeriodic() {
-
-        m_field2d.setRobotPose(m_drive.getPose());
-
-        updateModulePoses();
-
-        m_field2d.getObject("Swerve Modules").setPoses(m_drive.getModulePoses());
-
-        SmartDashboard.putData("Field2d", m_field2d);
-
-    }
-
-    public Pose2d getRobotPose() {
-        return m_field2d.getRobotPose();
-    }
-
-    public synchronized void resetRobotPose(Pose2d pose){
-        m_field2d.setRobotPose(pose);
-        m_drive.resetOdometry(pose, pose.getRotation());
-    }
-
-
-
-
+  public void simulationPeriodic() {}
 }

@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
    
     CommandScheduler.getInstance().run();
+    m_robotContainer.periodic();
     SmartDashboard.putData(CommandScheduler.getInstance()); 
   }
 
@@ -60,7 +61,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
 
-    m_robotContainer.disabledInit();
+    
   }
 
   @Override
@@ -72,13 +73,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    if(RobotBase.isSimulation()) 
-    m_robotContainer.autonomousInit();
-  m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-  
-  if (m_autonomousCommand != null) {
-    m_autonomousCommand.schedule();
-  }
+   
 }
   
   
@@ -99,14 +94,14 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-   
+    m_robotContainer.periodic();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
 
-    
+    m_robotContainer.periodic();
     
   }
 
@@ -124,15 +119,14 @@ public class Robot extends TimedRobot {
   @Override
   public void simulationInit() {
 
-    m_robotContainer.simulationInit();
-
+  
   }
 
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {
 
-    m_robotContainer.simulationPeriodic();
+  
     
   }
 }
