@@ -4,10 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.DriveCommand;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,8 +19,8 @@ import frc.robot.commands.DriveCommand;
  */
 public class Robot extends TimedRobot {
 
- 
-
+  private Command m_autonomousCommand;
+  
      
   private RobotContainer m_robotContainer;
   
@@ -52,6 +54,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
    
     CommandScheduler.getInstance().run();
+    m_robotContainer.periodic();
     SmartDashboard.putData(CommandScheduler.getInstance()); 
   }
 
@@ -59,7 +62,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
 
-   
+    
   }
 
   @Override
@@ -71,15 +74,16 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-
+   
+}
   
-  }
+  
   
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-
+    
     
   }
 
@@ -91,14 +95,14 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-   
+    m_robotContainer.periodic();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    
-   m_robotContainer.DriveCommand();
+
+    m_robotContainer.periodic();
     
   }
 
@@ -121,6 +125,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {
-   
+
+  
+    
   }
 }

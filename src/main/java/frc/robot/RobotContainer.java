@@ -23,6 +23,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -34,7 +36,10 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
-import frc.robot.commands.DriveCommand;
+
+import frc.robot.commands.SwerveDriveCommand;
+import frc.robot.simulation.FieldSim;
+
 import frc.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -72,6 +77,8 @@ public class RobotContainer {
 
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   PhotonCamera camera = new PhotonCamera("USB Camera 0");
+  private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
+  
   
 
   // SlewRateLimiter for Joystick Motion Profiling
@@ -93,7 +100,16 @@ public class RobotContainer {
   JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
 
    // Drive Speeds
-   
+   final double xSpeed =
+   m_xspeedLimiter.calculate(m_driverController.getLeftY());
+        
+    final double ySpeed =
+       m_yspeedLimiter.calculate(m_driverController.getLeftX());
+           
+             
+    final double rot =
+        m_rotLimiter.calculate(m_driverController.getRightX());
+
   
 
   //  private double leftSpeed =  -Left.calculate( m_driverController.getLeftY());
@@ -102,68 +118,29 @@ public class RobotContainer {
   public RobotContainer() {
 
     
-  starButton.toggleOnTrue(new StartEndCommand(m_robotDrive :: slowMode, m_robotDrive :: resetSpeed,m_robotDrive));
-
- 
-
-
-  }
-
   
-  public void DriveCommand() {
-
-    final double xSpeed =
-   -m_xspeedLimiter.calculate((m_driverController.getLeftY()))
-   * SwerveConstants.kMaxSpeed;
-        
-    final double ySpeed =
-       -m_yspeedLimiter.calculate(m_driverController.getLeftX())
-       * SwerveConstants.kMaxSpeed;
-           
-             
-    final double rot =
-        -m_rotLimiter.calculate(m_driverController.getRightX())
-        * SwerveConstants.kModuleMaxAngularVelocity;
-
-    m_robotDrive.drive(xSpeed,ySpeed,rot,true);
-
 
     
 
 
- 
-      
-    
+  m_robotDrive.setDefaultCommand( 
+    new SwerveDriveCommand(
+      m_robotDrive,
+      ()-> m_driverController.getLeftY(),
+      ()-> m_driverController.getLeftX(),
+      ()-> m_driverController.getRightX(),
+      true));
+  
+  
+      m_FieldSim.initSim();
+  
+  
+  
    
   }
 
-  // public void driveWithJoystick(boolean fieldRelative) {
-  //   // Get the x speed. We are inverting this because Xbox controllers return
-  //   // negative values when we push forward.
-  //   final double xSpeed =
-  //  -m_xspeedLimiter.calculate(MathUtil.applyDeadband(m_driverController.getLeftY(), 0.02))
-  //  * SwerveConstants.kMaxSpeed;
-        
-  //   final double ySpeed =
-  //      -m_yspeedLimiter.calculate(MathUtil.applyDeadband(m_driverController.getLeftX(), 0.02))
-  //      * SwerveConstants.kMaxSpeed;
-           
-             
-  //   final double rot =
-  //       -m_rotLimiter.calculate(MathUtil.applyDeadband(m_driverController.getRightX(), 0.02))
-  //       * SwerveConstants.kModuleMaxAngularVelocity;
-
-
-  //   m_robotDrive.drive(xSpeed, ySpeed, rot, fieldRelative);
-
-    
-  // }
-
-
-
-
-
-
+  public void periodic() {
+    m_FieldSim.periodic();
+  }
 }
-
  
