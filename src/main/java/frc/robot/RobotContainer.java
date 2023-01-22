@@ -83,9 +83,9 @@ public class RobotContainer {
 
   // SlewRateLimiter for Joystick Motion Profiling
 
-  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(5);
-  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(5);
-  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(5);
+  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(10);
+  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(10);
+  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(10);
 
  
  
@@ -126,9 +126,9 @@ public class RobotContainer {
   m_robotDrive.setDefaultCommand( 
     new SwerveDriveCommand(
       m_robotDrive,
-      ()-> -m_xspeedLimiter.calculate(m_driverController.getLeftY()),
-      ()->  -m_yspeedLimiter.calculate(m_driverController.getLeftX()),
-      ()->  m_rotLimiter.calculate(m_driverController.getRightX()),
+      ()-> -m_driverController.getLeftY(),
+      ()->  -m_driverController.getLeftX(),
+      ()->  m_driverController.getRightX()*0.7,
       false));
   
   
