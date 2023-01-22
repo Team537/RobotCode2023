@@ -31,6 +31,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.GyroPID;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
 import frc.robot.commands.DriveCommand;
@@ -75,9 +76,9 @@ public class RobotContainer {
 
   // SlewRateLimiter for Joystick Motion Profiling
 
-  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(3);
-  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(3);
-  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(3);
+  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(1);
+  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(1);
+  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(1);
 
  
  
@@ -86,22 +87,13 @@ public class RobotContainer {
 // The driver controllers
 
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort);
+  // XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort);
 
 
   JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
 
    // Drive Speeds
-   final double xSpeed =
-   -m_xspeedLimiter.calculate(m_driverController.getLeftY());
-        
-    final double ySpeed =
-       -m_yspeedLimiter.calculate(m_driverController.getLeftX());
-           
-             
-    final double rot =
-        -m_rotLimiter.calculate(m_driverController.getRightX());
-
+   
   
 
   //  private double leftSpeed =  -Left.calculate( m_driverController.getLeftY());
@@ -112,20 +104,66 @@ public class RobotContainer {
     
   starButton.toggleOnTrue(new StartEndCommand(m_robotDrive :: slowMode, m_robotDrive :: resetSpeed,m_robotDrive));
 
-    
+ 
+
+
+  }
+
+  
+  public void DriveCommand() {
+
+    final double xSpeed =
+   -m_xspeedLimiter.calculate((m_driverController.getLeftY()))
+   * SwerveConstants.kMaxSpeed;
+        
+    final double ySpeed =
+       -m_yspeedLimiter.calculate(m_driverController.getLeftX())
+       * SwerveConstants.kMaxSpeed;
+           
+             
+    final double rot =
+        -m_rotLimiter.calculate(m_driverController.getRightX())
+        * SwerveConstants.kModuleMaxAngularVelocity;
+
+    m_robotDrive.drive(xSpeed,ySpeed,rot,true);
+
+
     
 
 
-  m_robotDrive.setDefaultCommand( 
-    
-  new DriveCommand( () -> xSpeed, () -> ySpeed, () -> rot, true, m_robotDrive)
-  
-  
-  
-  );
+ 
       
     
    
   }
- 
+
+  // public void driveWithJoystick(boolean fieldRelative) {
+  //   // Get the x speed. We are inverting this because Xbox controllers return
+  //   // negative values when we push forward.
+  //   final double xSpeed =
+  //  -m_xspeedLimiter.calculate(MathUtil.applyDeadband(m_driverController.getLeftY(), 0.02))
+  //  * SwerveConstants.kMaxSpeed;
+        
+  //   final double ySpeed =
+  //      -m_yspeedLimiter.calculate(MathUtil.applyDeadband(m_driverController.getLeftX(), 0.02))
+  //      * SwerveConstants.kMaxSpeed;
+           
+             
+  //   final double rot =
+  //       -m_rotLimiter.calculate(MathUtil.applyDeadband(m_driverController.getRightX(), 0.02))
+  //       * SwerveConstants.kModuleMaxAngularVelocity;
+
+
+  //   m_robotDrive.drive(xSpeed, ySpeed, rot, fieldRelative);
+
+    
+  // }
+
+
+
+
+
+
 }
+
+ 
