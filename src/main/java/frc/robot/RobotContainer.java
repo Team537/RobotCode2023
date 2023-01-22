@@ -100,14 +100,14 @@ public class RobotContainer {
 
    // Drive Speeds
    final double xSpeed =
-   -m_xspeedLimiter.calculate(m_driverController.getLeftY());
+   m_xspeedLimiter.calculate(m_driverController.getLeftY());
         
     final double ySpeed =
-       -m_yspeedLimiter.calculate(m_driverController.getLeftX());
+       m_yspeedLimiter.calculate(m_driverController.getLeftX());
            
              
     final double rot =
-        -m_rotLimiter.calculate(m_driverController.getRightX());
+        m_rotLimiter.calculate(m_driverController.getRightX());
 
   
 

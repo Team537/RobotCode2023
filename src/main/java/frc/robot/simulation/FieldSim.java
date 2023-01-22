@@ -16,7 +16,10 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.utils.ModuleMap;
 
 import java.util.Map;
-
+/**
+ * 
+ * Simulates Field in Simulations
+ */
 
 public class FieldSim {
   private final DriveSubsystem m_drive;
