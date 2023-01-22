@@ -110,7 +110,7 @@ public class RobotContainer {
   public RobotContainer() {
 
     
-  // starButton.toggleOnTrue(new StartEndCommand(m_robotDrive :: slowMode, m_robotDrive :: resetSpeed,m_robotDrive));
+  starButton.toggleOnTrue(new StartEndCommand(m_robotDrive :: slowMode, m_robotDrive :: resetSpeed,m_robotDrive));
 
     
     
