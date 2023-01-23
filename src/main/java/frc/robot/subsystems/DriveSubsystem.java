@@ -139,7 +139,8 @@ public class DriveSubsystem extends SubsystemBase {
       double rotation,
       boolean isFieldRelative,
       boolean isOpenLoop) {
-    
+        rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
+
 
     //Chassis Speed
     ChassisSpeeds chassisSpeeds =
