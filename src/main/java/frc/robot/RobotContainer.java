@@ -36,7 +36,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
-
+import frc.robot.commands.SlowSwerveDriveCommand;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.simulation.FieldSim;
 
@@ -119,7 +119,12 @@ public class RobotContainer {
  
     
   
-
+ starButton.toggleOnTrue(new SlowSwerveDriveCommand(
+  m_robotDrive,
+  ()-> -m_driverController.getLeftY(),
+  ()->  -m_driverController.getLeftX(),
+  ()->  m_driverController.getRightX()*0.7,
+  false));
     
 
 

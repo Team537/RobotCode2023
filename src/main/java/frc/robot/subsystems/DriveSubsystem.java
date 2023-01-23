@@ -133,6 +133,31 @@ public class DriveSubsystem extends SubsystemBase {
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
       module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
   }
+  public void slowDrive(
+      double drive,
+      double strafe,
+      double rotation,
+      boolean isFieldRelative,
+      boolean isOpenLoop) {
+    
+
+    //Chassis Speed
+    ChassisSpeeds chassisSpeeds =
+        isFieldRelative
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(
+                drive, strafe, rotation, getHeadingRotation2d())
+            : new ChassisSpeeds(drive, strafe, rotation);
+
+    //Module States
+    Map<ModulePosition, SwerveModuleState> moduleStates =
+        ModuleMap.of(SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
+
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        ModuleMap.orderedValues(moduleStates, new SwerveModuleState[0]), SwerveConstants.kMaxSpeedMetersPerSecond);
+
+    for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
+      module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
+  }
 /**
  * Sets States For Swerve Modules and Determines FeedbackLoop Type
  * 
