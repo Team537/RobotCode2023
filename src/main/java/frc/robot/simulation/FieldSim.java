@@ -7,6 +7,7 @@ package frc.robot.simulation;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,6 +40,15 @@ public class FieldSim {
     return m_field2d;
   }
 
+  public void setTrajectory(Trajectory trajectory) {
+    m_field2d.getObject("trajectory").setTrajectory(trajectory);
+  }
+
+  public void resetRobotPose(Pose2d pose) {
+    m_field2d.setRobotPose(pose);
+  }
+  
+  
   private void updateRobotPoses() {
     m_field2d.setRobotPose(m_drive.getPoseMeters());
 

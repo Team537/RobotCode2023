@@ -147,5 +147,10 @@ public class RobotContainer {
   public void periodic() {
     m_FieldSim.periodic();
   }
+
+  public void robotInit() {
+    m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
+  }
+
 }
  
