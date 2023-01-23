@@ -51,28 +51,28 @@ public class DriveSubsystem extends SubsystemBase {
                       new WPI_TalonFX(SwerveConstants.kFrontLeftTurn),
                       new WPI_TalonFX(SwerveConstants.kFrontLeftDrive),
                       new CANCoder(SwerveConstants.kFrontLeftCanCoder),
-                      SwerveConstants.kFrontLeftCANCoderOffset),
+                      SwerveConstants.kFrontLeftCANCoderOffset, false),
               ModulePosition.FRONT_RIGHT,
                   new SwerveModule(
                       ModulePosition.FRONT_RIGHT,
                       new WPI_TalonFX(SwerveConstants.kFrontRightTurn),
                       new WPI_TalonFX(SwerveConstants.kFrontRightDrive),
                       new CANCoder(SwerveConstants.kFrontRightCanCoder),
-                      SwerveConstants.kFrontRightCANCoderOffset),
+                      SwerveConstants.kFrontRightCANCoderOffset, false),
               ModulePosition.BACK_LEFT,
                   new SwerveModule(
                       ModulePosition.BACK_LEFT,
                       new WPI_TalonFX(SwerveConstants.kBackLeftTurn),
                       new WPI_TalonFX(SwerveConstants.kBackLeftDrive),
                       new CANCoder(SwerveConstants.kBackLeftCanCoder),
-                     SwerveConstants.kBackLeftCANCoderOffset),
+                     SwerveConstants.kBackLeftCANCoderOffset, false),
               ModulePosition.BACK_RIGHT,
                   new SwerveModule(
                       ModulePosition.BACK_RIGHT,
                       new WPI_TalonFX(SwerveConstants.kBackRightTurn),
                       new WPI_TalonFX(SwerveConstants.kBackRightDrive),
                       new CANCoder(SwerveConstants.kBackRightCanCoder),
-                      SwerveConstants.kBackRightCANCoderOffset)));
+                      SwerveConstants.kBackRightCANCoderOffset, false)));
 
 
   //Gyro and Simulated Gyro  
@@ -97,7 +97,8 @@ public class DriveSubsystem extends SubsystemBase {
   private PIDController m_yController = new PIDController(SwerveConstants.kP_Y, SwerveConstants.kI_Y,  SwerveConstants.kD_Y);
   private ProfiledPIDController m_turnController =
       new ProfiledPIDController(SwerveConstants.kP_Theta, SwerveConstants.kI_Theta,SwerveConstants.kD_Theta , SwerveConstants.kThetaControllerConstraints);
-
+      private PIDController m_turnControllerAuto =
+      new PIDController(SwerveConstants.kP_Theta, SwerveConstants.kI_Theta,SwerveConstants.kD_Theta);
 
   //Simulated Yaw, Only used in Sim
   private double m_simYaw;
@@ -184,7 +185,9 @@ public class DriveSubsystem extends SubsystemBase {
     m_odometry.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
     // m_gyro.reset();
   }
- 
+  public void resetGyro() {
+    m_gyro.reset();
+  }
    /**
    * Gets Drive Heading
    * @return Adjusted Gyro Heading
@@ -250,6 +253,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   public ProfiledPIDController getThetaPidController() {
     return m_turnController;
+  }
+
+  public PIDController getThetaPidControllerAuto() {
+    return m_turnControllerAuto;
   }
 
   public void setNeutralMode(NeutralMode mode) {

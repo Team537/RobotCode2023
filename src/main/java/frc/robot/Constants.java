@@ -285,15 +285,15 @@ public final class Constants {
     public static final double kBackLeftCANCoderOffset = 0;
     public static final double kBackRightCANCoderOffset = 0;
 
-    public static final double kP_X = 1;
+    public static final double kP_X = 0.01;
     public static final double kI_X = 0;
-    public static final double kD_X = 0;
-    public static final double kP_Y = 1;
+    public static final double kD_X = 0.1;
+    public static final double kP_Y = 0.01;
     public static final double kI_Y = 0;
-    public static final double kD_Y = 0;
-    public static final double kP_Theta = 1;
+    public static final double kD_Y = 0.1;
+    public static final double kP_Theta = 0.01;
     public static final double kI_Theta = 0;
-    public static final double kD_Theta = 0;
+    public static final double kD_Theta = 0.1;
 
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxRotationRadiansPerSecond, kMaxRotationRadiansPerSecondSquared);

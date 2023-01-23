@@ -65,7 +65,8 @@ public class SwerveModule extends SubsystemBase {
       WPI_TalonFX  turnMotor,
       WPI_TalonFX  driveMotor,
       CANCoder angleEncoder,
-      double angleOffset) {
+      double angleOffset,
+      boolean isInverted) {
     m_modulePosition = modulePosition;
     m_moduleNumber = m_modulePosition.ordinal(); //Returns Index of Enum
     m_turnMotor = turnMotor;
@@ -73,7 +74,8 @@ public class SwerveModule extends SubsystemBase {
     m_angleEncoder = angleEncoder;
     m_angleOffset = angleOffset;
 
-
+    m_driveMotor.setInverted(isInverted);
+    m_turnMotor.setInverted(isInverted);
     //Uses CTRE Utils to Configure Swerve Module Components for Optimal Performance
 
     m_driveMotor.configFactoryDefault();
@@ -85,7 +87,7 @@ public class SwerveModule extends SubsystemBase {
     m_angleEncoder.configFactoryDefault();
     m_angleEncoder.configAllSettings(CtreUtils.generateCanCoderConfig());
     
-    
+   
 
     resetAngleToAbsolute();
   }
@@ -141,6 +143,10 @@ public class SwerveModule extends SubsystemBase {
   public double getDriveMetersPerSecond() {
     return m_driveMotor.getSelectedSensorVelocity() * SwerveConstants.kDriveEncoderDistancePerPulse * 10;
   }
+
+  // public void setDriveInvertedt() {
+  //   m_driveMotor.setInverted(true);
+  // }
 
 /**
  * Get Drive Distance in Meters 
@@ -283,6 +289,7 @@ public class SwerveModule extends SubsystemBase {
  */
   @Override
   public void simulationPeriodic() {
+    
     m_turnMotorSim.setInputVoltage(m_turnPercentOutput * RobotController.getBatteryVoltage());
     m_driveMotorSim.setInputVoltage(m_drivePercentOutput * RobotController.getBatteryVoltage());
 

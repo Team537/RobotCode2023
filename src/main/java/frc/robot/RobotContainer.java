@@ -36,6 +36,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
+import frc.robot.commands.ExampleTrajectory;
 import frc.robot.commands.SlowSwerveDriveCommand;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.simulation.FieldSim;
@@ -148,9 +149,15 @@ public class RobotContainer {
     m_FieldSim.periodic();
   }
 
-  public void robotInit() {
-    m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
+  // public void robotInit() {
+  //   m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
+  // }
+
+  public Command getAutoCommand() {
+
+   return new ExampleTrajectory(m_robotDrive, m_FieldSim);
   }
+
 
 }
  
