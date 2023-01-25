@@ -37,6 +37,7 @@ import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
 import frc.robot.commands.ExampleTrajectory;
+import frc.robot.commands.FollowTrajectory;
 import frc.robot.commands.SlowSwerveDriveCommand;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.simulation.FieldSim;
@@ -155,7 +156,7 @@ public class RobotContainer {
 
   public Command getAutoCommand() {
 
-   return new ExampleTrajectory(m_robotDrive, m_FieldSim);
+   return new FollowTrajectory(m_robotDrive, m_FieldSim,"Blue Auto 1");
   }
 
 
