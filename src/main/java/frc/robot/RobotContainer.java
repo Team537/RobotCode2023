@@ -156,7 +156,7 @@ public class RobotContainer {
 
   public Command getAutoCommand() {
 
-   return new FollowTrajectory(m_robotDrive, m_FieldSim,"Blue Auto 1");
+   return new FollowTrajectory(m_robotDrive, m_FieldSim,"Blue Auto 2");
   }
 
 

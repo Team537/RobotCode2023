@@ -45,9 +45,9 @@ public class SlowSwerveDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double throttle = Math.abs(m_throttleInput.getAsDouble()) > 0.05 ? m_throttleInput.getAsDouble() : 0;
-    double strafe = Math.abs(m_strafeInput.getAsDouble()) > 0.05 ? m_strafeInput.getAsDouble() : 0;
-    double rotation = Math.abs(m_rotationInput.getAsDouble()) > 0.05 ? m_rotationInput.getAsDouble() : 0;
+    double throttle = Math.abs(m_throttleInput.getAsDouble()) > 0.1 ? m_throttleInput.getAsDouble() : 0;
+    double strafe = Math.abs(m_strafeInput.getAsDouble()) > 0.1 ? m_strafeInput.getAsDouble() : 0;
+    double rotation = Math.abs(m_rotationInput.getAsDouble()) > 0.1 ? m_rotationInput.getAsDouble() : 0;
 
     m_drive.slowDrive(throttle, strafe, rotation, m_isFieldRelative, false);    // Forward/Back Trottle, Left/Right Strafe, Left/Right Turn
   }

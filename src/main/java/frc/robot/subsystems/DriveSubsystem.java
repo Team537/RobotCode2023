@@ -273,11 +273,11 @@ public class DriveSubsystem extends SubsystemBase {
     return m_turnController;
   }
 
-  public PIDController getThetaPidControllerAuto() {
+  public PIDController getRotPidControllerAuto() {
     return m_turnControllerAuto;
   }
 
-  public void setNeutralMode(NeutralMode mode) {
+  public void setBrakeMode(NeutralMode mode) {
     for (SwerveModule module : m_swerveModules.values()) {
       module.setDriveNeutralMode(mode);
       module.setTurnNeutralMode(mode);
