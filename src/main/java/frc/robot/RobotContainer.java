@@ -20,6 +20,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -28,6 +29,7 @@ import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -80,6 +82,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
+  private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   
   
 
@@ -150,13 +153,19 @@ public class RobotContainer {
     m_FieldSim.periodic();
   }
 
-  // public void robotInit() {
-  //   m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
-  // }
+  public void robotInit() {
+    // m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
+
+     m_Chooser.addOption("Auto 1", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 1"));
+     m_Chooser.addOption("Auto 2", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 2"));
+     m_Chooser.addOption("Auto 3", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 3"));
+
+     SmartDashboard.putData("Auto Selector", m_Chooser);
+  }
 
   public Command getAutoCommand() {
 
-   return new FollowTrajectory(m_robotDrive, m_FieldSim,"Blue Auto 2");
+   return m_Chooser.getSelected();
   }
 
 
