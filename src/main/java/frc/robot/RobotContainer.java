@@ -72,6 +72,8 @@ public class RobotContainer {
   // private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final GripperIntake m_Gripper = new GripperIntake();
   private final ArmInOut m_armArmInOut = new ArmInOut();
+  // private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  // private final GripperIntake m_Gripper = new GripperIntake();
   PhotonCamera camera = new PhotonCamera("USB Camera 0");
   
 
@@ -110,8 +112,8 @@ public class RobotContainer {
     yButton.toggleOnTrue(new StartEndCommand(m_armArmInOut::ArmIn,m_armArmInOut::ArmOut,m_armArmInOut));
     xButton.toggleOnTrue(new StartEndCommand(m_armArmInOut::ArmOut,m_armArmInOut::ArmIn,m_armArmInOut));
 
-    aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
-    bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
+    // aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
+    // bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
     //Toggle Booleans
 
     boolean toggleFastMode = true;
