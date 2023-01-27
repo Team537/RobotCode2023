@@ -18,7 +18,7 @@ import java.util.function.DoubleSupplier;
 public class SwerveDriveCommand extends CommandBase {
   
   private final DriveSubsystem m_drive;
-  private final DoubleSupplier m_throttleInput, m_strafeInput, m_rotationInput;
+  private final DoubleSupplier m_driveInput, m_strafeInput, m_rotationInput;
   private final boolean m_isFieldRelative;
 
   /**
@@ -26,9 +26,9 @@ public class SwerveDriveCommand extends CommandBase {
    *
    * 
    */
-  public SwerveDriveCommand(DriveSubsystem m_drive, DoubleSupplier throttleInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, boolean isFieldRelative) {
+  public SwerveDriveCommand(DriveSubsystem m_drive, DoubleSupplier driveInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, boolean isFieldRelative) {
     this.m_drive = m_drive;
-    m_throttleInput = throttleInput;
+    m_driveInput = driveInput;
     m_strafeInput = strafeInput;
     m_rotationInput = rotationInput;
     m_isFieldRelative = isFieldRelative;
@@ -45,11 +45,11 @@ public class SwerveDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double throttle = Math.abs(m_throttleInput.getAsDouble()) > 0.05 ? m_throttleInput.getAsDouble() : 0;
+    double drive = Math.abs(m_driveInput.getAsDouble()) > 0.05 ? m_driveInput.getAsDouble() : 0;
     double strafe = Math.abs(m_strafeInput.getAsDouble()) > 0.05 ? m_strafeInput.getAsDouble() : 0;
     double rotation = Math.abs(m_rotationInput.getAsDouble()) > 0.05 ? m_rotationInput.getAsDouble() : 0;
 
-    m_drive.drive(throttle, strafe, rotation, m_isFieldRelative, false);    // Forward/Back Trottle, Left/Right Strafe, Left/Right Turn
+    m_drive.drive(drive, strafe, rotation, m_isFieldRelative, false);    // Forward/Back Drive, Left/Right Strafe, Left/Right Turn
   }
 
   // Called once the command ends or is interrupted.

@@ -190,8 +190,7 @@ public class SwerveModule extends SubsystemBase {
         (Math.abs(desiredState.speedMetersPerSecond) <= (SwerveConstants.kMaxSpeedMetersPerSecond * 0.01))
             ? m_lastAngle
             : desiredState.angle
-                .getDegrees(); // Prevent rotating module if speed is less then 1%. Prevents
-    // Jittering.
+                .getDegrees(); // Prevent rotating module if speed is less then 1%.
     m_turnMotor.set(ControlMode.Position, angle / SwerveConstants.kTurningEncoderDistancePerPulse);
     m_lastAngle = angle;
 
@@ -263,7 +262,7 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Heading", getState().angle.getDegrees());
     SmartDashboard.putNumber(
-        "Module " + m_moduleNumber + " CANCoder Reading", m_angleEncoder.getAbsolutePosition());
+        "Module " + m_moduleNumber + " CANCoder Reading", m_angleEncoder.getPosition());
     SmartDashboard.putNumber(
           "Module " + m_moduleNumber + " Position", getDriveMeters());
     SmartDashboard.putNumber(

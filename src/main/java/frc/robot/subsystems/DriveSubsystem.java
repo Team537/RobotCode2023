@@ -93,12 +93,12 @@ public class DriveSubsystem extends SubsystemBase {
   //PID Controllers for X, Y, and Rotation
   //Rotation is Profiled to limit Uncontrollable Rotation
 
-  private PIDController m_xController = new PIDController(SwerveConstants.kP_X, SwerveConstants.kI_X,  SwerveConstants.kD_X);
-  private PIDController m_yController = new PIDController(SwerveConstants.kP_Y, SwerveConstants.kI_Y,  SwerveConstants.kD_Y);
+  private PIDController m_XController = new PIDController(SwerveConstants.kP_X, SwerveConstants.kI_X,  SwerveConstants.kD_X);
+  private PIDController m_YController = new PIDController(SwerveConstants.kP_Y, SwerveConstants.kI_Y,  SwerveConstants.kD_Y);
   private ProfiledPIDController m_turnController =
-      new ProfiledPIDController(SwerveConstants.kP_Theta, SwerveConstants.kI_Theta,SwerveConstants.kD_Theta , SwerveConstants.kThetaControllerConstraints);
+      new ProfiledPIDController(SwerveConstants.kP_Rot, SwerveConstants.kI_Rot,SwerveConstants.kD_Rot , SwerveConstants.kRotControllerConstraints);
       private PIDController m_turnControllerAuto =
-      new PIDController(SwerveConstants.kP_Theta, SwerveConstants.kI_Theta,SwerveConstants.kD_Theta);
+      new PIDController(SwerveConstants.kP_Rot, SwerveConstants.kI_Rot,SwerveConstants.kD_Rot);
 
   //Simulated Yaw, Only used in Sim
   private double m_simYaw;
@@ -245,18 +245,18 @@ public class DriveSubsystem extends SubsystemBase {
 // Returns PID Controllers, Used in Auto
 
   public PIDController getXPidController() {
-    return m_xController;
+    return m_XController;
   }
 
   public PIDController getYPidController() {
-    return m_yController;
+    return m_YController;
   }
 
-  public ProfiledPIDController getThetaPidController() {
+  public ProfiledPIDController getRotPidController() {
     return m_turnController;
   }
 
-  public PIDController getThetaPidControllerAuto() {
+  public PIDController getRotPidControllerAuto() {
     return m_turnControllerAuto;
   }
 

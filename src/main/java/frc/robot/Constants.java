@@ -291,13 +291,13 @@ public final class Constants {
     public static final double kP_Y = 0.01;
     public static final double kI_Y = 0;
     public static final double kD_Y = 0.1;
-    public static final double kP_Theta = 0.01;
-    public static final double kI_Theta = 0;
-    public static final double kD_Theta = 0.1;
+    public static final double kP_Rot = 0.01;
+    public static final double kI_Rot = 0;
+    public static final double kD_Rot = 0.1;
 
    public static final int kPigeonID = 10;
 
-    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
+    public static final TrapezoidProfile.Constraints kRotControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxRotationRadiansPerSecond, kMaxRotationRadiansPerSecondSquared);
 
 
