@@ -77,7 +77,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   //Gyro and Simulated Gyro  
                     
-  private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
+  private final Pigeon2 m_gyro = new Pigeon2(SwerveConstants.kPigeonID);
 //   private final ADXRS450_GyroSim m_gyroSim = new ADXRS450_GyroSim(m_gyro);
 
 
@@ -104,7 +104,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double m_simYaw;
 
   public DriveSubsystem() {
-    
+    m_gyro.setYaw(0);
   }
 
   public void drive(
@@ -186,14 +186,15 @@ public class DriveSubsystem extends SubsystemBase {
     // m_gyro.reset();
   }
   public void resetGyro() {
-    m_gyro.reset();
+    m_gyro.setYaw(0);
+    m_gyro.setAccumZAngle(0);
   }
    /**
    * Gets Drive Heading
    * @return Adjusted Gyro Heading
    */
   public double getHeadingDegrees() {
-    return Math.IEEEremainder(m_gyro.getAngle(), 360);
+    return Math.IEEEremainder(m_gyro.getYaw(), 360);
   }
   /**
    * Gets {@link Rotation2d} from Heading
@@ -312,17 +313,17 @@ public class DriveSubsystem extends SubsystemBase {
  * 
 //  * 
 //  */
-//   @Override
-//   public void simulationPeriodic() {
-//     ChassisSpeeds chassisSpeed =
-//         SwerveConstants.kDriveKinematics.toChassisSpeeds(
-//             ModuleMap.orderedValues(getModuleStates(), new SwerveModuleState[0]));
+  @Override
+  public void simulationPeriodic() {
+    ChassisSpeeds chassisSpeed =
+        SwerveConstants.kDriveKinematics.toChassisSpeeds(
+            ModuleMap.orderedValues(getModuleStates(), new SwerveModuleState[0]));
 
-//     m_simYaw += chassisSpeed.omegaRadiansPerSecond * 0.02;
+    m_simYaw += chassisSpeed.omegaRadiansPerSecond * 0.02;
 
-//     Unmanaged.feedEnable(2);
-//     m_gyroSim.setAngle(-Units.radiansToDegrees(m_simYaw));
-//   }
+    Unmanaged.feedEnable(2);
+    m_gyro.getSimCollection().setRawHeading(-Units.radiansToDegrees(m_simYaw));
+  }
 
 
 

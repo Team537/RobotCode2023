@@ -295,6 +295,8 @@ public final class Constants {
     public static final double kI_Theta = 0;
     public static final double kD_Theta = 0.1;
 
+   public static final int kPigeonID = 10;
+
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxRotationRadiansPerSecond, kMaxRotationRadiansPerSecondSquared);
 
