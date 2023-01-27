@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmInOut extends SubsystemBase {
-  private WPI_TalonSRX m_ArmInOut = new WPI_TalonSRX(Constants.ArmInOutConstants.kArmInOut);
+  private WPI_TalonFX m_ArmInOut = new WPI_TalonFX(Constants.ArmInOutConstants.kArmInOut);
 
   /** Creates a new Arm_In_Out. */
    public void ArmInOut() {
