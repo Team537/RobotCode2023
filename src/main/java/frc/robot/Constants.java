@@ -77,6 +77,8 @@ public final class Constants {
   }
   public static final class ArmPivotConstants {
     public static final int kArmPivot1 = 2;
+    public static final int kArmPivot2 = 3;
+
   }
 
   
