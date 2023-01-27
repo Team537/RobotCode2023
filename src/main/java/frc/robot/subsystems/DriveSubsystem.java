@@ -78,7 +78,7 @@ public class DriveSubsystem extends SubsystemBase {
   //Gyro and Simulated Gyro  
                     
   private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
-  private final ADXRS450_GyroSim m_gyroSim = new ADXRS450_GyroSim(m_gyro);
+//   private final ADXRS450_GyroSim m_gyroSim = new ADXRS450_GyroSim(m_gyro);
 
 
   //Swerve Odometry 
@@ -310,19 +310,19 @@ public class DriveSubsystem extends SubsystemBase {
  * Runs Periodically during Simulation
  * 
  * 
- * 
- */
-  @Override
-  public void simulationPeriodic() {
-    ChassisSpeeds chassisSpeed =
-        SwerveConstants.kDriveKinematics.toChassisSpeeds(
-            ModuleMap.orderedValues(getModuleStates(), new SwerveModuleState[0]));
+//  * 
+//  */
+//   @Override
+//   public void simulationPeriodic() {
+//     ChassisSpeeds chassisSpeed =
+//         SwerveConstants.kDriveKinematics.toChassisSpeeds(
+//             ModuleMap.orderedValues(getModuleStates(), new SwerveModuleState[0]));
 
-    m_simYaw += chassisSpeed.omegaRadiansPerSecond * 0.02;
+//     m_simYaw += chassisSpeed.omegaRadiansPerSecond * 0.02;
 
-    Unmanaged.feedEnable(2);
-    m_gyroSim.setAngle(-Units.radiansToDegrees(m_simYaw));
-  }
+//     Unmanaged.feedEnable(2);
+//     m_gyroSim.setAngle(-Units.radiansToDegrees(m_simYaw));
+//   }
 
 
 

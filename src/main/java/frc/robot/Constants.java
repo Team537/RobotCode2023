@@ -261,13 +261,13 @@ public final class Constants {
     public static final double kDriveEncoderDistancePerPulse =
     (2*kWheelRadius * Math.PI) / (DriveConstants.kEncoderCPR * kDriveMotorGearRatio);
 
-    public static final double kMaxSpeedMetersPerSecond = 10;
+    public static final double kMaxSpeedMetersPerSecond = 1;
     public static final double kMaxRotationRadiansPerSecond = Math.PI * 1;
     public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 1;
     
 
-    public static final int kFrontLeftDrive = 12;
-    public static final int kFrontLeftTurn = 13;
+    public static final int kFrontLeftDrive = 1;
+    public static final int kFrontLeftTurn = 6;
     public static final int kFrontRightDrive = 15;
     public static final int kFrontRightTurn = 26;
     public static final int kBackLeftDrive = 24;
