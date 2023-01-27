@@ -32,7 +32,8 @@ import frc.robot.Constants.GyroPID;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ArmInOut;
+// import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -42,7 +43,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ArcadeDriveCommand;
+// import frc.robot.commands.ArcadeDriveCommand;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -68,8 +69,9 @@ public class RobotContainer {
 
   // The robot's subsystems
 
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  // private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final GripperIntake m_Gripper = new GripperIntake();
+  private final ArmInOut m_armArmInOut = new ArmInOut();
   PhotonCamera camera = new PhotonCamera("USB Camera 0");
   
 
@@ -86,7 +88,7 @@ public class RobotContainer {
 // The driver controllers
 
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort);
+  XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort1);
 
    // Drive Speeds
 
@@ -99,9 +101,14 @@ public class RobotContainer {
   //Buttons
   JoystickButton aButton = new JoystickButton(m_driverController2, Button.kA.value);
   JoystickButton bButton = new JoystickButton(m_driverController2, Button.kB.value);
+
+  JoystickButton yButton = new JoystickButton(m_driverController2, Button.kY.value);
+  JoystickButton xButton = new JoystickButton(m_driverController2, Button.kX.value);
     
   public RobotContainer() {
 
+    yButton.toggleOnTrue(new StartEndCommand(m_armArmInOut::ArmIn,m_armArmInOut::ArmOut,m_armArmInOut));
+    xButton.toggleOnTrue(new StartEndCommand(m_armArmInOut::ArmOut,m_armArmInOut::ArmIn,m_armArmInOut));
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
@@ -152,18 +159,18 @@ public class RobotContainer {
 
    //Drive Commands
 
-    m_robotDrive.setDefaultCommand(
-      // new RunCommand(() ->
-      //     m_robotDrive.tankDrive(
-      //       leftSpeed,
-      //        rightSpeed),
-      //         m_robotDrive)
+//     m_robotDrive.setDefaultCommand(
+//       // new RunCommand(() ->
+//       //     m_robotDrive.tankDrive(
+//       //       leftSpeed,
+//       //        rightSpeed),
+//       //         m_robotDrive)
       
-      new ArcadeDriveCommand(
-        m_robotDrive,
-        () -> forwardSpeed,
-        () -> turnSpeed)
-);
+//       new ArcadeDriveCommand(
+//         m_robotDrive,
+//         () -> forwardSpeed,
+//         () -> turnSpeed)
+// );
       
 
 //Choose Which Drive Based on what is chosen by Drivers

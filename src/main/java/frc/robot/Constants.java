@@ -78,16 +78,16 @@ public final class Constants {
   
 
   public static final class ArmInOutConstants {
-    public static final int kArmInOut = 1;
-    public static final double kP = 0;
+    public static final int kArmInOut = 5;
+    public static final double kP = 1;
     public static final double kI = 0;
     public static final double kD = 0;
     public static final double kIz = 0;
-    public static final double kFF = 0.000156;
+    public static final double kFF = 1;
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
     public static final double kMaxV = 3000;
-    public static final double kOutPos = 0;
+    public static final double kOutPos = 10;
     public static final double kInPos = 0;
 
   }
@@ -155,6 +155,7 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kDriverControllerPort1 = 1;
   }
 
   public final static class Conversions {
