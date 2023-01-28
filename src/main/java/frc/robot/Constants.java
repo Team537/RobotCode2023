@@ -266,14 +266,14 @@ public final class Constants {
     public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 1;
     
 
-    public static final int kFrontLeftDrive = 1;
-    public static final int kFrontLeftTurn = 6;
-    public static final int kFrontRightDrive = 15;
-    public static final int kFrontRightTurn = 26;
-    public static final int kBackLeftDrive = 24;
-    public static final int kBackLeftTurn = 25;
-    public static final int kBackRightDrive = 21;
-    public static final int kBackRightTurn = 27;
+    public static final int kFrontLeftDrive = 0;
+    public static final int kFrontLeftTurn = 1;
+    public static final int kFrontRightDrive = 2;
+    public static final int kFrontRightTurn = 3;
+    public static final int kBackLeftDrive = 4;
+    public static final int kBackLeftTurn = 5;
+    public static final int kBackRightDrive = 6;
+    public static final int kBackRightTurn = 7;
 
     public static final int kFrontLeftSRXMagCoder = 10;
     public static final int kFrontRightSRXMagCoder = 11;
