@@ -6,9 +6,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.unmanaged.Unmanaged;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -34,7 +36,7 @@ public class SwerveModule extends SubsystemBase {
   int m_moduleNumber;
   WPI_TalonFX m_turnMotor;
   WPI_TalonFX  m_driveMotor;
-  CANCoder m_angleEncoder; // Mag Encoder
+  // CANCoder m_angleEncoder; // Mag Encoder
   double m_angleOffset; //Offset of Mag Encoder
   double m_lastAngle;
   Pose2d m_pose;
@@ -64,14 +66,14 @@ public class SwerveModule extends SubsystemBase {
       ModulePosition modulePosition,
       WPI_TalonFX  turnMotor,
       WPI_TalonFX  driveMotor,
-      CANCoder angleEncoder,
+      int angleEncoder,
       double angleOffset,
       boolean isInverted) {
     m_modulePosition = modulePosition;
     m_moduleNumber = m_modulePosition.ordinal(); //Returns Index of Enum
     m_turnMotor = turnMotor;
     m_driveMotor = driveMotor;
-    m_angleEncoder = angleEncoder;
+    // m_angleEncoder = angleEncoder;
     m_angleOffset = angleOffset;
 
     m_driveMotor.setInverted(isInverted);
@@ -83,9 +85,11 @@ public class SwerveModule extends SubsystemBase {
 
     m_turnMotor.configFactoryDefault();
     m_turnMotor.configAllSettings(CtreUtils.generateTurnMotorConfig());
+    m_turnMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, angleEncoder, 10);
+    m_turnMotor.configIntegratedSensorAbsoluteRange(AbsoluteSensorRange.Unsigned_0_to_360);
 
-    m_angleEncoder.configFactoryDefault();
-    m_angleEncoder.configAllSettings(CtreUtils.generateCanCoderConfig());
+    // m_angleEncoder.configFactoryDefault();
+    // m_angleEncoder.configAllSettings(CtreUtils.generateCanCoderConfig());
     
    
 
@@ -109,7 +113,7 @@ public class SwerveModule extends SubsystemBase {
  * 
  */
   public void resetAngleToAbsolute() {
-    double angle = m_angleEncoder.getAbsolutePosition() - m_angleOffset;
+    double angle =  m_turnMotor.getSensorCollection().getIntegratedSensorAbsolutePosition() -  m_angleOffset;
     m_turnMotor.setSelectedSensorPosition(angle / SwerveConstants.kTurningEncoderDistancePerPulse);
   }
 
@@ -262,7 +266,7 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Heading", getState().angle.getDegrees());
     SmartDashboard.putNumber(
-        "Module " + m_moduleNumber + " CANCoder Reading", m_angleEncoder.getPosition());
+        "Module " + m_moduleNumber + " CANCoder Reading", m_turnMotor.getSensorCollection().getIntegratedSensorAbsolutePosition());
     SmartDashboard.putNumber(
           "Module " + m_moduleNumber + " Position", getDriveMeters());
     SmartDashboard.putNumber(

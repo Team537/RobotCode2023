@@ -50,29 +50,29 @@ public class DriveSubsystem extends SubsystemBase {
                       ModulePosition.FRONT_LEFT,
                       new WPI_TalonFX(SwerveConstants.kFrontLeftTurn),
                       new WPI_TalonFX(SwerveConstants.kFrontLeftDrive),
-                      new CANCoder(SwerveConstants.kFrontLeftCanCoder),
-                      SwerveConstants.kFrontLeftCANCoderOffset, false),
+                      SwerveConstants.kFrontLeftSRXMagCoder,
+                      SwerveConstants.kFrontLeftSRXMagCoderOffset, false),
               ModulePosition.FRONT_RIGHT,
                   new SwerveModule(
                       ModulePosition.FRONT_RIGHT,
                       new WPI_TalonFX(SwerveConstants.kFrontRightTurn),
                       new WPI_TalonFX(SwerveConstants.kFrontRightDrive),
-                      new CANCoder(SwerveConstants.kFrontRightCanCoder),
-                      SwerveConstants.kFrontRightCANCoderOffset, false),
+                      SwerveConstants.kFrontRightSRXMagCoder,
+                      SwerveConstants.kFrontRightSRXMagCoderOffset, false),
               ModulePosition.BACK_LEFT,
                   new SwerveModule(
                       ModulePosition.BACK_LEFT,
                       new WPI_TalonFX(SwerveConstants.kBackLeftTurn),
                       new WPI_TalonFX(SwerveConstants.kBackLeftDrive),
-                      new CANCoder(SwerveConstants.kBackLeftCanCoder),
-                     SwerveConstants.kBackLeftCANCoderOffset, false),
+                      SwerveConstants.kBackLeftSRXMagCoder,
+                     SwerveConstants.kBackLeftSRXMagCoderOffset, false),
               ModulePosition.BACK_RIGHT,
                   new SwerveModule(
                       ModulePosition.BACK_RIGHT,
                       new WPI_TalonFX(SwerveConstants.kBackRightTurn),
                       new WPI_TalonFX(SwerveConstants.kBackRightDrive),
-                      new CANCoder(SwerveConstants.kBackRightCanCoder),
-                      SwerveConstants.kBackRightCANCoderOffset, false)));
+                      SwerveConstants.kBackRightSRXMagCoder,
+                      SwerveConstants.kBackRightSRXMagCoderOffset, false)));
 
 
   //Gyro and Simulated Gyro  
