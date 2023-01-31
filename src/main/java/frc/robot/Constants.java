@@ -275,10 +275,10 @@ public final class Constants {
     public static final int kBackRightDrive = 6;
     public static final int kBackRightTurn = 7;
 
-    public static final int kFrontLeftSRXMagCoder = 10;
-    public static final int kFrontRightSRXMagCoder = 11;
-    public static final int kBackLeftSRXMagCoder = 12;
-    public static final int kBackRightSRXMagCoder = 13;
+    public static final int kFrontLeftSRXMagCoder = 0;
+    public static final int kFrontRightSRXMagCoder = 1;
+    public static final int kBackLeftSRXMagCoder = 2;
+    public static final int kBackRightSRXMagCoder = 3;
 
     public static final double kFrontLeftSRXMagCoderOffset = 0;
     public static final double kFrontRightSRXMagCoderOffset = 0;

@@ -20,6 +20,9 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalSource;
+import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.SwerveConstants.ModulePosition;
 import frc.robot.utils.CtreUtils;
+import frc.robot.utils.SRXMagEncoder;
 
 
 public class SwerveModule extends SubsystemBase {
@@ -39,7 +43,9 @@ public class SwerveModule extends SubsystemBase {
   // CANCoder m_angleEncoder; // Mag Encoder
   double m_angleOffset; //Offset of Mag Encoder
   double m_lastAngle;
+  double angle;
   Pose2d m_pose;
+  SRXMagEncoder m_SrxMagEncoder;
 
   SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(
@@ -83,10 +89,12 @@ public class SwerveModule extends SubsystemBase {
     m_driveMotor.configFactoryDefault();
     m_driveMotor.configAllSettings(CtreUtils.generateDriveMotorConfig());
 
+    m_SrxMagEncoder = new SRXMagEncoder(new DutyCycle(new DigitalInput(angleEncoder)), angleOffset);
+
     m_turnMotor.configFactoryDefault();
     m_turnMotor.configAllSettings(CtreUtils.generateTurnMotorConfig());
-    m_turnMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, angleEncoder, 10);
-    m_turnMotor.configIntegratedSensorAbsoluteRange(AbsoluteSensorRange.Unsigned_0_to_360);
+    // m_turnMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, angleEncoder, 10);
+    // m_turnMotor.configIntegratedSensorAbsoluteRange(AbsoluteSensorRange.Unsigned_0_to_360);
 
     // m_angleEncoder.configFactoryDefault();
     // m_angleEncoder.configAllSettings(CtreUtils.generateCanCoderConfig());
@@ -113,7 +121,11 @@ public class SwerveModule extends SubsystemBase {
  * 
  */
   public void resetAngleToAbsolute() {
-    double angle =  m_turnMotor.getSensorCollection().getIntegratedSensorAbsolutePosition() -  m_angleOffset;
+    double angle = Math.toRadians(m_SrxMagEncoder.getDistance());
+            angle %= 2.0 * Math.PI;
+            if (angle < 0.0) {
+                angle += 2.0 * Math.PI;
+            }
     m_turnMotor.setSelectedSensorPosition(angle / SwerveConstants.kTurningEncoderDistancePerPulse);
   }
 
@@ -256,6 +268,12 @@ public class SwerveModule extends SubsystemBase {
   public void setTurnNeutralMode(NeutralMode mode) {
     m_turnMotor.setNeutralMode(mode);
   }
+
+
+ 
+
+   
+
 /**
  * Updates SmartDashboard
  * 
@@ -266,7 +284,7 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Heading", getState().angle.getDegrees());
     SmartDashboard.putNumber(
-        "Module " + m_moduleNumber + " CANCoder Reading", m_turnMotor.getSensorCollection().getIntegratedSensorAbsolutePosition());
+        "Module " + m_moduleNumber + " Mag Coder Reading", angle);
     SmartDashboard.putNumber(
           "Module " + m_moduleNumber + " Position", getDriveMeters());
     SmartDashboard.putNumber(
@@ -282,6 +300,11 @@ public class SwerveModule extends SubsystemBase {
   @Override
   public void periodic() {
     updateSmartDashboard();
+     angle = Math.toRadians(m_SrxMagEncoder.getDistance());
+    angle %= 2.0 * Math.PI;
+    if (angle < 0.0) {
+        angle += 2.0 * Math.PI;
+    }
   }
 
   /**
