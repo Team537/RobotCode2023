@@ -123,7 +123,7 @@ public class RobotContainer {
  starButton.toggleOnTrue(new SlowSwerveDriveCommand(
   m_robotDrive,
   ()-> -m_driverController.getLeftY(),
-  ()->  -m_driverController.getLeftX(),
+  ()->  m_driverController.getLeftX(),
   ()->  m_driverController.getRightX()*0.7,
   false));
     
@@ -133,7 +133,7 @@ public class RobotContainer {
     new SwerveDriveCommand(
       m_robotDrive,
       ()-> -m_driverController.getLeftY(),
-      ()->  -m_driverController.getLeftX(),
+      ()->  m_driverController.getLeftX(),
       ()->  m_driverController.getRightX()*0.7,
       false));
   

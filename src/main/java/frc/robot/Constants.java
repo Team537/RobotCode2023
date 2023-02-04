@@ -41,8 +41,8 @@ public final class Constants {
      public static final int kFrontRight = 2;
      public static final int kRearRight = 4;*/
 
-    public static final double kTrackwidthMeters = 0.5;
-    public static final double kWheelBase =  0.5;
+    public static final double kTrackwidthMeters = 0.415;
+    public static final double kWheelBase =  0.415;
     public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
         kTrackwidthMeters);
 

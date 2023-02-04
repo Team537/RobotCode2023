@@ -83,7 +83,7 @@ public class SwerveModule extends SubsystemBase {
     m_angleOffset = angleOffset;
 
     m_driveMotor.setInverted(isInverted);
-    m_turnMotor.setInverted(isInverted);
+    // m_turnMotor.setInverted(isInverted);
     //Uses CTRE Utils to Configure Swerve Module Components for Optimal Performance
 
     m_driveMotor.configFactoryDefault();

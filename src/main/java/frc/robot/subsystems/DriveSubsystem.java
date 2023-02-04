@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.SwerveConstants.ModulePosition;
@@ -28,6 +29,7 @@ import frc.robot.utils.ModuleMap;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -58,14 +60,14 @@ public class DriveSubsystem extends SubsystemBase {
                       new WPI_TalonFX(SwerveConstants.kFrontRightTurn),
                       new WPI_TalonFX(SwerveConstants.kFrontRightDrive),
                       SwerveConstants.kFrontRightSRXMagCoder,
-                      SwerveConstants.kFrontRightSRXMagCoderOffset, false),
+                      SwerveConstants.kFrontRightSRXMagCoderOffset, true),
               ModulePosition.BACK_LEFT,
                   new SwerveModule(
                       ModulePosition.BACK_LEFT,
                       new WPI_TalonFX(SwerveConstants.kBackLeftTurn),
                       new WPI_TalonFX(SwerveConstants.kBackLeftDrive),
                       SwerveConstants.kBackLeftSRXMagCoder,
-                     SwerveConstants.kBackLeftSRXMagCoderOffset, false),
+                     SwerveConstants.kBackLeftSRXMagCoderOffset, true),
               ModulePosition.BACK_RIGHT,
                   new SwerveModule(
                       ModulePosition.BACK_RIGHT,
@@ -295,7 +297,10 @@ public class DriveSubsystem extends SubsystemBase {
     }
   }
 
-  private void updateSmartDashboard() {}
+  private void updateSmartDashboard() {
+
+    SmartDashboard.getNumber("Gyro Angle", m_gyro.getYaw());
+  }
 /**
  * Runs Periodically after Init
  * 
