@@ -20,6 +20,8 @@ public class ArmPivot extends SubsystemBase {
   private SparkMaxPIDController m_pidControllerPivot2 = m_ArmPivot2.getPIDController();
   private RelativeEncoder m_encoderPivot2 = m_ArmPivot2.getEncoder();
 
+
+
   /** Creates a new ArmPivot. */
   public  ArmPivot() {
 
