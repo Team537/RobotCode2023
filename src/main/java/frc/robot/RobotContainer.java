@@ -149,9 +149,9 @@ public class RobotContainer {
     m_FieldSim.periodic();
   }
 
-  // public void robotInit() {
-  //   m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
-  // }
+  public void robotInit() {
+    m_robotDrive.resetEncoders();
+  }
 
   public Command getAutoCommand() {
 

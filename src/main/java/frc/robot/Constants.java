@@ -231,19 +231,19 @@ public final class Constants {
 
 
   public static class SwerveConstants {
-    public static final double kWheelRadius = 0.0508;
+    public static final double kWheelRadius = 1.75;
     public static final int kEncoderResolution = 4096;
-    public static final double  kDriveMotorGearRatio = 10; 
-    public static final double kTurningMotorGearRatio = 12;
+    public static final double  kDriveMotorGearRatio = 7.13; 
+    public static final double kTurningMotorGearRatio = 15.428;
     public static final double kMaxSpeed = 7.0;
-    public static final double kModuleMaxAngularVelocity = Math.PI*2;
-    public static final double kModuleMaxAngularAcceleration = 2 * Math.PI; 
+    public static final double kModuleMaxAngularVelocity = Math.PI*1/4;
+    public static final double kModuleMaxAngularAcceleration = 2 * Math.PI*1/4; 
 
     public static final double kPModuleTurningController = 0;
     public static final double kPModuleDriverController = 0;
 
-    public static final double kSTurn = 1;
-    public static final double kVTurn = 0.5;
+    public static final double kSTurn = 0.1;
+    public static final double kVTurn = 0.3;
     
     public static final double kSDrive = 0.587;
     public static final double kVDrive = 2.3;
@@ -263,7 +263,7 @@ public final class Constants {
 
     public static final double kMaxSpeedMetersPerSecond = 1;
     public static final double kMaxRotationRadiansPerSecond = Math.PI * 1;
-    public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 1;
+    public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 1/2;
     
 
     public static final int kFrontLeftDrive = 0;
@@ -291,9 +291,9 @@ public final class Constants {
     public static final double kP_Y = 0.01;
     public static final double kI_Y = 0;
     public static final double kD_Y = 0.1;
-    public static final double kP_Rot = 0.01;
+    public static final double kP_Rot = 0.001;
     public static final double kI_Rot = 0;
-    public static final double kD_Rot = 0.1;
+    public static final double kD_Rot = 0.01;
 
    public static final int kPigeonID = 10;
 

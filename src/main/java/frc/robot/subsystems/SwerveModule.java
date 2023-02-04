@@ -101,7 +101,7 @@ public class SwerveModule extends SubsystemBase {
     
    
 
-    resetAngleToAbsolute();
+    
   }
 
 /**
@@ -120,14 +120,10 @@ public class SwerveModule extends SubsystemBase {
  * 
  * 
  */
-  public void resetAngleToAbsolute() {
-    double angle = Math.toRadians(m_SrxMagEncoder.getDistance());
-            angle %= 2.0 * Math.PI;
-            if (angle < 0.0) {
-                angle += 2.0 * Math.PI;
-            }
-    m_turnMotor.setSelectedSensorPosition(angle / SwerveConstants.kTurningEncoderDistancePerPulse);
-  }
+  // public void resetAngleToAbsolute() {
+  
+  //   m_turnMotor.setSelectedSensorPosition(angle / SwerveConstants.kTurningEncoderDistancePerPulse);
+  // }
 
 /**
  * Gets Heading in Degrees
@@ -203,7 +199,7 @@ public class SwerveModule extends SubsystemBase {
 
     //Turn Motor Output Adjustment based on Angle
     double angle =
-        (Math.abs(desiredState.speedMetersPerSecond) <= (SwerveConstants.kMaxSpeedMetersPerSecond * 0.01))
+        (Math.abs(desiredState.speedMetersPerSecond) <= (SwerveConstants.kMaxRotationRadiansPerSecond * 0.01))
             ? m_lastAngle
             : desiredState.angle
                 .getDegrees(); // Prevent rotating module if speed is less then 1%.
@@ -355,7 +351,12 @@ public class SwerveModule extends SubsystemBase {
 
   public void resetEncoders(){
 
- double freq = m_SrxMagEncoder.getFrequency();
+ double position = m_SrxMagEncoder.getAbsolutePosition();
+
+//  double angle = position/(4096/360);
+// Not needed for now, needed if frequency is used to determine position
+
+ m_turnMotor.setSelectedSensorPosition(position);
 
   }
 

@@ -326,5 +326,14 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
 
+  public void resetEncoders(){
+
+    for (SwerveModule module : m_swerveModules.values()) {
+      module.resetEncoders();
+    }
+
+  }
+
+
 
 }
