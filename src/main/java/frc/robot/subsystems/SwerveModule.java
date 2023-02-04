@@ -349,5 +349,15 @@ public class SwerveModule extends SubsystemBase {
                     / (SwerveConstants.kDriveEncoderDistancePerPulse * 10)));
   }
 
+
+
+
+
+  public void resetEncoders(){
+
+ double freq = m_SrxMagEncoder.getFrequency();
+
+  }
+
        
 }
