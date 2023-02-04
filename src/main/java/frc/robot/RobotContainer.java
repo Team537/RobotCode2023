@@ -32,6 +32,7 @@ import frc.robot.Constants.GyroPID;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
+import frc.robot.subsystems.ArmInOut;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -70,6 +71,7 @@ public class RobotContainer {
 
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final GripperIntake m_Gripper = new GripperIntake();
+  private final ArmInOut m_ArmInOut = new ArmInOut();
   PhotonCamera camera = new PhotonCamera("USB Camera 0");
   
 
@@ -99,9 +101,14 @@ public class RobotContainer {
   //Buttons
   JoystickButton aButton = new JoystickButton(m_driverController2, Button.kA.value);
   JoystickButton bButton = new JoystickButton(m_driverController2, Button.kB.value);
+
+  JoystickButton yButton = new JoystickButton(m_driverController2, Button.kY.value);
+  JoystickButton xButton = new JoystickButton(m_driverController2, Button.kX.value);
     
   public RobotContainer() {
 
+    yButton.toggleOnTrue(new StartEndCommand(m_ArmInOut::armIn,m_ArmInOut::armOut,m_ArmInOut));
+    xButton.toggleOnTrue(new StartEndCommand(m_ArmInOut::armOut,m_ArmInOut::armIn,m_ArmInOut));
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
