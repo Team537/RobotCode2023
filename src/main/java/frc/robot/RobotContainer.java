@@ -44,6 +44,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArcadeDriveCommand;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -104,11 +105,16 @@ public class RobotContainer {
 
   JoystickButton yButton = new JoystickButton(m_driverController2, Button.kY.value);
   JoystickButton xButton = new JoystickButton(m_driverController2, Button.kX.value);
+
+  POVButton dPadUpButton = new POVButton(m_driverController2, 0);
+  POVButton dPadDownButton = new POVButton(m_driverController2, 180);
     
   public RobotContainer() {
 
     yButton.onTrue(new StartEndCommand(m_ArmInOut::armIn,m_ArmInOut::armOut,m_ArmInOut));
     xButton.onTrue(new StartEndCommand(m_ArmInOut::armOut,m_ArmInOut::armIn,m_ArmInOut));
+    dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
+    dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));

@@ -93,6 +93,8 @@ public final class Constants {
 
     public static final double kRotationsUp = -100;
     public static final double kRotationsDown = 0.0;
+    public static final double kIncrementUp = -10;
+    public static final double kIncrementDown = 10;
 
     public static final double kResetMotor = 0;
 
