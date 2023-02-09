@@ -18,8 +18,8 @@ public class ArmInOut extends SubsystemBase {
   /** Creates a new ArmInOut. */
   public ArmInOut() {}
 
-  private CANSparkMax m_climb = new CANSparkMax(Constants.ArmInOutConstants.kArmInOut, MotorType.kBrushless);
-  private SparkMaxPIDController m_pidControllerClimb = m_climb.getPIDController();
+  private CANSparkMax m_extension = new CANSparkMax(Constants.ArmInOutConstants.kArmInOut, MotorType.kBrushless);
+  private SparkMaxPIDController m_pidControllerExtension = m_climb.getPIDController();
   private RelativeEncoder m_encoderExtension = m_climb.getEncoder();
   private double m_incrementUp;
   private double m_incrementDown;
@@ -33,32 +33,32 @@ public class ArmInOut extends SubsystemBase {
   }
 
   public void armIn() {
-    m_pidControllerClimb.setP(Constants.ArmInOutConstants.kP);
-    m_pidControllerClimb.setI(Constants.ArmInOutConstants.kI);
-    m_pidControllerClimb.setD(Constants.ArmInOutConstants.kD);
-    m_pidControllerClimb.setIZone(Constants.ArmInOutConstants.kIz);
-    m_pidControllerClimb.setFF(Constants.ArmInOutConstants.kFF);
-    m_pidControllerClimb.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
-    m_pidControllerClimb.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
-    m_pidControllerClimb.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
-    m_pidControllerClimb.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
-    m_pidControllerClimb.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
-    m_pidControllerClimb.setReference(Constants.ArmInOutConstants.kRotationsUp, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
+    m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
+    m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
+    m_pidControllerExtension.setIZone(Constants.ArmInOutConstants.kIz);
+    m_pidControllerExtension.setFF(Constants.ArmInOutConstants.kFF);
+    m_pidControllerExtension.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kRotationsUp, CANSparkMax.ControlType.kSmartMotion);
 
   }
 
   public void armOut() {
-    m_pidControllerClimb.setP(Constants.ArmInOutConstants.kP);
-    m_pidControllerClimb.setI(Constants.ArmInOutConstants.kI);
-    m_pidControllerClimb.setD(Constants.ArmInOutConstants.kD);
-    m_pidControllerClimb.setIZone(Constants.ArmInOutConstants.kIz);
-    m_pidControllerClimb.setFF(Constants.ArmInOutConstants.kFF);
-    m_pidControllerClimb.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
-    m_pidControllerClimb.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
-    m_pidControllerClimb.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
-    m_pidControllerClimb.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
-    m_pidControllerClimb.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
-    m_pidControllerClimb.setReference(Constants.ArmInOutConstants.kRotationsDown, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
+    m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
+    m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
+    m_pidControllerExtension.setIZone(Constants.ArmInOutConstants.kIz);
+    m_pidControllerExtension.setFF(Constants.ArmInOutConstants.kFF);
+    m_pidControllerExtension.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kRotationsDown, CANSparkMax.ControlType.kSmartMotion);
 
   }
 
@@ -72,17 +72,17 @@ public class ArmInOut extends SubsystemBase {
 
     
     
-    m_pidControllerClimb.setP(Constants.ArmInOutConstants.kP);
-    m_pidControllerClimb.setI(Constants.ArmInOutConstants.kI);
-    m_pidControllerClimb.setD(Constants.ArmInOutConstants.kD);
-    m_pidControllerClimb.setIZone(Constants.ArmInOutConstants.kIz);
-    m_pidControllerClimb.setFF(Constants.ArmInOutConstants.kFF);
-    m_pidControllerClimb.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
-    m_pidControllerClimb.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
-    m_pidControllerClimb.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
-    m_pidControllerClimb.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
-    m_pidControllerClimb.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
-    m_pidControllerClimb.setReference(m_incrementUp, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
+    m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
+    m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
+    m_pidControllerExtension.setIZone(Constants.ArmInOutConstants.kIz);
+    m_pidControllerExtension.setFF(Constants.ArmInOutConstants.kFF);
+    m_pidControllerExtension.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
+    m_pidControllerExtension.setReference(m_incrementUp, CANSparkMax.ControlType.kSmartMotion);
 
   }
   public void armIncrementDown() {
@@ -95,17 +95,17 @@ public class ArmInOut extends SubsystemBase {
 
     
     
-    m_pidControllerClimb.setP(Constants.ArmInOutConstants.kP);
-    m_pidControllerClimb.setI(Constants.ArmInOutConstants.kI);
-    m_pidControllerClimb.setD(Constants.ArmInOutConstants.kD);
-    m_pidControllerClimb.setIZone(Constants.ArmInOutConstants.kIz);
-    m_pidControllerClimb.setFF(Constants.ArmInOutConstants.kFF);
-    m_pidControllerClimb.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
-    m_pidControllerClimb.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
-    m_pidControllerClimb.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
-    m_pidControllerClimb.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
-    m_pidControllerClimb.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
-    m_pidControllerClimb.setReference(m_incrementDown, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
+    m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
+    m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
+    m_pidControllerExtension.setIZone(Constants.ArmInOutConstants.kIz);
+    m_pidControllerExtension.setFF(Constants.ArmInOutConstants.kFF);
+    m_pidControllerExtension.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
+    m_pidControllerExtension.setReference(m_incrementDown, CANSparkMax.ControlType.kSmartMotion);
 
   }
 }
