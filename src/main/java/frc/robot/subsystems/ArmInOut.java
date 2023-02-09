@@ -10,6 +10,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -19,10 +20,13 @@ public class ArmInOut extends SubsystemBase {
 
   private CANSparkMax m_climb = new CANSparkMax(Constants.ArmInOutConstants.kArmInOut, MotorType.kBrushless);
   private SparkMaxPIDController m_pidControllerClimb = m_climb.getPIDController();
-  private RelativeEncoder m_encoderClimb = m_climb.getEncoder();
+  private RelativeEncoder m_encoderExtension = m_climb.getEncoder();
   
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Position", m_encoderExtension.getPosition());
+    SmartDashboard.putNumber("Extension Velocity",m_encoderExtension.getVelocity());
+    
     // This method will be called once per scheduler run
   }
 
