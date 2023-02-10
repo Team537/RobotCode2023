@@ -124,7 +124,7 @@ public class RobotContainer {
   m_robotDrive,
   ()-> -m_driverController.getLeftY(),
   ()->  m_driverController.getLeftX(),
-  ()->  m_driverController.getRightX()*0.7,
+  ()->  -m_driverController.getRightX()*0.7,
   false));
     
 
@@ -134,8 +134,8 @@ public class RobotContainer {
       m_robotDrive,
       ()-> -m_driverController.getLeftY(),
       ()->  m_driverController.getLeftX(),
-      ()->  m_driverController.getRightX()*0.7,
-      false));
+      ()->  -m_driverController.getRightX()*0.7,
+      true));
   
   
       m_FieldSim.initSim();

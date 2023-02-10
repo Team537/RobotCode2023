@@ -236,8 +236,8 @@ public final class Constants {
     public static final double  kDriveMotorGearRatio = 7.13; 
     public static final double kTurningMotorGearRatio = 15.428;
     public static final double kMaxSpeed = 7.0;
-    public static final double kModuleMaxAngularVelocity = Math.PI*1/4;
-    public static final double kModuleMaxAngularAcceleration = 2 * Math.PI*1/4; 
+    public static final double kModuleMaxAngularVelocity = Math.PI*2;
+    public static final double kModuleMaxAngularAcceleration = 2 * Math.PI; 
 
     public static final double kPModuleTurningController = 0;
     public static final double kPModuleDriverController = 0;
@@ -261,9 +261,9 @@ public final class Constants {
     public static final double kDriveEncoderDistancePerPulse =
     (2*kWheelRadius * Math.PI) / (DriveConstants.kEncoderCPR * kDriveMotorGearRatio);
 
-    public static final double kMaxSpeedMetersPerSecond = 1;
-    public static final double kMaxRotationRadiansPerSecond = Math.PI * 1;
-    public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 1/2;
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxRotationRadiansPerSecond = Math.PI * 2;
+    public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 1;
     
 
     public static final int kFrontLeftDrive = 0;
@@ -303,10 +303,10 @@ public final class Constants {
 
         public static final Map<ModulePosition, Translation2d> kModuleTranslations =
         Map.of(
-            ModulePosition.FRONT_LEFT, new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
-            ModulePosition.FRONT_RIGHT, new Translation2d(DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
-            ModulePosition.BACK_LEFT, new Translation2d(-DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
-            ModulePosition.BACK_RIGHT, new Translation2d(-DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2));
+            ModulePosition.FRONT_LEFT, new Translation2d(-DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
+            ModulePosition.FRONT_RIGHT, new Translation2d(-DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
+            ModulePosition.BACK_LEFT, new Translation2d(DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
+            ModulePosition.BACK_RIGHT, new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2));
 
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics( 
       ModuleMap.orderedValues(kModuleTranslations, new Translation2d[0]));

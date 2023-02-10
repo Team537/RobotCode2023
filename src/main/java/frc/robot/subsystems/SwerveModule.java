@@ -91,6 +91,9 @@ public class SwerveModule extends SubsystemBase {
 
     m_SrxMagEncoder = new SRXMagEncoder(new DutyCycle(new DigitalInput(angleEncoder)), angleOffset);
 
+
+
+
     m_turnMotor.configFactoryDefault();
     m_turnMotor.configAllSettings(CtreUtils.generateTurnMotorConfig());
     // m_turnMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, angleEncoder, 10);

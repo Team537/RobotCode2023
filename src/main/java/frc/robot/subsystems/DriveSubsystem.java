@@ -121,8 +121,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     //Chassis Speed
     ChassisSpeeds chassisSpeeds =
-        isFieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(
+        isFieldRelative ?
+            ChassisSpeeds.fromFieldRelativeSpeeds(
                 drive, strafe, rotation, getHeadingRotation2d())
             : new ChassisSpeeds(drive, strafe, rotation);
 
@@ -196,7 +196,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return Adjusted Gyro Heading
    */
   public double getHeadingDegrees() {
-    return Math.IEEEremainder(m_gyro.getYaw(), 360);
+    return m_gyro.getAbsoluteCompassHeading();
   }
   /**
    * Gets {@link Rotation2d} from Heading
@@ -299,9 +299,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   private void updateSmartDashboard() {
 
-    SmartDashboard.getNumber("Gyro Angle", m_gyro.getYaw());
+    SmartDashboard.putNumber("Gyro Angle", m_gyro.getAbsoluteCompassHeading());
   }
-/**
+/**s
  * Runs Periodically after Init
  * 
  * 
