@@ -42,6 +42,8 @@ import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ArmInOut;
+// import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
 import frc.robot.Constants.limelight;
 import frc.robot.subsystems.Camera;
@@ -57,6 +59,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+// import frc.robot.commands.ArcadeDriveCommand;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 
 import java.io.IOException;   
@@ -87,6 +91,7 @@ public class RobotContainer {
 
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final GripperIntake m_Gripper = new GripperIntake();
+  private final ArmInOut m_ArmInOut = new ArmInOut();
   PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
   
@@ -126,9 +131,19 @@ public class RobotContainer {
   //Buttons
   JoystickButton aButton = new JoystickButton(m_driverController2, Button.kA.value);
   JoystickButton bButton = new JoystickButton(m_driverController2, Button.kB.value);
+
+  JoystickButton yButton = new JoystickButton(m_driverController2, Button.kY.value);
+  JoystickButton xButton = new JoystickButton(m_driverController2, Button.kX.value);
+
+  POVButton dPadUpButton = new POVButton(m_driverController2, 0);
+  POVButton dPadDownButton = new POVButton(m_driverController2, 180);
     
   public RobotContainer() {
 
+    yButton.onTrue(new StartEndCommand(m_ArmInOut::armIn,m_ArmInOut::armOut,m_ArmInOut));
+    xButton.onTrue(new StartEndCommand(m_ArmInOut::armOut,m_ArmInOut::armIn,m_ArmInOut));
+    dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
+    dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));

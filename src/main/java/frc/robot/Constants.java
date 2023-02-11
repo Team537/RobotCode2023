@@ -83,6 +83,32 @@ public final class Constants {
     public static final int kGripper = 1; // subject to change
 
   }
+  
+  public static final class ArmInOutConstants {
+    public static final int kArmInOut = 11;
+
+    public static final double kP = 0.5;
+    public static final double kI = 0.8;
+    public static final double kD = 0;
+    public static final double kIz = 0;
+    public static final double kFF = 0.000156;
+    public static final double kMaxOutput = 1;
+    public static final double kMinOutput = -1;
+    public static final double kMaxV = 3000;
+    public static final double kMinV = 0;
+    public static final double kMaxA = 2500;
+    public static final double kAllE = 0;
+
+    public static final double kRotationsUp = -100;
+    public static final double kRotationsDown = 0.0;
+    public static final double kIncrementUp = -10;
+    public static final double kIncrementDown = 10;
+
+    public static final double kResetMotor = 0;
+
+    public static final double kRotationsIdle = 0.0;
+  }
+
 
   
   public static final class ArmConstants {
