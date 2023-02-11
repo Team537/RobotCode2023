@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
     
   
     m_robotContainer = new RobotContainer();
-    m_robotContainer.robotInit();
+    // m_robotContainer.robotInit();
   }
 
   /**

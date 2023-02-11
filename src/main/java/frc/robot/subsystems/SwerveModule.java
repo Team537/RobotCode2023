@@ -104,7 +104,7 @@ public class SwerveModule extends SubsystemBase {
     
    
 
-    
+    resetAngleToAbsolute();
   }
 
 /**
@@ -123,10 +123,11 @@ public class SwerveModule extends SubsystemBase {
  * 
  * 
  */
-  // public void resetAngleToAbsolute() {
-  
-  //   m_turnMotor.setSelectedSensorPosition(angle / SwerveConstants.kTurningEncoderDistancePerPulse);
-  // }
+  public void resetAngleToAbsolute() {
+  double angle =  m_SrxMagEncoder.getAbsolutePosition() - m_SrxMagEncoder.getPositionOffset();
+
+     m_turnMotor.setSelectedSensorPosition(angle);
+   }
 
 /**
  * Gets Heading in Degrees

@@ -107,6 +107,11 @@ public class DriveSubsystem extends SubsystemBase {
 
   public DriveSubsystem() {
     m_gyro.setYaw(0);
+    m_gyro.configMountPose(-87.7588, -0.219727 , 0.615234);
+  
+    
+    
+    
   }
 
   public void drive(
@@ -121,10 +126,12 @@ public class DriveSubsystem extends SubsystemBase {
 
     //Chassis Speed
     ChassisSpeeds chassisSpeeds =
-        isFieldRelative ?
+        // isFieldRelative ?
             ChassisSpeeds.fromFieldRelativeSpeeds(
-                drive, strafe, rotation, getHeadingRotation2d())
-            : new ChassisSpeeds(drive, strafe, rotation);
+                drive, strafe, rotation, getHeadingRotation2d());
+            //  new ChassisSpeeds(drive*Math.cos(Math.toRadians(m_gyro.getYaw())) + strafe*Math.sin(Math.toRadians(m_gyro.getYaw())),
+            //  -drive*Math.sin(Math.toRadians(m_gyro.getYaw())) + strafe*Math.cos(Math.toRadians(m_gyro.getYaw())), 
+            //  rotation);
 
     //Module States
     Map<ModulePosition, SwerveModuleState> moduleStates =
@@ -147,10 +154,10 @@ public class DriveSubsystem extends SubsystemBase {
 
     //Chassis Speed
     ChassisSpeeds chassisSpeeds =
-        isFieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                drive, strafe, rotation, getHeadingRotation2d())
-            : new ChassisSpeeds(drive, strafe, rotation);
+        // isFieldRelative
+             ChassisSpeeds.fromFieldRelativeSpeeds(
+                drive, strafe, rotation, getHeadingRotation2d());
+            // : new ChassisSpeeds(drive, strafe, rotation);
 
     //Module States
     Map<ModulePosition, SwerveModuleState> moduleStates =
@@ -196,7 +203,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return Adjusted Gyro Heading
    */
   public double getHeadingDegrees() {
-    return m_gyro.getAbsoluteCompassHeading();
+    return Math.IEEEremainder(-(m_gyro.getYaw()), 360);
   }
   /**
    * Gets {@link Rotation2d} from Heading
@@ -299,7 +306,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   private void updateSmartDashboard() {
 
-    SmartDashboard.putNumber("Gyro Angle", m_gyro.getAbsoluteCompassHeading());
+    SmartDashboard.putNumber("Gyro Angle", m_gyro.getYaw());
   }
 /**s
  * Runs Periodically after Init
@@ -331,13 +338,13 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
 
-  public void resetEncoders(){
+  // public void resetEncoders(){
 
-    for (SwerveModule module : m_swerveModules.values()) {
-      module.resetEncoders();
-    }
+  //   for (SwerveModule module : m_swerveModules.values()) {
+  //     module.resetEncoders();
+  //   }
 
-  }
+  // }
 
 
 

@@ -149,9 +149,9 @@ public class RobotContainer {
     m_FieldSim.periodic();
   }
 
-  public void robotInit() {
-    m_robotDrive.resetEncoders();
-  }
+  // public void robotInit() {
+  //   m_robotDrive.resetEncoders();
+  // }
 
   public Command getAutoCommand() {
 
