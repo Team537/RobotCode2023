@@ -1,7 +1,38 @@
 {
-  "NetworkTables Info": {
-    "Connections": {
-      "open": false
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Field2d": "Field2d",
+      "/SmartDashboard/PPSwerveControllerCommand_field": "Field2d",
+      "/SmartDashboard/Scheduler": "Scheduler"
+    },
+    "windows": {
+      "/SmartDashboard/Field2d": {
+        "Robot": {
+          "style": "Box/Image"
+        },
+        "Swerve Modules": {
+          "style": "Box/Image"
+        },
+        "height": 7.900000095367432,
+        "width": 16.899999618530273,
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "FMSInfo": {
+        "open": true
+      },
+      "Shuffleboard": {
+        "open": true
+      },
+      "SmartDashboard": {
+        "open": true
+      }
     }
   }
 }

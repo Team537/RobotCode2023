@@ -4,8 +4,15 @@
 
 package frc.robot;
 
+
+import java.util.Map;
+
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.robot.utils.ModuleMap;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -34,7 +41,8 @@ public final class Constants {
      public static final int kFrontRight = 2;
      public static final int kRearRight = 4;*/
 
-    public static final double kTrackwidthMeters = 0.8509;
+    public static final double kTrackwidthMeters = 0.415;
+    public static final double kWheelBase =  0.415;
     public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
         kTrackwidthMeters);
 
@@ -182,6 +190,13 @@ public final class Constants {
     // seconds
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7;
+
+    public static final double kPXController = 1;
+    public static final double kPYController = 1;
+    public static final double kPThetaController = 3.5;
+    public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
+                new TrapezoidProfile.Constraints(SwerveConstants.kModuleMaxAngularVelocity * 10,
+                        SwerveConstants.kModuleMaxAngularAcceleration * 10);
   }
 
   public static class kGains {
@@ -217,4 +232,97 @@ public final class Constants {
     public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
     public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
   }
+
+
+  public static class SwerveConstants {
+    public static final double kWheelRadius = 1.75;
+    public static final int kEncoderResolution = 4096;
+    public static final double  kDriveMotorGearRatio = 7.13; 
+    public static final double kTurningMotorGearRatio = 15.428;
+    public static final double kMaxSpeed = 7.0;
+    public static final double kModuleMaxAngularVelocity = Math.PI*2;
+    public static final double kModuleMaxAngularAcceleration = 2 * Math.PI; 
+
+    public static final double kPModuleTurningController = 0;
+    public static final double kPModuleDriverController = 0;
+
+    public static final double kSTurn = 0.1;
+    public static final double kVTurn = 0.3;
+    
+    public static final double kSDrive = 0.587;
+    public static final double kVDrive = 2.3;
+    public static final double kADrive = 0.917;
+
+    public static final double ksDriveVoltSecondsPerMeter = 0.07 / 12;
+    public static final double kvDriveVoltSecondsSquaredPerMeter = 0.25;
+    public static final double kaDriveVoltSecondsSquaredPerMeter = 0.05 / 12;
+
+
+    public static final double kTurningEncoderDistancePerPulse =
+    
+    360 / (DriveConstants.kEncoderCPR* kTurningMotorGearRatio);
+
+    public static final double kDriveEncoderDistancePerPulse =
+    (2*kWheelRadius * Math.PI) / (DriveConstants.kEncoderCPR * kDriveMotorGearRatio);
+
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxRotationRadiansPerSecond = Math.PI * 2;
+    public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 1;
+    
+
+    public static final int kFrontLeftDrive = 0;
+    public static final int kFrontLeftTurn = 1;
+    public static final int kFrontRightDrive = 2;
+    public static final int kFrontRightTurn = 3;
+    public static final int kBackLeftDrive = 4;
+    public static final int kBackLeftTurn = 5;
+    public static final int kBackRightDrive = 6;
+    public static final int kBackRightTurn = 7;
+
+    public static final int kFrontLeftSRXMagCoder = 0;
+    public static final int kFrontRightSRXMagCoder = 1;
+    public static final int kBackLeftSRXMagCoder = 2;
+    public static final int kBackRightSRXMagCoder = 3;
+
+    public static final double kFrontLeftSRXMagCoderOffset = 0;
+    public static final double kFrontRightSRXMagCoderOffset = 0;
+    public static final double kBackLeftSRXMagCoderOffset = 0;
+    public static final double kBackRightSRXMagCoderOffset = 0;
+
+    public static final double kP_X = 0.01;
+    public static final double kI_X = 0;
+    public static final double kD_X = 0.1;
+    public static final double kP_Y = 0.01;
+    public static final double kI_Y = 0;
+    public static final double kD_Y = 0.1;
+    public static final double kP_Rot = 0.001;
+    public static final double kI_Rot = 0;
+    public static final double kD_Rot = 0.01;
+
+   public static final int kPigeonID = 10;
+
+    public static final TrapezoidProfile.Constraints kRotControllerConstraints = new TrapezoidProfile.Constraints(
+        kMaxRotationRadiansPerSecond, kMaxRotationRadiansPerSecondSquared);
+
+
+        public static final Map<ModulePosition, Translation2d> kModuleTranslations =
+        Map.of(
+            ModulePosition.FRONT_LEFT, new Translation2d(-DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
+            ModulePosition.FRONT_RIGHT, new Translation2d(-DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
+            ModulePosition.BACK_LEFT, new Translation2d(DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
+            ModulePosition.BACK_RIGHT, new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2));
+
+    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics( 
+      ModuleMap.orderedValues(kModuleTranslations, new Translation2d[0]));
+           
+
+        public enum ModulePosition {
+          FRONT_LEFT,
+          FRONT_RIGHT,
+          BACK_LEFT,
+          BACK_RIGHT
+        }
+  }
 }
+
+
