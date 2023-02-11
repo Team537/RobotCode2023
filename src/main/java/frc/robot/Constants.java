@@ -75,7 +75,35 @@ public final class Constants {
     public static final int kGripper = 1; // subject to change
 
   }
+ 
+  
+  public static final class ArmConstants {
+
+    public static final int kArm = 17;
+
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kIz = 0;
+    public static final double kFF = 0.000156;
+    public static final double kMaxOutput = 1;
+    public static final double kMinOutput = -1;
+    public static final double kMaxVdown = 2000;
+    public static final double kMaxVup = 4500;
+    public static final double kMinV = 0;
+    public static final double kMaxAup = 4000;
+    public static final double kMaxAdown = 750;
+    public static final double kAllE = 0;
+
+    public static final double kRotationsUp = 0.5;
+    public static final double kRotationsDown = 27.5;
+
+    
+
+  }
+
   public static final class ArmPivotConstants {
+
     public static final int kArmPivot1 = 2;
     public static final int kArmPivot2 = 3;
 
@@ -103,38 +131,16 @@ public final class Constants {
 
     public static final double kResetRightSide = 85.0;
     public static final double kResetLeftSide = -90;
-  }
 
-  
-  public static final class ArmConstants {
-
-    public static final int kArm = 17;
-
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
-    public static final double kIz = 0;
-    public static final double kFF = 0.000156;
-    public static final double kMaxOutput = 1;
-    public static final double kMinOutput = -1;
-    public static final double kMaxVdown = 2000;
-    public static final double kMaxVup = 4500;
-    public static final double kMinV = 0;
-    public static final double kMaxAup = 4000;
-    public static final double kMaxAdown = 750;
-    public static final double kAllE = 0;
-
-    public static final double kRotationsUp = 0.5;
-    public static final double kRotationsDown = 27.5;
+    public static final double kRotationsIdle = 0.0;
 
     
 
   }
 
-  public static final class ClimberConstants {
+  public static final class WristConstants {
 
-    public static final int kClimb = 15;
-    public static final int kClimb2 = 16;
+    public static final int kWrist = 10;
 
     public static final double kP = 0;
     public static final double kI = 0;

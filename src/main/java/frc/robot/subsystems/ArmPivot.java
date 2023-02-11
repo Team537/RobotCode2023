@@ -28,55 +28,55 @@ public class ArmPivot extends SubsystemBase {
   }
 
   public void ArmPosition1() {
-    m_pidControllerPivot1.setP(Constants.ClimberConstants.kP);
-    m_pidControllerPivot1.setI(Constants.ClimberConstants.kI);
-    m_pidControllerPivot1.setD(Constants.ClimberConstants.kD);
-    m_pidControllerPivot1.setIZone(Constants.ClimberConstants.kIz);
-    m_pidControllerPivot1.setFF(Constants.ClimberConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.ClimberConstants.kMinOutput, Constants.ClimberConstants.kMaxOutput);
-    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.ClimberConstants.kMaxV, 0);
-    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.ClimberConstants.kMinV, 0);
-    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.ClimberConstants.kMaxA, 0);
-    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.ClimberConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ClimberConstants.kLeftRotationsUp, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot1.setP(Constants.ArmPivotConstants.kP);
+    m_pidControllerPivot1.setI(Constants.ArmPivotConstants.kI);
+    m_pidControllerPivot1.setD(Constants.ArmPivotConstants.kD);
+    m_pidControllerPivot1.setIZone(Constants.ArmPivotConstants.kIz);
+    m_pidControllerPivot1.setFF(Constants.ArmPivotConstants.kFF);
+    m_pidControllerPivot1.setOutputRange(Constants.ArmPivotConstants.kMinOutput, Constants.ArmPivotConstants.kMaxOutput);
+    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.ArmPivotConstants.kMaxV, 0);
+    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.ArmPivotConstants.kMinV, 0);
+    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
+    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kLeftRotationsUp, CANSparkMax.ControlType.kSmartMotion);
 
-    m_pidControllerPivot2.setP(Constants.ClimberConstants.kP);
-    m_pidControllerPivot2.setI(Constants.ClimberConstants.kI);
-    m_pidControllerPivot2.setD(Constants.ClimberConstants.kD);
-    m_pidControllerPivot2.setIZone(Constants.ClimberConstants.kIz);
-    m_pidControllerPivot2.setFF(Constants.ClimberConstants.kFF);
-    m_pidControllerPivot2.setOutputRange(Constants.ClimberConstants.kMinOutput, Constants.ClimberConstants.kMaxOutput);
-    m_pidControllerPivot2.setSmartMotionMaxVelocity(Constants.ClimberConstants.kMaxV, 0);
-    m_pidControllerPivot2.setSmartMotionMinOutputVelocity(Constants.ClimberConstants.kMinV, 0);
-    m_pidControllerPivot2.setSmartMotionMaxAccel(Constants.ClimberConstants.kMaxA, 0);
-    m_pidControllerPivot2.setSmartMotionAllowedClosedLoopError(Constants.ClimberConstants.kAllE, 0);
-    m_pidControllerPivot2.setReference(Constants.ClimberConstants.kRightRotationsUp, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot2.setP(Constants.ArmPivotConstants.kP);
+    m_pidControllerPivot2.setI(Constants.ArmPivotConstants.kI);
+    m_pidControllerPivot2.setD(Constants.ArmPivotConstants.kD);
+    m_pidControllerPivot2.setIZone(Constants.ArmPivotConstants.kIz);
+    m_pidControllerPivot2.setFF(Constants.ArmPivotConstants.kFF);
+    m_pidControllerPivot2.setOutputRange(Constants.ArmPivotConstants.kMinOutput, Constants.ArmPivotConstants.kMaxOutput);
+    m_pidControllerPivot2.setSmartMotionMaxVelocity(Constants.ArmPivotConstants.kMaxV, 0);
+    m_pidControllerPivot2.setSmartMotionMinOutputVelocity(Constants.ArmPivotConstants.kMinV, 0);
+    m_pidControllerPivot2.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
+    m_pidControllerPivot2.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
+    m_pidControllerPivot2.setReference(Constants.ArmPivotConstants.kRightRotationsUp, CANSparkMax.ControlType.kSmartMotion);
   }
 
   public void ArmPosition2() {
-    m_pidControllerPivot1.setP(Constants.ClimberConstants.kP);
-    m_pidControllerPivot1.setI(Constants.ClimberConstants.kI);
-    m_pidControllerPivot1.setD(Constants.ClimberConstants.kD);
-    m_pidControllerPivot1.setIZone(Constants.ClimberConstants.kIz);
-    m_pidControllerPivot1.setFF(Constants.ClimberConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.ClimberConstants.kMinOutput, Constants.ClimberConstants.kMaxOutput);
-    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.ClimberConstants.kMaxV, 0);
-    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.ClimberConstants.kMinV, 0);
-    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.ClimberConstants.kMaxA, 0);
-    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.ClimberConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ClimberConstants.kLeftRotationsUp, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot1.setP(Constants.ArmPivotConstants.kP);
+    m_pidControllerPivot1.setI(Constants.ArmPivotConstants.kI);
+    m_pidControllerPivot1.setD(Constants.ArmPivotConstants.kD);
+    m_pidControllerPivot1.setIZone(Constants.ArmPivotConstants.kIz);
+    m_pidControllerPivot1.setFF(Constants.ArmPivotConstants.kFF);
+    m_pidControllerPivot1.setOutputRange(Constants.ArmPivotConstants.kMinOutput, Constants.ArmPivotConstants.kMaxOutput);
+    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.ArmPivotConstants.kMaxV, 0);
+    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.ArmPivotConstants.kMinV, 0);
+    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
+    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kLeftRotationsUp, CANSparkMax.ControlType.kSmartMotion);
 
-    m_pidControllerPivot2.setP(Constants.ClimberConstants.kP);
-    m_pidControllerPivot2.setI(Constants.ClimberConstants.kI);
-    m_pidControllerPivot2.setD(Constants.ClimberConstants.kD);
-    m_pidControllerPivot2.setIZone(Constants.ClimberConstants.kIz);
-    m_pidControllerPivot2.setFF(Constants.ClimberConstants.kFF);
-    m_pidControllerPivot2.setOutputRange(Constants.ClimberConstants.kMinOutput, Constants.ClimberConstants.kMaxOutput);
-    m_pidControllerPivot2.setSmartMotionMaxVelocity(Constants.ClimberConstants.kMaxV, 0);
-    m_pidControllerPivot2.setSmartMotionMinOutputVelocity(Constants.ClimberConstants.kMinV, 0);
-    m_pidControllerPivot2.setSmartMotionMaxAccel(Constants.ClimberConstants.kMaxA, 0);
-    m_pidControllerPivot2.setSmartMotionAllowedClosedLoopError(Constants.ClimberConstants.kAllE, 0);
-    m_pidControllerPivot2.setReference(Constants.ClimberConstants.kRightRotationsUp, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot2.setP(Constants.ArmPivotConstants.kP);
+    m_pidControllerPivot2.setI(Constants.ArmPivotConstants.kI);
+    m_pidControllerPivot2.setD(Constants.ArmPivotConstants.kD);
+    m_pidControllerPivot2.setIZone(Constants.ArmPivotConstants.kIz);
+    m_pidControllerPivot2.setFF(Constants.ArmPivotConstants.kFF);
+    m_pidControllerPivot2.setOutputRange(Constants.ArmPivotConstants.kMinOutput, Constants.ArmPivotConstants.kMaxOutput);
+    m_pidControllerPivot2.setSmartMotionMaxVelocity(Constants.ArmPivotConstants.kMaxV, 0);
+    m_pidControllerPivot2.setSmartMotionMinOutputVelocity(Constants.ArmPivotConstants.kMinV, 0);
+    m_pidControllerPivot2.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
+    m_pidControllerPivot2.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
+    m_pidControllerPivot2.setReference(Constants.ArmPivotConstants.kRightRotationsUp, CANSparkMax.ControlType.kSmartMotion);
   }
 
   
