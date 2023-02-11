@@ -38,7 +38,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.unmanaged.Unmanaged;
-import com.kauailabs.navx.frc.AHRS;
+
 
 public class DriveSubsystem extends SubsystemBase {
 
