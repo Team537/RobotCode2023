@@ -80,7 +80,8 @@ public final class Constants {
   }
 
   public static final class GripperConstants{
-    public static final int kGripper = 1; // subject to change
+    public static final int kGripper = 15;
+    public static final int kGripper2 = 17; // subject to change
 
   }
   
@@ -178,7 +179,7 @@ public final class Constants {
   }
 
   public final static class Conversions {
-
+    
     public static double metersToFeet(double meters) {
       return meters * 3.28084;
     }
