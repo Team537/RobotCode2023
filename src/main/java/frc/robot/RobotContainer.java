@@ -43,8 +43,14 @@ import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
+import frc.robot.Constants.limelight;
+import frc.robot.subsystems.Camera;
+
+
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -52,7 +58,8 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import java.io.IOException;
+
+import java.io.IOException;   
 import java.nio.file.Path;
 import java.util.List;
 
@@ -74,6 +81,8 @@ import org.photonvision.PhotonUtils;
  */
 public class RobotContainer {
 
+  
+
   // The robot's subsystems
 
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
@@ -81,6 +90,7 @@ public class RobotContainer {
   PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
   
+  private final Camera m_camera = new Camera();
   
 
   // SlewRateLimiter for Joystick Motion Profiling
@@ -96,7 +106,8 @@ public class RobotContainer {
 // The driver controllers
 
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort);
+  XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort1);
+  
 
 
   JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
@@ -104,6 +115,10 @@ public class RobotContainer {
    // Drive Speeds
   
   
+
+
+   JoystickButton leftBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
+   JoystickButton rightBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
 
   //  private double leftSpeed =  -Left.calculate( m_driverController.getLeftY());
   //  private double rightSpeed =  -Right.calculate(m_driverController.getRightY());
@@ -117,10 +132,11 @@ public class RobotContainer {
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
+    
+      leftBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToLimelight,m_camera::CameraPipeline,m_camera));
+      rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
     //Toggle Booleans
 
-    boolean toggleFastMode = true;
-    boolean toggleSlowMode = true;
     
   
  starButton.toggleOnTrue(new SlowSwerveDriveCommand(
