@@ -29,10 +29,10 @@ import frc.robot.utils.ModuleMap;
 public final class Constants {
   public static final class DriveConstants {
 
-    public static final int kFrontLeft = 9;
-    public static final int kRearLeft = 3;
-    public static final int kFrontRight = 5;
-    public static final int kRearRight = 7;
+    // public static final int kFrontLeft = 9;
+    // public static final int kRearLeft = 3;
+    // public static final int kFrontRight = 5;
+    // public static final int kRearRight = 7;
 
     //For Bolt Testing 
     /*
