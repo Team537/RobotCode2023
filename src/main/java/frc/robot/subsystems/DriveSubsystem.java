@@ -106,8 +106,9 @@ public class DriveSubsystem extends SubsystemBase {
   private double m_simYaw;
 
   public DriveSubsystem() {
-    m_gyro.setYaw(0);
-    // m_gyro.configMountPose(-87.7588, -0.219727 , 0.615234);
+    m_gyro.setYaw(-90);
+  
+    // m_gyro.configMountPose(-90, -0.219727 , 0.615234);
   
     
     
@@ -205,7 +206,7 @@ public class DriveSubsystem extends SubsystemBase {
   public double getHeadingDegrees() {
     return Math.IEEEremainder(-(m_gyro.getYaw()), 360);
   }
-  /**
+  /** 
    * Gets {@link Rotation2d} from Heading
    * @return {@link Rotation2d} from Drive Heading
    */
@@ -306,7 +307,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   private void updateSmartDashboard() {
 
-    SmartDashboard.putNumber("Gyro Angle", m_gyro.getYaw());
+    SmartDashboard.putNumber("Gyro Angle", getHeadingDegrees());
   }
 /**s
  * Runs Periodically after Init
@@ -338,13 +339,13 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
 
-  // public void resetEncoders(){
+  public void resetEncoders(){
 
-  //   for (SwerveModule module : m_swerveModules.values()) {
-  //     module.resetEncoders();
-  //   }
+    for (SwerveModule module : m_swerveModules.values()) {
+      module.resetEncoders();
+    }
 
-  // }
+  }
 
 
 

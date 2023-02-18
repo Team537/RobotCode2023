@@ -314,16 +314,16 @@ public final class Constants {
     public static final int kBackLeftTurn = 5;
     public static final int kBackRightDrive = 6;
     public static final int kBackRightTurn = 7;
-
+    
     public static final int kFrontLeftSRXMagCoder = 0;
     public static final int kFrontRightSRXMagCoder = 1;
     public static final int kBackLeftSRXMagCoder = 2;
     public static final int kBackRightSRXMagCoder = 3;
 
-    public static final double kFrontLeftSRXMagCoderOffset = 0;
+    public static final double kFrontLeftSRXMagCoderOffset = 0.165;
     public static final double kFrontRightSRXMagCoderOffset = 0;
-    public static final double kBackLeftSRXMagCoderOffset = 0;
-    public static final double kBackRightSRXMagCoderOffset = 0;
+    public static final double kBackLeftSRXMagCoderOffset = 0.06;
+    public static final double kBackRightSRXMagCoderOffset = 0.07;
 
     public static final double kP_X = 0.01;
     public static final double kI_X = 0;

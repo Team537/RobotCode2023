@@ -44,6 +44,7 @@ public class SwerveModule extends SubsystemBase {
   double m_angleOffset; //Offset of Mag Encoder
   double m_lastAngle;
   double angle;
+  double deg;
   Pose2d m_pose;
   SRXMagEncoder m_SrxMagEncoder;
 
@@ -124,9 +125,11 @@ public class SwerveModule extends SubsystemBase {
  * 
  */
   public void resetAngleToAbsolute() {
-  double angle =  m_SrxMagEncoder.getAbsolutePosition() - m_angleOffset;
 
-     m_turnMotor.setSelectedSensorPosition(angle / SwerveConstants.kTurningEncoderDistancePerPulse);
+  //   double pos = 0;
+  // double angle =  (m_SrxMagEncoder.getAbsolutePosition() - m_SrxMagEncoder.getPositionOffset());
+
+  //    m_turnMotor.setSelectedSensorPosition(angle+pos);
    }
 
 /**
@@ -284,7 +287,9 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Heading", getState().angle.getDegrees());
     SmartDashboard.putNumber(
-        "Module " + m_moduleNumber + " Mag Coder Reading", angle);
+        "Module " + m_moduleNumber + " Mag Coder Reading", m_SrxMagEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber(
+          "Module " + m_moduleNumber + " Integrated Sensor Reading", m_turnMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber(
           "Module " + m_moduleNumber + " Position", getDriveMeters());
     SmartDashboard.putNumber(
@@ -300,10 +305,12 @@ public class SwerveModule extends SubsystemBase {
   @Override
   public void periodic() {
     updateSmartDashboard();
-     angle = Math.toRadians(m_SrxMagEncoder.getDistance());
+    deg = m_SrxMagEncoder.getDistance();
+     angle = Math.toRadians(deg);
     angle %= 2.0 * Math.PI;
     if (angle < 0.0) {
         angle += 2.0 * Math.PI;
+        deg =+ 360;
     }
   }
 
@@ -360,7 +367,7 @@ public class SwerveModule extends SubsystemBase {
 //  double angle = position/(4096/360);
 // Not needed for now, needed if frequency is used to determine position
 
- m_turnMotor.setSelectedSensorPosition(position);
+ m_turnMotor.setSelectedSensorPosition(0);
 
   }
 
