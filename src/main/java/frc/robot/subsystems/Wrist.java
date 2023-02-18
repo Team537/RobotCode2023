@@ -17,7 +17,7 @@ public class Wrist extends SubsystemBase {
   private SparkMaxPIDController m_pidControllerPivot1 = m_Wrist.getPIDController();
   private ArmPivot m_ArmPivot =  new ArmPivot();
   private RelativeEncoder m_encoderPivot1 = m_Wrist.getEncoder();
-  public double armAngle = m_ArmPivot.getArmAngle();
+  // public double armAngle = m_ArmPivot.getArmAngle();
 
 
   /** Creates a new ArmPivot. */
@@ -36,7 +36,7 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.WristConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.WristConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.WristConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kLeftRotationsUp + armAngle, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot1.setReference(Constants.WristConstants.kLeftRotationsUp, CANSparkMax.ControlType.kSmartMotion);
 
    
   }
