@@ -43,8 +43,10 @@ import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ArmInOut;
+import frc.robot.subsystems.ArmPivot;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
+import frc.robot.subsystems.Wrist;
 import frc.robot.Constants.limelight;
 import frc.robot.subsystems.Camera;
 
@@ -92,6 +94,8 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final GripperIntake m_Gripper = new GripperIntake();
   private final ArmInOut m_ArmInOut = new ArmInOut();
+  private final ArmPivot m_ArmPivot = new ArmPivot();
+  private final Wrist m_Wrist = new Wrist(); 
   PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
   
@@ -137,13 +141,24 @@ public class RobotContainer {
 
   POVButton dPadUpButton = new POVButton(m_driverController2, 0);
   POVButton dPadDownButton = new POVButton(m_driverController2, 180);
+  POVButton dPadLeftButton = new POVButton(m_driverController2, 90);
+  POVButton dPadRightButton = new POVButton(m_driverController2, 270);
+  
     
   public RobotContainer() {
 
     yButton.onTrue(new StartEndCommand(m_ArmInOut::armIn,m_ArmInOut::armOut,m_ArmInOut));
     xButton.onTrue(new StartEndCommand(m_ArmInOut::armOut,m_ArmInOut::armIn,m_ArmInOut));
-    dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
-    dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
+    // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
+    // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
+
+    /*^^ for incrementing the position of the arm in-out */
+
+    dPadDownButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition1,m_ArmPivot::ArmPosition2,m_ArmPivot));
+    dPadUpButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition2,m_ArmPivot::ArmPosition1,m_ArmPivot));
+
+    dPadLeftButton.onTrue(new StartEndCommand(m_Wrist::WristPosition2,m_Wrist::WristPosition1,m_Wrist));
+    dPadRightButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition2,m_ArmPivot::ArmPosition1,m_ArmPivot));
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
