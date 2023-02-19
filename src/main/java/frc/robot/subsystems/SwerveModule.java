@@ -259,8 +259,8 @@ public class SwerveModule extends SubsystemBase {
  * 
  * 
  */
-  public void setDriveNeutralMode(NeutralMode mode) {
-    m_driveMotor.setNeutralMode(mode);
+  public void setDriveNeutralMode(NeutralMode Coast) {
+    m_driveMotor.setNeutralMode(Coast);
   }
 /**
  * Sets Turn Neutral Mode
@@ -268,8 +268,8 @@ public class SwerveModule extends SubsystemBase {
  * 
  * 
  */
-  public void setTurnNeutralMode(NeutralMode mode) {
-    m_turnMotor.setNeutralMode(mode);
+  public void setTurnNeutralMode(NeutralMode Brake) {
+    m_turnMotor.setNeutralMode(Brake);
   }
 
 
