@@ -48,6 +48,7 @@ public class SwerveModule extends SubsystemBase {
   Pose2d m_pose;
   SRXMagEncoder m_SrxMagEncoder;
 
+
   SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(
           SwerveConstants.ksDriveVoltSecondsPerMeter,
@@ -92,6 +93,10 @@ public class SwerveModule extends SubsystemBase {
 
     m_driveMotor.setNeutralMode(NeutralMode.Coast);
     m_SrxMagEncoder = new SRXMagEncoder(new DutyCycle(new DigitalInput(angleEncoder)), angleOffset);
+
+
+    m_SrxMagEncoder.setDistancePerRotation(360);
+
 
 
     m_turnMotor.configFactoryDefault();
