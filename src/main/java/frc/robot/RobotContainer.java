@@ -104,9 +104,9 @@ public class RobotContainer {
 
   // SlewRateLimiter for Joystick Motion Profiling
 
-  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(10);
-  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(10);
-  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(10);
+  private final SlewRateLimiter m_xSpeedLimiter = new SlewRateLimiter(500);
+  private final SlewRateLimiter m_ySpeedLimiter = new SlewRateLimiter(500);
+  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(30);
 
  
  
@@ -120,6 +120,7 @@ public class RobotContainer {
 
 
   JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
+  JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
 
    // Drive Speeds
   
@@ -133,45 +134,49 @@ public class RobotContainer {
   //  private double rightSpeed =  -Right.calculate(m_driverController.getRightY());
 
   //Buttons
-  JoystickButton aButton = new JoystickButton(m_driverController2, Button.kA.value);
-  JoystickButton bButton = new JoystickButton(m_driverController2, Button.kB.value);
+  JoystickButton aButton = new JoystickButton(m_driverController, Button.kA.value);
+  JoystickButton bButton = new JoystickButton(m_driverController, Button.kB.value);
 
-  JoystickButton yButton = new JoystickButton(m_driverController2, Button.kY.value);
-  JoystickButton xButton = new JoystickButton(m_driverController2, Button.kX.value);
+  JoystickButton yButton = new JoystickButton(m_driverController, Button.kY.value);
+  JoystickButton xButton = new JoystickButton(m_driverController, Button.kX.value);
 
-  POVButton dPadUpButton = new POVButton(m_driverController2, 0);
-  POVButton dPadDownButton = new POVButton(m_driverController2, 180);
-  POVButton dPadLeftButton = new POVButton(m_driverController2, 90);
-  POVButton dPadRightButton = new POVButton(m_driverController2, 270);
+  POVButton dPadUpButton = new POVButton(m_driverController, 0);
+  POVButton dPadDownButton = new POVButton(m_driverController, 180);
+  POVButton dPadLeftButton = new POVButton(m_driverController, 90);
+  POVButton dPadRightButton = new POVButton(m_driverController, 270);
   
     
   public RobotContainer() {
 
-    yButton.onTrue(new StartEndCommand(m_ArmInOut::armIn,m_ArmInOut::armOut,m_ArmInOut));
-    xButton.onTrue(new StartEndCommand(m_ArmInOut::armOut,m_ArmInOut::armIn,m_ArmInOut));
+    dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armIn,m_ArmInOut::armOut,m_ArmInOut));
+    dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armOut,m_ArmInOut::armIn,m_ArmInOut));
     // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
     // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
 
     /*^^ for incrementing the position of the arm in-out */
 
-    dPadDownButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition1,m_ArmPivot::ArmPosition2,m_ArmPivot));
-    dPadUpButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition2,m_ArmPivot::ArmPosition1,m_ArmPivot));
+    yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition1,m_ArmPivot::ArmPosition2,m_ArmPivot));
+    xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition2,m_ArmPivot::ArmPosition1,m_ArmPivot));
+    backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition3,m_ArmPivot::ArmPosition1,m_ArmPivot));
 
-    dPadLeftButton.onTrue(new StartEndCommand(m_Wrist::WristPosition2,m_Wrist::WristPosition1,m_Wrist));
-    dPadRightButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition2,m_ArmPivot::ArmPosition1,m_ArmPivot));
+    dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPosition2,m_Wrist::WristPosition1,m_Wrist));
+    dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPosition1,m_Wrist::WristPosition2,m_Wrist));
+    leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPosition3,m_Wrist::WristPosition1,m_Wrist));
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
     
-      leftBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToLimelight,m_camera::CameraPipeline,m_camera));
-      rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
+
+
+      // leftBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToLimelight,m_camera::CameraPipeline,m_camera));
+      // rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
     //Toggle Booleans
 
     
   
  starButton.toggleOnTrue(new SlowSwerveDriveCommand(
   m_robotDrive,
-  ()-> -m_driverController.getLeftY(),
+  ()-> -(m_driverController.getLeftY()),
   ()->  m_driverController.getLeftX(),
   ()->  -m_driverController.getRightX()*0.7,
   false));
@@ -196,6 +201,7 @@ public class RobotContainer {
 
   public void periodic() {
     m_FieldSim.periodic();
+    SmartDashboard.putNumber("Left Joystick",m_driverController.getLeftY());
   }
 
   public void robotInit() {

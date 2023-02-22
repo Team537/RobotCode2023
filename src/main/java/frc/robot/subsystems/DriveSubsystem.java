@@ -106,7 +106,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double m_simYaw;
 
   public DriveSubsystem() {
-    m_gyro.setYaw(-90);
+    m_gyro.setYaw(0);
   
     // m_gyro.configMountPose(-90, -0.219727 , 0.615234);
   
@@ -332,7 +332,7 @@ public class DriveSubsystem extends SubsystemBase {
         SwerveConstants.kDriveKinematics.toChassisSpeeds(
             ModuleMap.orderedValues(getModuleStates(), new SwerveModuleState[0]));
 
-    m_simYaw += chassisSpeed.omegaRadiansPerSecond * 0.02;
+    // m_simYaw += chassisSpeed.omegaRadiansPerSecond * 0.06; //changed from .02
 
     Unmanaged.feedEnable(2);
     m_gyro.getSimCollection().setRawHeading(-Units.radiansToDegrees(m_simYaw));

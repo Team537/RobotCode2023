@@ -90,9 +90,8 @@ public class SwerveModule extends SubsystemBase {
     m_driveMotor.configFactoryDefault();
     m_driveMotor.configAllSettings(CtreUtils.generateDriveMotorConfig());
 
+    m_driveMotor.setNeutralMode(NeutralMode.Coast);
     m_SrxMagEncoder = new SRXMagEncoder(new DutyCycle(new DigitalInput(angleEncoder)), angleOffset);
-
-
 
 
     m_turnMotor.configFactoryDefault();
@@ -259,8 +258,8 @@ public class SwerveModule extends SubsystemBase {
  * 
  * 
  */
-  public void setDriveNeutralMode(NeutralMode mode) {
-    m_driveMotor.setNeutralMode(mode);
+  public void setDriveNeutralMode(NeutralMode Coast) {
+    m_driveMotor.setNeutralMode(Coast);
   }
 /**
  * Sets Turn Neutral Mode
@@ -268,8 +267,8 @@ public class SwerveModule extends SubsystemBase {
  * 
  * 
  */
-  public void setTurnNeutralMode(NeutralMode mode) {
-    m_turnMotor.setNeutralMode(mode);
+  public void setTurnNeutralMode(NeutralMode Brake) {
+    m_turnMotor.setNeutralMode(Brake);
   }
 
 
