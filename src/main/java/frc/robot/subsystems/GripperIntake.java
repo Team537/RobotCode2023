@@ -12,6 +12,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants;
 import frc.robot.Constants.GripperConstants;
 import frc.robot.Constants.IntakeConstants;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class GripperIntake extends SubsystemBase {
@@ -20,6 +23,10 @@ public class GripperIntake extends SubsystemBase {
 
   /** Creates a new GripperIntake. */
   public GripperIntake() {
+    UsbCamera cam =  new UsbCamera("Usb Camera 0", 0);
+    MjpegServer mjep = new MjpegServer("server_1", 1181);
+    mjep.setSource(cam);
+    CameraServer.startAutomaticCapture(0);
   } 
 
   @Override
