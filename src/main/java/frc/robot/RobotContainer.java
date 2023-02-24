@@ -37,6 +37,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
+import frc.robot.commands.ChaseTagCommand;
 import frc.robot.commands.ExampleTrajectory;
 import frc.robot.commands.SlowSwerveDriveCommand;
 import frc.robot.commands.SwerveDriveCommand;
@@ -166,7 +167,8 @@ public class RobotContainer {
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
     
-
+     final ChaseTagCommand chaseTagCommand = 
+    new ChaseTagCommand(m_camera, m_robotDrive, m_camera :: getRobotPose2d);
 
       // leftBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToLimelight,m_camera::CameraPipeline,m_camera));
       // rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));

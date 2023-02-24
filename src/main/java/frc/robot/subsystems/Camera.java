@@ -8,7 +8,9 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import frc.robot.Constants.limelight;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -97,6 +99,8 @@ public double getDetectionTimestamp() {
             return new Pose2d(pose[0], pose[1], Rotation2d.fromDegrees(pose[5]));
           }
 
+
+
           public Pose2d[] getRobotPoses2d() {
             Pose2d[] poseArray = {defaultPose};
         
@@ -124,6 +128,19 @@ public double getDetectionTimestamp() {
                         return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
                      
                     }
+
+                    public double[] getCameraToTarget() {
+                      
+                        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("targetpose_cameraspace").getDoubleArray(new double[6]);
+                     
+                    }
+
+                    public Pose3d getCameraPose3d() {
+                        double[] pose = getCameraToTarget();
+                        Pose2d pose1 =  new Pose2d(pose[0], pose[1], Rotation2d.fromDegrees(pose[5]));
+                        return new Pose3d(pose1);
+                        // Transform2d transform = new Transform2d()
+                      }
 
                     public boolean getValidTarget() {
                         return getValidTargetType() > 0;
