@@ -85,8 +85,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   //Swerve Odometry 
 
-  private final SwerveDriveOdometry m_odometry =
-      new SwerveDriveOdometry(
+  private final SwerveDrivePoseEstimator m_odometry =
+      new SwerveDrivePoseEstimator(
           SwerveConstants.kDriveKinematics,
           getHeadingRotation2d(),
           getModulePositions(),
@@ -218,7 +218,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return Position of the Robot in XY Coordinates 
    */
   public Pose2d getPoseMeters() {
-    return m_odometry.getPoseMeters();
+    return m_odometry.getEstimatedPosition();
   }
 /**
    * Gets Swerve Module From Module Position
@@ -252,6 +252,7 @@ public class DriveSubsystem extends SubsystemBase {
     };
   }
 
+
 // Returns PID Controllers, Used in Auto
 
   public PIDController getXPidController() {
@@ -280,7 +281,7 @@ public class DriveSubsystem extends SubsystemBase {
  * Gets Drive Odometry
  * @return {@link SwerveDriveOdometry}
  */
-  public SwerveDriveOdometry getOdometry() {
+  public SwerveDrivePoseEstimator getOdometry() {
     return m_odometry;
   }
 /**

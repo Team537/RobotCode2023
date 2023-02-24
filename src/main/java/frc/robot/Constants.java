@@ -7,7 +7,10 @@ package frc.robot;
 
 import java.util.Map;
 
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -264,6 +267,10 @@ public final class Constants {
     public static final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
     public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
     public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
+    public static final Transform3d CAMERA_TO_ROBOT =
+        new Transform3d(new Translation3d(0.0, -0.1375, -.90), new Rotation3d(0.0, 0.0, -0.10));
+        public static final double FIELD_LENGTH_METERS = 16.54175;
+    public static final double FIELD_WIDTH_METERS = 8.0137;
   } 
   public static class limelight {
     public static final int kCamera = 0;
