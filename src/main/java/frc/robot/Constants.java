@@ -301,7 +301,7 @@ public final class Constants {
 
     public static final double kTurningEncoderDistancePerPulse =
     
-    2* Math.PI / (DriveConstants.kEncoderCPR* kTurningMotorGearRatio);
+    360 / (DriveConstants.kEncoderCPR* kTurningMotorGearRatio);
 
     public static final double kDriveEncoderDistancePerPulse =
     (2*kWheelRadius * Math.PI) / (DriveConstants.kEncoderCPR * kDriveMotorGearRatio);
