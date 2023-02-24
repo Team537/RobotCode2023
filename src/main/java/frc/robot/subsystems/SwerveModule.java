@@ -14,6 +14,7 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.unmanaged.Unmanaged;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -69,6 +70,7 @@ public class SwerveModule extends SubsystemBase {
   private double m_turnPercentOutput;
   private double m_driveMotorSimDistance;
   private double m_turnMotorSimDistance;
+  public SlewRateLimiter output = new SlewRateLimiter(0.3);
 
   public SwerveModule(
       ModulePosition modulePosition,
@@ -197,10 +199,10 @@ public class SwerveModule extends SubsystemBase {
     //Feedback loop Type
 
     if (isOpenLoop) {
-      double percentOutput = desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond;
+      double percentOutput = output.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond);
       m_driveMotor.set(ControlMode.PercentOutput, percentOutput);
     } else {
-      double velocity = desiredState.speedMetersPerSecond / (SwerveConstants.kDriveEncoderDistancePerPulse * 10);
+      double velocity = output.calculate(desiredState.speedMetersPerSecond / (SwerveConstants.kDriveEncoderDistancePerPulse * 10));
       m_driveMotor.set(
           ControlMode.Velocity,
           velocity,
