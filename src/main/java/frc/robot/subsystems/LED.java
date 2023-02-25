@@ -11,11 +11,11 @@ import frc.robot.RobotContainer;
 
 public class LED extends SubsystemBase {
 
-  private static Spark m_blinkin = null;
+  private static Spark m_blinkin = new Spark(4);
 
   /** Creates a new LED class. */
   public void blinkin(int pwmPort) {
-    m_blinkin = new Spark(pwmPort);
+    
     solidOrange();
   }
 

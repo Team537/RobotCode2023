@@ -189,8 +189,8 @@ public class RobotContainer {
       // rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
     //Toggle Booleans
     // LED Light Trigger COntrol Code
-    leftTrigger.toggleOnTrue(new InstantCommand(m_LED::solidPurple, m_LED));
-    rightTrigger.toggleOnTrue(new InstantCommand(m_LED::solidYellow, m_LED));
+    leftTrigger.toggleOnTrue(new StartEndCommand(m_LED::solidPurple,m_LED::solidYellow,m_LED));
+    rightTrigger.toggleOnTrue(new StartEndCommand(m_LED::solidYellow,m_LED::solidPurple,m_LED));
     
   
  starButton.toggleOnTrue(new SlowSwerveDriveCommand(
