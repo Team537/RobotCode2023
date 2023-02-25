@@ -16,7 +16,7 @@ public class LED extends SubsystemBase {
   /** Creates a new LED class. */
   public void blinkin(int pwmPort) {
     m_blinkin = new Spark(pwmPort);
-    solid_orange();
+    solidOrange();
   }
 
   /* Creates a new LED class. */
@@ -26,8 +26,16 @@ public class LED extends SubsystemBase {
     }
   }
 
-  public void solid_orange() {
+  public void solidOrange() {
     set(0.65);
+  }
+
+  public void solidYellow() {
+    set(0.69);
+  }
+
+  public void solidPurple() {
+    set(0.91);
   }
 
   /* Creates a new LED class. */

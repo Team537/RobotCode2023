@@ -28,7 +28,9 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.event.BooleanEvent;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -56,6 +58,7 @@ import frc.robot.subsystems.Camera;
 
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -63,10 +66,11 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.io.IOException;   
 import java.nio.file.Path;
@@ -93,7 +97,7 @@ public class RobotContainer {
   
 
   // The robot's subsystems
-  // private final LED LEDAllianceStart = new LED();
+  private final LED m_LED = new LED();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final GripperIntake m_Gripper = new GripperIntake();
   private final ArmInOut m_ArmInOut = new ArmInOut();
@@ -142,6 +146,16 @@ public class RobotContainer {
   JoystickButton yButton = new JoystickButton(m_driverController, Button.kY.value);
   JoystickButton xButton = new JoystickButton(m_driverController, Button.kX.value);
 
+  // TODO: Consider using CommandXboxController instead of XboxController
+  // so we can get a command based reference to the left trigger
+  Trigger leftTrigger = m_driverController
+    .leftTrigger(0.5, CommandScheduler.getInstance().getDefaultButtonLoop())
+    .castTo(Trigger::new);
+
+  Trigger rightTrigger = m_driverController
+    .rightTrigger(0.5, CommandScheduler.getInstance().getDefaultButtonLoop())
+    .castTo(Trigger::new);
+
   POVButton dPadUpButton = new POVButton(m_driverController, 0);
   POVButton dPadDownButton = new POVButton(m_driverController, 180);
   POVButton dPadLeftButton = new POVButton(m_driverController, 90);
@@ -167,14 +181,16 @@ public class RobotContainer {
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
-    
+
      final ChaseTagCommand chaseTagCommand = 
     new ChaseTagCommand(m_camera, m_robotDrive, m_camera :: getRobotPose2d);
 
       // leftBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToLimelight,m_camera::CameraPipeline,m_camera));
       // rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
     //Toggle Booleans
-
+    // LED Light Trigger COntrol Code
+    leftTrigger.toggleOnTrue(new InstantCommand(m_LED::solidPurple, m_LED));
+    rightTrigger.toggleOnTrue(new InstantCommand(m_LED::solidYellow, m_LED));
     
   
  starButton.toggleOnTrue(new SlowSwerveDriveCommand(
@@ -216,7 +232,7 @@ public class RobotContainer {
 
   public void periodic() {
     m_FieldSim.periodic();
-    // Already runs ever 5 miliseconds:
+    // Already runs ever 5 miliseconds: 
     // Add to a variable when joystick power > 0
     // Reset it to 0 when joystick = 0
     // dont let it go over 1
