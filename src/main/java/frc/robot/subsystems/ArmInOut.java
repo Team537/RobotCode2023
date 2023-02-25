@@ -34,6 +34,21 @@ public class ArmInOut extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  public void armOut() {
+    m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
+    m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
+    m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
+    m_pidControllerExtension.setIZone(Constants.ArmInOutConstants.kIz);
+    m_pidControllerExtension.setFF(Constants.ArmInOutConstants.kFF);
+    m_pidControllerExtension.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionOut, CANSparkMax.ControlType.kSmartMotion);
+
+  }
+
   public void armIn() {
     m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
     m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
@@ -49,7 +64,7 @@ public class ArmInOut extends SubsystemBase {
 
   }
 
-  public void armOut() {
+  public void kArmPositionOutOut() {
     m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
     m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
     m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
@@ -60,7 +75,7 @@ public class ArmInOut extends SubsystemBase {
     m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
     m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
     m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
-    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionOut, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionOutOut, CANSparkMax.ControlType.kSmartMotion);
 
   }
 

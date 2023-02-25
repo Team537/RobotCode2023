@@ -108,6 +108,7 @@ public final class Constants {
     //ARM INOUT SET POSITIONS
     public static final double kArmPositionIn = -50;
     public static final double kArmPositionOut = 0.0;
+    public static final double kArmPositionOutOut = -200.0;
 
     //INCREMENT TEST POS
     /*public static final double kIncrementUp = -10;
@@ -136,8 +137,8 @@ public final class Constants {
     public static final double kAllE = 0;
 
     //ARM PIVOT SET POSITONS
-    public static final double kArmPositionUp = -45.0;
-    public static final double kArmPositionMiddle = -25.0;
+    public static final double kArmPositionUp = 58.0;
+    public static final double kArmPositionMiddle = 15.0;
     public static final double kArmPositionDown = 0.0;
 
   }
@@ -161,13 +162,19 @@ public final class Constants {
     public static final double kAllE = 0;
 
     //WRIST SET POSITIONS
-    public static final double kWristPositionUp = 5;
-    public static final double kWristPositionMiddle = 1.5;
-    public static final double kWristPositionDown = -3;
+    public static final double kWristPositionUp = -10;
+    public static final double kWristPositionMiddle = -3;
+    public static final double kWristPositionDown = -5;
+    public static final double kWristPositionZero = 0;
 
-    // public static final double kRotationsIdle = 0.0;
-
+    /* 
+    optimal picking up: -5
+    optimal drop off cone: -10
     
+
+    */
+
+
 
   }
 
