@@ -70,7 +70,7 @@ public class SwerveModule extends SubsystemBase {
   private double m_turnPercentOutput;
   private double m_driveMotorSimDistance;
   private double m_turnMotorSimDistance;
-  public SlewRateLimiter slewRateOutput = new SlewRateLimiter(2);
+  public SlewRateLimiter slewRateOutput = new SlewRateLimiter(1.5);
 
   public SwerveModule(
       ModulePosition modulePosition,
@@ -199,8 +199,9 @@ public class SwerveModule extends SubsystemBase {
     //Feedback loop Type
 
     if (isOpenLoop) {
-      double percentOutput = slewRateOutput.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond);
-      m_driveMotor.set(ControlMode.PercentOutput, percentOutput);
+      double percentOutput = 2* Math.min(slewRateOutput.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond), 0.25);
+      double percentOutput1 =  Math.max(percentOutput, -0.5);
+      m_driveMotor.set(ControlMode.PercentOutput, percentOutput1);
     } else {
       double velocity = slewRateOutput.calculate(desiredState.speedMetersPerSecond / (SwerveConstants.kDriveEncoderDistancePerPulse * 10));
       m_driveMotor.set(
@@ -217,7 +218,7 @@ public class SwerveModule extends SubsystemBase {
             : desiredState.angle
                 .getDegrees(); // Prevent rotating module if speed is less then 1%.
     m_turnMotor.set(ControlMode.Position, angle / SwerveConstants.kTurningEncoderDistancePerPulse);
-    m_lastAngle = angle;
+    m_lastAngle = angle;  
 
     m_drivePercentOutput = m_driveMotor.getMotorOutputPercent();
     m_turnPercentOutput = m_turnMotor.getMotorOutputPercent();
