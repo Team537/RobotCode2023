@@ -7,19 +7,27 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
 
 public class LED extends SubsystemBase {
-
-  private static Spark m_blinkin = new Spark(4);
-
-  /** Creates a new LED class. */
-  public void blinkin(int pwmPort) {
-    
-    solidOrange();
-  }
+  private static Spark m_blinkin = new Spark(0);
 
   /* Creates a new LED class. */
+  public LED() {
+    var isRed = NetworkTableInstance
+      .getDefault()
+      .getTable("FMSInfo")
+      .getEntry("IsRedAlliance")
+      .getBoolean(true);
+
+    if (isRed == true){
+      m_blinkin.set(-0.01);
+      System.out.println("led RED");
+    } else {
+      m_blinkin.set(0.19);
+      System.out.println("led BLUE");
+    }
+  }
+
   public void set(double val) {
     if ((val >= -1.0) && (val <= 1.0)) {
       m_blinkin.set(val);
@@ -31,25 +39,11 @@ public class LED extends SubsystemBase {
   }
 
   public void solidYellow() {
-    set(0.69);
+    m_blinkin.set(0.69);
   }
 
   public void solidPurple() {
     set(0.91);
-  }
-
-  /* Creates a new LED class. */
-  public LED() {
-
-    boolean isRed = NetworkTableInstance.getDefault().getTable("FMSInfo").getEntry("IsRedAlliance").getBoolean(true);
-    if (isRed == true){
-      m_blinkin.set(-0.01);
-      System.out.println("led RED");
-    } else {
-      m_blinkin.set(0.19);
-      System.out.println("led BLUE");
-    }
-
   }
 
   @Override
