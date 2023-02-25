@@ -55,13 +55,13 @@ public final class Constants {
         // Assumes the encoders are directly mounted on the wheel shafts
         (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
 
-    // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-    // These characterization values MUST be determined either experimentally or
-    // theoretically
-    // for *your* robot's drive.
-    // The Robot Characterization Toolsuite provides a convenient tool for obtaining
-    // these
-    // values for your robot.
+    /*  These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
+        These characterization values MUST be determined either experimentally or
+        theoretically
+        for *your* robot's drive.
+        The Robot Characterization Toolsuite provides a convenient tool for obtaining
+        these values for your robot. */
+        
     public static final double ksVolts = 0.305;
     public static final double kvVoltSecondsPerMeter = 2.29;
     public static final double kaVoltSecondsSquaredPerMeter = 0.0131;
@@ -98,20 +98,20 @@ public final class Constants {
     public static final double kFF = 0.000156;
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
+    //Max Velocity
     public static final double kMaxV = 3000;
     public static final double kMinV = 0;
+    //Max Acceleration
     public static final double kMaxA = 2500;
     public static final double kAllE = 0;
 
-    public static final double kRotationsUp = -50;
-    public static final double kRotationsDown = 0.0;
-    public static final double kIncrementUp = -10;
-    public static final double kIncrementDown = 10;
+    //ARM INOUT SET POSITIONS
+    public static final double kArmPositionIn = -50;
+    public static final double kArmPositionOut = 0.0;
 
-
-    public static final double kResetMotor = 0;
-
-    public static final double kRotationsIdle = 0.0;
+    //INCREMENT TEST POS
+    /*public static final double kIncrementUp = -10;
+    public static final double kIncrementDown = 10;*/
   }
 
 
@@ -128,25 +128,17 @@ public final class Constants {
     public static final double kFF = 0.000156;
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
+    //max velocity
     public static final double kMaxV = 3000;
-    //Changing this to fix climber
     public static final double kMinV = 0;
+    //max acceleration
     public static final double kMaxA = 2000;
     public static final double kAllE = 0;
 
-    //On the Right Side increasing is down
-    //On the Right Side decreasing is up
-    public static final double kRightRotationsUp = 50.0;
-    public static final double kRightRotationsDown = 0.0;
-    //On the Left Side decreasing is down
-    //On the Left Side increasing is up
-    public static final double kLeftRotationsUp = -45.0;
-    public static final double kLeftRotationsUp2 = -25.0;
-    public static final double kLeftRotationsDown = 0.0;
-
-    public static final double kRotationsIdle = 0.0;
-
-    
+    //ARM PIVOT SET POSITONS
+    public static final double kArmPositionUp = -45.0;
+    public static final double kArmPositionMiddle = -25.0;
+    public static final double kArmPositionDown = 0.0;
 
   }
 
@@ -161,21 +153,19 @@ public final class Constants {
     public static final double kFF = 0.000156;
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
+    //Max Velocity
     public static final double kMaxV = 3000;
-    //Changing this to fix climber
     public static final double kMinV = 0;
+    //Max Acceleration
     public static final double kMaxA = 2500;
     public static final double kAllE = 0;
 
+    //WRIST SET POSITIONS
+    public static final double kWristPositionUp = 5;
+    public static final double kWristPositionMiddle = 1.5;
+    public static final double kWristPositionDown = -3;
 
-    public static final double kLeftRotationsUp = 5;
-    public static final double kLeftRotationsDown = 1.5;
-    public static final double kLeftRotationsDown2 = -3;
-
-    public static final double kResetRightSide = 85.0;
-    public static final double kResetLeftSide = -90;
-
-    public static final double kRotationsIdle = 0.0;
+    // public static final double kRotationsIdle = 0.0;
 
     
 
@@ -249,19 +239,18 @@ public final class Constants {
     public static final double kD = 0.0;
   }
 
-  public static final int kTimeoutMs = 10;
-  public static final int kPIDLoopIdx = 0;
-  public static final int kSlotIdx = 0;
-  public static final double targetMeters = 2 * (6 * 2048 * 0.4787787204060999);
-  //gear ratio is 6:1 
-  public static final int smoothing = 4;
-  //Smoothing is from 0 to 8
+                  //@ASINX where do these constants go to
+                  public static final int kTimeoutMs = 10;
+                  public static final int kPIDLoopIdx = 0;
+                  public static final int kSlotIdx = 0;
 
-  public static class IntakeConstants {
+                  //gear ratio is 6:1 
+                  public static final double targetMeters = 2 * (6 * 2048 * 0.4787787204060999);
 
-    public static final int kIntake = 20;
+                  //Smoothing is from 0 to 8
+                  public static final int smoothing = 4;
+  
 
-  }
   public static class VisionConstants {
     public static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
     public static final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
@@ -272,6 +261,7 @@ public final class Constants {
         public static final double FIELD_LENGTH_METERS = 16.54175;
     public static final double FIELD_WIDTH_METERS = 8.0137;
   } 
+
   public static class limelight {
     public static final int kCamera = 0;
     public static final int kLimelight = 1;
@@ -332,10 +322,10 @@ public final class Constants {
     public static final int kBackLeftSRXMagCoder = 2;
     public static final int kBackRightSRXMagCoder = 3;
 
-    public static final double kFrontLeftSRXMagCoderOffset = 0.165;
+    public static final double kFrontLeftSRXMagCoderOffset = 320;//175;
     public static final double kFrontRightSRXMagCoderOffset = 0;
-    public static final double kBackLeftSRXMagCoderOffset = 0.06;
-    public static final double kBackRightSRXMagCoderOffset = 0.07;
+    public static final double kBackLeftSRXMagCoderOffset = 0.;
+    public static final double kBackRightSRXMagCoderOffset = 0.;
 
     public static final double kP_X = 0.01;
     public static final double kI_X = 0;

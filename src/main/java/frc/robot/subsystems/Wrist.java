@@ -26,7 +26,7 @@ public class Wrist extends SubsystemBase {
 
   }
 
-  public void WristPosition1() {
+  public void WristPositionUp() {
     m_pidControllerPivot1.setP(Constants.WristConstants.kP);
     m_pidControllerPivot1.setI(Constants.WristConstants.kI);
     m_pidControllerPivot1.setD(Constants.WristConstants.kD);
@@ -37,12 +37,12 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.WristConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.WristConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.WristConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kLeftRotationsUp, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionUp, CANSparkMax.ControlType.kSmartMotion);
 
    
   }
 
-  public void WristPosition2() {
+  public void WristPositionMiddle() {
     m_pidControllerPivot1.setP(Constants.WristConstants.kP);
     m_pidControllerPivot1.setI(Constants.WristConstants.kI);
     m_pidControllerPivot1.setD(Constants.WristConstants.kD);
@@ -53,11 +53,11 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.WristConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.WristConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.WristConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kLeftRotationsDown, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionMiddle, CANSparkMax.ControlType.kSmartMotion);
 
   }
 
-  public void WristPosition3() {
+  public void WristPositionDown() {
     m_pidControllerPivot1.setP(Constants.WristConstants.kP);
     m_pidControllerPivot1.setI(Constants.WristConstants.kI);
     m_pidControllerPivot1.setD(Constants.WristConstants.kD);
@@ -68,7 +68,7 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.WristConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.WristConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.WristConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kLeftRotationsDown2, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionDown, CANSparkMax.ControlType.kSmartMotion);
 
   }
 

@@ -22,6 +22,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.DutyCycle;
@@ -96,7 +97,7 @@ public class SwerveModule extends SubsystemBase {
     m_driveMotor.configAllSettings(CtreUtils.generateDriveMotorConfig());
 
     m_driveMotor.setNeutralMode(NeutralMode.Coast);
-    m_SrxMagEncoder = new SRXMagEncoder(new DutyCycle(new DigitalInput(angleEncoder)), angleOffset);
+    m_SrxMagEncoder = new SRXMagEncoder(new DutyCycle(new DigitalInput(angleEncoder)), 0);
 
 
     m_SrxMagEncoder.setDistancePerRotation(360);
@@ -113,7 +114,7 @@ public class SwerveModule extends SubsystemBase {
     
    
 
-    resetAngleToAbsolute();
+    // resetAngleToAbsolute();
   }
 
 /**
@@ -129,11 +130,21 @@ public class SwerveModule extends SubsystemBase {
 /**
  * Resets Angle to Absolute Position by subtracting angle offset
  * and setting the Turn Motor to the Set Position
- * 
+ *    
  * 
  */
   public void resetAngleToAbsolute() {
+    // TODO: Do we need to do 1 full revolution for the
+    // mag encoder to read the right value?
 
+    // Angle/Mag encoder position is always an absolute position - always sensing
+    // motor position is always 0 when code starts
+    // set motor position to opposite of mag, to make that mag angle 0
+    // add wanted position to -angle to make position what you want
+    var angle = Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
+    m_turnMotor.setSelectedSensorPosition((-angle+m_angleOffset)/SwerveConstants.kTurningEncoderDistancePerPulse);
+
+  
   //   double pos = 0;
   // double angle =  (m_SrxMagEncoder.getAbsolutePosition() - m_SrxMagEncoder.getPositionOffset());
 
@@ -296,7 +307,7 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Heading", getState().angle.getDegrees());
     SmartDashboard.putNumber(
-        "Module " + m_moduleNumber + " Mag Coder Reading", m_SrxMagEncoder.getAbsolutePosition());
+        "Module " + m_moduleNumber + " Mag Coder Reading", Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle()));
         SmartDashboard.putNumber(
           "Module " + m_moduleNumber + " Integrated Sensor Reading", m_turnMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber(

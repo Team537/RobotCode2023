@@ -35,10 +35,10 @@ public class Robot extends TimedRobot {
   
     
  
+    m_robotContainer.robotInit();
     
-    
-  m_robotContainer.getClass();
-  m_robotContainer.robotInit();
+  // m_robotContainer.getClass();
+
   
   }
 
@@ -105,6 +105,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     m_robotContainer.periodic();
+    
   }
 
   /** This function is called periodically during operator control. */
