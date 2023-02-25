@@ -55,13 +55,13 @@ public final class Constants {
         // Assumes the encoders are directly mounted on the wheel shafts
         (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
 
-    // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-    // These characterization values MUST be determined either experimentally or
-    // theoretically
-    // for *your* robot's drive.
-    // The Robot Characterization Toolsuite provides a convenient tool for obtaining
-    // these
-    // values for your robot.
+    /*  These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
+        These characterization values MUST be determined either experimentally or
+        theoretically
+        for *your* robot's drive.
+        The Robot Characterization Toolsuite provides a convenient tool for obtaining
+        these values for your robot. */
+        
     public static final double ksVolts = 0.305;
     public static final double kvVoltSecondsPerMeter = 2.29;
     public static final double kaVoltSecondsSquaredPerMeter = 0.0131;
@@ -239,13 +239,17 @@ public final class Constants {
     public static final double kD = 0.0;
   }
 
-  public static final int kTimeoutMs = 10;
-  public static final int kPIDLoopIdx = 0;
-  public static final int kSlotIdx = 0;
-  public static final double targetMeters = 2 * (6 * 2048 * 0.4787787204060999);
-  //gear ratio is 6:1 
-  public static final int smoothing = 4;
-  //Smoothing is from 0 to 8
+                  //@ASINX where do these constants go to
+                  public static final int kTimeoutMs = 10;
+                  public static final int kPIDLoopIdx = 0;
+                  public static final int kSlotIdx = 0;
+
+                  //gear ratio is 6:1 
+                  public static final double targetMeters = 2 * (6 * 2048 * 0.4787787204060999);
+
+                  //Smoothing is from 0 to 8
+                  public static final int smoothing = 4;
+  
 
   public static class VisionConstants {
     public static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
@@ -257,6 +261,7 @@ public final class Constants {
         public static final double FIELD_LENGTH_METERS = 16.54175;
     public static final double FIELD_WIDTH_METERS = 8.0137;
   } 
+
   public static class limelight {
     public static final int kCamera = 0;
     public static final int kLimelight = 1;
