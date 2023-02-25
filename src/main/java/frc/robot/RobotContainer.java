@@ -179,8 +179,8 @@ public class RobotContainer {
     dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPosition1,m_Wrist::WristPosition2,m_Wrist));
     leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPosition3,m_Wrist::WristPosition1,m_Wrist));
 
-    aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
-    bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
+   // aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
+    //bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
 
      final ChaseTagCommand chaseTagCommand = 
     new ChaseTagCommand(m_camera, m_robotDrive, m_camera :: getRobotPose2d);
@@ -189,8 +189,8 @@ public class RobotContainer {
       // rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
     //Toggle Booleans
     // LED Light Trigger COntrol Code
-    leftTrigger.toggleOnTrue(new StartEndCommand(m_LED::solidPurple,m_LED::solidYellow,m_LED));
-    rightTrigger.toggleOnTrue(new StartEndCommand(m_LED::solidYellow,m_LED::solidPurple,m_LED));
+    aButton.toggleOnTrue(new StartEndCommand(m_LED::setBlue,m_LED::setGreen,m_LED));
+    bButton.toggleOnTrue(new StartEndCommand(m_LED::setGreen,m_LED::setBlue,m_LED));
     
   
  starButton.toggleOnTrue(new SlowSwerveDriveCommand(
