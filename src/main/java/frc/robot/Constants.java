@@ -7,7 +7,10 @@ package frc.robot;
 
 import java.util.Map;
 
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -86,10 +89,10 @@ public final class Constants {
   }
   
   public static final class ArmInOutConstants {
-    public static final int kArmInOut = 11;
+    public static final int kArmInOut = 14;
 
-    public static final double kP = 0.5;
-    public static final double kI = 0.8;
+    public static final double kP = 0;
+    public static final double kI = 0;
     public static final double kD = 0;
     public static final double kIz = 0;
     public static final double kFF = 0.000156;
@@ -100,10 +103,11 @@ public final class Constants {
     public static final double kMaxA = 2500;
     public static final double kAllE = 0;
 
-    public static final double kRotationsUp = -100;
+    public static final double kRotationsUp = -50;
     public static final double kRotationsDown = 0.0;
     public static final double kIncrementUp = -10;
     public static final double kIncrementDown = 10;
+
 
     public static final double kResetMotor = 0;
 
@@ -111,36 +115,11 @@ public final class Constants {
   }
 
 
-  
-  public static final class ArmConstants {
-
-    public static final int kArm = 17;
-
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
-    public static final double kIz = 0;
-    public static final double kFF = 0.000156;
-    public static final double kMaxOutput = 1;
-    public static final double kMinOutput = -1;
-    public static final double kMaxVdown = 2000;
-    public static final double kMaxVup = 4500;
-    public static final double kMinV = 0;
-    public static final double kMaxAup = 4000;
-    public static final double kMaxAdown = 750;
-    public static final double kAllE = 0;
-
-    public static final double kRotationsUp = 0.5;
-    public static final double kRotationsDown = 27.5;
-
-    
-
-  }
 
   public static final class ArmPivotConstants {
 
-    public static final int kArmPivot1 = 2;
-    public static final int kArmPivot2 = 3;
+    public static final int kArmPivot1 = 19;
+   
 
     public static final double kP = 0;
     public static final double kI = 0;
@@ -152,20 +131,18 @@ public final class Constants {
     public static final double kMaxV = 3000;
     //Changing this to fix climber
     public static final double kMinV = 0;
-    public static final double kMaxA = 2500;
+    public static final double kMaxA = 2000;
     public static final double kAllE = 0;
 
     //On the Right Side increasing is down
     //On the Right Side decreasing is up
-    public static final double kRightRotationsUp = 90.0;
+    public static final double kRightRotationsUp = 50.0;
     public static final double kRightRotationsDown = 0.0;
     //On the Left Side decreasing is down
     //On the Left Side increasing is up
-    public static final double kLeftRotationsUp = -90.0;
+    public static final double kLeftRotationsUp = -45.0;
+    public static final double kLeftRotationsUp2 = -25.0;
     public static final double kLeftRotationsDown = 0.0;
-
-    public static final double kResetRightSide = 85.0;
-    public static final double kResetLeftSide = -90;
 
     public static final double kRotationsIdle = 0.0;
 
@@ -175,7 +152,7 @@ public final class Constants {
 
   public static final class WristConstants {
 
-    public static final int kWrist = 10;
+    public static final int kWrist = 11;
 
     public static final double kP = 0;
     public static final double kI = 0;
@@ -190,14 +167,10 @@ public final class Constants {
     public static final double kMaxA = 2500;
     public static final double kAllE = 0;
 
-    //On the Right Side increasing is down
-    //On the Right Side decreasing is up
-    public static final double kRightRotationsUp = 90.0;
-    public static final double kRightRotationsDown = 0.0;
-    //On the Left Side decreasing is down
-    //On the Left Side increasing is up
-    public static final double kLeftRotationsUp = -90.0;
-    public static final double kLeftRotationsDown = 0.0;
+
+    public static final double kLeftRotationsUp = 5;
+    public static final double kLeftRotationsDown = 1.5;
+    public static final double kLeftRotationsDown2 = -3;
 
     public static final double kResetRightSide = 85.0;
     public static final double kResetLeftSide = -90;
@@ -294,6 +267,10 @@ public final class Constants {
     public static final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
     public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
     public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
+    public static final Transform3d CAMERA_TO_ROBOT =
+        new Transform3d(new Translation3d(0.0, -0.1375, -.90), new Rotation3d(0.0, 0.0, -0.10));
+        public static final double FIELD_LENGTH_METERS = 16.54175;
+    public static final double FIELD_WIDTH_METERS = 8.0137;
   } 
   public static class limelight {
     public static final int kCamera = 0;
@@ -310,23 +287,23 @@ public final class Constants {
     public static final int kEncoderResolution = 4096;
     public static final double  kDriveMotorGearRatio = 7.13; 
     public static final double kTurningMotorGearRatio = 15.428;
-    public static final double kMaxSpeed = 7.0;
-    public static final double kModuleMaxAngularVelocity = Math.PI*2;
-    public static final double kModuleMaxAngularAcceleration = 2 * Math.PI; 
+    public static final double kMaxSpeed = 15.0;
+    public static final double kModuleMaxAngularVelocity = Math.PI*4;
+    public static final double kModuleMaxAngularAcceleration = 3 * Math.PI; 
 
     public static final double kPModuleTurningController = 0;
     public static final double kPModuleDriverController = 0;
 
     public static final double kSTurn = 0.1;
-    public static final double kVTurn = 0.3;
+    public static final double kVTurn = 0.2;
     
     public static final double kSDrive = 0.587;
     public static final double kVDrive = 2.3;
-    public static final double kADrive = 0.917;
+    public static final double kADrive = 0.517;
 
-    public static final double ksDriveVoltSecondsPerMeter = 0.07 / 12;
-    public static final double kvDriveVoltSecondsSquaredPerMeter = 0.25;
-    public static final double kaDriveVoltSecondsSquaredPerMeter = 0.05 / 12;
+    public static final double ksDriveVoltSecondsPerMeter = 1;
+    public static final double kvDriveVoltSecondsSquaredPerMeter = 1;
+    public static final double kaDriveVoltSecondsSquaredPerMeter = .5;
 
 
     public static final double kTurningEncoderDistancePerPulse =
@@ -336,7 +313,7 @@ public final class Constants {
     public static final double kDriveEncoderDistancePerPulse =
     (2*kWheelRadius * Math.PI) / (DriveConstants.kEncoderCPR * kDriveMotorGearRatio);
 
-    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxSpeedMetersPerSecond = 8;
     public static final double kMaxRotationRadiansPerSecond = Math.PI * 2;
     public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 1;
     

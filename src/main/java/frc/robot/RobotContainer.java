@@ -18,6 +18,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -36,6 +37,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.kGains;
+import frc.robot.commands.ChaseTagCommand;
 import frc.robot.commands.ExampleTrajectory;
 import frc.robot.commands.SlowSwerveDriveCommand;
 import frc.robot.commands.SwerveDriveCommand;
@@ -105,11 +107,10 @@ public class RobotContainer {
 
   // SlewRateLimiter for Joystick Motion Profiling
 
-  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(10);
-  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(10);
-  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(10);
+  private final SlewRateLimiter m_xSpeedLimiter = new SlewRateLimiter(0.1);
+  private final SlewRateLimiter m_ySpeedLimiter = new SlewRateLimiter(0.1);
+  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(30);
 
- 
  
  
   
@@ -121,6 +122,7 @@ public class RobotContainer {
 
 
   JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
+  JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
 
    // Drive Speeds
   
@@ -134,60 +136,75 @@ public class RobotContainer {
   //  private double rightSpeed =  -Right.calculate(m_driverController.getRightY());
 
   //Buttons
-  JoystickButton aButton = new JoystickButton(m_driverController2, Button.kA.value);
-  JoystickButton bButton = new JoystickButton(m_driverController2, Button.kB.value);
+  JoystickButton aButton = new JoystickButton(m_driverController, Button.kA.value);
+  JoystickButton bButton = new JoystickButton(m_driverController, Button.kB.value);
 
-  JoystickButton yButton = new JoystickButton(m_driverController2, Button.kY.value);
-  JoystickButton xButton = new JoystickButton(m_driverController2, Button.kX.value);
+  JoystickButton yButton = new JoystickButton(m_driverController, Button.kY.value);
+  JoystickButton xButton = new JoystickButton(m_driverController, Button.kX.value);
 
-  POVButton dPadUpButton = new POVButton(m_driverController2, 0);
-  POVButton dPadDownButton = new POVButton(m_driverController2, 180);
-  POVButton dPadLeftButton = new POVButton(m_driverController2, 90);
-  POVButton dPadRightButton = new POVButton(m_driverController2, 270);
+  POVButton dPadUpButton = new POVButton(m_driverController, 0);
+  POVButton dPadDownButton = new POVButton(m_driverController, 180);
+  POVButton dPadLeftButton = new POVButton(m_driverController, 90);
+  POVButton dPadRightButton = new POVButton(m_driverController, 270);
   
     
   public RobotContainer() {
 
-    yButton.onTrue(new StartEndCommand(m_ArmInOut::armIn,m_ArmInOut::armOut,m_ArmInOut));
-    xButton.onTrue(new StartEndCommand(m_ArmInOut::armOut,m_ArmInOut::armIn,m_ArmInOut));
+    dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armIn,m_ArmInOut::armOut,m_ArmInOut));
+    dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armOut,m_ArmInOut::armIn,m_ArmInOut));
     // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
     // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
 
     /*^^ for incrementing the position of the arm in-out */
 
-    dPadDownButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition1,m_ArmPivot::ArmPosition2,m_ArmPivot));
-    dPadUpButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition2,m_ArmPivot::ArmPosition1,m_ArmPivot));
+    yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition1,m_ArmPivot::ArmPosition2,m_ArmPivot));
+    xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition2,m_ArmPivot::ArmPosition1,m_ArmPivot));
+    backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition3,m_ArmPivot::ArmPosition1,m_ArmPivot));
 
-    dPadLeftButton.onTrue(new StartEndCommand(m_Wrist::WristPosition2,m_Wrist::WristPosition1,m_Wrist));
-    dPadRightButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition2,m_ArmPivot::ArmPosition1,m_ArmPivot));
+    dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPosition2,m_Wrist::WristPosition1,m_Wrist));
+    dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPosition1,m_Wrist::WristPosition2,m_Wrist));
+    leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPosition3,m_Wrist::WristPosition1,m_Wrist));
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
     
-      leftBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToLimelight,m_camera::CameraPipeline,m_camera));
-      rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
+     final ChaseTagCommand chaseTagCommand = 
+    new ChaseTagCommand(m_camera, m_robotDrive, m_camera :: getRobotPose2d);
+
+      // leftBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToLimelight,m_camera::CameraPipeline,m_camera));
+      // rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
     //Toggle Booleans
 
     
   
  starButton.toggleOnTrue(new SlowSwerveDriveCommand(
   m_robotDrive,
-  ()-> -m_driverController.getLeftY(),
+  ()-> -(m_driverController.getLeftY()),
   ()->  m_driverController.getLeftX(),
   ()->  -m_driverController.getRightX()*0.7,
   false));
     
 
+  //Drive without Slew
+//  m_robotDrive.setDefaultCommand( 
+//     new SwerveDriveCommand(
+//       m_robotDrive,
+//       ()-> -m_driverController.getLeftY(),
+//       ()->  m_driverController.getLeftX(),
+//       ()->  -m_driverController.getRightX()*0.7,
+//       true)); 
+  
+    //Drive with Slew
+    m_robotDrive.setDefaultCommand( 
+      new SwerveDriveCommand(
+        m_robotDrive,
+        ()-> -m_ySpeedLimiter.calculate(m_driverController.getLeftY()),
+        ()->  m_xSpeedLimiter.calculate(m_driverController.getLeftX()),
+        ()->  -m_driverController.getRightX()*0.7,
+        true));
 
-  m_robotDrive.setDefaultCommand( 
-    new SwerveDriveCommand(
-      m_robotDrive,
-      ()-> -m_driverController.getLeftY(),
-      ()->  m_driverController.getLeftX(),
-      ()->  -m_driverController.getRightX()*0.7,
-      true));
-  
-  
+
+
       m_FieldSim.initSim();
   
   
@@ -203,6 +220,7 @@ public class RobotContainer {
     // Add to a variable when joystick power > 0
     // Reset it to 0 when joystick = 0
     // dont let it go over 1
+    SmartDashboard.putNumber("Left Joystick",m_driverController.getLeftY());
   }
 
   public void robotInit() {

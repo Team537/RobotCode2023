@@ -9,16 +9,15 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmPivot extends SubsystemBase {
-  private final CANSparkMax m_ArmPivot1 = new CANSparkMax(Constants.ArmPivotConstants.kArmPivot1, MotorType.kBrushless);
+  private CANSparkMax m_ArmPivot1 = new CANSparkMax(Constants.ArmPivotConstants.kArmPivot1, MotorType.kBrushless);
   private SparkMaxPIDController m_pidControllerPivot1 = m_ArmPivot1.getPIDController();
   private RelativeEncoder m_encoderPivot1 = m_ArmPivot1.getEncoder();
-  private final CANSparkMax m_ArmPivot2 = new CANSparkMax(Constants.ArmPivotConstants.kArmPivot2, MotorType.kBrushless);
-  private SparkMaxPIDController m_pidControllerPivot2 = m_ArmPivot2.getPIDController();
-  private RelativeEncoder m_encoderPivot2 = m_ArmPivot2.getEncoder();
+
 
 
 
@@ -38,19 +37,11 @@ public class ArmPivot extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.ArmPivotConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kLeftRotationsUp, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kLeftRotationsDown, CANSparkMax.ControlType.kSmartMotion);
+    SmartDashboard.putBoolean("Arm Down", true);
+    SmartDashboard.putBoolean("Arm Up", false);
 
-    m_pidControllerPivot2.setP(Constants.ArmPivotConstants.kP);
-    m_pidControllerPivot2.setI(Constants.ArmPivotConstants.kI);
-    m_pidControllerPivot2.setD(Constants.ArmPivotConstants.kD);
-    m_pidControllerPivot2.setIZone(Constants.ArmPivotConstants.kIz);
-    m_pidControllerPivot2.setFF(Constants.ArmPivotConstants.kFF);
-    m_pidControllerPivot2.setOutputRange(Constants.ArmPivotConstants.kMinOutput, Constants.ArmPivotConstants.kMaxOutput);
-    m_pidControllerPivot2.setSmartMotionMaxVelocity(Constants.ArmPivotConstants.kMaxV, 0);
-    m_pidControllerPivot2.setSmartMotionMinOutputVelocity(Constants.ArmPivotConstants.kMinV, 0);
-    m_pidControllerPivot2.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
-    m_pidControllerPivot2.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
-    m_pidControllerPivot2.setReference(Constants.ArmPivotConstants.kRightRotationsUp, CANSparkMax.ControlType.kSmartMotion);
+   
   }
 
   public void ArmPosition2() {
@@ -65,24 +56,36 @@ public class ArmPivot extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
     m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kLeftRotationsUp, CANSparkMax.ControlType.kSmartMotion);
+    SmartDashboard.putBoolean("Arm Down", false);
+    SmartDashboard.putBoolean("Arm Up", true);
 
-    m_pidControllerPivot2.setP(Constants.ArmPivotConstants.kP);
-    m_pidControllerPivot2.setI(Constants.ArmPivotConstants.kI);
-    m_pidControllerPivot2.setD(Constants.ArmPivotConstants.kD);
-    m_pidControllerPivot2.setIZone(Constants.ArmPivotConstants.kIz);
-    m_pidControllerPivot2.setFF(Constants.ArmPivotConstants.kFF);
-    m_pidControllerPivot2.setOutputRange(Constants.ArmPivotConstants.kMinOutput, Constants.ArmPivotConstants.kMaxOutput);
-    m_pidControllerPivot2.setSmartMotionMaxVelocity(Constants.ArmPivotConstants.kMaxV, 0);
-    m_pidControllerPivot2.setSmartMotionMinOutputVelocity(Constants.ArmPivotConstants.kMinV, 0);
-    m_pidControllerPivot2.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
-    m_pidControllerPivot2.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
-    m_pidControllerPivot2.setReference(Constants.ArmPivotConstants.kRightRotationsUp, CANSparkMax.ControlType.kSmartMotion);
+    
+  }
+  public void ArmPosition3() {
+    m_pidControllerPivot1.setP(Constants.ArmPivotConstants.kP);
+    m_pidControllerPivot1.setI(Constants.ArmPivotConstants.kI);
+    m_pidControllerPivot1.setD(Constants.ArmPivotConstants.kD);
+    m_pidControllerPivot1.setIZone(Constants.ArmPivotConstants.kIz);
+    m_pidControllerPivot1.setFF(Constants.ArmPivotConstants.kFF);
+    m_pidControllerPivot1.setOutputRange(Constants.ArmPivotConstants.kMinOutput, Constants.ArmPivotConstants.kMaxOutput);
+    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.ArmPivotConstants.kMaxV, 0);
+    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.ArmPivotConstants.kMinV, 0);
+    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
+    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kLeftRotationsUp2, CANSparkMax.ControlType.kSmartMotion);
+    // SmartDashboard.putBoolean("Arm Down", true);
+    // SmartDashboard.putBoolean("Arm Up", false);
+
+   
   }
 
   
 
   @Override
   public void periodic() {
+
+    SmartDashboard.putNumber(" Pivot Position", m_encoderPivot1.getPosition());
+    SmartDashboard.putNumber("Pivot Velocity",m_encoderPivot1.getVelocity());
     // This method will be called once per scheduler run
   }
 }
