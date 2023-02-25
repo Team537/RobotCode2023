@@ -70,7 +70,7 @@ public class SwerveModule extends SubsystemBase {
   private double m_turnPercentOutput;
   private double m_driveMotorSimDistance;
   private double m_turnMotorSimDistance;
-  public SlewRateLimiter output = new SlewRateLimiter(0.3);
+  public SlewRateLimiter slewRateOutput = new SlewRateLimiter(2);
 
   public SwerveModule(
       ModulePosition modulePosition,
@@ -199,10 +199,10 @@ public class SwerveModule extends SubsystemBase {
     //Feedback loop Type
 
     if (isOpenLoop) {
-      double percentOutput = output.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond);
+      double percentOutput = slewRateOutput.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond);
       m_driveMotor.set(ControlMode.PercentOutput, percentOutput);
     } else {
-      double velocity = output.calculate(desiredState.speedMetersPerSecond / (SwerveConstants.kDriveEncoderDistancePerPulse * 10));
+      double velocity = slewRateOutput.calculate(desiredState.speedMetersPerSecond / (SwerveConstants.kDriveEncoderDistancePerPulse * 10));
       m_driveMotor.set(
           ControlMode.Velocity,
           velocity,
@@ -265,8 +265,8 @@ public class SwerveModule extends SubsystemBase {
  * 
  * 
  */
-  public void setDriveNeutralMode(NeutralMode Coast) {
-    m_driveMotor.setNeutralMode(Coast);
+  public void setDriveNeutralMode(NeutralMode Brake) {
+    m_driveMotor.setNeutralMode(Brake);
   }
 /**
  * Sets Turn Neutral Mode
