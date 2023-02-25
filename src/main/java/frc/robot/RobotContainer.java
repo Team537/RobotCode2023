@@ -41,6 +41,7 @@ import frc.robot.commands.SlowSwerveDriveCommand;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.simulation.FieldSim;
 
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ArmInOut;
 import frc.robot.subsystems.ArmPivot;
@@ -90,7 +91,7 @@ public class RobotContainer {
   
 
   // The robot's subsystems
-
+  private final LED LEDAllianceStart = new LED();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final GripperIntake m_Gripper = new GripperIntake();
   private final ArmInOut m_ArmInOut = new ArmInOut();
@@ -194,8 +195,14 @@ public class RobotContainer {
    
   }
 
+  private double time = 0;
+
   public void periodic() {
     m_FieldSim.periodic();
+    // Already runs ever 5 miliseconds:
+    // Add to a variable when joystick power > 0
+    // Reset it to 0 when joystick = 0
+    // dont let it go over 1
   }
 
   public void robotInit() {
