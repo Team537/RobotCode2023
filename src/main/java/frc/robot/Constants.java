@@ -98,20 +98,20 @@ public final class Constants {
     public static final double kFF = 0.000156;
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
+    //Max Velocity
     public static final double kMaxV = 3000;
     public static final double kMinV = 0;
+    //Max Acceleration
     public static final double kMaxA = 2500;
     public static final double kAllE = 0;
 
-    public static final double kRotationsUp = -50;
-    public static final double kRotationsDown = 0.0;
-    public static final double kIncrementUp = -10;
-    public static final double kIncrementDown = 10;
+    //ARM INOUT SET POSITIONS
+    public static final double kArmPositionIn = -50;
+    public static final double kArmPositionOut = 0.0;
 
-
-    public static final double kResetMotor = 0;
-
-    public static final double kRotationsIdle = 0.0;
+    //INCREMENT TEST POS
+    /*public static final double kIncrementUp = -10;
+    public static final double kIncrementDown = 10;*/
   }
 
 
@@ -128,25 +128,17 @@ public final class Constants {
     public static final double kFF = 0.000156;
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
+    //max velocity
     public static final double kMaxV = 3000;
-    //Changing this to fix climber
     public static final double kMinV = 0;
+    //max acceleration
     public static final double kMaxA = 2000;
     public static final double kAllE = 0;
 
-    //On the Right Side increasing is down
-    //On the Right Side decreasing is up
-    public static final double kRightRotationsUp = 50.0;
-    public static final double kRightRotationsDown = 0.0;
-    //On the Left Side decreasing is down
-    //On the Left Side increasing is up
-    public static final double kLeftRotationsUp = -45.0;
-    public static final double kLeftRotationsUp2 = -25.0;
-    public static final double kLeftRotationsDown = 0.0;
-
-    public static final double kRotationsIdle = 0.0;
-
-    
+    //ARM PIVOT SET POSITONS
+    public static final double kArmPositionUp = -45.0;
+    public static final double kArmPositionMiddle = -25.0;
+    public static final double kArmPositionDown = 0.0;
 
   }
 
@@ -161,21 +153,19 @@ public final class Constants {
     public static final double kFF = 0.000156;
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
+    //Max Velocity
     public static final double kMaxV = 3000;
-    //Changing this to fix climber
     public static final double kMinV = 0;
+    //Max Acceleration
     public static final double kMaxA = 2500;
     public static final double kAllE = 0;
 
+    //WRIST SET POSITIONS
+    public static final double kWristPositionUp = 5;
+    public static final double kWristPositionMiddle = 1.5;
+    public static final double kWristPositionDown = -3;
 
-    public static final double kLeftRotationsUp = 5;
-    public static final double kLeftRotationsDown = 1.5;
-    public static final double kLeftRotationsDown2 = -3;
-
-    public static final double kResetRightSide = 85.0;
-    public static final double kResetLeftSide = -90;
-
-    public static final double kRotationsIdle = 0.0;
+    // public static final double kRotationsIdle = 0.0;
 
     
 
@@ -257,11 +247,6 @@ public final class Constants {
   public static final int smoothing = 4;
   //Smoothing is from 0 to 8
 
-  public static class IntakeConstants {
-
-    public static final int kIntake = 20;
-
-  }
   public static class VisionConstants {
     public static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
     public static final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);

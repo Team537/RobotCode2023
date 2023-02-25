@@ -49,6 +49,7 @@ import frc.robot.subsystems.LED;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ArmInOut;
 import frc.robot.subsystems.ArmPivot;
+import frc.robot.subsystems.Manipulator;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
 import frc.robot.subsystems.Wrist;
@@ -103,7 +104,8 @@ public class RobotContainer {
   private final ArmInOut m_ArmInOut = new ArmInOut();
   private final ArmPivot m_ArmPivot = new ArmPivot();
   private final Wrist m_Wrist = new Wrist(); 
-  PhotonCamera camera = new PhotonCamera("USB Camera 0");
+  private final Manipulator m_Manipulator = new Manipulator();
+  private PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
   
   private final Camera m_camera = new Camera();
@@ -171,13 +173,13 @@ public class RobotContainer {
 
     /*^^ for incrementing the position of the arm in-out */
 
-    yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition1,m_ArmPivot::ArmPosition2,m_ArmPivot));
-    xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition2,m_ArmPivot::ArmPosition1,m_ArmPivot));
-    backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPosition3,m_ArmPivot::ArmPosition1,m_ArmPivot));
+    yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionDown,m_ArmPivot::ArmPositionUp,m_ArmPivot));
+    xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionUp,m_ArmPivot::ArmPositionDown,m_ArmPivot));
+    backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMiddle,m_ArmPivot::ArmPositionDown,m_ArmPivot));
 
-    dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPosition2,m_Wrist::WristPosition1,m_Wrist));
-    dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPosition1,m_Wrist::WristPosition2,m_Wrist));
-    leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPosition3,m_Wrist::WristPosition1,m_Wrist));
+    dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionMiddle,m_Wrist::WristPositionUp,m_Wrist));
+    dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionUp,m_Wrist::WristPositionMiddle,m_Wrist));
+    leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionDown,m_Wrist::WristPositionUp,m_Wrist));
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));

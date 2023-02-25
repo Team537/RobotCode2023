@@ -45,7 +45,7 @@ public class ArmInOut extends SubsystemBase {
     m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
     m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
     m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
-    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kRotationsUp, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionIn, CANSparkMax.ControlType.kSmartMotion);
 
   }
 
@@ -60,11 +60,11 @@ public class ArmInOut extends SubsystemBase {
     m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
     m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
     m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
-    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kRotationsDown, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionOut, CANSparkMax.ControlType.kSmartMotion);
 
   }
 
-  public void armIncrementUp() {
+  /*public void armIncrementUp() {
 
     m_incrementUp = Constants.ArmInOutConstants.kIncrementUp + m_encoderExtension.getPosition();
 
@@ -109,5 +109,5 @@ public class ArmInOut extends SubsystemBase {
     m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
     m_pidControllerExtension.setReference(m_incrementDown, CANSparkMax.ControlType.kSmartMotion);
 
-  }
+  }*/
 }
