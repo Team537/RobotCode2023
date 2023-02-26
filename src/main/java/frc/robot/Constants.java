@@ -215,48 +215,12 @@ public final class Constants {
 
   }
 
-  public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = .2;
-    public static final double kMaxAccelerationMetersPerSecondSquared =.1;
 
-    // Reasonable baseline values for a RAMSETE follower in units of meters and
-    // seconds
-    public static final double kRamseteB = 2;
-    public static final double kRamseteZeta = 0.7;
 
-    public static final double kPXController = 1;
-    public static final double kPYController = 1;
-    public static final double kPThetaController = 3.5;
-    public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
-                new TrapezoidProfile.Constraints(SwerveConstants.kModuleMaxAngularVelocity * 10,
-                        SwerveConstants.kModuleMaxAngularAcceleration * 10);
-  }
 
-  public static class kGains {
+ 
 
-    public static final double kP = 0.000102;
-    public static final double kI = 0.0;
-    public static final double kD = 0.000438;
-    public static final double kF = 0.0;
-  }
-
-  public static class GyroPID {
-    public static final double kP = 0.0;
-    public static final double kI = 0.0;
-    public static final double kD = 0.0;
-  }
-
-                  //@ASINX where do these constants go to
-                  public static final int kTimeoutMs = 10;
-                  public static final int kPIDLoopIdx = 0;
-                  public static final int kSlotIdx = 0;
-
-                  //gear ratio is 6:1 
-                  public static final double targetMeters = 2 * (6 * 2048 * 0.4787787204060999);
-
-                  //Smoothing is from 0 to 8
-                  public static final int smoothing = 4;
-  
+      
 
   public static class VisionConstants {
     public static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
@@ -276,6 +240,27 @@ public final class Constants {
     public static final int kAprilTagBlue = 3;
 
 
+  }
+
+  public static class LEDConstants {
+  public static final int length = 59;
+  public static final int centerLed = 29;
+  public static final int halfLength = (int) Math.ceil(length / 2.0);
+  public static final int batteryStartIndex = 72;
+  public static final int batteryEndIndex = 118;
+  public static final double strobeDuration = 0.2; // How long is each flash
+  public static final double rainbowFastFullLength = 40.0; // How many LEDs for a full cycle
+  public static final double rainbowFastDuration = 0.25; // How long until the cycle repeats
+  public static final double rainbowSlowFullLength = 80.0; // How many LEDs for a full cycle
+  public static final double rainbowSlowDuration = 4.0; // How long until the cycle repeats
+  public static final double breathDuration = 2.0; // How long until the cycle repeats
+  public static final double waveExponent = 0.4; // Controls the length of the transition
+  public static final double waveFastFullLength = 40.0; // How many LEDs for a full cycle
+  public static final double waveFastDuration = 0.25; // How long until the cycle repeats
+  public static final double waveAllianceFullLength = 15.0; // How many LEDs for a full cycle
+  public static final double waveAllianceDuration = 2.0; // How many LEDs for a full cycle
+  public static final double waveSlowFullLength = 40.0; // How many LEDs for a full cycle
+  public static final double waveSlowDuration = 3.0; 
   }
 
 

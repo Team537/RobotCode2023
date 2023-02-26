@@ -32,13 +32,13 @@ import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.event.BooleanEvent;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.AutoConstants;
+
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.GyroPID;
+
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
-import frc.robot.Constants.kGains;
+
 import frc.robot.commands.ChaseTagCommand;
 import frc.robot.commands.ExampleTrajectory;
 import frc.robot.commands.SlowSwerveDriveCommand;
@@ -194,8 +194,8 @@ public class RobotContainer {
       // rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
     //Toggle Booleans
     // LED Light Trigger COntrol Code
-    aButton.toggleOnTrue(new StartEndCommand(m_LED::setBlue,m_LED::setGreen,m_LED));
-    bButton.toggleOnTrue(new StartEndCommand(m_LED::setGreen,m_LED::setBlue,m_LED));
+    // aButton.toggleOnTrue(new StartEndCommand(m_LED::setBlue,m_LED::setGreen,m_LED));
+    // bButton.toggleOnTrue(new StartEndCommand(m_LED::setGreen,m_LED::setBlue,m_LED));
     
   
  starButton.toggleOnTrue(new SlowSwerveDriveCommand(
@@ -237,6 +237,7 @@ public class RobotContainer {
 
   public void periodic() {
     m_FieldSim.periodic();
+    m_LED.update();
     // Already runs ever 5 miliseconds: 
     // Add to a variable when joystick power > 0
     // Reset it to 0 when joystick = 0
