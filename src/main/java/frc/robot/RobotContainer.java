@@ -182,8 +182,8 @@ public class RobotContainer {
     leftBumper.onTrue(new StartEndCommand(m_ArmInOut::kArmPositionOutOut,m_ArmInOut::armOut,m_ArmInOut));
 
 
-    dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
-    dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
+    // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
+    // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
     /*^^ for incrementing the position of the arm in-out */
 
     yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionDown,m_ArmPivot::ArmPositionUp,m_ArmPivot));
