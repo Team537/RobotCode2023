@@ -82,6 +82,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final Pigeon2 m_gyro = new Pigeon2(SwerveConstants.kPigeonID);
 //   private final ADXRS450_GyroSim m_gyroSim = new ADXRS450_GyroSim(m_gyro);
 
+private LED m_LED = new LED();
 
   //Swerve Odometry 
 
@@ -305,7 +306,9 @@ public class DriveSubsystem extends SubsystemBase {
               module.getHeadingRotation2d().plus(getHeadingRotation2d())));
     }
   }
-
+  public void setLeds(LED leds) {
+    this.m_LED = leds;
+  }
   private void updateSmartDashboard() {
 
     SmartDashboard.putNumber("Gyro Angle", getHeadingDegrees());
@@ -320,6 +323,9 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     updateOdometry();
     updateSmartDashboard();
+    m_LED.setFallen(
+      Math.abs(m_gyro.getPitch()) > 75
+      || Math.abs(m_gyro.getPitch())> 75);
   }
  /**
  * Runs Periodically during Simulation

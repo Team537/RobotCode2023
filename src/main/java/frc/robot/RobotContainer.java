@@ -105,7 +105,7 @@ public class RobotContainer {
   private final ArmPivot m_ArmPivot = new ArmPivot();
   private final Wrist m_Wrist = new Wrist(); 
   // private final Manipulator m_Manipulator = new Manipulator();
-  private PhotonCamera camera = new PhotonCamera("USB Camera 0");
+  // private PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
   
   private final Camera m_camera = new Camera();
@@ -198,6 +198,8 @@ public class RobotContainer {
     // bButton.toggleOnTrue(new StartEndCommand(m_LED::setGreen,m_LED::setBlue,m_LED));
     
   
+  m_robotDrive.setLeds(m_LED);
+
  starButton.toggleOnTrue(new SlowSwerveDriveCommand(
   m_robotDrive,
   ()-> -(m_driverController.getLeftY()),

@@ -29,6 +29,7 @@ public class LED extends SubsystemBase {
   private LedMode mode = LedMode.DISABLED_NEUTRAL;
   private Alliance alliance = Alliance.Invalid;
   // private Spark m_blinkin = new Spark(0);
+ 
   public void update() {
     // Update alliance color
     if (DriverStation.isFMSAttached()) {
@@ -229,6 +230,31 @@ public class LED extends SubsystemBase {
       double blue = (c1.blue * (1 - ratio)) + (c2.blue * ratio);
       setLedsSymmetrical(i, new Color(red, green, blue));
     }
+    
+  }
+  public void setIntaking(boolean active) {
+    intaking = active;
+  }
+  public void setOutaking(boolean active) {
+    outaking = active;
+  }
+  public void setLowGoal(boolean active) {
+    low_goal = active;
+  }
+  public void setMidGoal(boolean active) {
+    mid_goal = active;
+  }
+  public void setHighGoal(boolean active) {
+    high_goal = active;
+  }
+  public void setCube(boolean active) {
+    cube = active;
+  }
+  public void setCone(boolean active) {
+    cone = active;
+  }
+  public void setFallen(boolean active) {
+    fallen = active;
   }
 
   // public void set(double val) {
