@@ -106,18 +106,26 @@ public class RobotContainer {
   
 
   // The robot's subsystems
-  private final LED m_LED = new LED();
+  public static final LED m_LED = new LED();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final GripperIntake m_Gripper = new GripperIntake();
-  private final ArmInOut m_ArmInOut = new ArmInOut();
-  private final ArmPivot m_ArmPivot = new ArmPivot();
-  private final Wrist m_Wrist = new Wrist(); 
-  // private final Manipulator m_Manipulator = new Manipulator();
+  // private final ArmInOut m_ArmInOut = new ArmInOut();
+  // private final ArmPivot m_ArmPivot = new ArmPivot();
+  // private final Wrist m_Wrist = new Wrist(); 
+  private final Manipulator m_Manipulator = new Manipulator();
   // private PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
   
   private final Camera m_camera = new Camera();
-  
+
+  Command high_goal = new ManipulatorHighGoal(m_Manipulator, m_LED);
+  Command mid_goal = new ManipulatorMidGoal(m_Manipulator, m_LED);
+  Command low_goal = new ManipulatorLowGoal(m_Manipulator, m_LED);
+  Command shelf = new ManipulatorShelf(m_Manipulator, m_LED);
+  Command gripperIn = new GripperIn(m_Gripper, m_LED);
+  Command gripperOut = new GripperOut(m_Gripper, m_LED);
+  Command signalCube = new SignalCube(m_LED);
+  Command signalCone = new SignalCone(m_LED);
 
   // SlewRateLimiter for Joystick Motion Profiling
 
@@ -177,42 +185,42 @@ public class RobotContainer {
 
 // NON LED COMMANDS
 
-    dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armOut,m_ArmInOut::armIn,m_ArmInOut));
-    dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armIn,m_ArmInOut::armOut,m_ArmInOut));
-    leftBumper.onTrue(new StartEndCommand(m_ArmInOut::kArmPositionOutOut,m_ArmInOut::armOut,m_ArmInOut));
+    // dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armOut,m_ArmInOut::armIn,m_ArmInOut));
+    // dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armIn,m_ArmInOut::armOut,m_ArmInOut));
+    // leftBumper.onTrue(new StartEndCommand(m_ArmInOut::kArmPositionOutOut,m_ArmInOut::armOut,m_ArmInOut));
 
 
     // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
     // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
     /*^^ for incrementing the position of the arm in-out */
 
-    yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionDown,m_ArmPivot::ArmPositionUp,m_ArmPivot));
-    xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionUp,m_ArmPivot::ArmPositionDown,m_ArmPivot));
-    backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMiddle,m_ArmPivot::ArmPositionDown,m_ArmPivot));
+    // yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionDown,m_ArmPivot::ArmPositionUp,m_ArmPivot));
+    // xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionUp,m_ArmPivot::ArmPositionDown,m_ArmPivot));
+    // backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMiddle,m_ArmPivot::ArmPositionDown,m_ArmPivot));
 
-    dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionDown,m_Wrist::WristPositionUp,m_Wrist));
-    dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionUp,m_Wrist::WristPositionMiddle,m_Wrist));
-    leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionMiddle,m_Wrist::WristPositionUp,m_Wrist));
-    rightBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionUp,m_Wrist));
+    // dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionDown,m_Wrist::WristPositionUp,m_Wrist));
+    // dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionUp,m_Wrist::WristPositionMiddle,m_Wrist));
+    // leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionMiddle,m_Wrist::WristPositionUp,m_Wrist));
+    // rightBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionUp,m_Wrist));
 
-     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
-    bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
+    //  aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
+    // bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
 
 
     //  LED COMMANDS
-    // yButton.onTrue(new ManipulatorHighGoal(m_Manipulator, m_LED));
-    // xButton.onTrue(new ManipulatorMidGoal(m_Manipulator, m_LED));
+    yButton.onTrue(high_goal);
+    xButton.onTrue(mid_goal);
 
    
-    // aButton.onTrue(new ManipulatorLowGoal(m_Manipulator, m_LED));
-    // bButton.onTrue(new ManipulatorShelf(m_Manipulator, m_LED));
+    aButton.onTrue(low_goal);
+    bButton.onTrue(shelf);
 
 
-    //  leftBumper.toggleOnTrue(new GripperIn(m_Gripper, m_LED));
-    //  rightBumper.toggleOnTrue(new GripperOut(m_Gripper, m_LED));
+     leftBumper.toggleOnTrue(gripperIn);
+     rightBumper.toggleOnTrue(gripperOut);
 
-    //  dPadLeftButton.toggleOnTrue(new SignalCone(m_LED));
-    //  dPadRightButton.toggleOnTrue(new SignalCube(m_LED));
+     dPadLeftButton.toggleOnTrue(signalCone);
+     dPadRightButton.toggleOnTrue(signalCube);
      final ChaseTagCommand chaseTagCommand = 
     new ChaseTagCommand(m_camera, m_robotDrive, m_camera :: getRobotPose2d);
 
@@ -231,7 +239,7 @@ public class RobotContainer {
   ()-> -(m_driverController.getLeftY()),
   ()->  m_driverController.getLeftX(),
   ()->  -m_driverController.getRightX()*0.7,
-  false));
+  false, m_LED));
     
 
   // Drive without Slew
@@ -241,7 +249,7 @@ public class RobotContainer {
       ()-> -m_driverController.getLeftY(),
       ()->  m_driverController.getLeftX(),
       ()->  -m_driverController.getRightX()*0.2,
-      true)); 
+      true, m_LED)); 
   
     //Drive with Slew
     // m_robotDrive.setDefaultCommand( 

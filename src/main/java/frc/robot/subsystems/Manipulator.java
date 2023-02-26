@@ -16,6 +16,7 @@ public class Manipulator extends SubsystemBase {
   private ArmInOut m_ArmInOut = new ArmInOut();
   private ArmPivot m_ArmPivot = new ArmPivot();
   private String manipulatorState = "Low Goal";
+
  
 
   /** Creates a new Manipulator. */
@@ -53,4 +54,5 @@ public class Manipulator extends SubsystemBase {
     SmartDashboard.putString("Manipulator State", manipulatorState);
     // This method will be called once per scheduler run
   }
+  
 }

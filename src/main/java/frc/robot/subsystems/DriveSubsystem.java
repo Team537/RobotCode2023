@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.SwerveConstants.ModulePosition;
 import frc.robot.utils.ModuleMap;
@@ -80,9 +81,10 @@ public class DriveSubsystem extends SubsystemBase {
   //Gyro and Simulated Gyro  
                     
   private final Pigeon2 m_gyro = new Pigeon2(SwerveConstants.kPigeonID);
+  public String driveState = "Drive";
 //   private final ADXRS450_GyroSim m_gyroSim = new ADXRS450_GyroSim(m_gyro);
 
-// private LED m_LED = new LED();
+
 
   //Swerve Odometry 
 
@@ -144,6 +146,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
       module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
+      driveState = "Drive";
   }
   public void slowDrive(
       double drive,
@@ -170,6 +173,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
       module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
+
+      driveState = "Slow Drive";
   }
 /**
  * Sets States For Swerve Modules and Determines FeedbackLoop Type
@@ -206,6 +211,14 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getHeadingDegrees() {
     return Math.IEEEremainder(-(m_gyro.getYaw()), 360);
+  }
+
+  public double getRoll() {
+    return m_gyro.getRoll();
+  }
+  
+  public double getPitch() {
+    return m_gyro.getPitch();
   }
   /** 
    * Gets {@link Rotation2d} from Heading
@@ -312,6 +325,7 @@ public class DriveSubsystem extends SubsystemBase {
   private void updateSmartDashboard() {
 
     SmartDashboard.putNumber("Gyro Angle", getHeadingDegrees());
+    SmartDashboard.putString("Drive State", driveState);
   }
 /**s
  * Runs Periodically after Init
@@ -323,9 +337,8 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     updateOdometry();
     updateSmartDashboard();
-    // m_LED.setFallen(
-    //   Math.abs(m_gyro.getPitch()) > 75
-    //   || Math.abs(m_gyro.getPitch())> 75);
+
+   
   }
  /**
  * Runs Periodically during Simulation
@@ -352,6 +365,11 @@ public class DriveSubsystem extends SubsystemBase {
       module.resetAngleToAbsolute();;
     }
 
+  }
+
+  public double getVelocity(){
+
+    return m_swerveModules.get(ModulePosition.FRONT_LEFT).getDriveMetersPerSecond();
   }
 
 

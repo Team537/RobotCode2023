@@ -28,6 +28,8 @@ public class LED extends SubsystemBase {
   private boolean outaking = false;
   private boolean cube = false;
   private boolean cone = false;
+  private boolean driving = false;
+  private boolean slow_driving = false;
   private LedMode mode = LedMode.DISABLED_NEUTRAL;
   private Alliance alliance = Alliance.Invalid;
   private String ledState = "Default";
@@ -64,6 +66,14 @@ public class LED extends SubsystemBase {
     else if (cube) {
       mode = LedMode.CUBE;
       ledState = "Cube";
+    } 
+    else if (driving) {
+      mode = LedMode.DRIVING;
+      ledState = "Driving";
+    } 
+    else if (slow_driving) {
+      mode = LedMode.SLOW_DRIVING;
+      ledState = "Slow Driving";
     } 
     else if (outaking && DriverStation.isTeleop()) {
       mode = LedMode.OUTAKING;
@@ -149,6 +159,8 @@ public class LED extends SubsystemBase {
     DEFAULT_TELEOP_RED, 
     DEFAULT_TELEOP_BLUE,
     DISABLED_RED, 
+    DRIVING,
+    SLOW_DRIVING,
     DISABLED_BLUE, 
     DISABLED_NEUTRAL, 
   }
@@ -174,6 +186,12 @@ public class LED extends SubsystemBase {
         break;
      case SHELF:
         breath(Color.kRed, Color.kCrimson);
+        break;
+     case DRIVING:
+        wave(Color.kGreen, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
+        break;
+      case SLOW_DRIVING:
+        wave(Color.kLime, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
         break;
       case DEFAULT_TELEOP_RED:
       wave(Color.kRed, Color.kBlack, LEDConstants.waveAllianceFullLength,
@@ -283,7 +301,12 @@ public class LED extends SubsystemBase {
   public void setFallen(boolean active) {
     fallen = active;
   }
-
+  public void setDriving(boolean active) {
+    driving = active;
+  }
+  public void setSlowDriving(boolean active) {
+    slow_driving = active;
+  }
   // public void set(double val) {
   //   if ((val >= -1.0) && (val <= 1.0)) {
   //     m_blinkin.set(val);

@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LED;
 
 import java.util.function.DoubleSupplier;
 
@@ -18,6 +19,7 @@ import java.util.function.DoubleSupplier;
 public class SwerveDriveCommand extends CommandBase {
   
   private final DriveSubsystem m_drive;
+  private final LED m_LED;
   private final DoubleSupplier m_driveInput, m_strafeInput, m_rotationInput;
   private final boolean m_isFieldRelative;
 
@@ -26,12 +28,13 @@ public class SwerveDriveCommand extends CommandBase {
    *
    * 
    */
-  public SwerveDriveCommand(DriveSubsystem m_drive, DoubleSupplier driveInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, boolean isFieldRelative) {
+  public SwerveDriveCommand(DriveSubsystem m_drive, DoubleSupplier driveInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, boolean isFieldRelative, LED m_LED) {
     this.m_drive = m_drive;
     m_driveInput = driveInput;
     m_strafeInput = strafeInput;
     m_rotationInput = rotationInput;
     m_isFieldRelative = isFieldRelative;
+    this.m_LED = m_LED;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drive);
   }
@@ -50,6 +53,20 @@ public class SwerveDriveCommand extends CommandBase {
     double rotation = Math.abs(m_rotationInput.getAsDouble()) > 0.1 ? m_rotationInput.getAsDouble() : 0;
 
     m_drive.drive(drive, strafe, rotation, m_isFieldRelative, true);    // Forward/Back Drive, Left/Right Strafe, Left/Right Turn
+    
+    if((Math.abs(m_drive.getVelocity()) > 0) && m_drive.driveState.equals("Drive")) {
+      m_LED.setDriving(true);
+      m_LED.setSlowDriving(false);
+    } else{
+      m_LED.setDriving(false);
+    }
+
+  if(m_drive.getPitch() > 75 || m_drive.getRoll() > 75) {
+    m_LED.setFallen(true);
+  } else{
+    m_LED.setFallen(false);
+  }
+
   }
 
   // Called once the command ends or is interrupted.
