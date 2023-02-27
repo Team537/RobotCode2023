@@ -61,7 +61,7 @@ public class SlowSwerveDriveCommand extends CommandBase {
       m_LED.setSlowDriving(false);
 
     }
-    if(m_drive.getPitch() > 75 || m_drive.getRoll() > 75) {
+    if(Math.abs(m_drive.getPitch()) > 75 || Math.abs(m_drive.getRoll()) > 75) {
       m_LED.setFallen(true);
     } else{
       m_LED.setFallen(false);
