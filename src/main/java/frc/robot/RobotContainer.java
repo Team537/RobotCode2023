@@ -46,6 +46,7 @@ import frc.robot.commands.led.LedLowGoal;
 import frc.robot.commands.led.LedMidGoal;
 import frc.robot.commands.led.LedShelf;
 import frc.robot.commands.manipulator.ManipulatorHighGoal;
+import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.signal.SignalCone;
 import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
@@ -121,7 +122,7 @@ public class RobotContainer {
 
   
   Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
-  // Command mid_goal = new ManipulatorMidGoal(m_Manipulator, m_LED);
+  Command mid_goal = new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   // Command low_goal = new ManipulatorLowGoal(m_Manipulator, m_LED);
   // Command shelf = new ManipulatorShelf(m_Manipulator, m_LED);
   Command gripperIn = new GripperIn(m_Gripper, m_LED);
@@ -187,30 +188,30 @@ public class RobotContainer {
 
 // NON LED COMMANDS
 
-    // dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armMidGoal,m_ArmInOut::armLowGoal,m_ArmInOut));
-    // dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armLowGoal,m_ArmInOut::armMidGoal,m_ArmInOut));
-    // leftBumper.onTrue(new StartEndCommand(m_ArmInOut::armHighGoal,m_ArmInOut::armMidGoal,m_ArmInOut));
+    dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armMidGoal,m_ArmInOut::armLowGoal,m_ArmInOut));
+    dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armLowGoal,m_ArmInOut::armMidGoal,m_ArmInOut));
+    leftBumper.onTrue(new StartEndCommand(m_ArmInOut::armHighGoal,m_ArmInOut::armMidGoal,m_ArmInOut));
 
 
     // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
     // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
     /*^^ for incrementing the position of the arm in-out */
 
-    // yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionLowGoal,m_ArmPivot::ArmPositionHighGoal,m_ArmPivot));
-    // xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionHighGoal,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
-    // backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidGoal,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
+    yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionLowGoal,m_ArmPivot::ArmPositionHighGoal,m_ArmPivot));
+    xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionHighGoal,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
+    backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidGoal,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
 
-    // dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionLowGoal,m_Wrist::WristPositionHighGoal,m_Wrist));
-    // dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionHighGoal,m_Wrist::WristPositionMidGoal,m_Wrist));
-    // leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionMidGoal,m_Wrist::WristPositionHighGoal,m_Wrist));
-    // rightBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionHighGoal,m_Wrist));
+    dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionLowGoal,m_Wrist::WristPositionHighGoal,m_Wrist));
+    dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionHighGoal,m_Wrist::WristPositionMidGoal,m_Wrist));
+    leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionMidGoal,m_Wrist::WristPositionHighGoal,m_Wrist));
+    rightBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionHighGoal,m_Wrist));
 
-    //  aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
-    // bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
+     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
+    bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
 
 
     //  LED COMMANDS
-    yButton.onTrue(high_goal);
+    // yButton.onTrue(high_goal);
     // xButton.onTrue(mid_goal);
 
    

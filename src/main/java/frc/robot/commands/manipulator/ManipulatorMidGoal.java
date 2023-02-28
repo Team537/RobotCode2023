@@ -6,11 +6,14 @@ package frc.robot.commands.manipulator;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.arminout.ArmInOutHighGoal;
+import frc.robot.commands.arminout.ArmInOutMidGoal;
 import frc.robot.commands.armpivot.ArmPivotHighGoal;
+import frc.robot.commands.armpivot.ArmPivotMidGoal;
 import frc.robot.commands.led.LedHighGoal;
+import frc.robot.commands.led.LedMidGoal;
 import frc.robot.commands.wrist.WristHighGoal;
+import frc.robot.commands.wrist.WristMidGoal;
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.ArmPivot;
@@ -19,13 +22,11 @@ import frc.robot.subsystems.manipulator.Wrist;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ManipulatorHighGoal extends SequentialCommandGroup {
+public class ManipulatorMidGoal extends SequentialCommandGroup {
 
 
-
-  
   /** Creates a new ManipulatorHighGoal. */
-  public ManipulatorHighGoal(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
+  public ManipulatorMidGoal(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
 
     
      
@@ -34,7 +35,7 @@ public class ManipulatorHighGoal extends SequentialCommandGroup {
      
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands( new ParallelCommandGroup(new LedHighGoal(m_LED),
-    new ParallelCommandGroup(new ArmPivotHighGoal(m_ArmPivot),  new WristHighGoal(m_Wrist)), new WaitCommand(1), new ArmInOutHighGoal(m_ArmInOut)));
+    addCommands( new ParallelCommandGroup(new LedMidGoal(m_LED),
+    new ParallelCommandGroup(new ArmPivotMidGoal(m_ArmPivot),  new WristMidGoal(m_Wrist)), new ArmInOutMidGoal(m_ArmInOut)));
   }
 }
