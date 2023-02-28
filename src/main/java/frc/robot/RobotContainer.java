@@ -38,29 +38,29 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
-
-import frc.robot.commands.ChaseTagCommand;
-import frc.robot.commands.ExampleTrajectory;
-import frc.robot.commands.GripperIn;
-import frc.robot.commands.GripperOut;
-import frc.robot.commands.ManipulatorHighGoal;
-import frc.robot.commands.ManipulatorLowGoal;
-import frc.robot.commands.ManipulatorMidGoal;
-import frc.robot.commands.ManipulatorShelf;
-import frc.robot.commands.SignalCone;
-import frc.robot.commands.SignalCube;
-import frc.robot.commands.SlowSwerveDriveCommand;
-import frc.robot.commands.SwerveDriveCommand;
+import frc.robot.commands.Auto.ExampleTrajectory;
+import frc.robot.commands.gripper.GripperIn;
+import frc.robot.commands.gripper.GripperOut;
+import frc.robot.commands.led.LedHighGoal;
+import frc.robot.commands.led.LedLowGoal;
+import frc.robot.commands.led.LedMidGoal;
+import frc.robot.commands.led.LedShelf;
+import frc.robot.commands.manipulator.ManipulatorHighGoal;
+import frc.robot.commands.signal.SignalCone;
+import frc.robot.commands.signal.SignalCube;
+import frc.robot.commands.swerve.SlowSwerveDriveCommand;
+import frc.robot.commands.swerve.SwerveDriveCommand;
+import frc.robot.commands.vision.ChaseTagCommand;
 import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ArmInOut;
-import frc.robot.subsystems.ArmPivot;
-import frc.robot.subsystems.Manipulator;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.manipulator.ArmInOut;
+import frc.robot.subsystems.manipulator.ArmPivot;
+import frc.robot.subsystems.manipulator.Manipulator;
+import frc.robot.subsystems.manipulator.Wrist;
 import frc.robot.Constants.limelight;
 import frc.robot.subsystems.Camera;
 
@@ -118,14 +118,16 @@ public class RobotContainer {
   
   private final Camera m_camera = new Camera();
 
-  // Command high_goal = new ManipulatorHighGoal(m_Manipulator, m_LED);
+
+  
+  Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
   // Command mid_goal = new ManipulatorMidGoal(m_Manipulator, m_LED);
   // Command low_goal = new ManipulatorLowGoal(m_Manipulator, m_LED);
   // Command shelf = new ManipulatorShelf(m_Manipulator, m_LED);
-  // Command gripperIn = new GripperIn(m_Gripper, m_LED);
-  // Command gripperOut = new GripperOut(m_Gripper, m_LED);
-  // Command signalCube = new SignalCube(m_LED);
-  // Command signalCone = new SignalCone(m_LED);
+  Command gripperIn = new GripperIn(m_Gripper, m_LED);
+  Command gripperOut = new GripperOut(m_Gripper, m_LED);
+  Command signalCube = new SignalCube(m_LED);
+  Command signalCone = new SignalCone(m_LED);
 
   // SlewRateLimiter for Joystick Motion Profiling
 
@@ -185,30 +187,30 @@ public class RobotContainer {
 
 // NON LED COMMANDS
 
-    dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armOut,m_ArmInOut::armIn,m_ArmInOut));
-    dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armIn,m_ArmInOut::armOut,m_ArmInOut));
-    leftBumper.onTrue(new StartEndCommand(m_ArmInOut::kArmPositionOutOut,m_ArmInOut::armOut,m_ArmInOut));
+    // dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armMidGoal,m_ArmInOut::armLowGoal,m_ArmInOut));
+    // dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armLowGoal,m_ArmInOut::armMidGoal,m_ArmInOut));
+    // leftBumper.onTrue(new StartEndCommand(m_ArmInOut::armHighGoal,m_ArmInOut::armMidGoal,m_ArmInOut));
 
 
     // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
     // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
     /*^^ for incrementing the position of the arm in-out */
 
-    yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionDown,m_ArmPivot::ArmPositionUp,m_ArmPivot));
-    xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionUp,m_ArmPivot::ArmPositionDown,m_ArmPivot));
-    backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMiddle,m_ArmPivot::ArmPositionDown,m_ArmPivot));
+    // yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionLowGoal,m_ArmPivot::ArmPositionHighGoal,m_ArmPivot));
+    // xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionHighGoal,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
+    // backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidGoal,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
 
-    dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionDown,m_Wrist::WristPositionUp,m_Wrist));
-    dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionUp,m_Wrist::WristPositionMiddle,m_Wrist));
-    leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionMiddle,m_Wrist::WristPositionUp,m_Wrist));
-    rightBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionUp,m_Wrist));
+    // dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionLowGoal,m_Wrist::WristPositionHighGoal,m_Wrist));
+    // dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionHighGoal,m_Wrist::WristPositionMidGoal,m_Wrist));
+    // leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionMidGoal,m_Wrist::WristPositionHighGoal,m_Wrist));
+    // rightBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionHighGoal,m_Wrist));
 
-     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
-    bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
+    //  aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
+    // bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
 
 
     //  LED COMMANDS
-    // yButton.onTrue(high_goal);
+    yButton.onTrue(high_goal);
     // xButton.onTrue(mid_goal);
 
    
@@ -221,6 +223,8 @@ public class RobotContainer {
 
     //  dPadLeftButton.toggleOnTrue(signalCone);
     //  dPadRightButton.toggleOnTrue(signalCube);
+
+    
      final ChaseTagCommand chaseTagCommand = 
     new ChaseTagCommand(m_camera, m_robotDrive, m_camera :: getRobotPose2d);
 

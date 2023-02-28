@@ -2,36 +2,35 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Auto;
+package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.math.trajectory.Trajectory;
-import frc.robot.simulation.FieldSim;
+import frc.robot.subsystems.manipulator.ArmInOut;
+import frc.robot.subsystems.manipulator.Wrist;
 
-public class PlotFieldTrajectory extends CommandBase {
 
-  FieldSim m_fieldSim;
-  Trajectory m_trajectory;
+public class WristLowGoal extends CommandBase {
 
-  /** Creates a new PlotFieldTrajectory. */
-  public PlotFieldTrajectory(FieldSim m_fieldSim, Trajectory m_traj) {
+  private Wrist m_Wrist;
+  /** Creates a new ArmPivotLowGoal. */
+  public WristLowGoal(Wrist m_Wrist) {
 
-    this.m_fieldSim = m_fieldSim;
-    m_trajectory = m_traj; 
+    this.m_Wrist = m_Wrist;
+
+    addRequirements(m_Wrist);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-    m_fieldSim.setTrajectory(m_trajectory);
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+    m_Wrist.WristPositionLowGoal();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -40,6 +39,6 @@ public class PlotFieldTrajectory extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

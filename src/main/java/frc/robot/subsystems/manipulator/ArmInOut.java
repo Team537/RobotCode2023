@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems;
+package frc.robot.subsystems.manipulator;
 
 import com.revrobotics.RelativeEncoder;
 
@@ -25,16 +25,18 @@ public class ArmInOut extends SubsystemBase {
   private RelativeEncoder m_encoderExtension = m_extension.getEncoder();
   private double m_incrementUp;
   private double m_incrementDown;
+  private String armInOutState = "Default";
   
   @Override
   public void periodic() {
     SmartDashboard.putNumber(" Extend Position", m_encoderExtension.getPosition());
     SmartDashboard.putNumber("Extension Velocity",m_encoderExtension.getVelocity());
+    SmartDashboard.putString("Arm In Out State", armInOutState);
     
     // This method will be called once per scheduler run
   }
 
-  public void armOut() {
+  public void armMidGoal() {
     m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
     m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
     m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
@@ -45,11 +47,42 @@ public class ArmInOut extends SubsystemBase {
     m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
     m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
     m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
-    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionOut, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionMidGoal, CANSparkMax.ControlType.kSmartMotion);
+    armInOutState = "Mid Goal";
+  }
+
+  public void armLowGoal() {
+    m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
+    m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
+    m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
+    m_pidControllerExtension.setIZone(Constants.ArmInOutConstants.kIz);
+    m_pidControllerExtension.setFF(Constants.ArmInOutConstants.kFF);
+    m_pidControllerExtension.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionLowGoal, CANSparkMax.ControlType.kSmartMotion);
+    armInOutState = "Low Goal";
+  }
+
+  public void armHighGoal() {
+    m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
+    m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
+    m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
+    m_pidControllerExtension.setIZone(Constants.ArmInOutConstants.kIz);
+    m_pidControllerExtension.setFF(Constants.ArmInOutConstants.kFF);
+    m_pidControllerExtension.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionHighGoal, CANSparkMax.ControlType.kSmartMotion);
+    armInOutState = "High Goal";
 
   }
 
-  public void armIn() {
+  public void armShelf() {
     m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
     m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
     m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
@@ -60,23 +93,8 @@ public class ArmInOut extends SubsystemBase {
     m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
     m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
     m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
-    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionIn, CANSparkMax.ControlType.kSmartMotion);
-
-  }
-
-  public void kArmPositionOutOut() {
-    m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
-    m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
-    m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
-    m_pidControllerExtension.setIZone(Constants.ArmInOutConstants.kIz);
-    m_pidControllerExtension.setFF(Constants.ArmInOutConstants.kFF);
-    m_pidControllerExtension.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
-    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
-    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
-    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
-    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
-    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionOutOut, CANSparkMax.ControlType.kSmartMotion);
-
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmPositionShelf, CANSparkMax.ControlType.kSmartMotion);
+    armInOutState = "Shelf";
   }
 
   /*public void armIncrementUp() {

@@ -2,52 +2,44 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.manipulator;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.arminout.ArmInOutHighGoal;
+import frc.robot.commands.armpivot.ArmPivotHighGoal;
+import frc.robot.commands.led.LedHighGoal;
+import frc.robot.commands.wrist.WristHighGoal;
 import frc.robot.subsystems.LED;
-import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.manipulator.ArmInOut;
+import frc.robot.subsystems.manipulator.ArmPivot;
+import frc.robot.subsystems.manipulator.Wrist;
 
-public class ManipulatorHighGoal extends CommandBase {
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class ManipulatorHighGoal extends SequentialCommandGroup {
 
-  private Manipulator m_Manipulator;
-  private LED m_LED;
+  private Wrist m_Wrist;
+  private ArmInOut m_ArmInOut;
+  private ArmPivot m_ArmPivot; 
+  private ArmPivotHighGoal armPivotHighGoal;
+  private ArmInOutHighGoal armInOutHighGoal;
+  private WristHighGoal wristHighGoal;
+  private LedHighGoal ledHighGoal;
   /** Creates a new ManipulatorHighGoal. */
-  public ManipulatorHighGoal(Manipulator m_Manipulator, LED m_LED) {
+  public ManipulatorHighGoal(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
 
-        this.m_Manipulator = m_Manipulator;
-        this.m_LED = m_LED;
-
-        addRequirements(m_Manipulator);
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-
-    m_LED.setHighGoal(true);
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-
-    m_Manipulator.highGoal(); 
-
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-
-    m_LED.setHighGoal(false);
-
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
+    this.m_ArmPivot = m_ArmPivot;
+    this.m_ArmInOut = m_ArmInOut;
+    this.m_Wrist = m_Wrist;
+     
+   
+    
+     
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
+    addCommands( new ParallelCommandGroup(new LedHighGoal(m_LED),
+    new ParallelCommandGroup(new ArmPivotHighGoal(m_ArmPivot),  new WristHighGoal(m_Wrist))), new ArmInOutHighGoal(m_ArmInOut));
   }
 }

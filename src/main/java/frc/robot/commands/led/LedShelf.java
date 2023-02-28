@@ -2,22 +2,23 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Auto;
+package frc.robot.commands.led;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.math.trajectory.Trajectory;
-import frc.robot.simulation.FieldSim;
+import frc.robot.subsystems.LED;
+import frc.robot.subsystems.manipulator.Manipulator;
 
-public class PlotFieldTrajectory extends CommandBase {
+public class LedShelf extends CommandBase {
 
-  FieldSim m_fieldSim;
-  Trajectory m_trajectory;
+  
+  private LED m_LED;
+  /** Creates a new ManipulatorHighGoal. */
+  public LedShelf( LED m_LED) {
 
-  /** Creates a new PlotFieldTrajectory. */
-  public PlotFieldTrajectory(FieldSim m_fieldSim, Trajectory m_traj) {
+       
+        this.m_LED = m_LED;
 
-    this.m_fieldSim = m_fieldSim;
-    m_trajectory = m_traj; 
+        
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -25,21 +26,28 @@ public class PlotFieldTrajectory extends CommandBase {
   @Override
   public void initialize() {
 
-    m_fieldSim.setTrajectory(m_trajectory);
-
+    m_LED.setShelf(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+  
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+    m_LED.setShelf(false);
+
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }
