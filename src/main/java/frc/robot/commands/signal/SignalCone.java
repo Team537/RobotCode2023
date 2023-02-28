@@ -24,6 +24,7 @@ public class SignalCone extends CommandBase {
   @Override
   public void execute() {
     m_LED.setCone(true);
+    m_LED.setCube(false);
   }
 
   // Called once the command ends or is interrupted.

@@ -24,6 +24,7 @@ public class SignalCube extends CommandBase {
   @Override
   public void execute() {
     m_LED.setCube(true);
+    m_LED.setCone(false);
   }
 
   // Called once the command ends or is interrupted.
