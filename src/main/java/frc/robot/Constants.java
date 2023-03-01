@@ -102,14 +102,14 @@ public final class Constants {
     public static final double kMaxV = 3000;
     public static final double kMinV = 0;
     //Max Acceleration
-    public static final double kMaxA = 2500;
+    public static final double kMaxA = 3000;
     public static final double kAllE = 0;
 
     //ARM INOUT SET POSITIONS
-    public static final double kArmPositionLowGoal = -50;
+    public static final double kArmPositionLowGoal = 40.0;
     public static final double kArmPositionMidGoal = 0.0;
-    public static final double kArmPositionHighGoal = -200.0;
-    public static final double kArmPositionShelf = -150.0;
+    public static final double kArmPositionHighGoal = 225.0;
+    public static final double kArmPositionShelf = 150.0;
 
     //INCREMENT TEST POS
     /*public static final double kIncrementUp = -10;
@@ -140,7 +140,7 @@ public final class Constants {
     //ARM PIVOT SET POSITONS
     public static final double kArmPositionHighGoal = 58.0;
     public static final double kArmPositionShelf = 40.0;
-    public static final double kArmPositionMidGoal = 15.0;
+    public static final double kArmPositionMidGoal = 25.0;
     public static final double kArmPositionLowGoal = 0.0;
 
   }
@@ -164,21 +164,12 @@ public final class Constants {
     public static final double kAllE = 0;
 
     //WRIST SET POSITIONS
-    public static final double kWristPositionHighGoal = -10;
-    public static final double kWristPositionShelf = -7;
-    public static final double kWristPositionMidGoal = -3;
+    public static final double kWristPositionHighGoal = -10;//test val
+    public static final double kWristPositionShelf = -9;
+    public static final double kWristPositionMidGoal = -9; 
     public static final double kWristPositionLowGoal = -5;
     
     public static final double kWristPositionZero = 0;
-
-    /* 
-    optimal picking up: -5
-    optimal drop off cone: -10
-    
-
-    */
-
-
 
   }
 

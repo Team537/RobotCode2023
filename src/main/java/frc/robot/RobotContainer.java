@@ -205,10 +205,10 @@ public class RobotContainer {
 
     dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionLowGoal,m_Wrist::WristPositionHighGoal,m_Wrist));
     dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionHighGoal,m_Wrist::WristPositionMidGoal,m_Wrist));
-    leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionMidGoal,m_Wrist::WristPositionHighGoal,m_Wrist));
+    // leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionMidGoal,m_Wrist::WristPositionHighGoal,m_Wrist));
     rightBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionHighGoal,m_Wrist));
 
-     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
+    aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
 
 
