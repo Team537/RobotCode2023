@@ -89,6 +89,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import javax.print.attribute.standard.JobHoldUntil;
+import javax.print.attribute.standard.JobPrioritySupported;
 import javax.swing.SwingConstants;
 
 import org.photonvision.PhotonCamera;
@@ -119,7 +120,7 @@ public class RobotContainer {
   // private PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
   
-  private final Camera m_camera = new Camera();
+  private final Camera m_camera = new Camera(m_robotDrive);
 
 
   
@@ -151,10 +152,12 @@ public class RobotContainer {
   JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
   JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
 
-   // Drive Speeds
-  
-  
 
+  
+  
+  JoystickButton leftStick = new JoystickButton(m_driverController, Button.kBack.value);
+  JoystickButton rightStick = new JoystickButton(m_driverController, Button.kRightStick.value);
+   // Drive Speeds
 
    JoystickButton leftBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
    JoystickButton rightBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
@@ -231,8 +234,8 @@ public class RobotContainer {
      final ChaseTagCommand chaseTagCommand = 
     new ChaseTagCommand(m_camera, m_robotDrive, m_camera :: getRobotPose2d);
 
-      // leftBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToLimelight,m_camera::CameraPipeline,m_camera));
-      // rightBumper.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
+    leftStick.toggleOnTrue(new StartEndCommand(m_camera::CameraToLimelight,m_camera::CameraPipeline,m_camera));
+    rightStick.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
     //Toggle Booleans
     // LED Light Trigger COntrol Code
     // aButton.toggleOnTrue(new StartEndCommand(m_LED::setBlue,m_LED::setGreen,m_LED));
