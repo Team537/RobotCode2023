@@ -40,7 +40,7 @@ public class Camera extends SubsystemBase {
     double[] tagPosX = new double[10];
     double[] tagPosY = new double[10];
     int[] tagIds = new int[10];
-public void camera( DriveSubsystem m_drive){
+public Camera( DriveSubsystem m_drive){
     this.m_drive = m_drive;
     
    
