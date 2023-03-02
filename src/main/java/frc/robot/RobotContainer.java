@@ -197,18 +197,16 @@ public class RobotContainer {
     dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armLowGoal,m_ArmInOut::armMidGoal,m_ArmInOut));
     leftBumper.onTrue(new StartEndCommand(m_ArmInOut::armHighGoal,m_ArmInOut::armMidGoal,m_ArmInOut));
 
+      // // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
+      // // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
+      // /*^^ for incrementing the position of the arm in-out */
 
-    // // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
-    // // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
-    // /*^^ for incrementing the position of the arm in-out */
+    yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionZero,m_ArmPivot::ArmPositionHighGoal,m_ArmPivot));
+    xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionGround,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
+    backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionTest,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
 
-    yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionLowGoal,m_ArmPivot::ArmPositionHighGoal,m_ArmPivot));
-    xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionHighGoal,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
-    backButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidGoal,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
-
-    dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionLowGoal,m_Wrist::WristPositionHighGoal,m_Wrist));
-    dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionHighGoal,m_Wrist::WristPositionMidGoal,m_Wrist));
-    // leftBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionMidGoal,m_Wrist::WristPositionHighGoal,m_Wrist));
+    dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionTest,m_Wrist::WristPositionHighGoal,m_Wrist));
+    dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionGround,m_Wrist::WristPositionMidGoal,m_Wrist));
     rightBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionHighGoal,m_Wrist));
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));

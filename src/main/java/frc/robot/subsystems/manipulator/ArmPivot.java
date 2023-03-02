@@ -82,7 +82,7 @@ public class ArmPivot extends SubsystemBase {
    
   }
 
-  public void kArmPositionShelf() {
+  public void ArmPositionShelf() {
     m_pidControllerPivot1.setP(Constants.ArmPivotConstants.kP);
     m_pidControllerPivot1.setI(Constants.ArmPivotConstants.kI);
     m_pidControllerPivot1.setD(Constants.ArmPivotConstants.kD);
@@ -100,7 +100,7 @@ public class ArmPivot extends SubsystemBase {
    
   }
 
-  public void kArmPositionZero() {
+  public void ArmPositionZero() {
     m_pidControllerPivot1.setP(Constants.ArmPivotConstants.kP);
     m_pidControllerPivot1.setI(Constants.ArmPivotConstants.kI);
     m_pidControllerPivot1.setD(Constants.ArmPivotConstants.kD);
@@ -118,7 +118,7 @@ public class ArmPivot extends SubsystemBase {
    
   }
 
-  public void kArmPositionGround() {
+  public void ArmPositionGround() {
     m_pidControllerPivot1.setP(Constants.ArmPivotConstants.kP);
     m_pidControllerPivot1.setI(Constants.ArmPivotConstants.kI);
     m_pidControllerPivot1.setD(Constants.ArmPivotConstants.kD);
@@ -136,7 +136,7 @@ public class ArmPivot extends SubsystemBase {
    
   }
 
-  public void kArmPositionTest() {
+  public void ArmPositionTest() {
     m_pidControllerPivot1.setP(Constants.ArmPivotConstants.kP);
     m_pidControllerPivot1.setI(Constants.ArmPivotConstants.kI);
     m_pidControllerPivot1.setD(Constants.ArmPivotConstants.kD);

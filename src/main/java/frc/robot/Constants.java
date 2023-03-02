@@ -108,7 +108,7 @@ public final class Constants {
     public static final double kArmInOutPositionShelf = 150.0;
 
     public static final double kArmInOutPositionTest = 0.0;
-    public static final double kArmInOutPositionZero = 0.0;
+    public static final double kArmInOutPositionZero = -5;
     public static final double kArmInOutPositionGround = 0.0;
 
     //INCREMENT TEST POS
