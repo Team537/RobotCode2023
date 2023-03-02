@@ -19,16 +19,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class GripperIntake extends SubsystemBase {
   CANSparkMax m_Gripper = new CANSparkMax(GripperConstants.kGripper, MotorType.kBrushless);
   CANSparkMax m_Gripper2 = new CANSparkMax(GripperConstants.kGripper2, MotorType.kBrushless);
-  UsbCamera cam =  new UsbCamera("Usb Camera 0", 0);
-  MjpegServer mjep = new MjpegServer("server_1", 1181);
+ 
   private String gripperState = "Stopped";
 
   
 
   /** Creates a new GripperIntake. */
   public GripperIntake() {
-    CameraServer.startAutomaticCapture(0);
-    // mjep.setSource(cam);
+   
   } 
 
   @Override
