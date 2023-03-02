@@ -133,9 +133,10 @@ public class DriveSubsystem extends SubsystemBase {
 
     //Chassis Speed
     ChassisSpeeds chassisSpeeds =
-        // isFieldRelative ?
+        isFieldRelative ?
             ChassisSpeeds.fromFieldRelativeSpeeds(
-                drive, strafe, rotation, getHeadingRotation2d());
+                drive, strafe, rotation, getHeadingRotation2d())
+                : new ChassisSpeeds(drive, strafe, rotation);
             //  new ChassisSpeeds(drive*Math.cos(Math.toRadians(m_gyro.getYaw())) + strafe*Math.sin(Math.toRadians(m_gyro.getYaw())),
             //  -drive*Math.sin(Math.toRadians(m_gyro.getYaw())) + strafe*Math.cos(Math.toRadians(m_gyro.getYaw())), 
             //  rotation);
@@ -162,10 +163,10 @@ public class DriveSubsystem extends SubsystemBase {
 
     //Chassis Speed
     ChassisSpeeds chassisSpeeds =
-        // isFieldRelative
+        isFieldRelative ?
              ChassisSpeeds.fromFieldRelativeSpeeds(
-                drive, strafe, rotation, getHeadingRotation2d());
-            // : new ChassisSpeeds(drive, strafe, rotation);
+                drive, strafe, rotation, getHeadingRotation2d())
+            : new ChassisSpeeds(drive, strafe, rotation);
 
     //Module States
     Map<ModulePosition, SwerveModuleState> moduleStates =

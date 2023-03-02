@@ -23,13 +23,8 @@ public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
   
-<<<<<<< HEAD
      
   private RobotContainer m_robotContainer = new RobotContainer();
-=======
- 
-  private RobotContainer m_robotContainer;
->>>>>>> PathPlanner2
   
 
   /**
@@ -40,21 +35,12 @@ public class Robot extends TimedRobot {
   public void robotInit() {
   
     
-<<<<<<< HEAD
  
-    // m_robotContainer.robotInit();
-    
-  // m_robotContainer.getClass();
-
-  
-=======
-   
-  
-    m_robotContainer = new RobotContainer();
     m_robotContainer.robotInit();
+    
+  m_robotContainer.getClass();
 
-   
->>>>>>> PathPlanner2
+  
   }
 
   /**

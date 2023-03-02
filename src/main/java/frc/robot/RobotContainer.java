@@ -41,6 +41,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.commands.Auto.ExampleTrajectory;
+import frc.robot.commands.Auto.FollowTrajectory;
 import frc.robot.commands.gripper.GripperIn;
 import frc.robot.commands.gripper.GripperOut;
 import frc.robot.commands.led.LedHighGoal;
@@ -56,9 +57,6 @@ import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.commands.swerve.SwerveDriveCommand;
 import frc.robot.commands.vision.ChaseTagCommand;
-
-import frc.robot.commands.FollowTrajectory;
-
 import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.LED;
