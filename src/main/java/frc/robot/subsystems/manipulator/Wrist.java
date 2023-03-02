@@ -70,7 +70,7 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.WristConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.WristConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.WristConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionLowGoal, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionMidGoal, CANSparkMax.ControlType.kSmartMotion);
     wristState = "Low Goal";
   }
 
@@ -102,6 +102,36 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.WristConstants.kAllE, 0);
     m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionZero, CANSparkMax.ControlType.kSmartMotion);
     wristState = "Zero";
+  }
+
+  public void WristPositionGround() {
+    m_pidControllerPivot1.setP(Constants.WristConstants.kP);
+    m_pidControllerPivot1.setI(Constants.WristConstants.kI);
+    m_pidControllerPivot1.setD(Constants.WristConstants.kD);
+    m_pidControllerPivot1.setIZone(Constants.WristConstants.kIz);
+    m_pidControllerPivot1.setFF(Constants.WristConstants.kFF);
+    m_pidControllerPivot1.setOutputRange(Constants.WristConstants.kMinOutput, Constants.WristConstants.kMaxOutput);
+    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.WristConstants.kMaxV, 0);
+    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.WristConstants.kMinV, 0);
+    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.WristConstants.kMaxA, 0);
+    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.WristConstants.kAllE, 0);
+    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionGround, CANSparkMax.ControlType.kSmartMotion);
+    wristState = "Ground";
+  }
+
+  public void WristPositionTest() {
+    m_pidControllerPivot1.setP(Constants.WristConstants.kP);
+    m_pidControllerPivot1.setI(Constants.WristConstants.kI);
+    m_pidControllerPivot1.setD(Constants.WristConstants.kD);
+    m_pidControllerPivot1.setIZone(Constants.WristConstants.kIz);
+    m_pidControllerPivot1.setFF(Constants.WristConstants.kFF);
+    m_pidControllerPivot1.setOutputRange(Constants.WristConstants.kMinOutput, Constants.WristConstants.kMaxOutput);
+    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.WristConstants.kMaxV, 0);
+    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.WristConstants.kMinV, 0);
+    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.WristConstants.kMaxA, 0);
+    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.WristConstants.kAllE, 0);
+    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionTest, CANSparkMax.ControlType.kSmartMotion);
+    wristState = "Test";
   }
 
   

@@ -77,14 +77,11 @@ public final class Constants {
     public static final double kTurnToleranceDeg = 4;
     public static final double kTurnRateToleranceDegPerS = 1;
 
-
-
-
   }
 
   public static final class GripperConstants{
     public static final int kGripper = 15;
-    public static final int kGripper2 = 17; // subject to change
+    public static final int kGripper2 = 17; 
 
   }
   
@@ -106,10 +103,13 @@ public final class Constants {
     public static final double kAllE = 0;
 
     //ARM INOUT SET POSITIONS
-    public static final double kArmPositionLowGoal = 40.0;
-    public static final double kArmPositionMidGoal = 0.0;
-    public static final double kArmPositionHighGoal = 225.0;
-    public static final double kArmPositionShelf = 150.0;
+    public static final double kArmInOutPositionMidGoal = 0.0;
+    public static final double kArmInOutPositionHighGoal = 225.0;
+    public static final double kArmInOutPositionShelf = 150.0;
+
+    public static final double kArmInOutPositionTest = 0.0;
+    public static final double kArmInOutPositionZero = 0.0;
+    public static final double kArmInOutPositionGround = 0.0;
 
     //INCREMENT TEST POS
     /*public static final double kIncrementUp = -10;
@@ -138,10 +138,13 @@ public final class Constants {
     public static final double kAllE = 0;
 
     //ARM PIVOT SET POSITONS
-    public static final double kArmPositionHighGoal = 58.0;
-    public static final double kArmPositionShelf = 40.0;
-    public static final double kArmPositionMidGoal = 25.0;
-    public static final double kArmPositionLowGoal = 0.0;
+    public static final double kArmPivotPositionHighGoal = 58.0;
+    public static final double kArmPivotPositionShelf = 40.0;
+    public static final double kArmPivotPositionMidGoal = 25.0;
+
+    public static final double kArmPivotPositionTest = 0.0;
+    public static final double kArmPivotPositionZero = 0.0;
+    public static final double kArmPivotPositionGround = 58.0;
 
   }
 
@@ -164,12 +167,14 @@ public final class Constants {
     public static final double kAllE = 0;
 
     //WRIST SET POSITIONS
-    public static final double kWristPositionHighGoal = -10;//test val
+    public static final double kWristPositionHighGoal = -10;
     public static final double kWristPositionShelf = -9;
     public static final double kWristPositionMidGoal = -9; 
-    public static final double kWristPositionLowGoal = -5;
-    
+
+    public static final double kWristPositionTest = 0;
     public static final double kWristPositionZero = 0;
+    public static final double kWristPositionGround = -6;
+
 
   }
 
@@ -209,13 +214,6 @@ public final class Constants {
     }
 
   }
-
-
-
-
- 
-
-      
 
   public static class VisionConstants {
     public static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
@@ -257,7 +255,6 @@ public final class Constants {
   public static final double waveSlowFullLength = 40.0; 
   public static final double waveSlowDuration = 3.0; 
   }
-
 
   public static class SwerveConstants {
     public static final double kWheelRadius = 1.75;
