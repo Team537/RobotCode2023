@@ -27,7 +27,7 @@ public class GripperIntake extends SubsystemBase {
 
   /** Creates a new GripperIntake. */
   public GripperIntake() {
-    CameraServer.startAutomaticCapture(cam);
+    CameraServer.startAutomaticCapture(0);
     // mjep.setSource(cam);
   } 
 
