@@ -21,6 +21,7 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -31,6 +32,7 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.event.BooleanEvent;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.DriveConstants;
@@ -54,6 +56,9 @@ import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.commands.swerve.SwerveDriveCommand;
 import frc.robot.commands.vision.ChaseTagCommand;
+
+import frc.robot.commands.FollowTrajectory;
+
 import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.LED;
@@ -119,6 +124,7 @@ public class RobotContainer {
   // private final Manipulator m_Manipulator = new Manipulator();
   // private PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
+  private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   
   private final Camera m_camera = new Camera(m_robotDrive);
 
@@ -290,12 +296,18 @@ public class RobotContainer {
   }
 
   public void robotInit() {
-    m_robotDrive.resetEncoders();
+    // m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
+
+     m_Chooser.addOption("Auto 1", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 1"));
+     m_Chooser.addOption("Auto 2", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 2"));
+     m_Chooser.addOption("Auto 3", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 3"));
+
+     SmartDashboard.putData("Auto Selector", m_Chooser);
   }
 
   public Command getAutoCommand() {
 
-   return new ExampleTrajectory(m_robotDrive, m_FieldSim);
+   return m_Chooser.getSelected();
   }
 
 

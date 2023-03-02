@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.SwerveConstants;
@@ -39,6 +40,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.unmanaged.Unmanaged;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
   
 
 public class DriveSubsystem extends SubsystemBase {
@@ -176,6 +179,21 @@ public class DriveSubsystem extends SubsystemBase {
 
       driveState = "Slow Drive";
   }
+  public Command followTrajectoryCommand(PathPlannerTrajectory traj) {
+    
+         return new PPSwerveControllerCommand(
+             traj, 
+             this::getPoseMeters, // Pose supplier
+             SwerveConstants.kDriveKinematics, // SwerveDriveKinematics
+             new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
+             new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             this::setSwerveModuleStatesAuto, // Module states consumer
+             true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+             this // Requires this drive subsystem
+         );
+     
+ }
 /**
  * Sets States For Swerve Modules and Determines FeedbackLoop Type
  * 
@@ -285,7 +303,7 @@ public class DriveSubsystem extends SubsystemBase {
     return m_turnControllerAuto;
   }
 
-  public void setNeutralMode(NeutralMode mode) {
+  public void setBrakeMode(NeutralMode mode) {
     for (SwerveModule module : m_swerveModules.values()) {
       module.setDriveNeutralMode(mode);
       module.setTurnNeutralMode(mode);
