@@ -27,7 +27,7 @@ public class ArmPivotShelf extends CommandBase {
   @Override
   public void execute() {
 
-    m_ArmPivot.kArmPositionShelf();
+    m_ArmPivot.ArmPositionShelf();
   }
 
   // Called once the command ends or is interrupted.

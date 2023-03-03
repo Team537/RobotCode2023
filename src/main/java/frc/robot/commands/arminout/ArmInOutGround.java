@@ -2,20 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.armpivot;
+package frc.robot.commands.arminout;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.manipulator.ArmPivot;
+import frc.robot.subsystems.manipulator.ArmInOut;
 
-public class ArmPivotLowGoal extends CommandBase {
 
-  private ArmPivot m_ArmPivot;
+public class ArmInOutGround extends CommandBase {
+
+  private ArmInOut m_ArmInOut;
   /** Creates a new ArmPivotLowGoal. */
-  public ArmPivotLowGoal(ArmPivot m_ArmPivot) {
+  public ArmInOutGround(ArmInOut m_ArmInOut) {
 
-    this.m_ArmPivot = m_ArmPivot;
+    this.m_ArmInOut = m_ArmInOut;
 
-    addRequirements(m_ArmPivot);
+    addRequirements(m_ArmInOut);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,7 +28,7 @@ public class ArmPivotLowGoal extends CommandBase {
   @Override
   public void execute() {
 
-    m_ArmPivot.ArmPositionLowGoal();
+    m_ArmInOut.armLowGoal();
   }
 
   // Called once the command ends or is interrupted.

@@ -38,7 +38,7 @@ public class ArmPivot extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.ArmPivotConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionHighGoal, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionGround, CANSparkMax.ControlType.kSmartMotion);
     // SmartDashboard.putBoolean("Arm Down", true);
     // SmartDashboard.putBoolean("Arm Up", false);
     armPivotState = "Low Goal";
