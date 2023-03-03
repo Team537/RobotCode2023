@@ -217,15 +217,15 @@ public class RobotContainer {
 
 */
     //  LED COMMANDS
-    // yButton.onTrue(high_goal);
-    // xButton.onTrue(mid_goal);
+    yButton.onTrue(high_goal);
+    xButton.onTrue(mid_goal);
 
     aButton.onTrue(ground);
     bButton.onTrue(shelf_mid);
 
 
-    //  leftBumper.toggleOnTrue(gripperIn);
-    //  rightBumper.toggleOnTrue(gripperOut);
+     leftBumper.toggleOnTrue(gripperIn);
+     rightBumper.toggleOnTrue(gripperOut);
 
     dPadUpButton.onTrue(shelf_high);
 
