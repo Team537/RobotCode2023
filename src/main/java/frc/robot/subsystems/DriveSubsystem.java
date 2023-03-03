@@ -158,7 +158,7 @@ public class DriveSubsystem extends SubsystemBase {
       double rotation,
       boolean isFieldRelative,
       boolean isOpenLoop) {
-        // rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
+        rotation *= SwerveConstants.kSlowRotationRadiansPerSecond;
 
 
     //Chassis Speed

@@ -294,6 +294,8 @@ public final class Constants {
     public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 1;
     
 
+    public static final double kSlowRotationRadiansPerSecond = Math.PI * 1;
+
     public static final int kFrontLeftDrive = 0;
     public static final int kFrontLeftTurn = 1;
     public static final int kFrontRightDrive = 2;
