@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LEDConstants;
 
 public class LED extends SubsystemBase {
-  private AddressableLED addressableLED = new AddressableLED(0);
+  private AddressableLED addressableLED = new AddressableLED(1);
   private AddressableLEDBuffer buffer = new AddressableLEDBuffer(LEDConstants.length);
   private boolean fallen = false;
   private boolean low_goal = false;

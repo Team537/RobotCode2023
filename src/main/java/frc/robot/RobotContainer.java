@@ -60,6 +60,7 @@ import frc.robot.commands.vision.ChaseTagCommand;
 import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.LED;
+import frc.robot.subsystems.blinkin;
 import frc.robot.subsystems.DriveSubsystem;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
@@ -125,8 +126,7 @@ public class RobotContainer {
   private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   
   private final Camera m_camera = new Camera(m_robotDrive);
-
-
+  private final blinkin m_blinkin = new blinkin(); 
   
   Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
   Command mid_goal = new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
