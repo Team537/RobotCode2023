@@ -7,11 +7,11 @@ package frc.robot.commands.armpivot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.manipulator.ArmPivot;
 
-public class ArmPivotLowGoal extends CommandBase {
+public class ArmPivotGround extends CommandBase {
 
   private ArmPivot m_ArmPivot;
   /** Creates a new ArmPivotLowGoal. */
-  public ArmPivotLowGoal(ArmPivot m_ArmPivot) {
+  public ArmPivotGround(ArmPivot m_ArmPivot) {
 
     this.m_ArmPivot = m_ArmPivot;
 

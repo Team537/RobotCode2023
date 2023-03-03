@@ -49,7 +49,11 @@ import frc.robot.commands.led.LedLowGoal;
 import frc.robot.commands.led.LedMidGoal;
 import frc.robot.commands.led.LedShelf;
 import frc.robot.commands.manipulator.ManipulatorHighGoal;
+<<<<<<< HEAD
 import frc.robot.commands.manipulator.ManipulatorGroundl;
+=======
+import frc.robot.commands.manipulator.ManipulatorGround;
+>>>>>>> development
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.manipulator.ManipulatorShelf;
 import frc.robot.commands.signal.SignalCone;
@@ -129,10 +133,13 @@ public class RobotContainer {
   private final Camera m_camera = new Camera(m_robotDrive);
 
 
-  
   Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
   Command mid_goal = new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+<<<<<<< HEAD
   Command low_goal = new ManipulatorGroundl(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+=======
+  Command ground = new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+>>>>>>> development
   Command shelf =  new ManipulatorShelf(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command gripperIn = new GripperIn(m_Gripper, m_LED);
   Command gripperOut = new GripperOut(m_Gripper, m_LED);
@@ -199,13 +206,19 @@ public class RobotContainer {
 
 // NON LED COMMANDS
 
+<<<<<<< HEAD
     dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armMidGoal,m_ArmInOut::armGround,m_ArmInOut));
     dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armGround,m_ArmInOut::armMidGoal,m_ArmInOut));
     leftBumper.onTrue(new StartEndCommand(m_ArmInOut::armHighGoal,m_ArmInOut::armMidGoal,m_ArmInOut));
+=======
+   /*  dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armGround,m_ArmInOut::armLowGoal,m_ArmInOut));
+    dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armZero,m_ArmInOut::armMidGoal,m_ArmInOut));
+    leftBumper.onTrue(new StartEndCommand(m_ArmInOut::armTest,m_ArmInOut::armMidGoal,m_ArmInOut));
+>>>>>>> development
 
       // // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
       // // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
-      // /*^^ for incrementing the position of the arm in-out */
+      // ^^ for incrementing the position of the arm in-out 
 
     yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionZero,m_ArmPivot::ArmPositionHighGoal,m_ArmPivot));
     xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionGround,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
@@ -214,22 +227,27 @@ public class RobotContainer {
     dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionTest,m_Wrist::WristPositionHighGoal,m_Wrist));
     dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionGround,m_Wrist::WristPositionMidGoal,m_Wrist));
     rightBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionHighGoal,m_Wrist));
+    // dPadUpButton.toggleOnTrue(new StartEndCommand(m_Manipulator::gripperManipulatorIn,m_Manipulator::highGoal,m_Manipulator));
+    leftBumper.onTrue(new StartEndCommand(m_Manipulator::scoreMid,m_Manipulator::highGoal,m_Manipulator));
 
-    aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
-    bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
+    dPadUpButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
+    dPadDownButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
 
+    aButton.onTrue(new StartEndCommand(m_Manipulator::ground,m_Manipulator::highGoal, m_Manipulator));
+    bButton.onTrue(new StartEndCommand(m_Manipulator::midGoal,m_Manipulator::highGoal, m_Manipulator));
+    xButton.onTrue(new StartEndCommand(m_Manipulator::highGoal,m_Manipulator::midGoal, m_Manipulator));
+    // yButton.onTrue();
+    rightBumper.onTrue(new StartEndCommand(m_Manipulator::zero,m_Manipulator::highGoal, m_Manipulator));*/
 
     //  LED COMMANDS
-    // yButton.onTrue(high_goal);
-    // xButton.onTrue(mid_goal);
+    yButton.onTrue(high_goal);
+    xButton.onTrue(mid_goal);
 
-   
-    // aButton.onTrue(low_goal);
-    // bButton.onTrue(shelf);
+    aButton.onTrue(ground);
+    bButton.onTrue(shelf);
 
-
-    //  leftBumper.toggleOnTrue(gripperIn);
-    //  rightBumper.toggleOnTrue(gripperOut);
+    leftBumper.toggleOnTrue(gripperIn);
+    rightBumper.toggleOnTrue(gripperOut);
 
     //  dPadLeftButton.toggleOnTrue(signalCone);
     //  dPadRightButton.toggleOnTrue(signalCube);

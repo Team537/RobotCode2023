@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.manipulator.ArmInOut;
 
 
-public class ArmInOutLowGoal extends CommandBase {
+public class ArmInOutGround extends CommandBase {
 
   private ArmInOut m_ArmInOut;
   /** Creates a new ArmPivotLowGoal. */
-  public ArmInOutLowGoal(ArmInOut m_ArmInOut) {
+  public ArmInOutGround(ArmInOut m_ArmInOut) {
 
     this.m_ArmInOut = m_ArmInOut;
 

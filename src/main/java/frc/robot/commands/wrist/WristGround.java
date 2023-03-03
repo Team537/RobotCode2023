@@ -9,11 +9,11 @@ import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.Wrist;
 
 
-public class WristLowGoal extends CommandBase {
+public class WristGround extends CommandBase {
 
   private Wrist m_Wrist;
   /** Creates a new ArmPivotLowGoal. */
-  public WristLowGoal(Wrist m_Wrist) {
+  public WristGround(Wrist m_Wrist) {
 
     this.m_Wrist = m_Wrist;
 

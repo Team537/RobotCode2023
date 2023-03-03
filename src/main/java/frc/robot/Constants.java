@@ -107,8 +107,8 @@ public final class Constants {
     public static final double kArmInOutPositionHighGoal = 225.0;
     public static final double kArmInOutPositionShelf = 150.0;
 
-    public static final double kArmInOutPositionTest = 0.0;
-    public static final double kArmInOutPositionZero = -5;
+    public static final double kArmInOutPositionTest = 50;
+    public static final double kArmInOutPositionZero = -1;
     public static final double kArmInOutPositionGround = 0.0;
 
     //INCREMENT TEST POS
@@ -138,11 +138,11 @@ public final class Constants {
     public static final double kAllE = 0;
 
     //ARM PIVOT SET POSITONS
-    public static final double kArmPivotPositionHighGoal = 58.0;
+    public static final double kArmPivotPositionHighGoal = 17;
     public static final double kArmPivotPositionShelf = 40.0;
     public static final double kArmPivotPositionMidGoal = 25.0;
 
-    public static final double kArmPivotPositionTest = 0.0;
+    public static final double kArmPivotPositionTest = 20.0;
     public static final double kArmPivotPositionZero = 0.0;
     public static final double kArmPivotPositionGround = 58.0;
 
@@ -167,13 +167,15 @@ public final class Constants {
     public static final double kAllE = 0;
 
     //WRIST SET POSITIONS
-    public static final double kWristPositionHighGoal = -10;
+    public static final double kWristPositionHighGoal = -11;
     public static final double kWristPositionShelf = -9;
-    public static final double kWristPositionMidGoal = -9; 
+    public static final double kWristPositionMidGoal = -14; 
 
-    public static final double kWristPositionTest = 0;
+    public static final double kWristPositionTest = -13;
     public static final double kWristPositionZero = 0;
-    public static final double kWristPositionGround = -6;
+    public static final double kWristPositionGround = -5;
+
+    // public static final double kWristPositionGroundUp = -4;
 
 
   }
