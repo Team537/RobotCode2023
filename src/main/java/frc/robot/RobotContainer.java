@@ -128,6 +128,7 @@ public class RobotContainer {
   private final Camera m_camera = new Camera(m_robotDrive);
 
 
+  
   Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
   Command mid_goal = new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command ground = new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
@@ -201,7 +202,7 @@ public class RobotContainer {
 
       // // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
       // // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown, m_ArmInOut::armIncrementUp, m_ArmInOut));
-      // ^^ for incrementing the position of the arm in-out 
+      //^^ for incrementing the position of the arm in-out
 
     yButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionZero,m_ArmPivot::ArmPositionHighGoal,m_ArmPivot));
     xButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionGround,m_ArmPivot::ArmPositionLowGoal,m_ArmPivot));
@@ -210,27 +211,21 @@ public class RobotContainer {
     dPadDownButton.onTrue(new StartEndCommand(m_Wrist::WristPositionTest,m_Wrist::WristPositionHighGoal,m_Wrist));
     dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionGround,m_Wrist::WristPositionMidGoal,m_Wrist));
     rightBumper.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionHighGoal,m_Wrist));
-    // dPadUpButton.toggleOnTrue(new StartEndCommand(m_Manipulator::gripperManipulatorIn,m_Manipulator::highGoal,m_Manipulator));
-    leftBumper.onTrue(new StartEndCommand(m_Manipulator::scoreMid,m_Manipulator::highGoal,m_Manipulator));
 
-    dPadUpButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
-    dPadDownButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
+    aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
+    bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
 
-    aButton.onTrue(new StartEndCommand(m_Manipulator::ground,m_Manipulator::highGoal, m_Manipulator));
-    bButton.onTrue(new StartEndCommand(m_Manipulator::midGoal,m_Manipulator::highGoal, m_Manipulator));
-    xButton.onTrue(new StartEndCommand(m_Manipulator::highGoal,m_Manipulator::midGoal, m_Manipulator));
-    // yButton.onTrue();
-    rightBumper.onTrue(new StartEndCommand(m_Manipulator::zero,m_Manipulator::highGoal, m_Manipulator));*/
-
+*/
     //  LED COMMANDS
-    yButton.onTrue(high_goal);
-    xButton.onTrue(mid_goal);
+    // yButton.onTrue(high_goal);
+    // xButton.onTrue(mid_goal);
 
     aButton.onTrue(ground);
     bButton.onTrue(shelf_mid);
 
-    leftBumper.toggleOnTrue(gripperIn);
-    rightBumper.toggleOnTrue(gripperOut);
+
+    //  leftBumper.toggleOnTrue(gripperIn);
+    //  rightBumper.toggleOnTrue(gripperOut);
 
     dPadUpButton.onTrue(shelf_high);
 
@@ -262,7 +257,7 @@ public class RobotContainer {
   ()-> -(m_driverController.getLeftY()),
   ()->  m_driverController.getLeftX(),
   ()->  -m_driverController.getRightX()*0.7,
-  false, m_LED));
+  true, m_LED));
     
 
   // Drive without Slew
