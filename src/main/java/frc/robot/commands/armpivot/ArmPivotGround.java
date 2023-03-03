@@ -27,7 +27,7 @@ public class ArmPivotGround extends CommandBase {
   @Override
   public void execute() {
 
-    m_ArmPivot.ArmPositionLowGoal();
+    m_ArmPivot.ArmPositionGround();
   }
 
   // Called once the command ends or is interrupted.

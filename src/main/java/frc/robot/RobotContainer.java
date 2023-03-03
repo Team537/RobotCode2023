@@ -51,7 +51,8 @@ import frc.robot.commands.led.LedShelf;
 import frc.robot.commands.manipulator.ManipulatorHighGoal;
 import frc.robot.commands.manipulator.ManipulatorGround;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
-import frc.robot.commands.manipulator.ManipulatorShelf;
+import frc.robot.commands.manipulator.ManipulatorShelfHigh;
+import frc.robot.commands.manipulator.ManipulatorShelfMid;
 import frc.robot.commands.signal.SignalCone;
 import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
@@ -66,7 +67,6 @@ import frc.robot.subsystems.GripperCamera;
 import frc.robot.subsystems.GripperIntake;
 import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.ArmPivot;
-import frc.robot.subsystems.manipulator.Manipulator;
 import frc.robot.subsystems.manipulator.Wrist;
 import frc.robot.Constants.limelight;
 import frc.robot.subsystems.Camera;
@@ -121,8 +121,7 @@ public class RobotContainer {
   private final ArmInOut m_ArmInOut = new ArmInOut();
   private final ArmPivot m_ArmPivot = new ArmPivot();
   private final Wrist m_Wrist = new Wrist(); 
-  // private final Manipulator m_Manipulator = new Manipulator();
-  // private PhotonCamera camera = new PhotonCamera("USB Camera 0");
+    // private PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
   private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   
@@ -132,7 +131,8 @@ public class RobotContainer {
   Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
   Command mid_goal = new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command ground = new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command shelf =  new ManipulatorShelf(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+  Command shelf_mid =  new ManipulatorShelfMid(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+  Command shelf_high = new ManipulatorShelfHigh(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command gripperIn = new GripperIn(m_Gripper, m_LED);
   Command gripperOut = new GripperOut(m_Gripper, m_LED);
   Command signalCube = new SignalCube(m_LED);
@@ -152,14 +152,9 @@ public class RobotContainer {
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort1);
   
-
-
   JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
   JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
 
-
-  
-  
   JoystickButton leftStick = new JoystickButton(m_driverController, Button.kBack.value);
   JoystickButton rightStick = new JoystickButton(m_driverController, Button.kRightStick.value);
    // Drive Speeds
@@ -197,7 +192,9 @@ public class RobotContainer {
 
 
 // NON LED COMMANDS
-
+//This is all commented out because we use a single button to order multiple commands, using commands made
+//for each part of the manipulator. they were then merged into multiple action commands, which send multiple
+//objects to multiple positions with one button press
    /*  dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armGround,m_ArmInOut::armLowGoal,m_ArmInOut));
     dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armZero,m_ArmInOut::armMidGoal,m_ArmInOut));
     leftBumper.onTrue(new StartEndCommand(m_ArmInOut::armTest,m_ArmInOut::armMidGoal,m_ArmInOut));
@@ -230,10 +227,18 @@ public class RobotContainer {
     xButton.onTrue(mid_goal);
 
     aButton.onTrue(ground);
-    bButton.onTrue(shelf);
+    bButton.onTrue(shelf_mid);
 
     leftBumper.toggleOnTrue(gripperIn);
     rightBumper.toggleOnTrue(gripperOut);
+
+    dPadUpButton.onTrue(shelf_high);
+
+    // dPadLeftButton.toggleOnTrue(WristDownManual);
+    // dPadRightButton.toggleOnTrue(WristUpManual);
+
+    // dPadUpButton.toggleOnTrue(ArmPivotUpManual);
+    // dPadDownButton.toggleOnTrue(ArmPivotDownManual);
 
     //  dPadLeftButton.toggleOnTrue(signalCone);
     //  dPadRightButton.toggleOnTrue(signalCube);

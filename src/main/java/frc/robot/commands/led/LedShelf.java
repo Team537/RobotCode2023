@@ -6,7 +6,6 @@ package frc.robot.commands.led;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LED;
-import frc.robot.subsystems.manipulator.Manipulator;
 
 public class LedShelf extends CommandBase {
 

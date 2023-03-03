@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.manipulator.ArmInOut;
 
 
-public class ArmInOutShelf extends CommandBase {
+public class ArmInOutShelfMid extends CommandBase {
 
   private ArmInOut m_ArmInOut;
   /** Creates a new ArmPivotLowGoal. */
-  public ArmInOutShelf(ArmInOut m_ArmInOut) {
+  public ArmInOutShelfMid(ArmInOut m_ArmInOut) {
 
     this.m_ArmInOut = m_ArmInOut;
 
@@ -28,7 +28,7 @@ public class ArmInOutShelf extends CommandBase {
   @Override
   public void execute() {
 
-    m_ArmInOut.armShelf();
+    m_ArmInOut.armShelfMid();
   }
 
   // Called once the command ends or is interrupted.
