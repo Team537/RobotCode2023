@@ -103,11 +103,12 @@ public final class Constants {
     public static final double kAllE = 0;
 
     //ARM INOUT SET POSITIONS
-    public static final double kArmInOutPositionMidGoal = 0.0;
+    public static final double kArmInOutPositionMidGoal = 50;
     public static final double kArmInOutPositionHighGoal = 225.0;
-    public static final double kArmInOutPositionShelf = 150.0;
+    public static final double kArmInOutPositionShelfMid = 50;
+    public static final double kArmInOutPositionShelfHigh = 50;
 
-    public static final double kArmInOutPositionTest = 50;
+    // public static final double kArmInOutPositionTest = 50;
     public static final double kArmInOutPositionZero = -1;
     public static final double kArmInOutPositionGround = 0.0;
 
@@ -139,10 +140,12 @@ public final class Constants {
 
     //ARM PIVOT SET POSITONS
     public static final double kArmPivotPositionHighGoal = 17;
-    public static final double kArmPivotPositionShelf = 40.0;
-    public static final double kArmPivotPositionMidGoal = 25.0;
+    public static final double kArmPivotPositionShelfMid = 25;
+    public static final double kArmPivotPositionMidGoal = 20;
+    public static final double kArmPivotPositionShelfHigh = 25;
 
-    public static final double kArmPivotPositionTest = 20.0;
+
+    // public static final double kArmPivotPositionTest = 20.0;
     public static final double kArmPivotPositionZero = 0.0;
     public static final double kArmPivotPositionGround = 58.0;
 
@@ -168,12 +171,15 @@ public final class Constants {
 
     //WRIST SET POSITIONS
     public static final double kWristPositionHighGoal = -11;
-    public static final double kWristPositionShelf = -9;
-    public static final double kWristPositionMidGoal = -14; 
+    public static final double kWristPositionShelfMid = -10;
+    public static final double kWristPositionMidGoal = -13; 
+    public static final double kWristPositionShelfHigh = -10;
 
-    public static final double kWristPositionTest = -13;
+    // public static final double kWristPositionTest = -14;
     public static final double kWristPositionZero = 0;
-    public static final double kWristPositionGround = -5;
+    public static final double kWristPositionGround = -6;
+    //when carrying cones and cubes on the ground, they currently hit
+    //the ground, need to add something to bring the wrist up 1 rotation
 
     // public static final double kWristPositionGroundUp = -4;
 

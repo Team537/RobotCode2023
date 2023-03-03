@@ -8,13 +8,15 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.arminout.ArmInOutHighGoal;
-import frc.robot.commands.arminout.ArmInOutShelf;
+import frc.robot.commands.arminout.ArmInOutShelfMid;
 import frc.robot.commands.armpivot.ArmPivotHighGoal;
-import frc.robot.commands.armpivot.ArmPivotShelf;
+import frc.robot.commands.armpivot.ArmPivotShelfHigh;
+import frc.robot.commands.armpivot.ArmPivotShelfMid;
 import frc.robot.commands.led.LedHighGoal;
 import frc.robot.commands.led.LedShelf;
 import frc.robot.commands.wrist.WristHighGoal;
-import frc.robot.commands.wrist.WristShelf;
+import frc.robot.commands.wrist.WristShelfHigh;
+import frc.robot.commands.wrist.WristShelfMid;
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.ArmPivot;
@@ -23,22 +25,25 @@ import frc.robot.subsystems.manipulator.Wrist;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ManipulatorShelf extends SequentialCommandGroup {
+public class ManipulatorShelfHigh extends SequentialCommandGroup {
+  /** Creates a new ManipulatorShelfHigh. */
+  public ManipulatorShelfHigh(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
 
 
 
-  
-  /** Creates a new ManipulatorHighGoal. */
-  public ManipulatorShelf(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
 
-    
-     
-   
-    
-     
+
+
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands( new ParallelCommandGroup(new LedShelf(m_LED),
-    new ParallelCommandGroup(new ArmPivotShelf(m_ArmPivot),  new WristShelf(m_Wrist)), new WaitCommand(1), new ArmInOutShelf(m_ArmInOut)));
+    addCommands( new ParallelCommandGroup(
+      new LedShelf(m_LED),
+      new ParallelCommandGroup(
+        new ArmPivotShelfHigh(m_ArmPivot),  
+        new WristShelfHigh(m_Wrist)), 
+      new WaitCommand(1), 
+      new ArmPivotShelfHigh(m_ArmPivot))
+
+    );
   }
 }

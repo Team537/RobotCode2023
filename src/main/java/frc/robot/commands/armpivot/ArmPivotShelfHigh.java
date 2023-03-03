@@ -2,23 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.wrist;
+package frc.robot.commands.armpivot;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.manipulator.ArmInOut;
-import frc.robot.subsystems.manipulator.Wrist;
+import frc.robot.subsystems.manipulator.ArmPivot;
 
+public class ArmPivotShelfHigh extends CommandBase {
+  private ArmPivot m_ArmPivot;
 
-public class WristShelf extends CommandBase {
-
-  private Wrist m_Wrist;
-  /** Creates a new ArmPivotLowGoal. */
-  public WristShelf(Wrist m_Wrist) {
-
-    this.m_Wrist = m_Wrist;
-
-    addRequirements(m_Wrist);
+  /** Creates a new ArmPivotShelfHigh. */
+  public ArmPivotShelfHigh(ArmPivot m_ArmPivot) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.m_ArmPivot = m_ArmPivot;
+
+    addRequirements(m_ArmPivot);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +26,7 @@ public class WristShelf extends CommandBase {
   @Override
   public void execute() {
 
-    m_Wrist.WristPositionShelf();
+    m_ArmPivot.ArmPositionShelfHigh();
   }
 
   // Called once the command ends or is interrupted.
