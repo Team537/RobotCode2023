@@ -28,7 +28,7 @@ public class ArmInOutLowGoal extends CommandBase {
   @Override
   public void execute() {
 
-    m_ArmInOut.armLowGoal();
+    m_ArmInOut.armGround();
   }
 
   // Called once the command ends or is interrupted.

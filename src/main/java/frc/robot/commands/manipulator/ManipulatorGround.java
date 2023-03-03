@@ -40,7 +40,7 @@ public class ManipulatorLowGoal extends SequentialCommandGroup {
      
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands( new ParallelCommandGroup(new LedLowGoal(m_LED),
-    new ParallelCommandGroup(new ArmPivotLowGoal(m_ArmPivot),  new WristLowGoal(m_Wrist)), new WaitCommand(1), new ArmInOutLowGoal(m_ArmInOut)));
+    addCommands( new ParallelCommandGroup(new ArmInOutLowGoal(m_ArmInOut), new LedLowGoal(m_LED),
+    new ParallelCommandGroup(new ArmPivotLowGoal(m_ArmPivot),  new WristLowGoal(m_Wrist)), new WaitCommand(1) ));
   }
 }

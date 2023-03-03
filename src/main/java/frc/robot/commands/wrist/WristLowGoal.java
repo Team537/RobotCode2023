@@ -29,7 +29,7 @@ public class WristLowGoal extends CommandBase {
   @Override
   public void execute() {
 
-    m_Wrist.WristPositionLowGoal();
+    m_Wrist.WristPositionGround();
   }
 
   // Called once the command ends or is interrupted.

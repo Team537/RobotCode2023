@@ -49,7 +49,7 @@ import frc.robot.commands.led.LedLowGoal;
 import frc.robot.commands.led.LedMidGoal;
 import frc.robot.commands.led.LedShelf;
 import frc.robot.commands.manipulator.ManipulatorHighGoal;
-import frc.robot.commands.manipulator.ManipulatorLowGoal;
+import frc.robot.commands.manipulator.ManipulatorGroundl;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.manipulator.ManipulatorShelf;
 import frc.robot.commands.signal.SignalCone;
@@ -132,7 +132,7 @@ public class RobotContainer {
   
   Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
   Command mid_goal = new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command low_goal = new ManipulatorLowGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+  Command low_goal = new ManipulatorGroundl(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command shelf =  new ManipulatorShelf(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command gripperIn = new GripperIn(m_Gripper, m_LED);
   Command gripperOut = new GripperOut(m_Gripper, m_LED);
@@ -199,8 +199,8 @@ public class RobotContainer {
 
 // NON LED COMMANDS
 
-    dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armMidGoal,m_ArmInOut::armLowGoal,m_ArmInOut));
-    dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armLowGoal,m_ArmInOut::armMidGoal,m_ArmInOut));
+    dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armMidGoal,m_ArmInOut::armGround,m_ArmInOut));
+    dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armGround,m_ArmInOut::armMidGoal,m_ArmInOut));
     leftBumper.onTrue(new StartEndCommand(m_ArmInOut::armHighGoal,m_ArmInOut::armMidGoal,m_ArmInOut));
 
       // // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp, m_ArmInOut::armIncrementDown, m_ArmInOut));
