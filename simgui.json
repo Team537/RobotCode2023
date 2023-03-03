@@ -26,6 +26,7 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+<<<<<<< HEAD
       "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[2]": "Digital Input",
@@ -42,11 +43,26 @@
       "/LiveWindow/Ungrouped/Talon FX [5]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [6]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [7]": "Motor Controller",
+=======
+      "/SmartDashboard/Auto Selector": "String Chooser",
+>>>>>>> PathPlanner2
       "/SmartDashboard/Field2d": "Field2d",
       "/SmartDashboard/Scheduler": "Scheduler"
     },
     "windows": {
       "/SmartDashboard/Field2d": {
+<<<<<<< HEAD
+=======
+        "Robot": {
+          "style": "Box/Image"
+        },
+        "Swerve Modules": {
+          "arrows": false,
+          "style": "Hidden"
+        },
+        "height": 7.900000095367432,
+        "width": 16.899999618530273,
+>>>>>>> PathPlanner2
         "window": {
           "visible": true
         }
@@ -59,8 +75,5 @@
         "open": true
       }
     }
-  },
-  "NetworkTables Info": {
-    "visible": true
   }
 }

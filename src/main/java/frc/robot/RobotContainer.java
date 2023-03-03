@@ -21,6 +21,7 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -31,6 +32,7 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.event.BooleanEvent;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.DriveConstants;
@@ -39,6 +41,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.commands.Auto.ExampleTrajectory;
+import frc.robot.commands.Auto.FollowTrajectory;
 import frc.robot.commands.gripper.GripperIn;
 import frc.robot.commands.gripper.GripperOut;
 import frc.robot.commands.led.LedHighGoal;
@@ -58,6 +61,7 @@ import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.GripperCamera;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
 import frc.robot.subsystems.manipulator.ArmInOut;
@@ -113,12 +117,14 @@ public class RobotContainer {
   public static final LED m_LED = new LED();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final GripperIntake m_Gripper = new GripperIntake();
+  private final GripperCamera m_GripperCamera = new GripperCamera();
   private final ArmInOut m_ArmInOut = new ArmInOut();
   private final ArmPivot m_ArmPivot = new ArmPivot();
   private final Wrist m_Wrist = new Wrist(); 
   // private final Manipulator m_Manipulator = new Manipulator();
   // private PhotonCamera camera = new PhotonCamera("USB Camera 0");
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
+  private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   
   private final Camera m_camera = new Camera(m_robotDrive);
 
@@ -294,12 +300,18 @@ public class RobotContainer {
   }
 
   public void robotInit() {
-    m_robotDrive.resetEncoders();
+    // m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
+
+     m_Chooser.addOption("Auto 1", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 1"));
+     m_Chooser.addOption("Auto 2", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 2"));
+     m_Chooser.addOption("Auto 3", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 3"));
+
+     SmartDashboard.putData("Auto Selector", m_Chooser);
   }
 
   public Command getAutoCommand() {
 
-   return new ExampleTrajectory(m_robotDrive, m_FieldSim);
+   return m_Chooser.getSelected();
   }
 
 

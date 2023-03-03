@@ -216,7 +216,7 @@ public class SwerveModule extends SubsystemBase {
       double percentOutput1 =  Math.max(percentOutput, -0.5);
       m_driveMotor.set(ControlMode.PercentOutput, percentOutput1);
     } else {
-      double velocity = slewRateOutput.calculate(desiredState.speedMetersPerSecond / (SwerveConstants.kDriveEncoderDistancePerPulse * 10));
+      double velocity = (desiredState.speedMetersPerSecond / (SwerveConstants.kDriveEncoderDistancePerPulse * 10));
       m_driveMotor.set(
           ControlMode.Velocity,
           velocity,
