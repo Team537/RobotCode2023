@@ -6,6 +6,7 @@ package frc.robot.commands.manipulator;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.arminout.ArmInOutHighGoal;
 import frc.robot.commands.arminout.ArmInOutMidGoal;
@@ -36,7 +37,12 @@ public class ManipulatorMidGoal extends SequentialCommandGroup {
      
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands( new ParallelCommandGroup(new LedMidGoal(m_LED),
-    new ParallelCommandGroup(new ArmPivotMidGoal(m_ArmPivot),  new WristMidGoal(m_Wrist)), new WaitCommand(1), new ArmInOutMidGoal(m_ArmInOut)));
+    addCommands( new ParallelCommandGroup(
+      new StartEndCommand(m_ArmInOut::armMidGoal,m_ArmInOut::armZero,m_ArmInOut),
+      new StartEndCommand(m_Wrist::WristPositionMidGoal,m_Wrist::WristPositionZero,m_Wrist),
+      new StartEndCommand(m_ArmPivot::ArmPositionMidGoal,m_ArmPivot::ArmPositionZero ,m_ArmPivot)
+
+
+    ));
   }
 }

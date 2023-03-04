@@ -6,6 +6,7 @@ package frc.robot.commands.manipulator;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.arminout.ArmInOutHighGoal;
 import frc.robot.commands.arminout.ArmInOutGround;
@@ -40,9 +41,17 @@ public class ManipulatorGround extends SequentialCommandGroup {
      
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands( new ParallelCommandGroup(new LedLowGoal(m_LED),
-    new ArmInOutGround(m_ArmInOut),
-    new WaitCommand(1),
-    new ParallelCommandGroup(new ArmPivotGround(m_ArmPivot),  new WristGround(m_Wrist))));
+    addCommands( 
+      // new ParallelCommandGroup(new LedLowGoal(m_LED),
+    // new ArmInOutGround(m_ArmInOut),
+    // new WaitCommand(1),
+    // new ParallelCommandGroup(new ArmPivotGround(m_ArmPivot),  new WristGround(m_Wrist)))
+    new ParallelCommandGroup(
+    new StartEndCommand(m_ArmPivot::ArmPositionGround, m_ArmPivot::ArmPositionZero, m_ArmPivot),
+    new StartEndCommand(m_Wrist::WristPositionGround, m_Wrist::WristPositionZero, m_Wrist),
+    new StartEndCommand(m_ArmInOut::armGround, m_ArmInOut::armZero, m_ArmInOut)
+    )
+    
+    );
   }
 }

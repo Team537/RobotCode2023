@@ -128,15 +128,15 @@ public class RobotContainer {
   private final Camera m_camera = new Camera(m_robotDrive);
 
 
-  Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
+  // Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
   Command mid_goal = new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command ground = new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command shelf_mid =  new ManipulatorShelfMid(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command shelf_high = new ManipulatorShelfHigh(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command gripperIn = new GripperIn(m_Gripper, m_LED);
-  Command gripperOut = new GripperOut(m_Gripper, m_LED);
-  Command signalCube = new SignalCube(m_LED);
-  Command signalCone = new SignalCone(m_LED);
+  // Command shelf_mid =  new ManipulatorShelfMid(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+  // Command shelf_high = new ManipulatorShelfHigh(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+  // Command gripperIn = new GripperIn(m_Gripper, m_LED);
+  // Command gripperOut = new GripperOut(m_Gripper, m_LED);
+  // Command signalCube = new SignalCube(m_LED);
+  // Command signalCone = new SignalCone(m_LED);
 
   // SlewRateLimiter for Joystick Motion Profiling
 
@@ -223,19 +223,19 @@ public class RobotContainer {
     rightBumper.onTrue(new StartEndCommand(m_Manipulator::zero,m_Manipulator::highGoal, m_Manipulator));*/
 
     //  LED COMMANDS
-    yButton.onTrue(high_goal);
-    xButton.onTrue(mid_goal);
+    // yButton.onTrue(high_goal);
+    // xButton.onTrue(mid_goal);
 
     aButton.onTrue(ground);
-    bButton.onTrue(shelf_mid);
+    bButton.onTrue(mid_goal);
 
-    leftBumper.toggleOnTrue(gripperIn);
-    rightBumper.toggleOnTrue(gripperOut);
+    // leftBumper.toggleOnTrue(gripperIn);
+    // rightBumper.toggleOnTrue(gripperOut);
 
-    dPadUpButton.onTrue(shelf_high);
+    // dPadUpButton.onTrue(shelf_high);
 
     // dPadLeftButton.toggleOnTrue(WristDownManual);
-    // dPadRightButton.toggleOnTrue(WristUpManual);
+    // dPadRightButton.toggleOnTrue(WristUpManual); 
 
     // dPadUpButton.toggleOnTrue(ArmPivotUpManual);
     // dPadDownButton.toggleOnTrue(ArmPivotDownManual);
