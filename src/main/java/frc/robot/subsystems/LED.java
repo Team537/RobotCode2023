@@ -22,9 +22,7 @@ public class LED extends SubsystemBase {
   private boolean shelf = false;
   private boolean intaking = false;
   private boolean outaking = false;
-  private boolean cube = false;
-  private boolean cone = false;
-  private String manipiulatorObject = "";
+  private ManipulatorObject manipulatorObject = null;
   private boolean driving = false;
   private boolean slow_driving = false;
   private LedMode mode = LedMode.DISABLED_NEUTRAL;
@@ -56,11 +54,11 @@ public class LED extends SubsystemBase {
       mode = LedMode.FALLEN;
       ledState = "Fallen";
     } 
-    else if (manipiulatorObject.equals("Cone")) {
+    else if (manipulatorObject == ManipulatorObject.CONE) {
       mode = LedMode.CONE;
       ledState = "Cone";
     }
-    else if (manipiulatorObject.equals("Cube")) {
+    else if (manipulatorObject == ManipulatorObject.CUBE) {
       mode = LedMode.CUBE;
       ledState = "Cube";
     } 
@@ -166,6 +164,11 @@ public class LED extends SubsystemBase {
     SLOW_DRIVING,
     DISABLED_BLUE, 
     DISABLED_NEUTRAL, 
+  }
+
+  public static enum ManipulatorObject {
+    CONE,
+    CUBE
   }
 
     // Sets the LED Blinkin based on the current MODE
@@ -336,22 +339,14 @@ public class LED extends SubsystemBase {
     shelf = active;
   }
   public void toggleCone() {
-    manipiulatorObject = manipiulatorObject.equals("Cone") ? "" : "Cone";
+    manipulatorObject = manipulatorObject == ManipulatorObject.CONE
+      ? null
+      : ManipulatorObject.CONE;
   }
   public void toggleCube() {
-    manipiulatorObject = manipiulatorObject.equals("Cube") ? "" : "Cube";
-  }
-  public void setCube(boolean active) {
-    // cube = active;
-    manipiulatorObject = active && !manipiulatorObject.equals("Cube")
-      ? "Cube"
-      : "";
-  }
-  public void setCone(boolean active) {
-    manipiulatorObject = active && !manipiulatorObject.equals("Cone")
-      ? "Cone"
-      : "";
-    // cone = active;
+    manipulatorObject = manipulatorObject == ManipulatorObject.CUBE
+      ? null
+      : ManipulatorObject.CUBE;
   }
   public void setFallen(boolean active) {
     fallen = active;
@@ -383,10 +378,6 @@ public class LED extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putString("Led State", ledState);
-    SmartDashboard.putString("Manipiulator obj", manipiulatorObject);
     // This method will be called once per scheduler run
-    
-    SmartDashboard.putBoolean("Cone", cone);
-    SmartDashboard.putBoolean("Cube", cube);
   }
 }

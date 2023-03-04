@@ -52,8 +52,6 @@ import frc.robot.commands.manipulator.ManipulatorHighGoal;
 import frc.robot.commands.manipulator.ManipulatorLowGoal;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.manipulator.ManipulatorShelf;
-import frc.robot.commands.signal.SignalCone;
-import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.commands.swerve.SwerveDriveCommand;
 import frc.robot.commands.vision.ChaseTagCommand;
@@ -131,8 +129,6 @@ public class RobotContainer {
   Command shelf =  new ManipulatorShelf(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command gripperIn = new GripperIn(m_Gripper, m_LED);
   Command gripperOut = new GripperOut(m_Gripper, m_LED);
-  Command signalCube = new SignalCube(m_LED);
-  Command signalCone = new SignalCone(m_LED);
 
   // SlewRateLimiter for Joystick Motion Profiling
 
