@@ -5,6 +5,7 @@
 package frc.robot.commands.armpivot;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.manipulator.ArmPivot;
 
 public class ArmPivotGround extends CommandBase {
@@ -26,7 +27,7 @@ public class ArmPivotGround extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    new SequentialCommandGroup();
     m_ArmPivot.ArmPositionGround();
   }
 

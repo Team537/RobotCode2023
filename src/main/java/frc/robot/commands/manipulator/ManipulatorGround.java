@@ -11,6 +11,7 @@ import frc.robot.commands.arminout.ArmInOutGround;
 import frc.robot.commands.armpivot.ArmPivotGround;
 import frc.robot.commands.led.LedLowGoal;
 import frc.robot.commands.wrist.WristGround;
+import frc.robot.commands.wrist.WristManualUp;
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.ArmPivot;
@@ -24,7 +25,7 @@ public class ManipulatorGround extends SequentialCommandGroup {
 
   /** Creates a new ManipulatorHighGoal. */
   public ManipulatorGround(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
-
+    
     
      
    
@@ -33,15 +34,11 @@ public class ManipulatorGround extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands( 
-      new ParallelCommandGroup(
-        new LedLowGoal(m_LED),
-        new ArmInOutGround(m_ArmInOut),
-        new WaitCommand(1),
-        new ParallelCommandGroup(
-          new ArmPivotGround(m_ArmPivot),  
-          new WristGround(m_Wrist)
-        )
-      )
+      new ParallelCommandGroup(new LedLowGoal(m_LED)),
+      new WristGround(m_Wrist),
+      new WaitCommand(1),
+      new ArmPivotGround(m_ArmPivot),  
+      new WristGround(m_Wrist)
     );
   }
 }

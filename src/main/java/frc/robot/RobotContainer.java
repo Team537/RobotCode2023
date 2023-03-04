@@ -78,8 +78,6 @@ public class RobotContainer {
   Command shelf_HuPL =  new ManipulatorShelfHumanPL(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command wrist_manualup = new WristManualUp(m_Wrist);
   Command zeros = new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command gripperIn = new GripperIn(m_Gripper, m_LED);
-  Command gripperOut = new GripperOut(m_Gripper, m_LED);
   Command signalCube = new SignalCube(m_LED);
   Command signalCone = new SignalCone(m_LED);
 
@@ -149,17 +147,18 @@ public class RobotContainer {
 */
     //  LED COMMANDS
     yButton.onTrue(high_goal);
-    xButton.onTrue(mid_goal);
+    xButton.onTrue(shelf_HuPL);
 
     aButton.onTrue(ground);
-    bButton.onTrue(shelf_HuPL);
+    bButton.onTrue(mid_goal);
 
-    leftBumper.onTrue(gripperIn);
-    rightBumper.onTrue(gripperOut);
+    leftBumper.onTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
+    rightBumper.onTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
 
-    
+    leftBumper.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
+    rightBumper.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
 
-    dPadUpButton.onTrue(wrist_manualup);
+    dPadRightButton.onTrue(wrist_manualup);
     dPadDownButton.onTrue(zeros);
 
     // dPadLeftButton.toggleOnTrue(WristDownManual);
