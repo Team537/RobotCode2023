@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Auto.FollowTrajectory;
+import frc.robot.commands.armpivot.ArmPivotGround;
 import frc.robot.commands.gripper.GripperIn;
 import frc.robot.commands.gripper.GripperOut;
 import frc.robot.commands.manipulator.ManipulatorHighGoal;
@@ -24,6 +25,7 @@ import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.commands.swerve.SwerveDriveCommand;
 import frc.robot.commands.vision.ChaseTagCommand;
+import frc.robot.commands.wrist.WristGround;
 import frc.robot.commands.wrist.WristManualUp;
 import frc.robot.simulation.FieldSim;
 
@@ -80,6 +82,7 @@ public class RobotContainer {
   Command zeros = new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command signalCube = new SignalCube(m_LED);
   Command signalCone = new SignalCone(m_LED);
+  Command pivot_ground = new ArmPivotGround(m_ArmPivot);
 
   // SlewRateLimiter for Joystick Motion Profiling
 
@@ -149,7 +152,9 @@ public class RobotContainer {
     yButton.onTrue(high_goal);
     xButton.onTrue(shelf_HuPL);
 
-    aButton.onTrue(ground);
+    // aButton.onTrue(ground);
+    // aButton.onTrue(pivot_ground);
+    aButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionGround,m_ArmPivot::ArmPositionZero,m_ArmPivot));
     bButton.onTrue(mid_goal);
 
     leftBumper.onTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));

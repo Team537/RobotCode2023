@@ -28,10 +28,10 @@ public class ManipulatorZero extends SequentialCommandGroup {
 
 
     addCommands(
-      new ParallelCommandGroup(new LedLowGoal(m_LED)),
+      // new LedLowGoal(m_LED),
       new ArmPivotZero(m_ArmPivot),  
       new WristZero(m_Wrist),
-      new WaitCommand(1), 
+      // new WaitCommand(1), 
       new ArmInOutZero(m_ArmInOut)
     );
   }

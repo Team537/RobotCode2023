@@ -34,9 +34,9 @@ public class ManipulatorGround extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands( 
-      new ParallelCommandGroup(new LedLowGoal(m_LED)),
-      new WristGround(m_Wrist),
-      new WaitCommand(1),
+      // new LedLowGoal(m_LED),
+      new ArmInOutGround(m_ArmInOut),
+      // new WaitCommand(1),
       new ArmPivotGround(m_ArmPivot),  
       new WristGround(m_Wrist)
     );
