@@ -12,9 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Auto.FollowTrajectory;
-import frc.robot.commands.armpivot.ArmPivotGround;
-import frc.robot.commands.gripper.GripperIn;
-import frc.robot.commands.gripper.GripperOut;
 import frc.robot.commands.manipulator.ManipulatorHighGoal;
 import frc.robot.commands.manipulator.ManipulatorGround;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
@@ -25,8 +22,6 @@ import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.commands.swerve.SwerveDriveCommand;
 import frc.robot.commands.vision.ChaseTagCommand;
-import frc.robot.commands.wrist.WristGround;
-import frc.robot.commands.wrist.WristManualUp;
 import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.LED;
@@ -78,11 +73,9 @@ public class RobotContainer {
   Command mid_goal = new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command ground = new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command shelf_HuPL =  new ManipulatorShelfHumanPL(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command wrist_manualup = new WristManualUp(m_Wrist);
   Command zeros = new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command signalCube = new SignalCube(m_LED);
   Command signalCone = new SignalCone(m_LED);
-  Command pivot_ground = new ArmPivotGround(m_ArmPivot);
 
   // SlewRateLimiter for Joystick Motion Profiling
 
@@ -161,7 +154,7 @@ public class RobotContainer {
     leftBumper.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
     rightBumper.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
 
-    dPadRightButton.onTrue(wrist_manualup);
+    dPadRightButton.onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp, m_Wrist::WristPositionManualDown, m_Wrist));
     dPadDownButton.onTrue(zeros);
 
     // dPadLeftButton.toggleOnTrue(WristDownManual);
