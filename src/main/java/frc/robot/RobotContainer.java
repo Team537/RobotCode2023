@@ -18,8 +18,8 @@ import frc.robot.commands.manipulator.ManipulatorGround;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.manipulator.ManipulatorShelfHumanPL;
 import frc.robot.commands.manipulator.ManipulatorZero;
-import frc.robot.commands.signal.SignalCone;
-import frc.robot.commands.signal.SignalCube;
+// import frc.robot.commands.signal.SignalCone;
+// import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.commands.swerve.SwerveDriveCommand;
 import frc.robot.commands.vision.ChaseTagCommand;
@@ -37,6 +37,7 @@ import frc.robot.subsystems.Camera;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArcadeDriveCommand;
@@ -67,24 +68,21 @@ public class RobotContainer {
   private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   
   private final Camera m_camera = new Camera(m_robotDrive);
-
-
+  
   
   Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
   Command mid_goal = new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command ground = new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command shelf_HuPL =  new ManipulatorShelfHumanPL(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command zeros = new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command signalCube = new SignalCube(m_LED);
-  Command signalCone = new SignalCone(m_LED);
+  // Command signalCube = new SignalCube(m_LED);
+  // Command signalCone = new SignalCone(m_LED);
 
   // SlewRateLimiter for Joystick Motion Profiling
 
   private final SlewRateLimiter m_xSpeedLimiter = new SlewRateLimiter(0.1);
   private final SlewRateLimiter m_ySpeedLimiter = new SlewRateLimiter(0.1);
   private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(30);
-
- 
  
   
 // The driver controllers
@@ -164,10 +162,9 @@ public class RobotContainer {
 
     dPadDownButton.onTrue(zeros);
 
-    //  dPadLeftButton.toggleOnTrue(signalCone);
-    //  dPadRightButton.toggleOnTrue(signalCube);
+    dPadLeftButton.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
+    dPadRightButton.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
 
-    
      final ChaseTagCommand chaseTagCommand = 
     new ChaseTagCommand(m_camera, m_robotDrive, m_camera :: getRobotPose2d);
 
@@ -175,9 +172,8 @@ public class RobotContainer {
     rightStick.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
     //Toggle Booleans
     // LED Light Trigger COntrol Code
-    // aButton.toggleOnTrue(new StartEndCommand(m_LED::setBlue,m_LED::setGreen,m_LED));
-    // bButton.toggleOnTrue(new StartEndCommand(m_LED::setGreen,m_LED::setBlue,m_LED));
-    
+    // bButton.onTrue(new InstantCommand(m_blinkin::setPurple));
+    // aButton.onTrue(new InstantCommand(m_blinkin::setYellow));
   
   // m_robotDrive.setLeds(m_LED);
   // m_Manipulator.setLeds(m_LED);
@@ -207,13 +203,8 @@ public class RobotContainer {
     //     ()->  -m_driverController.getRightX()*0.7,
     //     true));
 
-
-
       m_FieldSim.initSim();
   
-  
-  
-   
   }
 
   public void periodic() {
@@ -240,7 +231,6 @@ public class RobotContainer {
 
    return m_Chooser.getSelected();
   }
-
 
 }
  
