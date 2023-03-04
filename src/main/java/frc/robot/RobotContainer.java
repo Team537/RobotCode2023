@@ -155,6 +155,8 @@ public class RobotContainer {
     rightBumper.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
 
     dPadRightButton.onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp, m_Wrist::WristPositionManualDown, m_Wrist));
+    dPadLeftButton.onTrue(new StartEndCommand(m_Wrist::WristPositionManualDown, m_Wrist::WristPositionManualUp, m_Wrist));
+
     dPadDownButton.onTrue(zeros);
 
     // dPadLeftButton.toggleOnTrue(WristDownManual);
