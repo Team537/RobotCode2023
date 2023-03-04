@@ -34,6 +34,7 @@ public class ManipulatorHighGoal extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new ParallelCommandGroup(
+      new LedHighGoal(m_LED),
       new StartEndCommand(m_ArmInOut::armHighGoal,m_ArmInOut::armHighGoal,m_ArmInOut),
       new StartEndCommand(m_ArmPivot::ArmPositionHighGoal,m_ArmPivot::ArmPositionHighGoal,m_ArmPivot),
       new StartEndCommand(m_Wrist::WristPositionHighGoal,m_Wrist::WristPositionHighGoal,m_Wrist)
