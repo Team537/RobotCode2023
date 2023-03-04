@@ -17,19 +17,19 @@ import frc.robot.commands.gripper.GripperOut;
 import frc.robot.commands.manipulator.ManipulatorHighGoal;
 import frc.robot.commands.manipulator.ManipulatorGround;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
-import frc.robot.commands.manipulator.ManipulatorShelfHigh;
-import frc.robot.commands.manipulator.ManipulatorShelfMid;
+import frc.robot.commands.manipulator.ManipulatorShelfHumanPL;
 import frc.robot.commands.manipulator.ManipulatorZero;
 import frc.robot.commands.signal.SignalCone;
 import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.commands.swerve.SwerveDriveCommand;
 import frc.robot.commands.vision.ChaseTagCommand;
+import frc.robot.commands.wrist.WristManualUp;
 import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.GripperCamera;
+// import frc.robot.subsystems.GripperCamera;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
 import frc.robot.subsystems.manipulator.ArmInOut;
@@ -56,13 +56,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
 
-  
-
   // The robot's subsystems
   public static final LED m_LED = new LED();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final GripperIntake m_Gripper = new GripperIntake();
-  private final GripperCamera m_GripperCamera = new GripperCamera();
+  // private final GripperCamera m_GripperCamera = new GripperCamera();
   private final ArmInOut m_ArmInOut = new ArmInOut();
   private final ArmPivot m_ArmPivot = new ArmPivot();
   private final Wrist m_Wrist = new Wrist(); 
@@ -77,8 +75,8 @@ public class RobotContainer {
   Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
   Command mid_goal = new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command ground = new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command shelf_mid =  new ManipulatorShelfMid(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command shelf_high = new ManipulatorShelfHigh(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+  Command shelf_HuPL =  new ManipulatorShelfHumanPL(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+  Command wrist_manualup = new WristManualUp(m_Wrist);
   Command zeros = new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command gripperIn = new GripperIn(m_Gripper, m_LED);
   Command gripperOut = new GripperOut(m_Gripper, m_LED);
@@ -154,13 +152,14 @@ public class RobotContainer {
     xButton.onTrue(mid_goal);
 
     aButton.onTrue(ground);
-    bButton.onTrue(shelf_mid);
+    bButton.onTrue(shelf_HuPL);
 
+    leftBumper.onTrue(gripperIn);
+    rightBumper.onTrue(gripperOut);
 
-     leftBumper.toggleOnTrue(gripperIn);
-     rightBumper.toggleOnTrue(gripperOut);
+    
 
-    dPadUpButton.onTrue(shelf_high);
+    dPadUpButton.onTrue(wrist_manualup);
     dPadDownButton.onTrue(zeros);
 
     // dPadLeftButton.toggleOnTrue(WristDownManual);

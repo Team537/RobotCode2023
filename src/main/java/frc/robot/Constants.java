@@ -105,7 +105,7 @@ public final class Constants {
     //ARM INOUT SET POSITIONS
     public static final double kArmInOutPositionMidGoal = 50;
     public static final double kArmInOutPositionHighGoal = 225.0;
-    public static final double kArmInOutPositionShelfMid = 50;
+    public static final double kArmInOutPositionShelfHumanPL = 50;
     public static final double kArmInOutPositionShelfHigh = 50;
 
     // public static final double kArmInOutPositionTest = 50;
@@ -116,8 +116,6 @@ public final class Constants {
     /*public static final double kIncrementUp = -10;
     public static final double kIncrementDown = 10;*/
   }
-
-
 
   public static final class ArmPivotConstants {
 
@@ -140,7 +138,7 @@ public final class Constants {
 
     //ARM PIVOT SET POSITONS
     public static final double kArmPivotPositionHighGoal = 17;
-    public static final double kArmPivotPositionShelfMid = 25;
+    public static final double kArmPivotPositionShelfHumanPL = 25;
     public static final double kArmPivotPositionMidGoal = 20;
     public static final double kArmPivotPositionShelfHigh = 25;
 
@@ -171,15 +169,21 @@ public final class Constants {
 
     //WRIST SET POSITIONS
     public static final double kWristPositionHighGoal = -11;
-    public static final double kWristPositionShelfMid = -10;
+    public static final double kWristPositionShelfHumanPL = -10;
     public static final double kWristPositionMidGoal = -13; 
     public static final double kWristPositionShelfHigh = -10;
 
     // public static final double kWristPositionTest = -14;
     public static final double kWristPositionZero = 0;
     public static final double kWristPositionGround = -6;
+
     //when carrying cones and cubes on the ground, they currently hit
     //the ground, need to add something to bring the wrist up 1 rotation
+    public static final double kWristPositionManualUp = -4;
+    public static final double kWristPositionManualDown = -14;
+
+
+    public static Object m_wrist;
 
     // public static final double kWristPositionGroundUp = -4;
 

@@ -64,7 +64,7 @@ public class ArmPivot extends SubsystemBase {
     
   }
 
-  public void ArmPositionShelfMid() {
+  public void ArmPositionShelfHumanPL() {
     m_pidControllerPivot1.setP(Constants.ArmPivotConstants.kP);
     m_pidControllerPivot1.setI(Constants.ArmPivotConstants.kI);
     m_pidControllerPivot1.setD(Constants.ArmPivotConstants.kD);
@@ -75,28 +75,10 @@ public class ArmPivot extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.ArmPivotConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionShelfMid, CANSparkMax.ControlType.kSmartMotion);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionShelfHumanPL, CANSparkMax.ControlType.kSmartMotion);
     // SmartDashboard.putBoolean("Arm Down", true);
     // SmartDashboard.putBoolean("Arm Up", false);
     armPivotState = "ShelfMid";
-   
-  }
-
-  public void ArmPositionShelfHigh() {
-    m_pidControllerPivot1.setP(Constants.ArmPivotConstants.kP);
-    m_pidControllerPivot1.setI(Constants.ArmPivotConstants.kI);
-    m_pidControllerPivot1.setD(Constants.ArmPivotConstants.kD);
-    m_pidControllerPivot1.setIZone(Constants.ArmPivotConstants.kIz);
-    m_pidControllerPivot1.setFF(Constants.ArmPivotConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.ArmPivotConstants.kMinOutput, Constants.ArmPivotConstants.kMaxOutput);
-    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.ArmPivotConstants.kMaxV, 0);
-    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.ArmPivotConstants.kMinV, 0);
-    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.ArmPivotConstants.kMaxA, 0);
-    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.ArmPivotConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionShelfHigh, CANSparkMax.ControlType.kSmartMotion);
-    // SmartDashboard.putBoolean("Arm Down", true);
-    // SmartDashboard.putBoolean("Arm Up", false);
-    armPivotState = "ShelfHigh";
    
   }
 

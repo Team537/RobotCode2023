@@ -7,9 +7,10 @@ package frc.robot.commands.manipulator;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.armpivot.ArmPivotShelfHigh;
+import frc.robot.commands.arminout.ArmInOutShelfHumanPL;
+import frc.robot.commands.armpivot.ArmPivotShelfHumanPL;
 import frc.robot.commands.led.LedShelf;
-import frc.robot.commands.wrist.WristShelfHigh;
+import frc.robot.commands.wrist.WristShelfHumanPL;
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.ArmPivot;
@@ -18,27 +19,31 @@ import frc.robot.subsystems.manipulator.Wrist;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ManipulatorShelfHigh extends SequentialCommandGroup {
-  /** Creates a new ManipulatorShelfHigh. */
-  public ManipulatorShelfHigh(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
+public class ManipulatorShelfHumanPL extends SequentialCommandGroup {
 
 
 
+  
+  /** Creates a new ManipulatorHighGoal. */
+  public ManipulatorShelfHumanPL(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
 
-
-
+    
+     
+   
+    
+     
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands( 
       new ParallelCommandGroup(
         new LedShelf(m_LED),
         new ParallelCommandGroup(
-          new ArmPivotShelfHigh(m_ArmPivot),  
-          new WristShelfHigh(m_Wrist)), 
+          new ArmPivotShelfHumanPL(m_ArmPivot),  
+          new WristShelfHumanPL(m_Wrist)),
         new WaitCommand(1), 
-        new ArmPivotShelfHigh(m_ArmPivot)
+        new ArmInOutShelfHumanPL(m_ArmInOut)
       )
-
+    
     );
   }
 }

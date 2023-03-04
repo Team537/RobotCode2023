@@ -7,15 +7,16 @@ package frc.robot.commands.armpivot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.manipulator.ArmPivot;
 
-public class ArmPivotShelfHigh extends CommandBase {
-  private ArmPivot m_ArmPivot;
+public class ArmPivotShelfHumanPL extends CommandBase {
 
-  /** Creates a new ArmPivotShelfHigh. */
-  public ArmPivotShelfHigh(ArmPivot m_ArmPivot) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  private ArmPivot m_ArmPivot;
+  /** Creates a new ArmPivotLowGoal. */
+  public ArmPivotShelfHumanPL(ArmPivot m_ArmPivot) {
+
     this.m_ArmPivot = m_ArmPivot;
 
     addRequirements(m_ArmPivot);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +27,7 @@ public class ArmPivotShelfHigh extends CommandBase {
   @Override
   public void execute() {
 
-    m_ArmPivot.ArmPositionShelfHigh();
+    m_ArmPivot.ArmPositionShelfHumanPL();
   }
 
   // Called once the command ends or is interrupted.

@@ -7,14 +7,17 @@ package frc.robot.commands.wrist;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.manipulator.Wrist;
 
-public class WristShelfHigh extends CommandBase {
+
+public class WristShelfHumanPL extends CommandBase {
+
   private Wrist m_Wrist;
-  /** Creates a new WristShelfHigh. */
-  public WristShelfHigh(Wrist m_Wrist) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  /** Creates a new ArmPivotLowGoal. */
+  public WristShelfHumanPL(Wrist m_Wrist) {
+
     this.m_Wrist = m_Wrist;
 
     addRequirements(m_Wrist);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -24,8 +27,8 @@ public class WristShelfHigh extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Wrist.WristPositionShelfHigh();
-    
+
+    m_Wrist.WristPositionShelfHumanPL();
   }
 
   // Called once the command ends or is interrupted.
