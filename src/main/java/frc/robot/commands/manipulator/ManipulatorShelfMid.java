@@ -7,14 +7,8 @@ package frc.robot.commands.manipulator;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.arminout.ArmInOutHighGoal;
-import frc.robot.commands.arminout.ArmInOutShelfMid;
-import frc.robot.commands.armpivot.ArmPivotHighGoal;
-import frc.robot.commands.armpivot.ArmPivotShelfMid;
 import frc.robot.commands.led.LedHighGoal;
 import frc.robot.commands.led.LedShelf;
-import frc.robot.commands.wrist.WristHighGoal;
-import frc.robot.commands.wrist.WristShelfMid;
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.ArmPivot;
@@ -38,9 +32,9 @@ public class ManipulatorShelfMid extends SequentialCommandGroup {
      
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands( new ParallelCommandGroup(new LedShelf(m_LED),
-    new ParallelCommandGroup(new ArmPivotShelfMid(m_ArmPivot),  new WristShelfMid(m_Wrist)),
-    new WaitCommand(1), 
-    new ArmInOutShelfMid(m_ArmInOut)));
+    // addCommands( new ParallelCommandGroup(new LedShelf(m_LED),
+    // new ParallelCommandGroup(new ArmPivotShelfMid(m_ArmPivot),  new WristShelfMid(m_Wrist)),
+    // new WaitCommand(1), 
+    // new ArmInOutShelfMid(m_ArmInOut)));
   }
 }

@@ -42,8 +42,6 @@ import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.commands.Auto.ExampleTrajectory;
 import frc.robot.commands.Auto.FollowTrajectory;
-import frc.robot.commands.gripper.GripperIn;
-import frc.robot.commands.gripper.GripperOut;
 import frc.robot.commands.led.LedHighGoal;
 import frc.robot.commands.led.LedLowGoal;
 import frc.robot.commands.led.LedMidGoal;
@@ -191,11 +189,11 @@ public class RobotContainer {
   public RobotContainer() {
 
 
-// NON LED COMMANDS
-//This is all commented out because we use a single button to order multiple commands, using commands made
-//for each part of the manipulator. they were then merged into multiple action commands, which send multiple
-//objects to multiple positions with one button press
-   /*  dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armGround,m_ArmInOut::armLowGoal,m_ArmInOut));
+/*// NON LED COMMANDS
+  //This is all commented out because we use a single button to order multiple commands, using commands made
+  //for each part of the manipulator. they were then merged into multiple action commands, which send multiple
+  //objects to multiple positions with one button press
+     dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armGround,m_ArmInOut::armLowGoal,m_ArmInOut));
     dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armZero,m_ArmInOut::armMidGoal,m_ArmInOut));
     leftBumper.onTrue(new StartEndCommand(m_ArmInOut::armTest,m_ArmInOut::armMidGoal,m_ArmInOut));
 
@@ -224,13 +222,12 @@ public class RobotContainer {
 
     //  LED COMMANDS
     // yButton.onTrue(high_goal);
-    // xButton.onTrue(mid_goal);
 
     aButton.onTrue(ground);
     bButton.onTrue(mid_goal);
 
-    // leftBumper.toggleOnTrue(gripperIn);
-    // rightBumper.toggleOnTrue(gripperOut);
+    leftBumper.toggleOnTrue(m_Gripper::GripperIn,m_Gripper::GripperStop
+    rightBumper.toggleOnTrue(gripperOut);
 
     // dPadUpButton.onTrue(shelf_high);
 
