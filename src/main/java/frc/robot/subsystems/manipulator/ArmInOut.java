@@ -36,7 +36,7 @@ public class ArmInOut extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void armMidGoal() {
+  public boolean armMidGoal() {
     m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
     m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
     m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
@@ -49,6 +49,7 @@ public class ArmInOut extends SubsystemBase {
     m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
     m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmInOutPositionMidGoal, CANSparkMax.ControlType.kSmartMotion);
     armInOutState = "Mid Goal";
+    return true;
   }
 
   public void armHighGoal() {

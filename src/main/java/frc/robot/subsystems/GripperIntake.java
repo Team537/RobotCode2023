@@ -41,8 +41,8 @@ public class GripperIntake extends SubsystemBase {
     gripperState = "Stopped";
   }
   public void GripperOut() {
-    m_Gripper.set(-0.25);
-    m_Gripper2.set(0.25);
+    m_Gripper.set(-0.15);
+    m_Gripper2.set(0.15);
     gripperState = "Outaking";
   }
   public void GripperFast() {

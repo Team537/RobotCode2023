@@ -140,7 +140,7 @@ public class RobotContainer {
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
-36
+  36
 */
     //  LED COMMANDS
     yButton.onTrue(high_goal);
@@ -158,16 +158,11 @@ public class RobotContainer {
     backButton.onTrue(new StartEndCommand(m_Gripper::GripperFast,m_Gripper::GripperStop,m_Gripper));
     backButton.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
 
+    dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionZero,m_Wrist));
     dPadRightButton.onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp, m_Wrist::WristPositionManualDown, m_Wrist));
     dPadLeftButton.onTrue(new StartEndCommand(m_Wrist::WristPositionManualDown, m_Wrist::WristPositionManualUp, m_Wrist));
 
     dPadDownButton.onTrue(zeros);
-
-    // dPadLeftButton.toggleOnTrue(WristDownManual);
-    // dPadRightButton.toggleOnTrue(WristUpManual);
-
-    // dPadUpButton.toggleOnTrue(ArmPivotUpManual);
-    // dPadDownButton.toggleOnTrue(ArmPivotDownManual);
 
     //  dPadLeftButton.toggleOnTrue(signalCone);
     //  dPadRightButton.toggleOnTrue(signalCube);
