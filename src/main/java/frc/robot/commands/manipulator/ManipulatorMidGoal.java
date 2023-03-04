@@ -25,7 +25,7 @@ public class ManipulatorMidGoal extends SequentialCommandGroup {
 
     
      
-   
+   //m_encoderExtension.getPosition();
     
      
     // Add your commands in the addCommands() call, e.g.

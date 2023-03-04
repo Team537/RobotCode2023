@@ -138,7 +138,7 @@ public final class Constants {
 
     //ARM PIVOT SET POSITONS
     public static final double kArmPivotPositionHighGoal = 17;
-    public static final double kArmPivotPositionShelfHumanPL = 0;
+    public static final double kArmPivotPositionShelfHumanPL = 15;
     public static final double kArmPivotPositionMidGoal = 20;
     public static final double kArmPivotPositionShelfHigh = 25;
 
@@ -169,7 +169,7 @@ public final class Constants {
 
     //WRIST SET POSITIONS
     public static final double kWristPositionHighGoal = -11;
-    public static final double kWristPositionShelfHumanPL = -15;
+    public static final double kWristPositionShelfHumanPL = -16;
     public static final double kWristPositionMidGoal = -13; 
     public static final double kWristPositionShelfHigh = -10;
 
