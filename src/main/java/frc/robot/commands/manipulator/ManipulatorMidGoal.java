@@ -34,7 +34,7 @@ public class ManipulatorMidGoal extends SequentialCommandGroup {
     addCommands( new ParallelCommandGroup(
       new StartEndCommand(m_ArmInOut::armMidGoal,m_ArmInOut::armZero,m_ArmInOut),
       new StartEndCommand(m_Wrist::WristPositionMidGoal,m_Wrist::WristPositionZero,m_Wrist),
-      new StartEndCommand(m_ArmPivot::ArmPositionMidGoal,m_ArmPivot::ArmPositionZero ,m_ArmPivot)
+      new StartEndCommand(m_ArmPivot::ArmPositionMidGoal,m_ArmPivot::ArmPositionZero,m_ArmPivot)
 
 
     ));
