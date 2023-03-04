@@ -30,11 +30,12 @@ public class ManipulatorMidGoal extends SequentialCommandGroup {
      
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ParallelCommandGroup(
+    addCommands(
       new StartEndCommand(m_ArmInOut::armMidGoal,m_ArmInOut::armMidGoal,m_ArmInOut),
-      new StartEndCommand(m_ArmPivot::ArmPositionMidGoal,m_ArmPivot::ArmPositionMidGoal,m_ArmPivot),
-      new StartEndCommand(m_Wrist::WristPositionMidGoal,m_Wrist::WristPositionMidGoal,m_Wrist)
-    )
+      new ParallelCommandGroup(
+        new StartEndCommand(m_ArmPivot::ArmPositionMidGoal,m_ArmPivot::ArmPositionMidGoal,m_ArmPivot),
+        new StartEndCommand(m_Wrist::WristPositionMidGoal,m_Wrist::WristPositionMidGoal,m_Wrist)
+      )
     );
   }
 }

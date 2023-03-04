@@ -104,7 +104,7 @@ public final class Constants {
 
     //ARM INOUT SET POSITIONS
     public static final double kArmInOutPositionMidGoal = 50;
-    public static final double kArmInOutPositionHighGoal = 225.0;
+    public static final double kArmInOutPositionHighGoal = 100; //for actual high goal, 225
     public static final double kArmInOutPositionShelfHumanPL = 50;
     public static final double kArmInOutPositionShelfHigh = 50;
 
