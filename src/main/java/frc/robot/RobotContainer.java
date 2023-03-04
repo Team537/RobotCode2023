@@ -229,6 +229,9 @@ public class RobotContainer {
     leftBumper.onTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
     rightBumper.onTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
 
+    leftBumper.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
+    rightBumper.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
+
     // dPadUpButton.onTrue(shelf_high);
 
     // dPadLeftButton.toggleOnTrue(WristDownManual);
