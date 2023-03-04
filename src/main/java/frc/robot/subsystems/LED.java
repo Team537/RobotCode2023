@@ -171,36 +171,45 @@ public class LED extends SubsystemBase {
   public void setMode(LedMode mode) {
     switch (mode) {
       case FALLEN:
-        strobe(Color.kWhite);
+        // strobe(Color.kWhite);
+        m_blinkin.set(-0.05);
         break;
       case INTAKING:
-        setSolidColor(Color.kGold);
+        // setSolidColor(Color.kGold);
+        m_blinkin.set(0.67);
         break;
       case OUTAKING:
-        setSolidColor(Color.kFirebrick);
+        // setSolidColor(Color.kFirebrick);
+        m_blinkin.set(-0.59);
         break;
       case LOW_GOAL:
-        breath(Color.kRed, Color.kFloralWhite);
+        // breath(Color.kRed, Color.kFloralWhite);
+        m_blinkin.set(-0.25);
         break;
       case MID_GOAL:
-        breath(Color.kRed, Color.kAzure);
+        // breath(Color.kRed, Color.kAzure);
+        m_blinkin.set(-0.25);
         break;
       case HIGH_GOAL:
-        breath(Color.kRed, Color.kDarkGoldenrod);
+        // breath(Color.kRed, Color.kDarkGoldenrod);
+        m_blinkin.set(-0.25);
         break;
      case SHELF:
-        breath(Color.kRed, Color.kCrimson);
+        // breath(Color.kRed, Color.kCrimson);
+        m_blinkin.set(-0.25);
         break;
      case DRIVING:
-        wave(Color.kGreen, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
+        // wave(Color.kGreen, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
+        m_blinkin.set(-0.37);
         break;
       case SLOW_DRIVING:
-        wave(Color.kLime, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
+        // wave(Color.kLime, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
+        m_blinkin.set(-0.37);
         break;
       case DEFAULT_TELEOP_RED:
       // wave(Color.kRed, Color.kBlack, LEDConstants.waveAllianceFullLength,
       // LEDConstants. waveAllianceDuration);
-        m_blinkin.set(-0.17);
+        m_blinkin.set(-0.25);
         break;
       case CONE:
       // setSolidColor(Color.kYellow);

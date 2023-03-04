@@ -228,8 +228,8 @@ public class RobotContainer {
     //  leftBumper.toggleOnTrue(gripperIn);
     //  rightBumper.toggleOnTrue(gripperOut);
 
-    //  dPadLeftButton.toggleOnTrue(signalCone);
-    //  dPadRightButton.toggleOnTrue(signalCube);
+     dPadLeftButton.toggleOnTrue(signalCone);
+     dPadRightButton.toggleOnTrue(signalCube);
 
     
      final ChaseTagCommand chaseTagCommand = 
