@@ -113,13 +113,14 @@ public class LED extends SubsystemBase {
         ledState = "Default";
         break;
     } 
-    
-      
     }
+
     setMode(mode);
+
   }
   /* Creates a new LED class. */
-  public LED() {
+  // public LED() {
+
     //addressableLED.setLength(buffer.getLength());
     // setRed();
     //addressableLED.start();
@@ -149,7 +150,10 @@ public class LED extends SubsystemBase {
 
   // public void setGreen() {
   //   setSolidColor(0, 255, 0);
-  }
+  // }
+
+  // }
+
   public static enum LedMode {
     FALLEN, 
     LOW_GOAL, 
@@ -168,70 +172,88 @@ public class LED extends SubsystemBase {
     DISABLED_BLUE, 
     DISABLED_NEUTRAL, 
   }
+
+    // Sets the LED Blinkin based on the current MODE
   public void setMode(LedMode mode) {
     switch (mode) {
+
       case FALLEN:
         // strobe(Color.kWhite);
         m_blinkin.set(-0.05);
         break;
+
       case INTAKING:
         // setSolidColor(Color.kGold);
         m_blinkin.set(0.67);
         break;
+
       case OUTAKING:
         // setSolidColor(Color.kFirebrick);
         m_blinkin.set(-0.59);
         break;
+
       case LOW_GOAL:
         // breath(Color.kRed, Color.kFloralWhite);
         m_blinkin.set(-0.25);
         break;
+
       case MID_GOAL:
         // breath(Color.kRed, Color.kAzure);
         m_blinkin.set(-0.25);
         break;
+
       case HIGH_GOAL:
         // breath(Color.kRed, Color.kDarkGoldenrod);
         m_blinkin.set(-0.25);
         break;
+
      case SHELF:
         // breath(Color.kRed, Color.kCrimson);
         m_blinkin.set(-0.25);
         break;
+
      case DRIVING:
         // wave(Color.kGreen, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
         m_blinkin.set(-0.37);
         break;
+
       case SLOW_DRIVING:
         // wave(Color.kLime, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
         m_blinkin.set(-0.37);
         break;
+
       case DEFAULT_TELEOP_RED:
       // wave(Color.kRed, Color.kBlack, LEDConstants.waveAllianceFullLength,
       // LEDConstants. waveAllianceDuration);
         m_blinkin.set(-0.25);
         break;
+
       case CONE:
       // setSolidColor(Color.kYellow);
         m_blinkin.set(0.69);
         break;
+
       case CUBE:
       // setSolidColor(Color.kPurple);
         m_blinkin.set(0.91);
         break;
+
       case DEFAULT_TELEOP_BLUE:
       // wave(Color.kBlue, Color.kBlack, LEDConstants.waveAllianceFullLength,
       // LEDConstants. waveAllianceDuration);
         m_blinkin.set(-0.15);
         break;
+
       case DISABLED_RED:
       // setSolidColor(Color.kRed);
         m_blinkin.set(-0.17);
         break;
+
       case DISABLED_BLUE:
       // setSolidColor(Color.kBlue);
         m_blinkin.set(-0.15);
         break;
+        
       default:
         // setSolidColor(Color.kBlack);
         m_blinkin.set(0.99);
@@ -240,61 +262,64 @@ public class LED extends SubsystemBase {
        
     }
 
-  private void setSolidColor(Color color) {
-    // for (var i = 0; i < buffer.getLength(); ++i) {
-    //   buffer.setLED(i, color);
-    // }
-    // addressableLED.setData(buffer);
-  }
-  private void strobe(Color color) {
-    boolean on =
-        ((Timer.getFPGATimestamp() % LEDConstants.strobeDuration) / LEDConstants.strobeDuration) > 0.5;
-    setSolidColor(on ? color : Color.kBlack);
-  }
+  // private void setSolidColor(Color color) {
+  //   // for (var i = 0; i < buffer.getLength(); ++i) {
+  //   //   buffer.setLED(i, color);
+  //   // }
+  //   // addressableLED.setData(buffer);
+  // }
 
-  private void breath(Color c1, Color c2) {
-    double x = ((Timer.getFPGATimestamp() % LEDConstants.breathDuration) / LEDConstants.breathDuration)
-        * 2.0 * Math.PI;
-    double ratio = (Math.sin(x) + 1.0) / 2.0;
-    double red = (c1.red * (1 - ratio)) + (c2.red * ratio);
-    double green = (c1.green * (1 - ratio)) + (c2.green * ratio);
-    double blue = (c1.blue * (1 - ratio)) + (c2.blue * ratio);
-    setSolidColor(new Color(red, green, blue));
-  }
-  private void setLedsSymmetrical(int index, Color color) {
-    // buffer.setLED((LEDConstants.centerLed + index) % LEDConstants.length, color);
-    // buffer.setLED(LEDConstants.centerLed - index, color);
-  }
-  private void rainbow(double fullLength, double duration) {
-    double x = (1 - ((Timer.getFPGATimestamp() / duration) % 1.0)) * 180.0;
-    double xDiffPerLed = 180.0 / fullLength;
-    for (int i = 0; i < LEDConstants.halfLength; i++) {
-      x += xDiffPerLed;
-      x %= 180.0;
-      setLedsSymmetrical(i, Color.fromHSV((int) x, 255, 255));
-    }
-  }
+  // private void strobe(Color color) {
+  //   boolean on =
+  //       ((Timer.getFPGATimestamp() % LEDConstants.strobeDuration) / LEDConstants.strobeDuration) > 0.5;
+  //   setSolidColor(on ? color : Color.kBlack);
+  // }
+
+  // private void breath(Color c1, Color c2) {
+  //   double x = ((Timer.getFPGATimestamp() % LEDConstants.breathDuration) / LEDConstants.breathDuration)
+  //       * 2.0 * Math.PI;
+  //   double ratio = (Math.sin(x) + 1.0) / 2.0;
+  //   double red = (c1.red * (1 - ratio)) + (c2.red * ratio);
+  //   double green = (c1.green * (1 - ratio)) + (c2.green * ratio);
+  //   double blue = (c1.blue * (1 - ratio)) + (c2.blue * ratio);
+  //   setSolidColor(new Color(red, green, blue));
+  // }
+
+  // private void setLedsSymmetrical(int index, Color color) {
+  //   // buffer.setLED((LEDConstants.centerLed + index) % LEDConstants.length, color);
+  //   // buffer.setLED(LEDConstants.centerLed - index, color);
+  // }
   
-  private void wave(Color c1, Color c2, double fullLength, double duration) {
-    double x = (1 - ((Timer.getFPGATimestamp() % duration) / duration)) * 2.0
-        * Math.PI;
-    double xDiffPerLed = (2.0 * Math.PI) / fullLength;
-    for (int i = 0; i < LEDConstants.halfLength; i++) {
-      x += xDiffPerLed;
-      double ratio = (Math.pow(Math.sin(x), LEDConstants.waveExponent) + 1.0) / 2.0;
-      if (Double.isNaN(ratio)) {
-        ratio = (-Math.pow(Math.sin(x + Math.PI),LEDConstants. waveExponent) + 1.0) / 2.0;
-      }
-      if (Double.isNaN(ratio)) {
-        ratio = 0.5;
-      }
-      double red = (c1.red * (1 - ratio)) + (c2.red * ratio);
-      double green = (c1.green * (1 - ratio)) + (c2.green * ratio);
-      double blue = (c1.blue * (1 - ratio)) + (c2.blue * ratio);
-      setLedsSymmetrical(i, new Color(red, green, blue));
-    }
+  // private void rainbow(double fullLength, double duration) {
+  //   double x = (1 - ((Timer.getFPGATimestamp() / duration) % 1.0)) * 180.0;
+  //   double xDiffPerLed = 180.0 / fullLength;
+  //   for (int i = 0; i < LEDConstants.halfLength; i++) {
+  //     x += xDiffPerLed;
+  //     x %= 180.0;
+  //     setLedsSymmetrical(i, Color.fromHSV((int) x, 255, 255));
+  //   }
+  // }
+  
+  // private void wave(Color c1, Color c2, double fullLength, double duration) {
+  //   double x = (1 - ((Timer.getFPGATimestamp() % duration) / duration)) * 2.0
+  //       * Math.PI;
+  //   double xDiffPerLed = (2.0 * Math.PI) / fullLength;
+  //   for (int i = 0; i < LEDConstants.halfLength; i++) {
+  //     x += xDiffPerLed;
+  //     double ratio = (Math.pow(Math.sin(x), LEDConstants.waveExponent) + 1.0) / 2.0;
+  //     if (Double.isNaN(ratio)) {
+  //       ratio = (-Math.pow(Math.sin(x + Math.PI),LEDConstants. waveExponent) + 1.0) / 2.0;
+  //     }
+  //     if (Double.isNaN(ratio)) {
+  //       ratio = 0.5;
+  //     }
+  //     double red = (c1.red * (1 - ratio)) + (c2.red * ratio);
+  //     double green = (c1.green * (1 - ratio)) + (c2.green * ratio);
+  //     double blue = (c1.blue * (1 - ratio)) + (c2.blue * ratio);
+  //     setLedsSymmetrical(i, new Color(red, green, blue));
+  //   }
     
-  }
+  // }
   public void setIntaking(boolean active) {
     intaking = active;
   }
