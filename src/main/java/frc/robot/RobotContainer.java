@@ -110,8 +110,6 @@ import org.photonvision.PhotonUtils;
  */
 public class RobotContainer {
 
-  
-
   // The robot's subsystems
   public static final LED m_LED = new LED();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
@@ -141,22 +139,15 @@ public class RobotContainer {
   private final SlewRateLimiter m_xSpeedLimiter = new SlewRateLimiter(0.1);
   private final SlewRateLimiter m_ySpeedLimiter = new SlewRateLimiter(0.1);
   private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(30);
-
- 
  
   
 // The driver controllers
 
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort1);
-  
-
 
   JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
   JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
-
-
-  
   
   JoystickButton leftStick = new JoystickButton(m_driverController, Button.kBack.value);
   JoystickButton rightStick = new JoystickButton(m_driverController, Button.kRightStick.value);
@@ -215,7 +206,6 @@ public class RobotContainer {
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
 
-
     //  LED COMMANDS
     // yButton.onTrue(high_goal);
     // xButton.onTrue(mid_goal);
@@ -228,10 +218,9 @@ public class RobotContainer {
     //  leftBumper.toggleOnTrue(gripperIn);
     //  rightBumper.toggleOnTrue(gripperOut);
 
-     dPadLeftButton.toggleOnTrue(signalCone);
-     dPadRightButton.toggleOnTrue(signalCube);
+    dPadLeftButton.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
+    dPadRightButton.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
 
-    
      final ChaseTagCommand chaseTagCommand = 
     new ChaseTagCommand(m_camera, m_robotDrive, m_camera :: getRobotPose2d);
 
@@ -270,16 +259,9 @@ public class RobotContainer {
     //     ()->  -m_driverController.getRightX()*0.7,
     //     true));
 
-
-
       m_FieldSim.initSim();
   
-  
-  
-   
   }
-
-  private double time = 0;
 
   public void periodic() {
     m_FieldSim.periodic();
@@ -305,7 +287,6 @@ public class RobotContainer {
 
    return m_Chooser.getSelected();
   }
-
 
 }
  

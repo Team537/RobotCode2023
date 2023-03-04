@@ -23,8 +23,6 @@ public class SignalCube extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_LED.setCube(true);
-    m_LED.setCone(false);
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +34,6 @@ public class SignalCube extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

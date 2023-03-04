@@ -4,17 +4,11 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.LEDConstants;
 
 public class LED extends SubsystemBase {
   private static Spark m_blinkin = new Spark(0);
@@ -30,6 +24,7 @@ public class LED extends SubsystemBase {
   private boolean outaking = false;
   private boolean cube = false;
   private boolean cone = false;
+  private String manipiulatorObject = "";
   private boolean driving = false;
   private boolean slow_driving = false;
   private LedMode mode = LedMode.DISABLED_NEUTRAL;
@@ -61,11 +56,11 @@ public class LED extends SubsystemBase {
       mode = LedMode.FALLEN;
       ledState = "Fallen";
     } 
-    else if (cone) {
+    else if (manipiulatorObject.equals("Cone")) {
       mode = LedMode.CONE;
       ledState = "Cone";
-    } 
-    else if (cube) {
+    }
+    else if (manipiulatorObject.equals("Cube")) {
       mode = LedMode.CUBE;
       ledState = "Cube";
     } 
@@ -320,6 +315,8 @@ public class LED extends SubsystemBase {
   //   }
     
   // }
+
+  // Sets the variable in this file active based on another file's variable ( trace the method )
   public void setIntaking(boolean active) {
     intaking = active;
   }
@@ -338,11 +335,23 @@ public class LED extends SubsystemBase {
   public void setShelf(boolean active) {
     shelf = active;
   }
+  public void toggleCone() {
+    manipiulatorObject = manipiulatorObject.equals("Cone") ? "" : "Cone";
+  }
+  public void toggleCube() {
+    manipiulatorObject = manipiulatorObject.equals("Cube") ? "" : "Cube";
+  }
   public void setCube(boolean active) {
-    cube = active;
+    // cube = active;
+    manipiulatorObject = active && !manipiulatorObject.equals("Cube")
+      ? "Cube"
+      : "";
   }
   public void setCone(boolean active) {
-    cone = active;
+    manipiulatorObject = active && !manipiulatorObject.equals("Cone")
+      ? "Cone"
+      : "";
+    // cone = active;
   }
   public void setFallen(boolean active) {
     fallen = active;
@@ -374,6 +383,10 @@ public class LED extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putString("Led State", ledState);
+    SmartDashboard.putString("Manipiulator obj", manipiulatorObject);
     // This method will be called once per scheduler run
+    
+    SmartDashboard.putBoolean("Cone", cone);
+    SmartDashboard.putBoolean("Cube", cube);
   }
 }
