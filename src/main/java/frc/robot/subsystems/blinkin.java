@@ -29,7 +29,16 @@ public class blinkin extends SubsystemBase {
    */
   public blinkin() {
     //solid_orange();
+    set(0.57);
+  }
+
+  public void setYellow() {
     set(0.69);
+  }
+
+  public void setPurple() {
+    set(0.91);
+    
   }
 
   /*

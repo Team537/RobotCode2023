@@ -240,9 +240,10 @@ public class RobotContainer {
     rightStick.toggleOnTrue(new StartEndCommand(m_camera::CameraToAprilTag,m_camera::CameraPipeline,m_camera));
     //Toggle Booleans
     // LED Light Trigger COntrol Code
-    // aButton.toggleOnTrue(new StartEndCommand(m_LED::setBlue,m_LED::setGreen,m_LED));
-    // bButton.toggleOnTrue(new StartEndCommand(m_LED::setGreen,m_LED::setBlue,m_LED));
-    
+    //aButton.toggleOnTrue(new StartEndCommand(m_blinkin::setPurple,m_blinkin::setYellow,m_blinkin));
+    //bButton.toggleOnTrue(new StartEndCommand(m_blinkin::setYellow,m_blinkin::set,m_blinkin));
+    //bButton.onTrue(new InstantCommand(m_blinkin::setPurple));
+    //aButton.onTrue(new InstantCommand(m_blinkin::setYellow));
   
   // m_robotDrive.setLeds(m_LED);
   // m_Manipulator.setLeds(m_LED);
