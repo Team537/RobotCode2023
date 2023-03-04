@@ -5,7 +5,6 @@
 package frc.robot.commands.led;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.LED;
 
 public class LedHighGoal extends CommandBase {

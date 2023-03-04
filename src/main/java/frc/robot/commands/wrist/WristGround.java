@@ -5,7 +5,6 @@
 package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.Wrist;
 
 

@@ -4,50 +4,16 @@
 
 package frc.robot;
 
-import static edu.wpi.first.wpilibj.XboxController.Button;
-
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
-import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.event.BooleanEvent;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.Constants.DriveConstants;
-
 import frc.robot.Constants.OIConstants;
-import frc.robot.Constants.SwerveConstants;
-import frc.robot.Constants.VisionConstants;
-import frc.robot.commands.Auto.ExampleTrajectory;
 import frc.robot.commands.Auto.FollowTrajectory;
 import frc.robot.commands.gripper.GripperIn;
 import frc.robot.commands.gripper.GripperOut;
-import frc.robot.commands.led.LedHighGoal;
-import frc.robot.commands.led.LedLowGoal;
-import frc.robot.commands.led.LedMidGoal;
-import frc.robot.commands.led.LedShelf;
 import frc.robot.commands.manipulator.ManipulatorHighGoal;
 import frc.robot.commands.manipulator.ManipulatorGround;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
@@ -69,37 +35,15 @@ import frc.robot.subsystems.GripperIntake;
 import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.ArmPivot;
 import frc.robot.subsystems.manipulator.Wrist;
-import frc.robot.Constants.limelight;
 import frc.robot.subsystems.Camera;
-
-
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
-import java.io.IOException;   
-import java.nio.file.Path;
-import java.util.List;
-
-import javax.print.attribute.standard.JobHoldUntil;
-import javax.print.attribute.standard.JobPrioritySupported;
-import javax.swing.SwingConstants;
-
-import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonUtils;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -276,8 +220,6 @@ public class RobotContainer {
   
    
   }
-
-  private double time = 0;
 
   public void periodic() {
     m_FieldSim.periodic();
