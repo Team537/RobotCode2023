@@ -152,9 +152,7 @@ public class RobotContainer {
     yButton.onTrue(high_goal);
     xButton.onTrue(shelf_HuPL);
 
-    // aButton.onTrue(ground);
-    // aButton.onTrue(pivot_ground);
-    aButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionGround,m_ArmPivot::ArmPositionZero,m_ArmPivot));
+    aButton.onTrue(ground);
     bButton.onTrue(mid_goal);
 
     leftBumper.onTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));

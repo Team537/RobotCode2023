@@ -6,6 +6,7 @@ package frc.robot.commands.manipulator;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.arminout.ArmInOutZero;
 import frc.robot.commands.armpivot.ArmPivotZero;
@@ -28,11 +29,11 @@ public class ManipulatorZero extends SequentialCommandGroup {
 
 
     addCommands(
-      // new LedLowGoal(m_LED),
-      new ArmPivotZero(m_ArmPivot),  
-      new WristZero(m_Wrist),
-      // new WaitCommand(1), 
-      new ArmInOutZero(m_ArmInOut)
+      new ParallelCommandGroup(
+      new StartEndCommand(m_ArmInOut::armZero,m_ArmInOut::armGround,m_ArmInOut),
+      new StartEndCommand(m_ArmPivot::ArmPositionZero,m_ArmPivot::ArmPositionGround,m_ArmPivot),
+      new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionGround,m_Wrist)
+      )
     );
   }
 }
