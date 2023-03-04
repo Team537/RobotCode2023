@@ -36,13 +36,15 @@ public class ManipulatorShelfHigh extends SequentialCommandGroup {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands( new ParallelCommandGroup(
-      new LedShelf(m_LED),
+    addCommands( 
       new ParallelCommandGroup(
-        new ArmPivotShelfHigh(m_ArmPivot),  
-        new WristShelfHigh(m_Wrist)), 
-      new WaitCommand(1), 
-      new ArmPivotShelfHigh(m_ArmPivot))
+        new LedShelf(m_LED),
+        new ParallelCommandGroup(
+          new ArmPivotShelfHigh(m_ArmPivot),  
+          new WristShelfHigh(m_Wrist)), 
+        new WaitCommand(1), 
+        new ArmPivotShelfHigh(m_ArmPivot)
+      )
 
     );
   }

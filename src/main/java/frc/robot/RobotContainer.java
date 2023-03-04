@@ -53,6 +53,7 @@ import frc.robot.commands.manipulator.ManipulatorGround;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.manipulator.ManipulatorShelfHigh;
 import frc.robot.commands.manipulator.ManipulatorShelfMid;
+import frc.robot.commands.manipulator.ManipulatorZero;
 import frc.robot.commands.signal.SignalCone;
 import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
@@ -134,6 +135,7 @@ public class RobotContainer {
   Command ground = new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command shelf_mid =  new ManipulatorShelfMid(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command shelf_high = new ManipulatorShelfHigh(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+  Command zeros = new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
   Command gripperIn = new GripperIn(m_Gripper, m_LED);
   Command gripperOut = new GripperOut(m_Gripper, m_LED);
   Command signalCube = new SignalCube(m_LED);
@@ -155,26 +157,19 @@ public class RobotContainer {
   
   JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
   JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
-
   JoystickButton leftStick = new JoystickButton(m_driverController, Button.kBack.value);
   JoystickButton rightStick = new JoystickButton(m_driverController, Button.kRightStick.value);
-   // Drive Speeds
-
-   JoystickButton leftBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
-   JoystickButton rightBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
-
-  //  private double leftSpeed =  -Left.calculate( m_driverController.getLeftY());
-  //  private double rightSpeed =  -Right.calculate(m_driverController.getRightY());
-
-  //Buttons
+  JoystickButton leftBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
+  JoystickButton rightBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
   JoystickButton aButton = new JoystickButton(m_driverController, Button.kA.value);
   JoystickButton bButton = new JoystickButton(m_driverController, Button.kB.value);
-
   JoystickButton yButton = new JoystickButton(m_driverController, Button.kY.value);
   JoystickButton xButton = new JoystickButton(m_driverController, Button.kX.value);
+  POVButton dPadUpButton = new POVButton(m_driverController, 0);
+  POVButton dPadDownButton = new POVButton(m_driverController, 180);
+  POVButton dPadLeftButton = new POVButton(m_driverController, 90);
+  POVButton dPadRightButton = new POVButton(m_driverController, 270);
 
-  // TODO: Consider using CommandXboxController instead of XboxController
-  // so we can get a command based reference to the left trigger
   Trigger leftTrigger = m_driverController
     .leftTrigger(0.5, CommandScheduler.getInstance().getDefaultButtonLoop())
     .castTo(Trigger::new);
@@ -183,20 +178,14 @@ public class RobotContainer {
     .rightTrigger(0.5, CommandScheduler.getInstance().getDefaultButtonLoop())
     .castTo(Trigger::new);
 
-  POVButton dPadUpButton = new POVButton(m_driverController, 0);
-  POVButton dPadDownButton = new POVButton(m_driverController, 180);
-  POVButton dPadLeftButton = new POVButton(m_driverController, 90);
-  POVButton dPadRightButton = new POVButton(m_driverController, 270);
-  
-    
   public RobotContainer() {
 
 
-// NON LED COMMANDS
-//This is all commented out because we use a single button to order multiple commands, using commands made
-//for each part of the manipulator. they were then merged into multiple action commands, which send multiple
-//objects to multiple positions with one button press
-   /*  dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armGround,m_ArmInOut::armLowGoal,m_ArmInOut));
+/*  // NON LED COMMANDS
+    //This is all commented out because we use a single button to order multiple commands, using commands made
+    //for each part of the manipulator. they were then merged into multiple action commands, which send multiple
+    //objects to multiple positions with one button press
+     dPadLeftButton.onTrue(new StartEndCommand(m_ArmInOut::armGround,m_ArmInOut::armLowGoal,m_ArmInOut));
     dPadRightButton.onTrue(new StartEndCommand(m_ArmInOut::armZero,m_ArmInOut::armMidGoal,m_ArmInOut));
     leftBumper.onTrue(new StartEndCommand(m_ArmInOut::armTest,m_ArmInOut::armMidGoal,m_ArmInOut));
 
@@ -228,6 +217,7 @@ public class RobotContainer {
      rightBumper.toggleOnTrue(gripperOut);
 
     dPadUpButton.onTrue(shelf_high);
+    dPadDownButton.onTrue(zeros);
 
     // dPadLeftButton.toggleOnTrue(WristDownManual);
     // dPadRightButton.toggleOnTrue(WristUpManual);

@@ -45,6 +45,9 @@ public class ManipulatorShelfMid extends SequentialCommandGroup {
           new ArmPivotShelfMid(m_ArmPivot),  
           new WristShelfMid(m_Wrist)),
         new WaitCommand(1), 
-        new ArmInOutShelfMid(m_ArmInOut)));
+        new ArmInOutShelfMid(m_ArmInOut)
+      )
+    
+    );
   }
 }
