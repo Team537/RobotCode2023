@@ -8,10 +8,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.manipulator.ArmPivot;
 
 public class ArmPivotZero extends CommandBase {
-  private ArmPivot m_ArmPivot;
 
-  /** Creates a new ArmPivotZero. */
+  private ArmPivot m_ArmPivot;
+  /** Creates a new ArmPivotLowGoal. */
   public ArmPivotZero(ArmPivot m_ArmPivot) {
+
+    this.m_ArmPivot = m_ArmPivot;
+
+    addRequirements(m_ArmPivot);
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_ArmPivot = m_ArmPivot;
 
