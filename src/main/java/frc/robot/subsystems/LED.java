@@ -17,8 +17,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LEDConstants;
 
 public class LED extends SubsystemBase {
-  private AddressableLED addressableLED = new AddressableLED(1);
-  private AddressableLEDBuffer buffer = new AddressableLEDBuffer(LEDConstants.length);
+  private static Spark m_blinkin = new Spark(0);
+
+  // private AddressableLED addressableLED = new AddressableLED(1);
+  // private AddressableLEDBuffer buffer = new AddressableLEDBuffer(LEDConstants.length);
   private boolean fallen = false;
   private boolean low_goal = false;
   private boolean mid_goal = false;
@@ -111,14 +113,16 @@ public class LED extends SubsystemBase {
         ledState = "Default";
         break;
     } 
+    
       
     }
+    setMode(mode);
   }
   /* Creates a new LED class. */
   public LED() {
-    addressableLED.setLength(buffer.getLength());
+    //addressableLED.setLength(buffer.getLength());
     // setRed();
-    addressableLED.start();
+    //addressableLED.start();
    
     // var isRed = NetworkTableInstance
     //   .getDefault()
@@ -164,7 +168,7 @@ public class LED extends SubsystemBase {
     DISABLED_BLUE, 
     DISABLED_NEUTRAL, 
   }
-  public void setMode(LedMode mode, boolean sameBattery) {
+  public void setMode(LedMode mode) {
     switch (mode) {
       case FALLEN:
         strobe(Color.kWhite);
@@ -194,36 +198,44 @@ public class LED extends SubsystemBase {
         wave(Color.kLime, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
         break;
       case DEFAULT_TELEOP_RED:
-      wave(Color.kRed, Color.kBlack, LEDConstants.waveAllianceFullLength,
-      LEDConstants. waveAllianceDuration);
+      // wave(Color.kRed, Color.kBlack, LEDConstants.waveAllianceFullLength,
+      // LEDConstants. waveAllianceDuration);
+        m_blinkin.set(-0.17);
+        break;
       case CONE:
-      setSolidColor(Color.kYellow);
+      // setSolidColor(Color.kYellow);
+        m_blinkin.set(0.69);
         break;
       case CUBE:
-      setSolidColor(Color.kPurple);
+      // setSolidColor(Color.kPurple);
+        m_blinkin.set(0.91);
         break;
       case DEFAULT_TELEOP_BLUE:
-      wave(Color.kBlue, Color.kBlack, LEDConstants.waveAllianceFullLength,
-      LEDConstants. waveAllianceDuration);
+      // wave(Color.kBlue, Color.kBlack, LEDConstants.waveAllianceFullLength,
+      // LEDConstants. waveAllianceDuration);
+        m_blinkin.set(-0.15);
         break;
       case DISABLED_RED:
-      setSolidColor(Color.kRed);
+      // setSolidColor(Color.kRed);
+        m_blinkin.set(-0.17);
         break;
       case DISABLED_BLUE:
-      setSolidColor(Color.kBlue);
+      // setSolidColor(Color.kBlue);
+        m_blinkin.set(-0.15);
         break;
       default:
-        setSolidColor(Color.kBlack);
+        // setSolidColor(Color.kBlack);
+        m_blinkin.set(0.99);
        break;
     }
        
     }
 
   private void setSolidColor(Color color) {
-    for (var i = 0; i < buffer.getLength(); ++i) {
-      buffer.setLED(i, color);
-    }
-    addressableLED.setData(buffer);
+    // for (var i = 0; i < buffer.getLength(); ++i) {
+    //   buffer.setLED(i, color);
+    // }
+    // addressableLED.setData(buffer);
   }
   private void strobe(Color color) {
     boolean on =
@@ -241,8 +253,8 @@ public class LED extends SubsystemBase {
     setSolidColor(new Color(red, green, blue));
   }
   private void setLedsSymmetrical(int index, Color color) {
-    buffer.setLED((LEDConstants.centerLed + index) % LEDConstants.length, color);
-    buffer.setLED(LEDConstants.centerLed - index, color);
+    // buffer.setLED((LEDConstants.centerLed + index) % LEDConstants.length, color);
+    // buffer.setLED(LEDConstants.centerLed - index, color);
   }
   private void rainbow(double fullLength, double duration) {
     double x = (1 - ((Timer.getFPGATimestamp() / duration) % 1.0)) * 180.0;
