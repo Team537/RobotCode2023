@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.util.sendable.SendableBuilder.BackendKind;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -139,7 +140,7 @@ public class RobotContainer {
 
     aButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
     bButton.toggleOnTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
-
+36
 */
     //  LED COMMANDS
     yButton.onTrue(high_goal);
@@ -153,6 +154,9 @@ public class RobotContainer {
 
     leftBumper.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
     rightBumper.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
+    
+    backButton.onTrue(new StartEndCommand(m_Gripper::GripperFast,m_Gripper::GripperStop,m_Gripper));
+    backButton.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
 
     dPadRightButton.onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp, m_Wrist::WristPositionManualDown, m_Wrist));
     dPadLeftButton.onTrue(new StartEndCommand(m_Wrist::WristPositionManualDown, m_Wrist::WristPositionManualUp, m_Wrist));

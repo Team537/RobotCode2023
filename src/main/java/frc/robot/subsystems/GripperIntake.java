@@ -30,6 +30,7 @@ public class GripperIntake extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   public void GripperIn() {
+
     m_Gripper.set(0.25);
     m_Gripper2.set(-0.25);
     gripperState = "Intaking";
@@ -40,9 +41,14 @@ public class GripperIntake extends SubsystemBase {
     gripperState = "Stopped";
   }
   public void GripperOut() {
-    m_Gripper.set(-0.1);
-    m_Gripper2.set(0.1);
+    m_Gripper.set(-0.25);
+    m_Gripper2.set(0.25);
     gripperState = "Outaking";
+  }
+  public void GripperFast() {
+    m_Gripper.set(-0.8);
+    m_Gripper2.set(0.8);
+    gripperState = "SuperSpeed";
   }
 
 }

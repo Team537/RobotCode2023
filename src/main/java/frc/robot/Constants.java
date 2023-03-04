@@ -169,7 +169,7 @@ public final class Constants {
 
     //WRIST SET POSITIONS
     public static final double kWristPositionHighGoal = -11;
-    public static final double kWristPositionShelfHumanPL = -16;
+    public static final double kWristPositionShelfHumanPL = -17;
     public static final double kWristPositionMidGoal = -13; 
     public static final double kWristPositionShelfHigh = -10;
 

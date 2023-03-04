@@ -33,9 +33,9 @@ public class ManipulatorShelfHumanPL extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new ParallelCommandGroup(
-      new StartEndCommand(m_ArmInOut::armShelfHumanPL,m_ArmInOut::armZero,m_ArmInOut),
-      new StartEndCommand(m_ArmPivot::ArmPositionShelfHumanPL,m_ArmPivot::ArmPositionZero,m_ArmPivot),
-      new StartEndCommand(m_Wrist::WristPositionShelfHumanPL,m_Wrist::WristPositionZero,m_Wrist)
+      new StartEndCommand(m_ArmInOut::armShelfHumanPL,m_ArmInOut::armShelfHumanPL,m_ArmInOut),
+      new StartEndCommand(m_ArmPivot::ArmPositionShelfHumanPL,m_ArmPivot::ArmPositionShelfHumanPL,m_ArmPivot),
+      new StartEndCommand(m_Wrist::WristPositionShelfHumanPL,m_Wrist::WristPositionShelfHumanPL,m_Wrist)
     )
     
     );
