@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -15,6 +16,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.ModuleMap;
 
 /**
@@ -29,7 +31,7 @@ import frc.robot.utils.ModuleMap;
  * wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {
+public class Constants {
   public static final class DriveConstants {
 
     // public static final int kFrontLeft = 9;
@@ -359,6 +361,17 @@ public final class Constants {
           BACK_RIGHT
         }
   }
+  // public class AutoConstants{
+
+  //   public HashMap<String, Command> autoMap = new HashMap<>();
+
+    
+    
+    
+  
+  // }
+  
 }
+
 
 

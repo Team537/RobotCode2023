@@ -13,6 +13,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Auto.FollowTrajectory;
+import frc.robot.commands.Auto.ScoreMidDriveBack;
+import frc.robot.commands.led.LedHighGoal;
+import frc.robot.commands.led.LedLowGoal;
+import frc.robot.commands.led.LedMidGoal;
+import frc.robot.commands.led.LedShelf;
 import frc.robot.commands.manipulator.ManipulatorHighGoal;
 import frc.robot.commands.manipulator.ManipulatorGround;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
@@ -38,6 +43,7 @@ import frc.robot.subsystems.Camera;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArcadeDriveCommand;
@@ -70,11 +76,13 @@ public class RobotContainer {
   private final Camera m_camera = new Camera(m_robotDrive);
   
   
-  Command high_goal = new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED) ;
-  Command mid_goal = new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command ground = new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
-  Command shelf_HuPL =  new ManipulatorShelfHumanPL(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+  Command high_goal = new ParallelCommandGroup(new LedHighGoal(m_LED), new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
+  Command mid_goal =  new ParallelCommandGroup(new LedMidGoal(m_LED), new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
+  Command ground = new ParallelCommandGroup(new LedLowGoal(m_LED), new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
+  Command shelf_HuPL =   new ParallelCommandGroup(new LedShelf(m_LED), new ManipulatorShelfHumanPL(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
   Command zeros = new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+
+  Command auto = new ScoreMidDriveBack(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
   // Command signalCube = new SignalCube(m_LED);
   // Command signalCone = new SignalCone(m_LED);
 
@@ -147,14 +155,14 @@ public class RobotContainer {
     aButton.onTrue(ground);
     bButton.onTrue(mid_goal);
 
-    leftBumper.onTrue(new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
-    rightBumper.onTrue(new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
+    leftBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),new StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper)));
+    rightBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),new StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper)));
 
-    leftBumper.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
-    rightBumper.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
+    leftBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper)));
+    rightBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper)));
     
-    backButton.onTrue(new StartEndCommand(m_Gripper::GripperFast,m_Gripper::GripperStop,m_Gripper));
-    backButton.onFalse(new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper));
+    backButton.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),new StartEndCommand(m_Gripper::GripperFast,m_Gripper::GripperStop,m_Gripper)));
+    backButton.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper)));
 
     dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionZero,m_Wrist));
     dPadRightButton.onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp, m_Wrist::WristPositionManualDown, m_Wrist));
@@ -220,16 +228,17 @@ public class RobotContainer {
   public void robotInit() {
     // m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
 
-     m_Chooser.addOption("Auto 1", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 1"));
-     m_Chooser.addOption("Auto 2", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 2"));
-     m_Chooser.addOption("Auto 3", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 3"));
+    //  m_Chooser.addOption("Auto 1", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 1", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+    //  m_Chooser.addOption("Auto 2", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 2", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+    //  m_Chooser.addOption("Auto 3", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 3", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
 
-     SmartDashboard.putData("Auto Selector", m_Chooser);
+    //  SmartDashboard.putData("Auto Selector", m_Chooser);
   }
 
   public Command getAutoCommand() {
+    
 
-   return m_Chooser.getSelected();
+   return auto;
   }
 
 }

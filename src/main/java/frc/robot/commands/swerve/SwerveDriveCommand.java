@@ -7,6 +7,7 @@
 
 package frc.robot.commands.swerve;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LED;
@@ -54,7 +55,7 @@ public class SwerveDriveCommand extends CommandBase {
 
     m_drive.drive(drive, strafe, rotation, m_isFieldRelative, true);    // Forward/Back Drive, Left/Right Strafe, Left/Right Turn
     
-    if((Math.abs(m_drive.getVelocity()) > 0) && m_drive.driveState.equals("Drive")) {
+    if((Math.abs(m_drive.getVelocity()) > 0) && m_drive.driveState.equals("Drive") && DriverStation.isTeleop()) {
       m_LED.setDriving(true);
       m_LED.setSlowDriving(false);
     } else{

@@ -21,10 +21,14 @@ public class LED extends SubsystemBase {
   private boolean high_goal = false;
   private boolean shelf = false;
   private boolean intaking = false;
+  private boolean fastOutaking = false;
   private boolean outaking = false;
   private ManipulatorObject manipulatorObject = null;
   private boolean driving = false;
   private boolean slow_driving = false;
+  private boolean auto_start = false;
+  private boolean auto_end = false;
+
   private LedMode mode = LedMode.DISABLED_NEUTRAL;
   private Alliance alliance = Alliance.Invalid;
   private String ledState = "Default";
@@ -78,6 +82,10 @@ public class LED extends SubsystemBase {
       mode = LedMode.INTAKING;
       ledState = "Intaking";
     } 
+    else if (fastOutaking && DriverStation.isTeleop()) {
+      mode = LedMode.FAST_OUTAKING;
+      ledState = "Fast Intaking";
+    } 
     else if (low_goal && DriverStation.isTeleop()) {
       mode = LedMode.LOW_GOAL;
       ledState = "Low Goal";
@@ -92,7 +100,14 @@ public class LED extends SubsystemBase {
     } else if (shelf && DriverStation.isTeleop()) {
       mode = LedMode.SHELF;
       ledState = "Shelf";
-    } else { switch (alliance) {
+    } else if (auto_start) {
+      mode = LedMode.AUTO_START;
+      ledState = "Auto Start";
+    } else if (auto_end) {
+      mode = LedMode.AUTO_END;
+      ledState = "Auto End";
+    }
+    else { switch (alliance) {
       case Red:
         mode = LedMode.DEFAULT_TELEOP_RED;
         ledState = "Default Teleop Red";
@@ -107,6 +122,11 @@ public class LED extends SubsystemBase {
         break;
     } 
     }
+
+   if(DriverStation.isTeleop()){
+       auto_end = false;
+
+   }
 
     setMode(mode);
 
@@ -156,6 +176,7 @@ public class LED extends SubsystemBase {
     CONE,
     CUBE,  
     INTAKING,
+    FAST_OUTAKING,
     OUTAKING, 
     DEFAULT_TELEOP_RED, 
     DEFAULT_TELEOP_BLUE,
@@ -164,6 +185,8 @@ public class LED extends SubsystemBase {
     SLOW_DRIVING,
     DISABLED_BLUE, 
     DISABLED_NEUTRAL, 
+    AUTO_START,
+    AUTO_END,
   }
 
   public static enum ManipulatorObject {
@@ -183,6 +206,11 @@ public class LED extends SubsystemBase {
       case INTAKING:
         // setSolidColor(Color.kGold);
         m_blinkin.set(0.67);
+        break;
+
+      case FAST_OUTAKING:
+        // setSolidColor(Color.kGold);
+        m_blinkin.set(0.13);
         break;
 
       case OUTAKING:
@@ -236,6 +264,16 @@ public class LED extends SubsystemBase {
         m_blinkin.set(0.91);
         break;
 
+        case AUTO_START:
+        // setSolidColor(Color.kBlue);
+          m_blinkin.set(-0.91);
+          break;
+
+      case AUTO_END:
+        // setSolidColor(Color.kBlue);
+          m_blinkin.set(-0.87);
+          break;
+
       case DEFAULT_TELEOP_BLUE:
       // wave(Color.kBlue, Color.kBlack, LEDConstants.waveAllianceFullLength,
       // LEDConstants. waveAllianceDuration);
@@ -251,6 +289,8 @@ public class LED extends SubsystemBase {
       // setSolidColor(Color.kBlue);
         m_blinkin.set(-0.15);
         break;
+
+    
         
       default:
         // setSolidColor(Color.kBlack);
@@ -320,12 +360,31 @@ public class LED extends SubsystemBase {
   // }
 
   // Sets the variable in this file active based on another file's variable ( trace the method )
-  public void setIntaking(boolean active) {
-    intaking = active;
+  // public void setIntaking(boolean active) {
+  //   intaking = active;
+  // }
+  // public void setOutaking(boolean active) {
+  //   outaking = active;
+  // }
+
+  public void toggleOutake() {
+    outaking = !outaking;
   }
-  public void setOutaking(boolean active) {
-    outaking = active;
+  public void toggleIntake() {
+    intaking = !intaking;
   }
+  public void toggleFastOutake() {
+    fastOutaking = !fastOutaking;
+  }
+  public void autoStart() {
+    auto_start = true;
+  }
+
+  public void autoEnd() {
+    auto_start = false;
+    auto_end = true;
+  }
+ 
   public void setLowGoal(boolean active) {
     low_goal = active;
   }
