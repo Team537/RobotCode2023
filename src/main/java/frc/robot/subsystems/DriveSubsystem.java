@@ -19,8 +19,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.SwerveConstants;
-import frc.robot.Constants.SwerveConstants.ModulePosition;
+import frc.robot.constants.Constants.SwerveConstants;
+import frc.robot.constants.Constants.SwerveConstants.ModulePosition;
 import frc.robot.utils.ModuleMap;
 
 import java.util.HashMap;

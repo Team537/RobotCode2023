@@ -10,8 +10,8 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.SwerveConstants;
-import frc.robot.Constants.SwerveConstants.ModulePosition;
+import frc.robot.constants.Constants.SwerveConstants;
+import frc.robot.constants.Constants.SwerveConstants.ModulePosition;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.utils.ModuleMap;
 

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.Constants.OIConstants;
+import frc.robot.constants.Constants.OIConstants;
 import frc.robot.commands.Auto.FollowTrajectory;
 import frc.robot.commands.manipulator.ManipulatorHighGoal;
 import frc.robot.commands.manipulator.ManipulatorGround;

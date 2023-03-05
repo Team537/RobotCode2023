@@ -8,7 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.GripperConstants;
+import frc.robot.constants.Constants.GripperConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class GripperIntake extends SubsystemBase {

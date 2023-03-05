@@ -13,7 +13,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.VisionConstants;
+import frc.robot.constants.Constants.VisionConstants;
 import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.DriveSubsystem;
 

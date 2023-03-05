@@ -11,7 +11,7 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
-import frc.robot.Constants.SwerveConstants;
+import frc.robot.constants.Constants.SwerveConstants;
 import frc.robot.commands.swerve.SetSwerveBrakeMode;
 import frc.robot.commands.swerve.SetSwerveOdometry;
 import frc.robot.simulation.FieldSim;
