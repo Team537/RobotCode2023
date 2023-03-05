@@ -112,7 +112,36 @@ public class DriveSubsystem extends SubsystemBase {
     
     
   }
+  public void drivePose(
+    double drive,
+    double strafe,
+    double rotation,
+    Rotation2d rotation2d) {
+  drive *= SwerveConstants.kMaxSpeedMetersPerSecond;
+  strafe *= SwerveConstants.kMaxSpeedMetersPerSecond;
+  rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
 
+  //Chassis Speed
+  ChassisSpeeds chassisSpeeds =
+      
+          ChassisSpeeds.fromFieldRelativeSpeeds(
+              drive, strafe, rotation, rotation2d);
+           
+          //  new ChassisSpeeds(drive*Math.cos(Math.toRadians(m_gyro.getYaw())) + strafe*Math.sin(Math.toRadians(m_gyro.getYaw())),
+          //  -drive*Math.sin(Math.toRadians(m_gyro.getYaw())) + strafe*Math.cos(Math.toRadians(m_gyro.getYaw())), 
+          //  rotation);
+
+  //Module States
+  Map<ModulePosition, SwerveModuleState> moduleStates =
+      ModuleMap.of(SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
+
+  SwerveDriveKinematics.desaturateWheelSpeeds(
+      ModuleMap.orderedValues(moduleStates, new SwerveModuleState[0]), SwerveConstants.kMaxSpeedMetersPerSecond);
+
+  for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
+    module.setDesiredState(moduleStates.get(module.getModulePosition()), false);
+    driveState = "Drive";
+}
   public void drive(
       double drive,
       double strafe,
