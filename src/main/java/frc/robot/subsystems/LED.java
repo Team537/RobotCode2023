@@ -24,8 +24,8 @@ public class LED extends SubsystemBase {
   private boolean fastOutaking = false;
   private boolean outaking = false;
   private ManipulatorObject manipulatorObject = null;
+  private boolean boost_driving = false;
   private boolean driving = false;
-  private boolean slow_driving = false;
   private boolean auto_start = false;
   private boolean auto_end = false;
 
@@ -66,13 +66,13 @@ public class LED extends SubsystemBase {
       mode = LedMode.CUBE;
       ledState = "Cube";
     } 
+    else if (boost_driving) {
+      mode = LedMode.BOOST_DRIVING;
+      ledState = "Boost Driving";
+    } 
     else if (driving) {
       mode = LedMode.DRIVING;
       ledState = "Driving";
-    } 
-    else if (slow_driving) {
-      mode = LedMode.SLOW_DRIVING;
-      ledState = "Slow Driving";
     } 
     else if (outaking && DriverStation.isTeleop()) {
       mode = LedMode.OUTAKING;
@@ -181,8 +181,8 @@ public class LED extends SubsystemBase {
     DEFAULT_TELEOP_RED, 
     DEFAULT_TELEOP_BLUE,
     DISABLED_RED, 
+    BOOST_DRIVING,
     DRIVING,
-    SLOW_DRIVING,
     DISABLED_BLUE, 
     DISABLED_NEUTRAL, 
     AUTO_START,
@@ -238,12 +238,12 @@ public class LED extends SubsystemBase {
         m_blinkin.set(-0.25);
         break;
 
-     case DRIVING:
+     case BOOST_DRIVING:
         // wave(Color.kGreen, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
         m_blinkin.set(-0.37);
         break;
 
-      case SLOW_DRIVING:
+      case DRIVING:
         // wave(Color.kLime, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
         m_blinkin.set(-0.37);
         break;
@@ -410,11 +410,11 @@ public class LED extends SubsystemBase {
   public void setFallen(boolean active) {
     fallen = active;
   }
+  public void setBoostDriving(boolean active) {
+    boost_driving = active;
+  }
   public void setDriving(boolean active) {
     driving = active;
-  }
-  public void setSlowDriving(boolean active) {
-    slow_driving = active;
   }
   // public void set(double val) {
   //   if ((val >= -1.0) && (val <= 1.0)) {

@@ -113,15 +113,22 @@ public class DriveSubsystem extends SubsystemBase {
     
   }
 
-  public void drive(
+  public void boostDrive(
       double drive,
       double strafe,
       double rotation,
+      double triggerMultiplier,
       boolean isFieldRelative,
       boolean isOpenLoop) {
+
+
     drive *= SwerveConstants.kMaxSpeedMetersPerSecond;
     strafe *= SwerveConstants.kMaxSpeedMetersPerSecond;
     rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
+
+    drive = (triggerMultiplier+0.5)*drive;
+    strafe = (triggerMultiplier+0.5)*strafe;
+    rotation = (triggerMultiplier+0.5)*rotation;
 
     //Chassis Speed
     ChassisSpeeds chassisSpeeds =
@@ -142,9 +149,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
       module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
-      driveState = "Drive";
+      driveState = "Boost Drive";
   }
-  public void slowDrive(
+  public void drive(
       double drive,
       double strafe,
       double rotation,
@@ -170,7 +177,7 @@ public class DriveSubsystem extends SubsystemBase {
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
       module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
 
-      driveState = "Slow Drive";
+      driveState = "Drive";
   }
   public Command followTrajectoryCommand(PathPlannerTrajectory traj) {
     

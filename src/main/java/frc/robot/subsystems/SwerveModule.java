@@ -207,8 +207,8 @@ public class SwerveModule extends SubsystemBase {
     //Feedback loop Type
 
     if (isOpenLoop) {
-      double percentOutput = 2* Math.min(filter.calculate(slewRateOutput.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond)), 0.25);
-      double percentOutput1 =  Math.max(percentOutput, -0.5);
+      double percentOutput = 2* Math.min(filter.calculate(slewRateOutput.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond)), 0.5);
+      double percentOutput1 =  Math.max(percentOutput, -1);
       m_driveMotor.set(ControlMode.PercentOutput, percentOutput1);
     } else {
       double velocity = (desiredState.speedMetersPerSecond / (SwerveConstants.kDriveEncoderDistancePerPulse * 10));
