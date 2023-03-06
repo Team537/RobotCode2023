@@ -126,9 +126,9 @@ public class DriveSubsystem extends SubsystemBase {
     strafe *= SwerveConstants.kMaxSpeedMetersPerSecond;
     rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
 
-    drive = (triggerMultiplier+0.5)*drive;
-    strafe = (triggerMultiplier+0.5)*strafe;
-    rotation = (triggerMultiplier+0.5)*rotation;
+    drive = (triggerMultiplier+0.1)*drive;
+    strafe = (triggerMultiplier+0.1)*strafe;
+    
 
     //Chassis Speed
     ChassisSpeeds chassisSpeeds =
@@ -180,7 +180,7 @@ public class DriveSubsystem extends SubsystemBase {
       driveState = "Drive";
   }
   public Command followTrajectoryCommand(PathPlannerTrajectory traj) {
-    
+    driveState = "Following Trajectory";
          return new PPSwerveControllerCommand(
              traj, 
              this::getPoseMeters, // Pose supplier
@@ -192,7 +192,7 @@ public class DriveSubsystem extends SubsystemBase {
              true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
              this // Requires this drive subsystem
          );
-     
+    
  }
 /**
  * Sets States For Swerve Modules and Determines FeedbackLoop Type

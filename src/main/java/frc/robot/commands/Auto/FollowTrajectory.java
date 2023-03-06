@@ -69,7 +69,7 @@ eventMap.put("returnGround",new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wris
 
 
 
-   PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, 1, 0.5, false);
+   PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, 0.5, 0.1, false);
 
    FollowPathWithEvents command = new FollowPathWithEvents(
     m_drive.followTrajectoryCommand(trajectory),
