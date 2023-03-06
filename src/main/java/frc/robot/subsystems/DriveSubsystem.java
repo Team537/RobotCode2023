@@ -208,7 +208,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void setSwerveModuleStatesAuto(SwerveModuleState[] states) {
-    setSwerveModuleStates(states, false);
+    setSwerveModuleStates(states, true);
   }
 
   /**
