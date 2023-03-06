@@ -26,7 +26,7 @@ public class ScoreMidDriveBack extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(m_LED::autoStart),
-      new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(5),
+      new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
       new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(2),
       new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1),
       new FollowTrajectory(m_drive, m_fieldSim, "Drive Backward", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED),

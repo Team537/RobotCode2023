@@ -125,6 +125,7 @@ public class LED extends SubsystemBase {
 
    if(DriverStation.isTeleop()){
        auto_end = false;
+       auto_start = false;
 
    }
 
@@ -210,7 +211,7 @@ public class LED extends SubsystemBase {
 
       case FAST_OUTAKING:
         // setSolidColor(Color.kGold);
-        m_blinkin.set(0.13);
+        m_blinkin.set(-0.73);
         break;
 
       case OUTAKING:
@@ -220,12 +221,12 @@ public class LED extends SubsystemBase {
 
       case LOW_GOAL:
         // breath(Color.kRed, Color.kFloralWhite);
-        m_blinkin.set(-0.25);
+        m_blinkin.set(-0.17);
         break;
 
       case MID_GOAL:
         // breath(Color.kRed, Color.kAzure);
-        m_blinkin.set(-0.25);
+        m_blinkin.set(-0.39);
         break;
 
       case HIGH_GOAL:
@@ -245,7 +246,7 @@ public class LED extends SubsystemBase {
 
       case DRIVING:
         // wave(Color.kLime, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
-        m_blinkin.set(-0.37);
+        m_blinkin.set(-0.49);
         break;
 
       case DEFAULT_TELEOP_RED:
