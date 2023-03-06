@@ -126,8 +126,8 @@ public class DriveSubsystem extends SubsystemBase {
     strafe *= SwerveConstants.kMaxSpeedMetersPerSecond;
     rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
 
-    drive = (triggerMultiplier+0.1)*drive;
-    strafe = (triggerMultiplier+0.1)*strafe;
+    drive = (triggerMultiplier+0.2)*drive;
+    strafe = (triggerMultiplier+0.2)*strafe;
     
 
     //Chassis Speed
