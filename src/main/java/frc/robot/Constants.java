@@ -145,7 +145,7 @@ public class Constants {
     public static final double kArmPivotPositionShelfHigh = 25;
 
 
-    // public static final double kArmPivotPositionTest = 20.0;
+    public static final double kArmPivotPositionMidDown = 23;
     public static final double kArmPivotPositionZero = 0.0;
     public static final double kArmPivotPositionGround = 58.0;
 
@@ -175,7 +175,7 @@ public class Constants {
     public static final double kWristPositionMidGoal = -13; 
     public static final double kWristPositionShelfHigh = -10;
 
-    // public static final double kWristPositionTest = -14;
+    // public static final double kWristPositionMid = -14;
     public static final double kWristPositionZero = 0;
     public static final double kWristPositionGround = -6;
 
