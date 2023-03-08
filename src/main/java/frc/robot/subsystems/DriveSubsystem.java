@@ -77,6 +77,8 @@ public class DriveSubsystem extends SubsystemBase {
                     
   private final Pigeon2 m_gyro = new Pigeon2(SwerveConstants.kPigeonID);
   public String driveState = "Drive";
+
+  //old gyro
 //   private final ADXRS450_GyroSim m_gyroSim = new ADXRS450_GyroSim(m_gyro);
 
 
@@ -119,6 +121,7 @@ public class DriveSubsystem extends SubsystemBase {
       double rotation,
       boolean isFieldRelative,
       boolean isOpenLoop) {
+        // d = d * s
     drive *= SwerveConstants.kMaxSpeedMetersPerSecond;
     strafe *= SwerveConstants.kMaxSpeedMetersPerSecond;
     rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
@@ -181,6 +184,8 @@ public class DriveSubsystem extends SubsystemBase {
              new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
              new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
              new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+
+             //refers to the class its in, calls the swerve module
              this::setSwerveModuleStatesAuto, // Module states consumer
              true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
              this // Requires this drive subsystem
@@ -208,6 +213,9 @@ public class DriveSubsystem extends SubsystemBase {
    * Sets Odometry, Used in Auto
    * @param pose 
    */
+
+   // calls from the setswerveodometry command
+   //only used in auto
   public void setOdometry(Pose2d pose) {
     m_odometry.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
     m_gyro.setYaw(pose.getRotation().getDegrees());

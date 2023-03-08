@@ -49,11 +49,13 @@ public class SlowSwerveDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+                                                      // 0.05 are the joystick deadbands. if the joystick is less than that value, is makes it equal to 0 
     double drive = Math.abs(m_driveInput.getAsDouble()) > 0.05 ? m_driveInput.getAsDouble() : 0;
     double strafe = Math.abs(m_strafeInput.getAsDouble()) > 0.05 ? m_strafeInput.getAsDouble() : 0;
     double rotation = Math.abs(m_rotationInput.getAsDouble()) > 0.05 ? m_rotationInput.getAsDouble() : 0;
 
-    m_drive.drive(drive, strafe, rotation, m_isFieldRelative, true);    // Forward/Back drive, Left/Right Strafe, Left/Right Turn
+
+    m_drive.slowDrive(drive, strafe, rotation, m_isFieldRelative, true);    // Forward/Back drive, Left/Right Strafe, Left/Right Turn
     if(Math.abs(m_drive.getVelocity()) > 0 && m_drive.driveState.equals("Drive") && DriverStation.isTeleop()) {
       m_LED.setSlowDriving(true);
       m_LED.setDriving(false);
@@ -62,6 +64,8 @@ public class SlowSwerveDriveCommand extends CommandBase {
       m_LED.setSlowDriving(false);
 
     }
+
+    //detects pitch and roll from the start position
     if(Math.abs(m_drive.getPitch()) > 75 || Math.abs(m_drive.getRoll()) > 75) {
       m_LED.setFallen(true);
     } else{

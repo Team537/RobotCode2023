@@ -5,11 +5,8 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
 import java.util.HashMap;
 
@@ -19,7 +16,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import frc.robot.commands.manipulator.ManipulatorGround;
-import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.swerve.SetSwerveBrakeMode;
 import frc.robot.commands.swerve.SetSwerveOdometry;
 import frc.robot.simulation.FieldSim;
@@ -44,7 +40,7 @@ public class FollowTrajectory extends SequentialCommandGroup{
   private final String pathName;
 
   public FollowTrajectory(DriveSubsystem m_drive, FieldSim m_fieldSim, String pathName, ArmInOut m_ArmInOut, ArmPivot m_ArmPivot, GripperIntake m_Gripper, Wrist m_Wrist, LED m_LED) {
-
+    //setting the subsytem to the one in the drive subsystem, so no duplicates
    this.m_drive = m_drive;
    this.m_fieldSim = m_fieldSim;
    this.pathName = pathName;
@@ -55,10 +51,13 @@ public class FollowTrajectory extends SequentialCommandGroup{
    this.m_LED = m_LED;
 
    HashMap<String, Command> eventMap = new HashMap<>();
-eventMap.put("1", new PrintCommand("Passed marker 1"));
+   //prints a status message once it completes a action
+eventMap.put("1",new PrintCommand("Passed marker 1"));
 eventMap.put("2",new PrintCommand("Passed marker 2"));
 eventMap.put("3",new PrintCommand("Passed marker 3"));
 eventMap.put("4",new PrintCommand("Passed marker 4"));
+
+
 // eventMap.put("autoStart", );
 // eventMap.put("autoEnd", new InstantCommand(m_LED::autoEnd));
 // eventMap.put("scoreMid", new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(5));
@@ -72,6 +71,7 @@ eventMap.put("returnGround",new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wris
    PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, 0.5, 0.1, false);
 
    FollowPathWithEvents command = new FollowPathWithEvents(
+    //uses the drive method to follow the trajectory.
     m_drive.followTrajectoryCommand(trajectory),
     trajectory.getMarkers(),
     eventMap

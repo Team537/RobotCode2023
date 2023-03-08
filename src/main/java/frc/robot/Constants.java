@@ -72,20 +72,11 @@ public class Constants {
     public static final double kEncoderDistancePerPulse =
         // Assumes the encoders are directly mounted on the wheel shafts
         (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
-
-    /*  These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-        These characterization values MUST be determined either experimentally or
-        theoretically
-        for *your* robot's drive.
-        The Robot Characterization Toolsuite provides a convenient tool for obtaining
-        these values for your robot. */
-        //aniket sussy bacca.......
         
     public static final double ksVolts = 0.305;
     public static final double kvVoltSecondsPerMeter = 2.29;
     public static final double kaVoltSecondsSquaredPerMeter = 0.0131;
 
-    // Example value only - as above, this must be tuned for your drive!
     public static final double kPDriveVel = 8.5;
 
 

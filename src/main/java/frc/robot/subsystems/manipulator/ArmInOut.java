@@ -30,7 +30,7 @@ public class ArmInOut extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber(" Extend Position", m_encoderExtension.getPosition());
-    SmartDashboard.putNumber("Extension Velocity",m_encoderExtension.getVelocity());
+    SmartDashboard.putNumber("Extension Velocity", m_encoderExtension.getVelocity());
     SmartDashboard.putString("Arm In Out State", armInOutState);
     
     // This method will be called once per scheduler run

@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.math.trajectory.Trajectory;
 import frc.robot.simulation.FieldSim;
 
+
+//sends things to the field simulation
 public class PlotFieldTrajectory extends CommandBase {
 
   FieldSim m_fieldSim;

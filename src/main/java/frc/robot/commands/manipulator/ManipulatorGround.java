@@ -7,8 +7,6 @@ package frc.robot.commands.manipulator;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.led.LedLowGoal;
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.ArmPivot;
@@ -25,7 +23,11 @@ public class ManipulatorGround extends SequentialCommandGroup {
     
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+
+    //schedules commands to run
     addCommands( new ParallelCommandGroup(
+
+      //calls them from the subsystem class
       new StartEndCommand(m_ArmInOut::armGround,m_ArmInOut::armGround,m_ArmInOut),
       new StartEndCommand(m_ArmPivot::ArmPositionGround,m_ArmPivot::ArmPositionGround,m_ArmPivot),
       new StartEndCommand(m_Wrist::WristPositionGround,m_Wrist::WristPositionGround,m_Wrist)

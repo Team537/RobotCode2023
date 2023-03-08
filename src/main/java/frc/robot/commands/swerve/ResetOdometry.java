@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
 
+                  //resets the gyro angle of the robot
 public class ResetOdometry extends CommandBase {
   /** Creates a new ResetGyro. */
   private final DriveSubsystem m_drive;

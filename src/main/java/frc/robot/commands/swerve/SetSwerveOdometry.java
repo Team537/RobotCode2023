@@ -29,6 +29,8 @@ public class SetSwerveOdometry extends CommandBase {
    * @param pose2d position to set odometry to
    * @param fieldSim fieldSim to set robot's position if we're simulating the robot
    */
+
+   //sets the position of the gyro
   public SetSwerveOdometry(DriveSubsystem m_drive, Pose2d pose2d, FieldSim fieldSim) {
     if (RobotBase.isSimulation() && fieldSim == null)
       System.out.println(
