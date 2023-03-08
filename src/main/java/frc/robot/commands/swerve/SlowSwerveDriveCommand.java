@@ -17,7 +17,7 @@ import java.util.function.DoubleSupplier;
 /**
  * An example command that uses an example subsystem.
  */
-public class SwerveDriveCommand extends CommandBase {
+public class SlowSwerveDriveCommand extends CommandBase {
   
   private final DriveSubsystem m_drive;
   private final DoubleSupplier m_driveInput, m_strafeInput, m_rotationInput;
@@ -29,7 +29,7 @@ public class SwerveDriveCommand extends CommandBase {
    *
    * 
    */
-  public SwerveDriveCommand(DriveSubsystem m_drive, DoubleSupplier driveInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, boolean isFieldRelative, LED m_LED) {
+  public SlowSwerveDriveCommand(DriveSubsystem m_drive, DoubleSupplier driveInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, boolean isFieldRelative, LED m_LED) {
     this.m_drive = m_drive;
     m_driveInput = driveInput;
     m_strafeInput = strafeInput;
@@ -55,11 +55,11 @@ public class SwerveDriveCommand extends CommandBase {
 
     m_drive.drive(drive, strafe, rotation, m_isFieldRelative, true);    // Forward/Back drive, Left/Right Strafe, Left/Right Turn
     if(Math.abs(m_drive.getVelocity()) > 0 && m_drive.driveState.equals("Drive") && DriverStation.isTeleop()) {
-      m_LED.setDriving(true);
-      m_LED.setBoostDriving(false);
+      m_LED.setSlowDriving(true);
+      m_LED.setDriving(false);
       
     } else{
-      m_LED.setDriving(false);
+      m_LED.setSlowDriving(false);
 
     }
     if(Math.abs(m_drive.getPitch()) > 75 || Math.abs(m_drive.getRoll()) > 75) {
