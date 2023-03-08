@@ -114,7 +114,7 @@ public class ArmInOut extends SubsystemBase {
 
   }
 
-
+//increment testing inorder to create many positions with one button
   /*public void armIncrementUp() {
 
     m_incrementUp = Constants.ArmInOutConstants.kIncrementUp + m_encoderExtension.getPosition();

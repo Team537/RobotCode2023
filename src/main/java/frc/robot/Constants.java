@@ -52,27 +52,15 @@ public class Constants {
 
     //This is the max acceleration when accelerating to the cruise velocity. In RPM
     public static final double kMaxA = 3000;
-
+    //specific accel constant for the pivot
     public static final double kMaxAccelArmPivot = 2000;
 
-
+    // allowed closed loop error
     public static final double kAllE = 0;
 
   }
 
   public static final class DriveConstants {
-
-    // public static final int kFrontLeft = 9;
-    // public static final int kRearLeft = 3;
-    // public static final int kFrontRight = 5;
-    // public static final int kRearRight = 7;
-
-    //For Bolt Testing 
-    /*
-     public static final int kFrontLeft = 1;
-     public static final int kRearLeft = 3;
-     public static final int kFrontRight = 2;
-     public static final int kRearRight = 4;*/
 
     public static final double kTrackwidthMeters = 0.415;
     public static final double kWheelBase =  0.415;
@@ -91,6 +79,7 @@ public class Constants {
         for *your* robot's drive.
         The Robot Characterization Toolsuite provides a convenient tool for obtaining
         these values for your robot. */
+        //aniket sussy bacca.......
         
     public static final double ksVolts = 0.305;
     public static final double kvVoltSecondsPerMeter = 2.29;
@@ -110,58 +99,66 @@ public class Constants {
   }
 
   public static final class GripperConstants{
+
+    //These are the ids for each gripper motor
     public static final int kGripper = 15;
     public static final int kGripper2 = 17; 
 
   }
   
   public static final class ArmInOutConstants {
+
+    //motor id for inout
     public static final int kArmInOut = 14;
 
-    //ARM INOUT SET POSITIONS
+    //These are the set positions for the differnt scoring heights on the arm inout motor.
+    // current limits are (+-)(it is +- because the string can get flipped) 300 to 0
+
+    public static final double kArmInOutPositionHighGoal = 100; // for "shooting" cones, it was 100
+    // the value for normal high goal is 225
+
     public static final double kArmInOutPositionMidGoal = 50;
-    public static final double kArmInOutPositionHighGoal = 100; //for actual high goal, 225
     public static final double kArmInOutPositionShelfHumanPL = 50;
     public static final double kArmInOutPositionShelfHigh = 50;
-
-    // public static final double kArmInOutPositionTest = 50;
-    public static final double kArmInOutPositionZero = -1;
     public static final double kArmInOutPositionGround = 0.0;
+    
+    //used for setting the robot to zero (and accounts for the string rolling up different)
+    public static final double kArmInOutPositionZero = -1;
 
-    //INCREMENT TEST POS
+
+    //positions used to increment inout positions
     /*public static final double kIncrementUp = -10;
     public static final double kIncrementDown = 10;*/
   }
 
   public static final class ArmPivotConstants {
-
+    // the id for the arm pivot constant. 
     public static final int kArmPivot1 = 19;
    
-
-    //ARM PIVOT SET POSITONS
+    //these are the setpositions for the armpivot. current limits are 0 to 58
     public static final double kArmPivotPositionHighGoal = 17;
     public static final double kArmPivotPositionShelfHumanPL = 15;
     public static final double kArmPivotPositionMidGoal = 20;
     public static final double kArmPivotPositionShelfHigh = 25;
 
-
-    public static final double kArmPivotPositionMidDown = 23;
     public static final double kArmPivotPositionZero = 0.0;
     public static final double kArmPivotPositionGround = 58.0;
+
+    // this is the position for moving tht arm down a bit when scoring mid.  via tylers prefrences
+    public static final double kArmPivotPositionMidDown = 23;
 
   }
 
   public static final class WristConstants {
-
+    //motor id for wrist
     public static final int kWrist = 11;
 
-    //WRIST SET POSITIONS
+    // set positions for the wrist. known limits are 0 to -17(could be farther)
     public static final double kWristPositionHighGoal = -11;
     public static final double kWristPositionShelfHumanPL = -17;
     public static final double kWristPositionMidGoal = -13; 
     public static final double kWristPositionShelfHigh = -10;
 
-    // public static final double kWristPositionMid = -14;
     public static final double kWristPositionZero = 0;
     public static final double kWristPositionGround = -6;
 
@@ -171,14 +168,11 @@ public class Constants {
     public static final double kWristPositionManualDown = -15;
 
 
-    public static Object m_wrist;
-
-    // public static final double kWristPositionGroundUp = -4;
-
-
   }
 
   public static final class OIConstants {
+
+    //these are the ports for each controller. the controller ports can be switched in the driver station
     public static final int kDriverControllerPort = 0;
     public static final int kDriverControllerPort1 = 1;
   }
