@@ -114,20 +114,6 @@ public class ArmInOut extends SubsystemBase {
 
   }
 
-  /*public void armTest() {
-      m_pidControllerExtension.setP(Constants.ArmInOutConstants.kP);
-      m_pidControllerExtension.setI(Constants.ArmInOutConstants.kI);
-      m_pidControllerExtension.setD(Constants.ArmInOutConstants.kD);
-      m_pidControllerExtension.setIZone(Constants.ArmInOutConstants.kIz);
-      m_pidControllerExtension.setFF(Constants.ArmInOutConstants.kFF);
-      m_pidControllerExtension.setOutputRange(Constants.ArmInOutConstants.kMinOutput, Constants.ArmInOutConstants.kMaxOutput);
-      m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.ArmInOutConstants.kMaxV, 0);
-      m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.ArmInOutConstants.kMinV, 0);
-      m_pidControllerExtension.setSmartMotionMaxAccel(Constants.ArmInOutConstants.kMaxA, 0);
-      m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.ArmInOutConstants.kAllE, 0);
-      m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmInOutPositionTest, CANSparkMax.ControlType.kSmartMotion);
-      armInOutState = "Test";
-    }*/
 
   /*public void armIncrementUp() {
 

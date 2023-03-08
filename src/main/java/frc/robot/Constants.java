@@ -155,20 +155,6 @@ public class Constants {
 
     public static final int kWrist = 11;
 
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
-    public static final double kIz = 0;
-    public static final double kFF = 0.000156;
-    public static final double kMaxOutput = 1;
-    public static final double kMinOutput = -1;
-    //Max Velocity
-    public static final double kMaxV = 3000;
-    public static final double kMinV = 0;
-    //Max Acceleration
-    public static final double kMaxA = 2500;
-    public static final double kAllE = 0;
-
     //WRIST SET POSITIONS
     public static final double kWristPositionHighGoal = -11;
     public static final double kWristPositionShelfHumanPL = -17;
