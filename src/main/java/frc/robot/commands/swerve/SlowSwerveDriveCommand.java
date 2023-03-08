@@ -8,7 +8,6 @@
 package frc.robot.commands.swerve;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LED;
@@ -18,25 +17,24 @@ import java.util.function.DoubleSupplier;
 /**
  * An example command that uses an example subsystem.
  */
-public class BoostDriveCommand extends CommandBase {
+public class SwerveDriveCommand extends CommandBase {
   
   private final DriveSubsystem m_drive;
-  private final LED m_LED;
-  private final DoubleSupplier m_driveInput, m_strafeInput, m_rotationInput, m_triggerInput;
+  private final DoubleSupplier m_driveInput, m_strafeInput, m_rotationInput;
   private final boolean m_isFieldRelative;
+  private final LED m_LED;
 
   /**
    * Creates a new ExampleCommand.
    *
    * 
    */
-  public BoostDriveCommand(DriveSubsystem m_drive, DoubleSupplier driveInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, DoubleSupplier triggerInput, boolean isFieldRelative, LED m_LED) {
+  public SwerveDriveCommand(DriveSubsystem m_drive, DoubleSupplier driveInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, boolean isFieldRelative, LED m_LED) {
     this.m_drive = m_drive;
     m_driveInput = driveInput;
     m_strafeInput = strafeInput;
     m_rotationInput = rotationInput;
     m_isFieldRelative = isFieldRelative;
-    m_triggerInput = triggerInput;
     this.m_LED = m_LED;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drive);
@@ -45,42 +43,36 @@ public class BoostDriveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.print(" \n Swerve Drive Started");
-    
+    System.out.print( " \n Slow Drive Started");
   }
-
-  
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double drive =  Math.abs(m_driveInput.getAsDouble()) > 0.05 ? m_driveInput.getAsDouble() : 0;
-    double strafe =   Math.abs(m_strafeInput.getAsDouble()) > 0.05 ? m_strafeInput.getAsDouble() : 0;
-    double rotation =  Math.abs(m_rotationInput.getAsDouble()) > 0.05 ? m_rotationInput.getAsDouble() : 0;
+    double drive = Math.abs(m_driveInput.getAsDouble()) > 0.05 ? m_driveInput.getAsDouble() : 0;
+    double strafe = Math.abs(m_strafeInput.getAsDouble()) > 0.05 ? m_strafeInput.getAsDouble() : 0;
+    double rotation = Math.abs(m_rotationInput.getAsDouble()) > 0.05 ? m_rotationInput.getAsDouble() : 0;
 
-    m_drive.boostDrive(drive, strafe, rotation, m_triggerInput.getAsDouble(), m_isFieldRelative, true);    // Forward/Back Drive, Left/Right Strafe, Left/Right Turn
-    
-    if((Math.abs(m_drive.getVelocity()) > 0) && m_drive.driveState.equals("Boost Drive") && DriverStation.isTeleop()) {
-      m_LED.setBoostDriving(true);
-      m_LED.setDriving(false);
-    } else{
+    m_drive.drive(drive, strafe, rotation, m_isFieldRelative, true);    // Forward/Back drive, Left/Right Strafe, Left/Right Turn
+    if(Math.abs(m_drive.getVelocity()) > 0 && m_drive.driveState.equals("Drive") && DriverStation.isTeleop()) {
+      m_LED.setDriving(true);
       m_LED.setBoostDriving(false);
+      
+    } else{
+      m_LED.setDriving(false);
+
     }
-
-  if(Math.abs(m_drive.getPitch()) > 75 || Math.abs(m_drive.getRoll()) > 75) {
-    m_LED.setFallen(true);
-  } else{
-    m_LED.setFallen(false);
+    if(Math.abs(m_drive.getPitch()) > 75 || Math.abs(m_drive.getRoll()) > 75) {
+      m_LED.setFallen(true);
+    } else{
+      m_LED.setFallen(false);
+    }
   }
 
-  }
-  
-  
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.print(" \n Swerve Drive Ended");
-   
+    System.out.print(" \n Slow Drive Started");
   }
 
   // Returns true when the command should end.

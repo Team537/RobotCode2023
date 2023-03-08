@@ -113,22 +113,15 @@ public class DriveSubsystem extends SubsystemBase {
     
   }
 
-  public void boostDrive(
+  public void drive(
       double drive,
       double strafe,
       double rotation,
-      double triggerMultiplier,
       boolean isFieldRelative,
       boolean isOpenLoop) {
-
-
     drive *= SwerveConstants.kMaxSpeedMetersPerSecond;
     strafe *= SwerveConstants.kMaxSpeedMetersPerSecond;
     rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
-
-    drive = (triggerMultiplier+0.2)*drive;
-    strafe = (triggerMultiplier+0.2)*strafe;
-    
 
     //Chassis Speed
     ChassisSpeeds chassisSpeeds =
@@ -149,9 +142,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
       module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
-      driveState = "Boost Drive";
+      driveState = "Drive";
   }
-  public void drive(
+  public void slowDrive(
       double drive,
       double strafe,
       double rotation,
@@ -177,22 +170,22 @@ public class DriveSubsystem extends SubsystemBase {
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
       module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
 
-      driveState = "Drive";
+      driveState = "Slow Drive";
   }
   public Command followTrajectoryCommand(PathPlannerTrajectory traj) {
-    driveState = "Following Trajectory";
+    
          return new PPSwerveControllerCommand(
              traj, 
              this::getPoseMeters, // Pose supplier
              SwerveConstants.kDriveKinematics, // SwerveDriveKinematics
-             new PIDController(0.01, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-             new PIDController(0.01, 0, 0), // Y controller (usually the same values as X controller)
-             new PIDController(0.01, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
+             new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
              this::setSwerveModuleStatesAuto, // Module states consumer
              true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
              this // Requires this drive subsystem
          );
-    
+     
  }
 /**
  * Sets States For Swerve Modules and Determines FeedbackLoop Type
@@ -208,7 +201,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void setSwerveModuleStatesAuto(SwerveModuleState[] states) {
-    setSwerveModuleStates(states, true);
+    setSwerveModuleStates(states, false);
   }
 
   /**
@@ -391,8 +384,5 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
 
- public void robotInit(){
 
-    m_gyro.setYaw(180);
- }
 }

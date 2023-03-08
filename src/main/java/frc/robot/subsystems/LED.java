@@ -24,8 +24,8 @@ public class LED extends SubsystemBase {
   private boolean fastOutaking = false;
   private boolean outaking = false;
   private ManipulatorObject manipulatorObject = null;
-  private boolean boost_driving = false;
   private boolean driving = false;
+  private boolean slow_driving = false;
   private boolean auto_start = false;
   private boolean auto_end = false;
 
@@ -66,13 +66,13 @@ public class LED extends SubsystemBase {
       mode = LedMode.CUBE;
       ledState = "Cube";
     } 
-    else if (boost_driving) {
-      mode = LedMode.BOOST_DRIVING;
-      ledState = "Boost Driving";
-    } 
     else if (driving) {
       mode = LedMode.DRIVING;
       ledState = "Driving";
+    } 
+    else if (slow_driving) {
+      mode = LedMode.SLOW_DRIVING;
+      ledState = "Slow Driving";
     } 
     else if (outaking && DriverStation.isTeleop()) {
       mode = LedMode.OUTAKING;
@@ -125,7 +125,6 @@ public class LED extends SubsystemBase {
 
    if(DriverStation.isTeleop()){
        auto_end = false;
-       auto_start = false;
 
    }
 
@@ -182,8 +181,8 @@ public class LED extends SubsystemBase {
     DEFAULT_TELEOP_RED, 
     DEFAULT_TELEOP_BLUE,
     DISABLED_RED, 
-    BOOST_DRIVING,
     DRIVING,
+    SLOW_DRIVING,
     DISABLED_BLUE, 
     DISABLED_NEUTRAL, 
     AUTO_START,
@@ -211,7 +210,7 @@ public class LED extends SubsystemBase {
 
       case FAST_OUTAKING:
         // setSolidColor(Color.kGold);
-        m_blinkin.set(-0.73);
+        m_blinkin.set(0.13);
         break;
 
       case OUTAKING:
@@ -221,12 +220,12 @@ public class LED extends SubsystemBase {
 
       case LOW_GOAL:
         // breath(Color.kRed, Color.kFloralWhite);
-        m_blinkin.set(-0.17);
+        m_blinkin.set(-0.25);
         break;
 
       case MID_GOAL:
         // breath(Color.kRed, Color.kAzure);
-        m_blinkin.set(-0.39);
+        m_blinkin.set(-0.25);
         break;
 
       case HIGH_GOAL:
@@ -239,14 +238,14 @@ public class LED extends SubsystemBase {
         m_blinkin.set(-0.25);
         break;
 
-     case BOOST_DRIVING:
+     case DRIVING:
         // wave(Color.kGreen, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
         m_blinkin.set(-0.37);
         break;
 
-      case DRIVING:
+      case SLOW_DRIVING:
         // wave(Color.kLime, Color.kBlack, LEDConstants.waveAllianceFullLength, LEDConstants. waveAllianceDuration);
-        m_blinkin.set(-0.49);
+        m_blinkin.set(-0.37);
         break;
 
       case DEFAULT_TELEOP_RED:
@@ -411,11 +410,11 @@ public class LED extends SubsystemBase {
   public void setFallen(boolean active) {
     fallen = active;
   }
-  public void setBoostDriving(boolean active) {
-    boost_driving = active;
-  }
   public void setDriving(boolean active) {
     driving = active;
+  }
+  public void setSlowDriving(boolean active) {
+    slow_driving = active;
   }
   // public void set(double val) {
   //   if ((val >= -1.0) && (val <= 1.0)) {

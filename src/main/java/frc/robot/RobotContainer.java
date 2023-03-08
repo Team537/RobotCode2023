@@ -26,7 +26,8 @@ import frc.robot.commands.manipulator.ManipulatorZero;
 // import frc.robot.commands.signal.SignalCone;
 // import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SwerveDriveCommand;
-import frc.robot.commands.swerve.BoostDriveCommand;
+// import frc.robot.commands.swerve.BoostDriveCommand;
+import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.commands.vision.ChaseTagCommand;
 import frc.robot.simulation.FieldSim;
 
@@ -186,12 +187,11 @@ public class RobotContainer {
   // m_robotDrive.setLeds(m_LED);
   // m_Manipulator.setLeds(m_LED);
 
- starButton.toggleOnTrue(new BoostDriveCommand(
+  starButton.toggleOnTrue(new SlowSwerveDriveCommand(
   m_robotDrive,
   ()-> -(m_driverController.getLeftY()),
   ()->  m_driverController.getLeftX(),
   ()->  -m_driverController.getRightX()*0.7,
-  ()-> m_driverController.getLeftTriggerAxis(),
   true, m_LED));
     
 
@@ -235,7 +235,7 @@ public class RobotContainer {
     //  m_Chooser.addOption("Auto 3", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 3", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
 
     //  SmartDashboard.putData("Auto Selector", m_Chooser);
-      m_robotDrive.robotInit();
+      // m_robotDrive.robotInit();
   }
 
   public Command robotDisabled() {
