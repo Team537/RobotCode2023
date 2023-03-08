@@ -165,8 +165,8 @@ public class RobotContainer {
     backButton.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),new StartEndCommand(m_Gripper::GripperStop,m_Gripper::GripperStop,m_Gripper)));
 
     dPadUpButton.onTrue(new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionZero,m_Wrist));
-    dPadRightButton.onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp, m_Wrist::WristPositionManualDown, m_Wrist));
-    dPadLeftButton.onTrue(new StartEndCommand(m_Wrist::WristPositionManualDown, m_Wrist::WristPositionManualUp, m_Wrist));
+    dPadRightButton.onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp, m_Wrist::WristPositionManualUp, m_Wrist));
+    dPadLeftButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidDown, m_ArmPivot::ArmPositionMidDown, m_ArmPivot));
 
     dPadDownButton.onTrue(zeros);
 
