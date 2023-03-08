@@ -32,6 +32,34 @@ import frc.robot.utils.ModuleMap;
  * constants are needed, to reduce verbosity.
  */
 public class Constants {
+
+  public static final class SparkPIDFConstants {
+
+    // This is the default PIDF for spark maxes. Perportional, Integral, Derivetive, Izone and Feed Forward. 
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kIz = 0;
+    public static final double kFF = 0.000156;
+
+    // This is the max output based on percent output forward and backward
+    public static final double kMaxOutput = 1;
+    public static final double kMinOutput = -1;
+
+    //This is the max cruise velocity in RPM. This is the speed it travels at when going to the set position
+    public static final double kMaxV = 3000;
+    public static final double kMinV = 0;
+
+    //This is the max acceleration when accelerating to the cruise velocity. In RPM
+    public static final double kMaxA = 3000;
+
+    public static final double kMaxAccelArmPivot = 2000;
+
+
+    public static final double kAllE = 0;
+
+  }
+
   public static final class DriveConstants {
 
     // public static final int kFrontLeft = 9;
@@ -90,20 +118,6 @@ public class Constants {
   public static final class ArmInOutConstants {
     public static final int kArmInOut = 14;
 
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
-    public static final double kIz = 0;
-    public static final double kFF = 0.000156;
-    public static final double kMaxOutput = 1;
-    public static final double kMinOutput = -1;
-    //Max Velocity
-    public static final double kMaxV = 3000;
-    public static final double kMinV = 0;
-    //Max Acceleration
-    public static final double kMaxA = 3000;
-    public static final double kAllE = 0;
-
     //ARM INOUT SET POSITIONS
     public static final double kArmInOutPositionMidGoal = 50;
     public static final double kArmInOutPositionHighGoal = 100; //for actual high goal, 225
@@ -123,20 +137,6 @@ public class Constants {
 
     public static final int kArmPivot1 = 19;
    
-
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
-    public static final double kIz = 0;
-    public static final double kFF = 0.000156;
-    public static final double kMaxOutput = 1;
-    public static final double kMinOutput = -1;
-    //max velocity
-    public static final double kMaxV = 3000;
-    public static final double kMinV = 0;
-    //max acceleration
-    public static final double kMaxA = 2000;
-    public static final double kAllE = 0;
 
     //ARM PIVOT SET POSITONS
     public static final double kArmPivotPositionHighGoal = 17;
