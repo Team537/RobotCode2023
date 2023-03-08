@@ -227,7 +227,7 @@ public class RobotContainer {
     SmartDashboard.putNumber("Left Joystick",m_driverController.getLeftY());
   }
 
-  public void robotInit() {
+  public void setTeleOpGyro() {
     // m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
 
     //  m_Chooser.addOption("Auto 1", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 1", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
@@ -235,6 +235,15 @@ public class RobotContainer {
     //  m_Chooser.addOption("Auto 3", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 3", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
 
     //  SmartDashboard.putData("Auto Selector", m_Chooser);
+      m_robotDrive.robotInit();
+  }
+
+  public Command robotDisabled() {
+
+      Command zero = new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
+      return zero;
+
+
   }
 
   public Command getAutoCommand() {

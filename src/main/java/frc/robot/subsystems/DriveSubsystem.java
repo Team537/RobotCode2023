@@ -391,5 +391,8 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
 
+ public void robotInit(){
 
+    m_gyro.setYaw(180);
+ }
 }

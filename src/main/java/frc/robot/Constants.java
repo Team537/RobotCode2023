@@ -289,9 +289,9 @@ public class Constants {
     public static final double kVDrive = 2.3;
     public static final double kADrive = 0.517;
 
-    public static final double ksDriveVoltSecondsPerMeter = 1;
-    public static final double kvDriveVoltSecondsSquaredPerMeter = 1;
-    public static final double kaDriveVoltSecondsSquaredPerMeter = .5;
+    public static final double ksDriveVoltSecondsPerMeter = 0.01;
+    public static final double kvDriveVoltSecondsSquaredPerMeter = 0.01;
+    public static final double kaDriveVoltSecondsSquaredPerMeter = .05;
 
 
     public static final double kTurningEncoderDistancePerPulse =

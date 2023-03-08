@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
+import frc.robot.commands.swerve.SwerveDriveCommand;
 import frc.robot.simulation.FieldSim;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
@@ -29,7 +30,8 @@ public class ScoreMidDriveBack extends SequentialCommandGroup {
       new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
       new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(2),
       new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1),
-      new FollowTrajectory(m_drive, m_fieldSim, "Drive Backward", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED),
+      //new FollowTrajectory(m_drive, m_fieldSim, "Drive Backward", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED),
+      new RunCommand (() -> m_drive.drive(-0.5, 0, 0, false, true), m_drive).withTimeout(2),
       new InstantCommand(m_LED::autoEnd)
       );
   }

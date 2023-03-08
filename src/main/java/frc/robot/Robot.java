@@ -33,7 +33,6 @@ public class Robot extends TimedRobot {
   
     
  
-    m_robotContainer.robotInit();
     
   m_robotContainer.getClass();
 
@@ -63,6 +62,10 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
 
+    m_autonomousCommand = m_robotContainer.robotDisabled();
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
     
   }
 
@@ -97,7 +100,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-   
+    m_robotContainer.setTeleOpGyro();
+
     // M_arm.ArmDown();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
