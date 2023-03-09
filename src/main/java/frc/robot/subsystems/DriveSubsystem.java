@@ -1,437 +1,396 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.Constants;
-import frc.robot.Constants.DriveConstants;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import frc.robot.Constants.SwerveConstants;
+import frc.robot.Constants.SwerveConstants.ModulePosition;
+import frc.robot.utils.ModuleMap;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix.unmanaged.Unmanaged;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+  
 
 public class DriveSubsystem extends SubsystemBase {
-  private final WPI_TalonFX m_frontLeft = new WPI_TalonFX(DriveConstants.kFrontLeft);
-  private final WPI_TalonFX m_rearLeft = new WPI_TalonFX(DriveConstants.kRearLeft);
-  private final WPI_TalonFX m_frontRight = new WPI_TalonFX(DriveConstants.kFrontRight);
-  private final WPI_TalonFX m_rearRight = new WPI_TalonFX(DriveConstants.kRearRight);
-  PowerDistribution PDP = new PowerDistribution(0, ModuleType.kCTRE);
 
-  // The motors on the left side of the drive.
-  private final MotorControllerGroup m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
+  // Hash Map for All Swerve Modules
 
-  // The motors on the right side of the drive.
-  private final MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight, m_rearRight);
+  private final HashMap<ModulePosition, SwerveModule> m_swerveModules =
+      new HashMap<>(
+          Map.of(
+              ModulePosition.FRONT_LEFT,
+                  new SwerveModule(
+                      ModulePosition.FRONT_LEFT,
+                      new WPI_TalonFX(SwerveConstants.kFrontLeftTurn),
+                      new WPI_TalonFX(SwerveConstants.kFrontLeftDrive),
+                      SwerveConstants.kFrontLeftSRXMagCoder,
+                      SwerveConstants.kFrontLeftSRXMagCoderOffset, false),
+              ModulePosition.FRONT_RIGHT,
+                  new SwerveModule(
+                      ModulePosition.FRONT_RIGHT,
+                      new WPI_TalonFX(SwerveConstants.kFrontRightTurn),
+                      new WPI_TalonFX(SwerveConstants.kFrontRightDrive),
+                      SwerveConstants.kFrontRightSRXMagCoder,
+                      SwerveConstants.kFrontRightSRXMagCoderOffset, true),
+              ModulePosition.BACK_LEFT,
+                  new SwerveModule(
+                      ModulePosition.BACK_LEFT,
+                      new WPI_TalonFX(SwerveConstants.kBackLeftTurn),
+                      new WPI_TalonFX(SwerveConstants.kBackLeftDrive),
+                      SwerveConstants.kBackLeftSRXMagCoder,
+                     SwerveConstants.kBackLeftSRXMagCoderOffset, true),
+              ModulePosition.BACK_RIGHT,
+                  new SwerveModule(
+                      ModulePosition.BACK_RIGHT,
+                      new WPI_TalonFX(SwerveConstants.kBackRightTurn),
+                      new WPI_TalonFX(SwerveConstants.kBackRightDrive),
+                      SwerveConstants.kBackRightSRXMagCoder,
+                      SwerveConstants.kBackRightSRXMagCoderOffset, false)));
 
-  // The robot's drive
-  // THE PROBLEM CHILD. This line being uncommented was causing our issues
- // private final DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
- private double m_left_setpoint, m_right_setpoint;
 
-  // The gyro sensor
-  private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+  //Gyro and Simulated Gyro  
+                    
+  private final Pigeon2 m_gyro = new Pigeon2(SwerveConstants.kPigeonID);
+  public String driveState = "Drive";
 
-  // Odometry class for tracking robot pose
-  private final DifferentialDriveOdometry m_odometry;
+  //old gyro
+//   private final ADXRS450_GyroSim m_gyroSim = new ADXRS450_GyroSim(m_gyro);
 
-  // Toggle Booleans
-  private boolean fastModeEnabled = true; 
-  private boolean slowModeEnabled = true;
 
-  /** Creates a new DriveSubsystem. */
+
+  //Swerve Odometry 
+
+  private final SwerveDrivePoseEstimator m_odometry =
+      new SwerveDrivePoseEstimator(
+          SwerveConstants.kDriveKinematics,
+          getHeadingRotation2d(),
+          getModulePositions(),
+          new Pose2d());
+
+  //PID Controllers for X, Y, and Rotation
+  //Rotation is Profiled to limit Uncontrollable Rotation
+
+  private PIDController m_XController = new PIDController(SwerveConstants.kP_X, SwerveConstants.kI_X,  SwerveConstants.kD_X);
+  private PIDController m_YController = new PIDController(SwerveConstants.kP_Y, SwerveConstants.kI_Y,  SwerveConstants.kD_Y);
+  private ProfiledPIDController m_turnController =
+      new ProfiledPIDController(SwerveConstants.kP_Rot, SwerveConstants.kI_Rot,SwerveConstants.kD_Rot , SwerveConstants.kRotControllerConstraints);
+      private PIDController m_turnControllerAuto =
+      new PIDController(SwerveConstants.kP_Rot, SwerveConstants.kI_Rot,SwerveConstants.kD_Rot);
+
+  //Simulated Yaw, Only used in Sim
+  private double m_simYaw;
+
   public DriveSubsystem() {
-    // m_frontLeft
-    // m_frontRight
-    // m_rearLeft
-    // m_rearRight
-
-    m_frontLeft.configFactoryDefault(Constants.kTimeoutMs);
-    m_frontRight.configFactoryDefault(Constants.kTimeoutMs);
-    m_rearLeft.configFactoryDefault(Constants.kTimeoutMs);
-    m_rearRight.configFactoryDefault(Constants.kTimeoutMs);
-
-    // 2. No effect
-    m_frontLeft.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.kPIDLoopIdx,
-        Constants.kTimeoutMs);
-    m_frontRight.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.kPIDLoopIdx,
-        Constants.kTimeoutMs);
-    m_rearLeft.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.kPIDLoopIdx,
-        Constants.kTimeoutMs);
-    m_rearRight.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.kPIDLoopIdx,
-        Constants.kTimeoutMs);
-
-    // We need to invert one side of the drivetrain so that positive voltages
-    // result in both sides moving forward. Depending on how your robot's
-    // gearbox is constructed, you might have to invert the left side instead.
+    m_gyro.setYaw(0);
+  
+    // m_gyro.configMountPose(-90, -0.219727 , 0.615234);
+  
     
-    m_frontLeft.setInverted(false);
-    m_frontRight.setInverted(true);
-    m_rearLeft.setInverted(false);
-    m_rearRight.setInverted(true);
-
-    //bolt inverts
-    /*
-    m_frontLeft.setInverted(false);
-    m_frontRight.setInverted(true);
-    m_rearLeft.setInverted(false);
-    m_rearRight.setInverted(true);*/
-
-    // 1. No effect
-    m_frontRight.setNeutralMode(NeutralMode.Brake);
-    m_frontLeft.setNeutralMode(NeutralMode.Brake);
-    m_rearRight.setNeutralMode(NeutralMode.Brake);
-    m_rearLeft.setNeutralMode(NeutralMode.Brake);
-
-  m_frontLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.kTimeoutMs);
-  m_frontRight.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.kTimeoutMs);
-  m_rearRight.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.kTimeoutMs);
-  m_rearLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.kTimeoutMs);
-  
-  m_frontLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
-  m_frontRight.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
-  m_rearLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
-  m_rearRight.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
-
-  m_frontLeft.configNominalOutputForward(0, Constants.kTimeoutMs);
-  m_frontRight.configNominalOutputForward(0, Constants.kTimeoutMs);
-  m_rearLeft.configNominalOutputForward(0, Constants.kTimeoutMs);
-  m_rearRight.configNominalOutputForward(0, Constants.kTimeoutMs);
-
-  m_frontLeft.configNominalOutputReverse(0, Constants.kTimeoutMs);
-  m_frontRight.configNominalOutputReverse(0, Constants.kTimeoutMs);
-  m_rearLeft.configNominalOutputReverse(0, Constants.kTimeoutMs);
-  m_rearRight.configNominalOutputReverse(0, Constants.kTimeoutMs);
-
-  m_frontLeft.configPeakOutputForward(1, Constants.kTimeoutMs);
-  m_frontRight.configPeakOutputForward(1, Constants.kTimeoutMs);
-  m_rearLeft.configPeakOutputForward(1, Constants.kTimeoutMs);
-  m_rearRight.configPeakOutputForward(1, Constants.kTimeoutMs);
-
-  // m_frontLeft.configAllowableClosedloopError(Constants.kSlotIdx, 5, Constants.kTimeoutMs);
-  // m_frontRight.configAllowableClosedloopError(Constants.kSlotIdx, 5, Constants.kTimeoutMs);
-  // m_rearLeft.configAllowableClosedloopError(Constants.kSlotIdx, 5, Constants.kTimeoutMs);
-  // m_rearLeft.configAllowableClosedloopError(Constants.kSlotIdx, 5, Constants.kTimeoutMs);
-
-  m_frontLeft.configPeakOutputReverse(-1, Constants.kTimeoutMs);
-  m_frontRight.configPeakOutputReverse(-1, Constants.kTimeoutMs);
-  m_rearLeft.configPeakOutputReverse(-1, Constants.kTimeoutMs);
-  m_rearRight.configPeakOutputReverse(-1, Constants.kTimeoutMs);
-
-  m_frontLeft.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
-  m_frontRight.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
-  m_rearLeft.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
-  m_rearRight.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
-
-  // m_frontLeft.config_kF(Constants.kSlotIdx, Constants.kGains.kF, Constants.kTimeoutMs);
-  // m_frontRight.config_kF(Constants.kSlotIdx, Constants.kGains.kF, Constants.kTimeoutMs);
-  // m_rearLeft.config_kF(Constants.kSlotIdx, Constants.kGains.kF, Constants.kTimeoutMs);
-  // m_rearRight.config_kF(Constants.kSlotIdx, Constants.kGains.kF, Constants.kTimeoutMs);
-
-  // m_frontLeft.config_kP(Constants.kSlotIdx, .03, Constants.kTimeoutMs);
-  // m_frontRight.config_kP(Constants.kSlotIdx, .03, Constants.kTimeoutMs);
-  // m_rearLeft.config_kP(Constants.kSlotIdx, .03, Constants.kTimeoutMs);
-  // m_rearRight.config_kP(Constants.kSlotIdx, .03, Constants.kTimeoutMs);
-
-  // m_frontLeft.config_kI(Constants.kSlotIdx, Constants.kGains.kI, Constants.kTimeoutMs);
-  // m_frontRight.config_kI(Constants.kSlotIdx, Constants.kGains.kI, Constants.kTimeoutMs);
-  // m_rearLeft.config_kI(Constants.kSlotIdx, Constants.kGains.kI, Constants.kTimeoutMs);
-  // m_rearRight.config_kI(Constants.kSlotIdx, Constants.kGains.kI, Constants.kTimeoutMs);
-
-  // m_frontLeft.config_kD(Constants.kSlotIdx, Constants.kGains.kD, Constants.kTimeoutMs);
-  // m_frontRight.config_kD(Constants.kSlotIdx, Constants.kGains.kD, Constants.kTimeoutMs);
-  // m_rearLeft.config_kD(Constants.kSlotIdx, Constants.kGains.kD, Constants.kTimeoutMs);
-  // m_rearRight.config_kD(Constants.kSlotIdx, Constants.kGains.kD, Constants.kTimeoutMs);
-  
-  // m_frontLeft.configMotionCruiseVelocity(15000, Constants.kTimeoutMs);
-	// m_frontRight.configMotionCruiseVelocity(15000, Constants.kTimeoutMs);
-  // m_rearLeft.configMotionCruiseVelocity(15000, Constants.kTimeoutMs);
-  // m_rearRight.configMotionCruiseVelocity(15000, Constants.kTimeoutMs);
-
-  // m_frontLeft.configMotionAcceleration(6000, Constants.kTimeoutMs);
-	// m_frontRight.configMotionAcceleration(6000, Constants.kTimeoutMs);
-  // m_rearLeft.configMotionAcceleration(6000, Constants.kTimeoutMs);
-  // m_rearRight.configMotionAcceleration(6000, Constants.kTimeoutMs);
-
-  m_frontLeft.configMotionSCurveStrength(Constants.smoothing);
-	m_frontRight.configMotionSCurveStrength(Constants.smoothing);
-  m_rearLeft.configMotionSCurveStrength(Constants.smoothing);
-  m_rearRight.configMotionSCurveStrength(Constants.smoothing);
-
-   m_frontLeft.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-    m_frontRight.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-    m_rearLeft.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-    m_rearRight.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-
-   // Sets the distance per pulse for the encoders
-    // m_frontLeft.configPulseWidthPeriod_EdgesPerRot(4096, Constants.kTimeoutMs);
-    // m_frontRight.configPulseWidthPeriod_EdgesPerRot(4096, Constants.kTimeoutMs);
-
-    resetEncoders();
-    m_odometry = new DifferentialDriveOdometry(null, m_right_setpoint, m_left_setpoint);
-
-    SmartDashboard.putData(this);
+    
+    
   }
 
-  public void toggleFastMode() {
-    fastModeEnabled = !fastModeEnabled;
+  public void drive(
+      double drive,
+      double strafe,
+      double rotation,
+      boolean isFieldRelative,
+      boolean isOpenLoop) {
+        // d = d * s
+    drive *= SwerveConstants.kMaxSpeedMetersPerSecond;
+    strafe *= SwerveConstants.kMaxSpeedMetersPerSecond;
+    rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
 
-    if (fastModeEnabled = true) {
-      slowModeEnabled = false;
+    //Chassis Speed
+    ChassisSpeeds chassisSpeeds =
+        isFieldRelative ?
+            ChassisSpeeds.fromFieldRelativeSpeeds(
+                drive, strafe, rotation, getHeadingRotation2d())
+                : new ChassisSpeeds(drive, strafe, rotation);
+            //  new ChassisSpeeds(drive*Math.cos(Math.toRadians(m_gyro.getYaw())) + strafe*Math.sin(Math.toRadians(m_gyro.getYaw())),
+            //  -drive*Math.sin(Math.toRadians(m_gyro.getYaw())) + strafe*Math.cos(Math.toRadians(m_gyro.getYaw())), 
+            //  rotation);
+
+    //Module States
+    Map<ModulePosition, SwerveModuleState> moduleStates =
+        ModuleMap.of(SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
+
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        ModuleMap.orderedValues(moduleStates, new SwerveModuleState[0]), SwerveConstants.kMaxSpeedMetersPerSecond);
+
+    for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
+      module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
+      driveState = "Drive";
+  }
+  public void slowDrive(
+      double drive,
+      double strafe,
+      double rotation,
+      boolean isFieldRelative,
+      boolean isOpenLoop) {
+        rotation *= SwerveConstants.kSlowRotationRadiansPerSecond;
+
+
+    //Chassis Speed
+    ChassisSpeeds chassisSpeeds =
+        isFieldRelative ?
+             ChassisSpeeds.fromFieldRelativeSpeeds(
+                drive, strafe, rotation, getHeadingRotation2d())
+            : new ChassisSpeeds(drive, strafe, rotation);
+
+    //Module States
+    Map<ModulePosition, SwerveModuleState> moduleStates =
+        ModuleMap.of(SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
+
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        ModuleMap.orderedValues(moduleStates, new SwerveModuleState[0]), SwerveConstants.kMaxSpeedMetersPerSecond);
+
+    for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
+      module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
+
+      driveState = "Slow Drive";
+  }
+  public Command followTrajectoryCommand(PathPlannerTrajectory traj) {
+    
+         return new PPSwerveControllerCommand(
+             traj, 
+             this::getPoseMeters, // Pose supplier
+             SwerveConstants.kDriveKinematics, // SwerveDriveKinematics
+             new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
+             new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+
+             //refers to the class its in, calls the swerve module
+             this::setSwerveModuleStatesAuto, // Module states consumer
+             true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+             this // Requires this drive subsystem
+         );
+     
+ }
+/**
+ * Sets States For Swerve Modules and Determines FeedbackLoop Type
+ * 
+ * @param states
+ * @param isOpenLoop
+ */
+  public void setSwerveModuleStates(SwerveModuleState[] states, boolean isOpenLoop) {
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, SwerveConstants.kMaxSpeedMetersPerSecond);
+
+    for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
+      module.setDesiredState(states[module.getModulePosition().ordinal()], isOpenLoop);
+  }
+
+  public void setSwerveModuleStatesAuto(SwerveModuleState[] states) {
+    setSwerveModuleStates(states, false);
+  }
+
+  /**
+   * Sets Odometry, Used in Auto
+   * @param pose 
+   */
+
+   // calls from the setswerveodometry command
+   //only used in auto
+  public void setOdometry(Pose2d pose) {
+    m_odometry.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
+    m_gyro.setYaw(pose.getRotation().getDegrees());
+  }
+  public void resetGyro() {
+    m_gyro.setYaw(0);
+    m_gyro.setAccumZAngle(0);
+  }
+   /**
+   * Gets Drive Heading
+   * @return Adjusted Gyro Heading
+   */
+  public double getHeadingDegrees() {
+    return Math.IEEEremainder(-(m_gyro.getYaw()), 360);
+  }
+
+  public double getRoll() {
+    return m_gyro.getRoll();
+  }
+  
+  public double getPitch() {
+    return m_gyro.getPitch();
+  }
+  /** 
+   * Gets {@link Rotation2d} from Heading
+   * @return {@link Rotation2d} from Drive Heading
+   */
+  public Rotation2d getHeadingRotation2d() {
+    return Rotation2d.fromDegrees(getHeadingDegrees());
+  }
+/**
+   * Gets Robot Position on the Field in Meters
+   * @return Position of the Robot in XY Coordinates 
+   */
+  public Pose2d getPoseMeters() {
+    return m_odometry.getEstimatedPosition();
+  }
+/**
+   * Gets Swerve Module From Module Position
+   * @param {@link ModulePosition}
+   * @return Swerve Module
+   */
+  public SwerveModule getSwerveModule(ModulePosition modulePosition) {
+    return m_swerveModules.get(modulePosition);
+  }
+/**
+   * Gets Module States
+   * @return {@link Map Map ofModule Position and SwerveModuleState}
+   */
+  public Map<ModulePosition, SwerveModuleState> getModuleStates() {
+    Map<ModulePosition, SwerveModuleState> map = new HashMap<>();
+    for (ModulePosition i : m_swerveModules.keySet()) {
+      map.put(i, m_swerveModules.get(i).getState());
+    }
+    return map;
+  }
+/**
+   * Gets Module Positions
+   * @return {@link SwerveModulePosition SwerveModulePosition Array}
+   */
+  public SwerveModulePosition[] getModulePositions() {
+    return new SwerveModulePosition[] {
+        m_swerveModules.get(ModulePosition.FRONT_LEFT).getPosition(),
+        m_swerveModules.get(ModulePosition.FRONT_RIGHT).getPosition(),
+        m_swerveModules.get(ModulePosition.BACK_LEFT).getPosition(),
+        m_swerveModules.get(ModulePosition.BACK_RIGHT).getPosition()
+    };
+  }
+
+
+// Returns PID Controllers, Used in Auto
+
+  public PIDController getXPidController() {
+    return m_XController;
+  }
+
+  public PIDController getYPidController() {
+    return m_YController;
+  }
+
+  public ProfiledPIDController getRotPidController() {
+    return m_turnController;
+  }
+
+  public PIDController getRotPidControllerAuto() {
+    return m_turnControllerAuto;
+  }
+
+  public void setBrakeMode(NeutralMode mode) {
+    for (SwerveModule module : m_swerveModules.values()) {
+      module.setDriveNeutralMode(mode);
+      module.setTurnNeutralMode(mode);
     }
   }
-  public void toggleSlowMode() {
-    slowModeEnabled = !slowModeEnabled;
-    if (slowModeEnabled = true) {
-      fastModeEnabled = false;
+/**
+ * Gets Drive Odometry
+ * @return {@link SwerveDriveOdometry}
+ */
+  public SwerveDrivePoseEstimator getOdometry() {
+    return m_odometry;
+  }
+/**
+ * Updates Drive Odometry
+ * 
+ */
+  public void updateOdometry() {
+    m_odometry.update(
+        getHeadingRotation2d(),
+        getModulePositions());
+
+    for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules)) {
+      Translation2d modulePositionFromChassis =
+          SwerveConstants.kModuleTranslations
+              .get(module.getModulePosition())
+              .rotateBy(getHeadingRotation2d())
+              .plus(getPoseMeters().getTranslation());
+      module.setModulePose(
+          new Pose2d(
+              modulePositionFromChassis,
+              module.getHeadingRotation2d().plus(getHeadingRotation2d())));
     }
   }
+  // public void setLeds(LED leds) {
+  //   this.m_LED = leds;
+  // }
+  private void updateSmartDashboard() {
 
-
-
+    SmartDashboard.putNumber("Gyro Angle", getHeadingDegrees());
+    SmartDashboard.putString("Drive State", driveState);
+  }
+/**s
+ * Runs Periodically after Init
+ * 
+ * 
+ * 
+ */
   @Override
   public void periodic() {
-    //Update the odometry in the periodic block
-    m_odometry.update(
-        m_gyro.getRotation2d(), m_frontLeft.getSelectedSensorPosition(Constants.kPIDLoopIdx),
-        m_frontRight.getSelectedSensorPosition(Constants.kPIDLoopIdx));
+    updateOdometry();
+    updateSmartDashboard();
 
-    SmartDashboard.putNumber("Front Left Motor Velocity", m_frontLeft.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("Front Right Motor Velocity", m_frontRight.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("Rear Left Motor Velocity", m_rearLeft.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("Rear Right Motor Velocity", m_rearRight.getSelectedSensorVelocity());
-
-    SmartDashboard.putNumber("Front Left Motor Position", m_frontLeft.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Front Right Motor Position", m_frontRight.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Rear Left Motor Position", m_rearLeft.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Rear Right Motor Position", m_rearRight.getSelectedSensorPosition());
-
-    SmartDashboard.putNumber("Front Left Motor Current", PDP.getCurrent(DriveConstants.kFrontLeft));
-    SmartDashboard.putNumber("Front Right Motor Current", PDP.getCurrent(DriveConstants.kFrontRight));
-    SmartDashboard.putNumber("Rear Left Motor Current", PDP.getCurrent(DriveConstants.kRearLeft));
-    SmartDashboard.putNumber("Rear Right Motor Current", PDP.getCurrent(DriveConstants.kRearRight));
-
-    SmartDashboard.putNumber("Front Left Motor Voltage", m_frontLeft.getBusVoltage());    
-    SmartDashboard.putNumber("Front Right Motor Voltage", m_frontRight.getBusVoltage());
-    SmartDashboard.putNumber("Rear Left Motor Voltage", m_rearLeft.getBusVoltage());
-    SmartDashboard.putNumber("Rear Right Motor Voltage", m_rearRight.getBusVoltage());
-
-    SmartDashboard.putNumber("Heading", m_gyro.getRotation2d().getDegrees());
-
+   
   }
+ /**
+ * Runs Periodically during Simulation
+ * 
+ * 
+//  * 
+//  */
+  @Override
+  public void simulationPeriodic() {
+    ChassisSpeeds chassisSpeed =
+        SwerveConstants.kDriveKinematics.toChassisSpeeds(
+            ModuleMap.orderedValues(getModuleStates(), new SwerveModuleState[0]));
 
-  /**
-   * Returns the currently-estimated pose of the robot.
-   *
-   * @return The pose.
-   */
-  public Pose2d getPose() {
-  return m_odometry.getPoseMeters();
-  }
+    // m_simYaw += chassisSpeed.omegaRadiansPerSecond * 0.06; //changed from .02
 
-  // /**
-  // * Returns the current wheel speeds of the robot.
-  // *
-  // * @return The current wheel speeds.
-  // */
-  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_frontLeft.getSelectedSensorVelocity(),
-        m_frontRight.getSelectedSensorVelocity());
-  }
-
-  // /**
-  // * Resets the odometry to the specified pose.
-  // *
-  // * @param pose The pose to which to set the odometry.
-  // */
-  public void resetOdometry(Pose2d pose) {
-  resetEncoders();
-  m_odometry.resetPosition(null, m_right_setpoint, m_left_setpoint, pose);
-  }
-
-  /**
-   * Drives the robot using arcade controls.
-   *
-   * @param fwd the commanded forward movement
-   * @param rot the commanded rotation
-   */
-  public void arcadeDrive(double fwd, double rot) {
-    // m_drive.arcadeDrive(fwd, rot);
-  }
-
-  public void tankDrive(double left, double right) {
-    // m_drive.tankDrive(left, right);
-  }
-
-  /**
-   * Controls the left and right sides of the drive directly with voltages.
-   *
-   * @param leftVolts  the commanded left output
-   * @param rightVolts the commanded right output
-   */
-  public void tankDriveVolts(double leftVolts, double rightVolts) {
-    m_left.setVoltage(leftVolts);
-    m_right.setVoltage(rightVolts);
-    // m_frontRight.set(ControlMode.MusicTone, demand0, demand1Type, demand1);
-    // m_drive.feed();
-  }
-
-  /** Resets the drive encoders to currently read a position of 0. */
-  public void resetEncoders() {
-    m_frontLeft.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-    m_frontRight.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-    m_rearLeft.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-    m_rearRight.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-
-  }
-
-  /**
-   * Gets the average distance of the two encoders.
-   *
-   * @return the average of the two encoder readings
-   */
-  public double getAverageEncoderDistance() {
-    return (m_frontRight.getSelectedSensorPosition(Constants.kPIDLoopIdx)) +
-        (m_frontLeft.getSelectedSensorPosition(Constants.kPIDLoopIdx)) / 2.0;
-  }
-
-  // Called continuously when driving in auto or teleop
-  public void setMotors(double leftSpeed, double rightSpeed) {
-    double clampedLeftSpeed = fastModeEnabled ? leftSpeed*1.2: slowModeEnabled ? leftSpeed*0.5:leftSpeed;
-    double clampedRightSpeed = fastModeEnabled ? rightSpeed*1.2:slowModeEnabled ? rightSpeed*0.5 :rightSpeed;
-
-    
-    m_frontLeft.set(clampedLeftSpeed);
-    m_frontRight.set(clampedRightSpeed);
-    m_rearLeft.set(clampedLeftSpeed);
-    m_rearRight.set(clampedRightSpeed);
-  }
-
-  /** Zeroes the heading of the robot. */
-  public void zeroHeading() {
-    m_gyro.reset();
-  }
-
-  public void motion_magic_start_config_drive(boolean isForward, double lengthInTicks){
-		m_left_setpoint = m_frontLeft.getSelectedSensorPosition() + lengthInTicks;
-		m_right_setpoint = m_frontRight.getSelectedSensorPosition() + lengthInTicks;
-
-		m_frontLeft.configMotionCruiseVelocity(12318, Constants.kTimeoutMs);
-		m_frontLeft.configMotionAcceleration(6159, Constants.kTimeoutMs); //cruise velocity / 2, so will take 2 seconds
-		m_frontRight.configMotionCruiseVelocity(12318, Constants.kTimeoutMs);
-		m_frontRight.configMotionAcceleration(6159, Constants.kTimeoutMs);
-    m_rearLeft.configMotionCruiseVelocity(12318, Constants.kTimeoutMs);
-		m_rearLeft.configMotionAcceleration(6159, Constants.kTimeoutMs); //cruise velocity / 2, so will take 2 seconds
-		m_rearRight.configMotionCruiseVelocity(12318, Constants.kTimeoutMs);
-		m_rearRight.configMotionAcceleration(6159, Constants.kTimeoutMs);
-		
-		//set up talon to use DriveMM slots
-	m_frontLeft.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
-  m_frontRight.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
-  m_rearLeft.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
-  m_rearRight.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
-
-	
-		// if(isForward == true){
-		// 	m_left_leader.config_kF(kSlot_DriveMM, kGains_Driving.kF);
-		// 	m_right_leader.config_kF(kSlot_DriveMM, kGains_Driving.kF);
-		// } else{
-		// 	m_left_leader.config_kF(kSlot_DriveMM, kGains_Driving.kF * -1);
-		// 	m_right_leader.config_kF(kSlot_DriveMM, kGains_Driving.kF * -1);
-		// }
-	}
-
-	public boolean motionMagicDrive(double target_position) {
-		double tolerance = 1500;
-		//add ifs if we need to set negative arbFF for going backward
-		m_frontLeft.set(ControlMode.MotionMagic, m_left_setpoint); //, DemandType.ArbitraryFeedForward, arbFF);
-		m_frontRight.set(ControlMode.MotionMagic, m_right_setpoint);//, DemandType.ArbitraryFeedForward, arbFF);
-    m_rearLeft.set(ControlMode.MotionMagic, m_left_setpoint); //, DemandType.ArbitraryFeedForward, arbFF);
-		m_rearRight.set(ControlMode.MotionMagic, m_right_setpoint);//, DemandType.ArbitraryFeedForward, arbFF);
-		// m_left_leader.set(ControlMode.MotionMagic, target_position);
-		// m_right_leader.set(ControlMode.MotionMagic, target_position);
-	
-		double currentPos_L = m_frontLeft.getSelectedSensorPosition();
-		double currentPos_R = m_frontRight.getSelectedSensorPosition();
-	
-		return Math.abs(currentPos_L - m_left_setpoint) < tolerance && Math.abs(currentPos_R - m_right_setpoint) < tolerance;
-	}
-
-
-
-  /**
-   * Returns the heading of the robot.
-   *
-   * @return the robot's heading in degrees, from -180 to 180
-   */
-  public double getHeading() {
-    return m_gyro.getRotation2d().getDegrees();
-  }
-
-  /**
-   * Returns the turn rate of the robot.
-   *
-   * @return The turn rate of the robot, in degrees per second
-   */
-  public double getTurnRate() {
-    return -m_gyro.getRate();
-
-  }
-
-  public void DriveSlow() { 
-    m_frontLeft.set(TalonFXControlMode.PercentOutput, .25);
-    m_frontRight.set(TalonFXControlMode.PercentOutput, .25);
-    m_rearLeft.set(TalonFXControlMode.PercentOutput, .25);
-    m_rearRight.set(TalonFXControlMode.PercentOutput, .25);
-  }
-
-  public void DriveFast() {
-    m_frontLeft.set(TalonFXControlMode.PercentOutput, .55);
-    m_frontRight.set(TalonFXControlMode.PercentOutput, .55);
-    m_rearLeft.set(TalonFXControlMode.PercentOutput, .55);
-    m_rearRight.set(TalonFXControlMode.PercentOutput, .55);
+    Unmanaged.feedEnable(2);
+    m_gyro.getSimCollection().setRawHeading(-Units.radiansToDegrees(m_simYaw));
   }
 
 
-  public void AutoBack() {
-    m_frontLeft.set(TalonFXControlMode.PercentOutput, .2);
-    m_frontRight.set(TalonFXControlMode.PercentOutput, .2);
-    m_rearLeft.set(TalonFXControlMode.PercentOutput, .2);
-    m_rearRight.set(TalonFXControlMode.PercentOutput, .2);
+  public void resetEncoders(){
+
+    for (SwerveModule module : m_swerveModules.values()) {
+      module.resetAngleToAbsolute();;
+    }
+
   }
-  
-  // public void setDriveStates(TrapezoidProfile.State left, TrapezoidProfile.State right) {
-  //   m_leftLeader.setSetpoint(
-  //       ExampleSmartMotorController.PIDMode.kPosition,
-  //       left.position,
-  //       m_feedforward.calculate(left.velocity));
-  //   m_rightLeader.setSetpoint(
-  //       ExampleSmartMotorController.PIDMode.kPosition,
-  //       right.position,
-  //       m_feedforward.calculate(right.velocity));
-  // }
 
-public void MagicTaxi(){ 
-  
-  m_frontLeft.set(TalonFXControlMode.MotionMagic, Constants.targetMeters);
-	m_frontRight.set(TalonFXControlMode.MotionMagic, Constants.targetMeters);
-  m_rearLeft.set(TalonFXControlMode.MotionMagic, Constants.targetMeters);
-  m_rearRight.set(TalonFXControlMode.MotionMagic, Constants.targetMeters);
+  public double getVelocity(){
 
-    
+    return m_swerveModules.get(ModulePosition.FRONT_LEFT).getDriveMetersPerSecond();
   }
 
 
 
-  
 }
