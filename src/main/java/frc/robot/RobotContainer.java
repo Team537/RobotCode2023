@@ -204,7 +204,7 @@ public class RobotContainer {
       m_robotDrive,
       ()-> -m_driverController.getLeftY(),
       ()->  m_driverController.getLeftX(),
-      ()->  -m_driverController.getRightX()*0.2,
+      ()->  -m_driverController.getRightX()*0.5,
       true, m_LED)); 
   
     //Drive with Slew
@@ -255,9 +255,9 @@ public class RobotContainer {
 
   public void robotInit() {
 
-   SmartDashboard.putData("Auto Selector", m_Chooser);
-   m_Chooser.addOption("Score Mid Drive Back", scoreMidDriveBack);
-   m_Chooser.addOption("Score Mid No Drive", scoreMidNoDrive);
+  //  SmartDashboard.putData("Auto Selector", m_Chooser);
+  //  m_Chooser.addOption("Score Mid Drive Back", scoreMidDriveBack);
+  //  m_Chooser.addOption("Score Mid No Drive", scoreMidNoDrive);
 
 
 }
@@ -265,7 +265,7 @@ public class RobotContainer {
   public Command getAutoCommand() {
     
 
-   return m_Chooser.getSelected();
+   return scoreMidDriveBack;
   }
 
 }
