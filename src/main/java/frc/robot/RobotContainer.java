@@ -236,7 +236,7 @@ public class RobotContainer {
     //  m_Chooser.addOption("Auto 3", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 3", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
 
     //  SmartDashboard.putData("Auto Selector", m_Chooser);
-      // m_robotDrive.robotInit();
+    m_robotDrive.robotInit();
   }
 
   public Command robotDisabled() {
