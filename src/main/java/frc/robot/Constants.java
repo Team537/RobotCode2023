@@ -295,8 +295,8 @@ public class Constants {
 
     public static final double kFrontLeftSRXMagCoderOffset = 320;//175;
     public static final double kFrontRightSRXMagCoderOffset = 0;
-    public static final double kBackLeftSRXMagCoderOffset = 0.;
-    public static final double kBackRightSRXMagCoderOffset = 0.;
+    public static final double kBackLeftSRXMagCoderOffset = 0;
+    public static final double kBackRightSRXMagCoderOffset = 0;
 
     public static final double kP_X = 0.01;
     public static final double kI_X = 0;

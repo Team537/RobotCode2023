@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
   
     
- 
+ m_robotContainer.robotInit();
     
   m_robotContainer.getClass();
 
