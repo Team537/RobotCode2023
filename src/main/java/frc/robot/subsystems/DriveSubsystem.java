@@ -391,9 +391,12 @@ public class DriveSubsystem extends SubsystemBase {
     return m_swerveModules.get(ModulePosition.FRONT_LEFT).getDriveMetersPerSecond();
   }
 
-  public void robotInit(){
+  public void teleOpGyroReset(){
 
-    m_gyro.setYaw(180);
+    double gyroAngle = m_gyro.getYaw();
+
+    m_gyro.setYaw(180 - gyroAngle);
+
   }
 
 }

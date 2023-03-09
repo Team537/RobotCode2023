@@ -34,6 +34,11 @@
       "/SmartDashboard/Scheduler": "Scheduler"
     },
     "windows": {
+      "/SmartDashboard/Auto Selector": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field2d": {
         "window": {
           "visible": true
@@ -44,6 +49,9 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "Auto Selector": {
+          "open": true
+        },
         "open": true
       }
     }

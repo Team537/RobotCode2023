@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
   
   
  
-    
+  m_robotContainer.robotInit();
   m_robotContainer.getClass();
 
   
