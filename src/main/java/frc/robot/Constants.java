@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-
+// All Imports
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +18,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.ModuleMap;
+// End of imports
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -31,8 +32,11 @@ import frc.robot.utils.ModuleMap;
  * wherever the
  * constants are needed, to reduce verbosity.
  */
+
+ // Makes the main class of the file (everything in the file goes in this)(works like a file itself)
 public class Constants {
 
+  // Spark Max Constants
   public static final class SparkPIDFConstants {
 
     // This is the default PIDF for spark maxes. Perportional, Integral, Derivetive, Izone and Feed Forward. 
@@ -60,6 +64,7 @@ public class Constants {
 
   }
 
+  // Sets all variables for drive (ex. speed)
   public static final class DriveConstants {
 
     public static final double kTrackwidthMeters = 0.415;
@@ -80,7 +85,7 @@ public class Constants {
     public static final double kPDriveVel = 8.5;
 
 
-    //Gyro Command Constants
+    // Gyro Command Constants
     public static final double kTurnP = 8.5;
     public static final double kTurnI = 0;
     public static final double kTurnD = 0;
@@ -91,29 +96,35 @@ public class Constants {
 
   public static final class GripperConstants{
 
-    //These are the ids for each gripper motor
+    // These are the ids for each gripper motor
+    // TODO: Temporary variables ( find a permanent solution  ex. interface)
     public static final int kGripper = 15;
     public static final int kGripper2 = 17; 
 
   }
   
+  // Sets all variables/constants for arm movement
   public static final class ArmInOutConstants {
 
-    //motor id for inout
+    // Motor id for inout
+    // TODO: Temporary variables ( find a permanent solution  ex. interface)
     public static final int kArmInOut = 14;
 
     //These are the set positions for the differnt scoring heights on the arm inout motor.
     // current limits are (+-)(it is +- because the string can get flipped) 300 to 0
 
+    // TODO: Temporary variables ( find a permanent solution  ex. interface)
     public static final double kArmInOutPositionHighGoal = 100; // for "shooting" cones, it was 100
     // the value for normal high goal is 225
 
+    // TODO: Temporary variables ( find a permanent solution  ex. interface)
     public static final double kArmInOutPositionMidGoal = 50;
     public static final double kArmInOutPositionShelfHumanPL = 50;
     public static final double kArmInOutPositionShelfHigh = 50;
     public static final double kArmInOutPositionGround = 0.0;
     
     //used for setting the robot to zero (and accounts for the string rolling up different)
+    // TODO: Temporary variables ( find a permanent solution  ex. interface)
     public static final double kArmInOutPositionZero = -1;
 
 
