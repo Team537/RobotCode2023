@@ -105,7 +105,7 @@ public class Constants {
     //These are the set positions for the differnt scoring heights on the arm inout motor.
     // current limits are (+-)(it is +- because the string can get flipped) 300 to 0
 
-    public static final double kArmInOutPositionHighGoal = 100; // for "shooting" cones, it was 100
+    public static final double kArmInOutPositionHighGoal = 50; // for "shooting" cones, it was 100
     // the value for normal high goal is 225
 
     public static final double kArmInOutPositionMidGoal = 50;
@@ -127,9 +127,9 @@ public class Constants {
     public static final int kArmPivot1 = 19;
    
     //these are the setpositions for the armpivot. current limits are 0 to 58
-    public static final double kArmPivotPositionHighGoal = 17;
+    public static final double kArmPivotPositionHighGoal = 7;
     public static final double kArmPivotPositionShelfHumanPL = 15;
-    public static final double kArmPivotPositionMidGoal = 20;
+    public static final double kArmPivotPositionMidGoal = 18;
     public static final double kArmPivotPositionShelfHigh = 25;
 
     public static final double kArmPivotPositionZero = 0.0;
@@ -145,7 +145,7 @@ public class Constants {
     public static final int kWrist = 11;
 
     // set positions for the wrist. known limits are 0 to -17(could be farther)
-    public static final double kWristPositionHighGoal = -11;
+    public static final double kWristPositionHighGoal = -17;
     public static final double kWristPositionShelfHumanPL = -17;
     public static final double kWristPositionMidGoal = -13; 
     public static final double kWristPositionShelfHigh = -10;
@@ -288,10 +288,10 @@ public class Constants {
     public static final int kBackRightDrive = 6;
     public static final int kBackRightTurn = 7;
     
-    public static final int kFrontLeftSRXMagCoder = 0;
-    public static final int kFrontRightSRXMagCoder = 1;
-    public static final int kBackLeftSRXMagCoder = 2;
-    public static final int kBackRightSRXMagCoder = 3;
+    public static final int kFrontLeftSRXMagCoder = 4; //0
+    public static final int kFrontRightSRXMagCoder =5; //1
+    public static final int kBackLeftSRXMagCoder = 6; //2
+    public static final int kBackRightSRXMagCoder = 7; //3
 
     public static final double kFrontLeftSRXMagCoderOffset = 320;//175;
     public static final double kFrontRightSRXMagCoderOffset = 0;

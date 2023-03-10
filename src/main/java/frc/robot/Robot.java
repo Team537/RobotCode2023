@@ -21,7 +21,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   
      
-  private RobotContainer m_robotContainer = new RobotContainer();
+  private RobotContainer m_robotContainer;
   
 
   /**
@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
   
-  
+    m_robotContainer = new RobotContainer();
  
   m_robotContainer.robotInit();
   m_robotContainer.getClass();
@@ -62,10 +62,10 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
 
-    m_autonomousCommand = m_robotContainer.robotDisabled();
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    // m_autonomousCommand = m_robotContainer.robotDisabled();
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.schedule();
+    // }
     
   }
 

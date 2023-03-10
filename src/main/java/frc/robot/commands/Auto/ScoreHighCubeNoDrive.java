@@ -41,7 +41,7 @@ public class ScoreHighCubeNoDrive extends SequentialCommandGroup {
       new RunCommand(m_Gripper::GripperFast, m_Gripper).withTimeout(2),
       new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1),
       //new FollowTrajectory(m_drive, m_fieldSim, "Drive Backward", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED),
-      new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
+      new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
       //new RunCommand (() -> m_drive.drive(-0.3, 0, 0, true, true), m_drive).withTimeout(2),
       //new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
       new InstantCommand(m_LED::autoEnd)

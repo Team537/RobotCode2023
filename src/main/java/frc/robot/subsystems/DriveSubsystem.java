@@ -378,13 +378,13 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
 
-  public void resetEncoders(){
+  // public void resetEncoders(){
 
-    for (SwerveModule module : m_swerveModules.values()) {
-      module.resetAngleToAbsolute();;
-    }
+  //   for (SwerveModule module : m_swerveModules.values()) {
+  //     module.resetAngleToAbsolute();;
+  //   }
 
-  }
+  // }
 
   public double getVelocity(){
 
@@ -395,7 +395,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     double gyroAngle = m_gyro.getYaw();
 
-    m_gyro.setYaw(180 - gyroAngle);
+    m_gyro.setYaw(180);
 
   }
 

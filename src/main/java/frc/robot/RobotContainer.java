@@ -15,6 +15,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Auto.FollowTrajectory;
 import frc.robot.commands.Auto.ScoreMidDriveBack;
 import frc.robot.commands.Auto.ScoreMidNoDrive;
+import frc.robot.commands.Auto.ScoreHighCubeNoDrive;
 import frc.robot.commands.led.LedHighGoal;
 import frc.robot.commands.led.LedLowGoal;
 import frc.robot.commands.led.LedMidGoal;
@@ -48,6 +49,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -87,6 +89,7 @@ public class RobotContainer {
 
   Command scoreMidDriveBack = new ScoreMidDriveBack(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
   Command scoreMidNoDrive = new ScoreMidNoDrive(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
+  Command scoreHighCubeNoDrive = new ScoreHighCubeNoDrive(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
   // Command signalCube = new SignalCube(m_LED);
   // Command signalCone = new SignalCone(m_LED);
 
@@ -255,17 +258,20 @@ public class RobotContainer {
 
   public void robotInit() {
 
-  //  SmartDashboard.putData("Auto Selector", m_Chooser);
+   
   //  m_Chooser.addOption("Score Mid Drive Back", scoreMidDriveBack);
-  //  m_Chooser.addOption("Score Mid No Drive", scoreMidNoDrive);
+  m_Chooser.addOption("Do Nothing", new WaitCommand(1));
+   m_Chooser.addOption("Score Mid No Drive", scoreMidNoDrive);
+   m_Chooser.addOption("Score High Cube No Drive", scoreHighCubeNoDrive);
 
+   SmartDashboard.putData("Auto Selector", m_Chooser);
 
 }
 
   public Command getAutoCommand() {
     
 
-   return scoreMidDriveBack;
+   return m_Chooser.getSelected();
   }
 
 }
