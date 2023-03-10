@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-
-import java.util.HashMap;
 import java.util.Map;
 
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -16,7 +14,6 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.ModuleMap;
 
 /**
@@ -60,6 +57,7 @@ public class Constants {
 
   }
 
+  // A Collection of all DriveConstants, used to pull easier
   public static final class DriveConstants {
 
     public static final double kTrackwidthMeters = 0.415;
