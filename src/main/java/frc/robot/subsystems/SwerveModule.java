@@ -92,7 +92,7 @@ public class SwerveModule extends SubsystemBase {
     m_driveMotor.configAllSettings(CtreUtils.generateDriveMotorConfig());
 
     m_driveMotor.setNeutralMode(NeutralMode.Coast);
-    m_SrxMagEncoder = new SRXMagEncoder(new DutyCycle(new DigitalInput(angleEncoder)), 0);
+    m_SrxMagEncoder = new SRXMagEncoder(new DutyCycle(new DigitalInput(angleEncoder)), m_angleOffset);
 
 
     m_SrxMagEncoder.setDistancePerRotation(360);
@@ -137,7 +137,7 @@ public class SwerveModule extends SubsystemBase {
     // set motor position to opposite of mag, to make that mag angle 0
     // add wanted position to -angle to make position what you want
     var angle = Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
-    m_turnMotor.setSelectedSensorPosition((-angle+m_angleOffset)/SwerveConstants.kTurningEncoderDistancePerPulse);
+    m_turnMotor.setSelectedSensorPosition((angle)*SwerveConstants.kTurningEncoderDistancePerPulse);
 
   
   //   double pos = 0;

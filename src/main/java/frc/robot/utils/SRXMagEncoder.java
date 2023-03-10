@@ -18,20 +18,36 @@ public class SRXMagEncoder extends DutyCycleEncoder {
     super(cycle);
     this.offset = offset;
     setDistancePerRotation(360);
+    double angle =  (360 * super.getAbsolutePosition()) - offset;
+
+    System.out.println(angle);
   }
 
-  @Override
-  public double getDistance() {
-      return super.getDistance() + this.offset;//Math.toDegrees(this.offset); // this is already in degrees
+  
+  public double getEncoderDistance() {
+    
+    double angle =  (360 * super.getAbsolutePosition()) - offset;
+
+
+      return  angle;//Math.toDegrees(this.offset); // this is already in degrees
+      
   }
 
   public double getAbsoluteAngle() {  
-    double angle = Math.toRadians(getDistance());
+    double angle =  Math.toRadians(this.getEncoderDistance());
     angle %= 2.0 * Math.PI;
     if (angle < 0.0) {
         angle += 2.0 * Math.PI;
     }
 
     return angle;
+}
+
+
+public void resetAngleToAbsolute(double zero){
+  
+  super.setPositionOffset(zero);
+
+
 }
 }

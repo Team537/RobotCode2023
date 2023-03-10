@@ -254,6 +254,7 @@ public class RobotContainer {
   }
 
   public void robotInit() {
+    m_robotDrive.resetEncoders();
 
   //  SmartDashboard.putData("Auto Selector", m_Chooser);
   //  m_Chooser.addOption("Score Mid Drive Back", scoreMidDriveBack);

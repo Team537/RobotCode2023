@@ -265,9 +265,7 @@ public class Constants {
     public static final double kaDriveVoltSecondsSquaredPerMeter = .05;
 
 
-    public static final double kTurningEncoderDistancePerPulse =
-    
-    360 / (DriveConstants.kEncoderCPR* kTurningMotorGearRatio);
+    public static final double kTurningEncoderDistancePerPulse = (DriveConstants.kEncoderCPR* kTurningMotorGearRatio)/360;
 
     public static final double kDriveEncoderDistancePerPulse =
     (2*kWheelRadius * Math.PI) / (DriveConstants.kEncoderCPR * kDriveMotorGearRatio);
@@ -293,10 +291,10 @@ public class Constants {
     public static final int kBackLeftSRXMagCoder = 2;
     public static final int kBackRightSRXMagCoder = 3;
 
-    public static final double kFrontLeftSRXMagCoderOffset = 320;//175;
-    public static final double kFrontRightSRXMagCoderOffset = 0;
-    public static final double kBackLeftSRXMagCoderOffset = 0.;
-    public static final double kBackRightSRXMagCoderOffset = 0.;
+    public static final double kFrontLeftSRXMagCoderOffset = 273.393;//175;
+    public static final double kFrontRightSRXMagCoderOffset = 62.08;
+    public static final double kBackLeftSRXMagCoderOffset = 26.27;
+    public static final double kBackRightSRXMagCoderOffset = 47.89;
 
     public static final double kP_X = 0.01;
     public static final double kI_X = 0;
