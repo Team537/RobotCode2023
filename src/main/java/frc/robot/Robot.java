@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_robotContainer.setTeleOpGyro();
+   
 
     // M_arm.ArmDown();
     // This makes sure that the autonomous stops running when

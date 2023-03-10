@@ -106,7 +106,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double m_simYaw;
 
   public DriveSubsystem() {
-    m_gyro.setYaw(0);
+    m_gyro.setYaw(180);
   
     // m_gyro.configMountPose(-90, -0.219727 , 0.615234);
   
