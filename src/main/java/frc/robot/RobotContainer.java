@@ -62,6 +62,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
+// File's main class
 public class RobotContainer {
 
   // The robot's subsystems
@@ -76,9 +77,10 @@ public class RobotContainer {
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
   private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   
+  // Gets the camera
   private final Camera m_camera = new Camera(m_robotDrive);
   
-  
+  // Creates the commands to be executed  
   Command high_goal = new ParallelCommandGroup(new LedHighGoal(m_LED), new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
   Command mid_goal =  new ParallelCommandGroup(new LedMidGoal(m_LED), new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
   Command ground = new ParallelCommandGroup(new LedLowGoal(m_LED), new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
@@ -91,14 +93,12 @@ public class RobotContainer {
   // Command signalCone = new SignalCone(m_LED);
 
   // SlewRateLimiter for Joystick Motion Profiling
-
   private final SlewRateLimiter m_xSpeedLimiter = new SlewRateLimiter(0.1);
   private final SlewRateLimiter m_ySpeedLimiter = new SlewRateLimiter(0.1);
   private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(30);
  
   
 // The driver controllers
-
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort1);
   
@@ -155,7 +155,6 @@ public class RobotContainer {
     //  LED COMMANDS
     yButton.onTrue(high_goal);
     xButton.onTrue(shelf_HuPL);
-
     aButton.onTrue(ground);
     bButton.onTrue(mid_goal);
 
@@ -220,6 +219,7 @@ public class RobotContainer {
   
   }
 
+  // Runs once per run of the scheduler
   public void periodic() {
     m_FieldSim.periodic();
     m_LED.update();
