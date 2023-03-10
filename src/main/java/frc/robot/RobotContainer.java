@@ -230,18 +230,16 @@ public class RobotContainer {
     SmartDashboard.putNumber("Left Joystick",m_driverController.getLeftY());
   }
 
-
+  // Resets the swerve module into a starting position
   public void setTeleOpGyro() {
     // m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
 
     //  m_Chooser.addOption("Auto 1", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 1", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
     //  m_Chooser.addOption("Auto 2", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 2", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
     //  m_Chooser.addOption("Auto 3", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 3", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
-
      
     m_robotDrive.teleOpGyroReset();
 
-   
   }
 
 

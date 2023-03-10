@@ -26,8 +26,6 @@ import frc.robot.utils.ModuleMap;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.Pigeon2;
