@@ -77,7 +77,7 @@ public class RobotContainer {
   private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
   private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   
-  // Gets the camera
+  // Gets the camera for tracking and positioning purposes
   private final Camera m_camera = new Camera(m_robotDrive);
   
   // Creates the commands to be executed  
@@ -229,6 +229,7 @@ public class RobotContainer {
     // dont let it go over 1
     SmartDashboard.putNumber("Left Joystick",m_driverController.getLeftY());
   }
+
 
   public void setTeleOpGyro() {
     // m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
