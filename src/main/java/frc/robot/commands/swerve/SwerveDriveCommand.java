@@ -58,7 +58,7 @@ public class SwerveDriveCommand extends CommandBase {
     double strafe =   Math.abs(m_strafeInput.getAsDouble()) > 0.05 ? m_strafeInput.getAsDouble() : 0;
     double rotation =  Math.abs(m_rotationInput.getAsDouble()) > 0.05 ? m_rotationInput.getAsDouble() : 0;
 
-    m_drive.drive(drive, strafe, rotation, m_isFieldRelative, true);    // Forward/Back Drive, Left/Right Strafe, Left/Right Turn
+    m_drive.drive(drive, strafe, rotation, m_isFieldRelative, false);    // Forward/Back Drive, Left/Right Strafe, Left/Right Turn
     
     if((Math.abs(m_drive.getVelocity()) > 0) && m_drive.driveState.equals("Boost Drive") && DriverStation.isTeleop()) {
       m_LED.setDriving(true);

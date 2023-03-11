@@ -260,9 +260,9 @@ public class Constants {
     public static final double kVDrive = 2.3;
     public static final double kADrive = 0.517;
 
-    public static final double ksDriveVoltSecondsPerMeter = 0.01;
-    public static final double kvDriveVoltSecondsSquaredPerMeter = 0.01;
-    public static final double kaDriveVoltSecondsSquaredPerMeter = .05;
+    public static final double ksDriveVoltSecondsPerMeter = 0.18;
+    public static final double kvDriveVoltSecondsSquaredPerMeter = 2.3;
+    public static final double kaDriveVoltSecondsSquaredPerMeter = 0.52878;
 
 
     public static final double kTurningEncoderDistancePerPulse =
@@ -272,8 +272,8 @@ public class Constants {
     public static final double kDriveEncoderDistancePerPulse =
     (2*kWheelRadius * Math.PI) / (DriveConstants.kEncoderCPR * kDriveMotorGearRatio);
 
-    public static final double kMaxSpeedMetersPerSecond = 10;
-    public static final double kMaxRotationRadiansPerSecond = Math.PI * 6;
+    public static final double kMaxSpeedMetersPerSecond = 2;
+    public static final double kMaxRotationRadiansPerSecond = Math.PI * 4;
     public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 2;
     
 
