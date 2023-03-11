@@ -42,8 +42,11 @@ public class ScoreHighCubeDriveBack extends SequentialCommandGroup {
       new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1),
       //new FollowTrajectory(m_drive, m_fieldSim, "Drive Backward", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED),
       new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
-      new RunCommand (() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(3),
-      //new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
+      new RunCommand (() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(1),
+      new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
+      new RunCommand(m_Wrist::WristPositionManualUp, m_Wrist).withTimeout(1),
+      new RunCommand (() -> m_drive.drive(0.2, 0, 0, true, true), m_drive).withTimeout(2),
+      //new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2)2
       new InstantCommand(m_LED::autoEnd)
       );
   }
