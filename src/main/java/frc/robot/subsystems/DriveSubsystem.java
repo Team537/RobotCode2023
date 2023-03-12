@@ -171,7 +171,7 @@ public class DriveSubsystem extends SubsystemBase {
         ModuleMap.orderedValues(moduleStates, new SwerveModuleState[0]), SwerveConstants.kMaxSpeedMetersPerSecond);
 
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
-      module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
+      module.setSlowDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
 
       driveState = "Slow Drive";
   }
