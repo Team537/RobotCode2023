@@ -391,6 +391,15 @@ public class DriveSubsystem extends SubsystemBase {
     return m_swerveModules.get(ModulePosition.FRONT_LEFT).getDriveMetersPerSecond();
   }
 
+
+  
+  public void setCoast(){
+    for (SwerveModule module : m_swerveModules.values()) {
+       module.setDriveNeutralMode(NeutralMode.Coast);
+
+    }
+    
+  }
   public void teleOpGyroReset(){
 
     double gyroAngle = m_gyro.getYaw();

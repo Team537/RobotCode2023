@@ -122,13 +122,7 @@ public class RobotContainer {
   POVButton dPadLeftButton = new POVButton(m_driverController, 90);
   POVButton dPadRightButton = new POVButton(m_driverController, 270);
 
-  Trigger leftTrigger = m_driverController
-    .leftTrigger(0.5, CommandScheduler.getInstance().getDefaultButtonLoop())
-    .castTo(Trigger::new);
-
-  Trigger rightTrigger = m_driverController
-    .rightTrigger(0.5, CommandScheduler.getInstance().getDefaultButtonLoop())
-    .castTo(Trigger::new);
+  
 
   public RobotContainer() {
 
@@ -199,7 +193,8 @@ public class RobotContainer {
   m_robotDrive,
   ()-> -(m_driverController.getLeftY()),
   ()->  m_driverController.getLeftX(),
-  ()->  -m_driverController.getRightX()*0.7,
+  ()->  -m_driverController.getRightX()*0.2,
+  () -> m_driverController.getRightTriggerAxis(),
   true, m_LED));
     
 
@@ -210,6 +205,7 @@ public class RobotContainer {
       ()-> -m_driverController.getLeftY(),
       ()->  m_driverController.getLeftX(),
       ()->  -m_driverController.getRightX()*0.5,
+      ()-> m_driverController.getRightTriggerAxis(),
       true, m_LED)); 
   
     //Drive with Slew
@@ -258,9 +254,16 @@ public class RobotContainer {
 
   }
 
+
+  public void teleopInit() {
+
+ 
+
+}
+
   public void robotInit() {
 
-   
+    // m_robotDrive.setCoast();
   //  m_Chooser.addOption("Score Mid Drive Back", scoreMidDriveBack);
    m_Chooser.addOption("Do Nothing", new WaitCommand(1));
    m_Chooser.addOption("Score Mid No Drive", scoreMidNoDrive);
