@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Auto.FollowTrajectory;
+import frc.robot.commands.Auto.ScoreHighCubeDriveBack;
 import frc.robot.commands.Auto.ScoreMidDriveBack;
 import frc.robot.commands.Auto.ScoreMidNoDrive;
 import frc.robot.commands.Auto.ScoreHighCubeNoDrive;
@@ -90,6 +91,7 @@ public class RobotContainer {
   Command scoreMidDriveBack = new ScoreMidDriveBack(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
   Command scoreMidNoDrive = new ScoreMidNoDrive(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
   Command scoreHighCubeNoDrive = new ScoreHighCubeNoDrive(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
+  Command scoreHighCubeDriveBack = new ScoreHighCubeDriveBack(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
   // Command signalCube = new SignalCube(m_LED);
   // Command signalCone = new SignalCone(m_LED);
 
@@ -260,10 +262,11 @@ public class RobotContainer {
 
    
   //  m_Chooser.addOption("Score Mid Drive Back", scoreMidDriveBack);
-  m_Chooser.addOption("Do Nothing", new WaitCommand(1));
+   m_Chooser.addOption("Do Nothing", new WaitCommand(1));
    m_Chooser.addOption("Score Mid No Drive", scoreMidNoDrive);
-   m_Chooser.addOption("Score High Cube No Drive", scoreHighCubeNoDrive);
    m_Chooser.addOption("Score Mid Drive Back", scoreMidDriveBack);
+   m_Chooser.addOption("Score High Cube No Drive", scoreHighCubeNoDrive);
+   m_Chooser.addOption("Score High Cube Drive Back", scoreHighCubeDriveBack);
 
    SmartDashboard.putData("Auto Selector", m_Chooser);
 
