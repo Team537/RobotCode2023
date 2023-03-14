@@ -69,6 +69,9 @@ public class SwerveModule extends SubsystemBase {
   private double m_turnMotorSimDistance;
   public SlewRateLimiter slewRateOutput = new SlewRateLimiter(100);
   public LinearFilter filter = LinearFilter.movingAverage(2);
+  private final double sensorPositionCoefficient = Math.PI * 2* SwerveConstants.kWheelRadius * SwerveConstants.kDriveMotorGearRatio / 2048;
+  private final double sensorVelocityCoefficient =  sensorPositionCoefficient * 10.0;
+  private final double nominalVoltage = 12.0;
 
   public SwerveModule(
       ModulePosition modulePosition,
@@ -90,7 +93,9 @@ public class SwerveModule extends SubsystemBase {
 
     m_driveMotor.configFactoryDefault();
     m_driveMotor.configAllSettings(CtreUtils.generateDriveMotorConfig());
-
+    m_driveMotor.setSensorPhase(true);
+    m_driveMotor.setSafetyEnabled(true);
+    m_driveMotor.enableVoltageCompensation(true);
     m_driveMotor.setNeutralMode(NeutralMode.Coast);
     m_SrxMagEncoder = new SRXMagEncoder(new DutyCycle(new DigitalInput(angleEncoder)), 0);
 
@@ -128,23 +133,23 @@ public class SwerveModule extends SubsystemBase {
  *    
  * 
  */
-  public void resetAngleToAbsolute() {
-    // TODO: Do we need to do 1 full revolution for the
-    // mag encoder to read the right value?
+  // public void resetAngleToAbsolute() {
+  //   // TODO: Do we need to do 1 full revolution for the
+  //   // mag encoder to read the right value?
 
-    // Angle/Mag encoder position is always an absolute position - always sensing
-    // motor position is always 0 when code starts
-    // set motor position to opposite of mag, to make that mag angle 0
-    // add wanted position to -angle to make position what you want
-    var angle = Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
-    m_turnMotor.setSelectedSensorPosition((-angle+m_angleOffset)/SwerveConstants.kTurningEncoderDistancePerPulse);
+  //   // Angle/Mag encoder position is always an absolute position - always sensing
+  //   // motor position is always 0 when code starts
+  //   // set motor position to opposite of mag, to make that mag angle 0
+  //   // add wanted position to -angle to make position what you want
+  //   var angle = Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
+  //   m_turnMotor.setSelectedSensorPosition((-angle+m_angleOffset)/SwerveConstants.kTurningEncoderDistancePerPulse);
 
   
-  //   double pos = 0;
-  // double angle =  (m_SrxMagEncoder.getAbsolutePosition() - m_SrxMagEncoder.getPositionOffset());
+  // //   double pos = 0;
+  // // double angle =  (m_SrxMagEncoder.getAbsolutePosition() - m_SrxMagEncoder.getPositionOffset());
 
-  //    m_turnMotor.setSelectedSensorPosition(angle+pos);
-   }
+  // //    m_turnMotor.setSelectedSensorPosition(angle+pos);
+  //  }
 
 /**
  * Gets Heading in Degrees
@@ -174,7 +179,7 @@ public class SwerveModule extends SubsystemBase {
  * 
  */
   public double getDriveMetersPerSecond() {
-    return m_driveMotor.getSelectedSensorVelocity() * SwerveConstants.kDriveEncoderDistancePerPulse * 10;
+    return m_driveMotor.getSelectedSensorVelocity() * SwerveConstants.kDriveEncoderDistancePerPulse * 10 ;
   }
 
   // public void setDriveInvertedt() {
@@ -188,7 +193,7 @@ public class SwerveModule extends SubsystemBase {
  * 
  */
   public double getDriveMeters() {
-    return m_driveMotor.getSelectedSensorPosition() *SwerveConstants.kDriveEncoderDistancePerPulse;
+    return m_driveMotor.getSelectedSensorPosition() * sensorPositionCoefficient;
   }
 
 
@@ -211,13 +216,13 @@ public class SwerveModule extends SubsystemBase {
       double percentOutput1 =  Math.max(percentOutput, -0.5);
       m_driveMotor.set(ControlMode.PercentOutput, percentOutput1);
     } else {
-      double velocity = (desiredState.speedMetersPerSecond / (SwerveConstants.kDriveEncoderDistancePerPulse * 10));
+      double velocity = (desiredState.speedMetersPerSecond / sensorVelocityCoefficient);
     
       m_driveMotor.set(
           ControlMode.Velocity,
           velocity,
           DemandType.ArbitraryFeedForward,
-          feedforward.calculate(desiredState.speedMetersPerSecond));
+          feedforward.calculate(desiredState.speedMetersPerSecond) / nominalVoltage);
     }
 
     //Turn Motor Output Adjustment based on Angle

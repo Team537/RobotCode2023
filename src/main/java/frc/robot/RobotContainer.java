@@ -13,7 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Auto.FollowTrajectory;
+import frc.robot.commands.Auto.ScoreHighCubeDriveBack;
 import frc.robot.commands.Auto.ScoreMidDriveBack;
+import frc.robot.commands.Auto.ScoreMidNoDrive;
+import frc.robot.commands.Auto.ScoreHighCubeNoDrive;
 import frc.robot.commands.led.LedHighGoal;
 import frc.robot.commands.led.LedLowGoal;
 import frc.robot.commands.led.LedMidGoal;
@@ -47,6 +50,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -84,7 +88,10 @@ public class RobotContainer {
   Command shelf_HuPL =   new ParallelCommandGroup(new LedShelf(m_LED), new ManipulatorShelfHumanPL(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
   Command zeros = new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
 
-  Command auto = new ScoreMidDriveBack(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
+  Command scoreMidDriveBack = new ScoreMidDriveBack(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
+  Command scoreMidNoDrive = new ScoreMidNoDrive(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
+  Command scoreHighCubeNoDrive = new ScoreHighCubeNoDrive(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
+  Command scoreHighCubeDriveBack = new ScoreHighCubeDriveBack(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED);
   // Command signalCube = new SignalCube(m_LED);
   // Command signalCone = new SignalCone(m_LED);
 
@@ -202,7 +209,7 @@ public class RobotContainer {
       m_robotDrive,
       ()-> -m_driverController.getLeftY(),
       ()->  m_driverController.getLeftX(),
-      ()->  -m_driverController.getRightX()*0.2,
+      ()->  -m_driverController.getRightX()*0.5,
       true, m_LED)); 
   
     //Drive with Slew
@@ -228,17 +235,21 @@ public class RobotContainer {
     SmartDashboard.putNumber("Left Joystick",m_driverController.getLeftY());
   }
 
-  public void setTeleOpGyro() {
+ /* public void setTeleOpGyro() {
     // m_robotDrive.setOdometry(new Pose2d(3.67,1.30,new Rotation2d()));
 
     //  m_Chooser.addOption("Auto 1", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 1", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
     //  m_Chooser.addOption("Auto 2", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 2", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
     //  m_Chooser.addOption("Auto 3", new FollowTrajectory(m_robotDrive, m_FieldSim, "Blue Auto 3", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
 
-    //  SmartDashboard.putData("Auto Selector", m_Chooser);
-      // m_robotDrive.robotInit();
-  }
+    
+    m_robotDrive.teleOpGyroReset();
 
+   
+  }*/
+
+
+  
   public Command robotDisabled() {
 
       Command zero = new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
@@ -247,10 +258,24 @@ public class RobotContainer {
 
   }
 
+  public void robotInit() {
+
+   
+  //  m_Chooser.addOption("Score Mid Drive Back", scoreMidDriveBack);
+   m_Chooser.addOption("Do Nothing", new WaitCommand(1));
+   m_Chooser.addOption("Score Mid No Drive", scoreMidNoDrive);
+   m_Chooser.addOption("Score Mid Drive Back", scoreMidDriveBack);
+   m_Chooser.addOption("Score High Cube No Drive", scoreHighCubeNoDrive);
+   m_Chooser.addOption("Score High Cube Drive Back", scoreHighCubeDriveBack);
+
+   SmartDashboard.putData("Auto Selector", m_Chooser);
+
+}
+
   public Command getAutoCommand() {
     
 
-   return auto;
+   return m_Chooser.getSelected();
   }
 
 }
