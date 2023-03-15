@@ -57,7 +57,8 @@ public class SlowSwerveDriveCommand extends CommandBase {
         TriggerPercent *= -1;
       }
 
-      OutputSpeedPercent = (JoystickPercent * DriveSpeedConstants.kBaseRobotSpeed) + (JoystickPercent * (TriggerPercent * (DriveSpeedConstants.kMaxRobotSpeed - DriveSpeedConstants.kMaxRobotSpeed)));
+      //OutputSpeedPercent = (JoystickPercent * DriveSpeedConstants.kBaseRobotSpeed) + (JoystickPercent * (TriggerPercent * (DriveSpeedConstants.kMaxRobotSpeed - DriveSpeedConstants.kMaxRobotSpeed)));
+      OutputSpeedPercent = JoystickPercent + TriggerPercent;
     }
     else {
       //when it is lower than the deadband, it sets it to zero
