@@ -189,17 +189,17 @@ public class RobotContainer {
   // m_robotDrive.setLeds(m_LED);
   // m_Manipulator.setLeds(m_LED);
 
-  starButton.toggleOnTrue(new SlowSwerveDriveCommand(
+  m_robotDrive.setDefaultCommand(new SlowSwerveDriveCommand(
   m_robotDrive,
-  ()-> -(m_driverController.getLeftY()),
-  ()->  m_driverController.getLeftX(),
+  ()-> -(m_driverController.getLeftY())*0.2,
+  ()->  m_driverController.getLeftX()*0.2,
   ()->  -m_driverController.getRightX()*0.2,
-  () -> m_driverController.getRightTriggerAxis(),
+  () -> m_driverController.getRightTriggerAxis()*0.8,
   true, m_LED));
     
 
   // Drive without Slew
- m_robotDrive.setDefaultCommand( 
+ starButton.toggleOnTrue( 
     new SwerveDriveCommand(
       m_robotDrive,
       ()-> -m_driverController.getLeftY(),
