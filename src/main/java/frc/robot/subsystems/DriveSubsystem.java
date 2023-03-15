@@ -192,6 +192,31 @@ public class DriveSubsystem extends SubsystemBase {
          );
      
  }
+
+
+ public double[] getGyroVelocityXYZ() {
+  double[] xyz = new double[3];
+  m_gyro.getRawGyro(xyz);
+  return xyz;
+}
+
+public void setXShape() {
+  setSwerveModuleStates(new SwerveModuleState[] {
+    // front left
+    new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),
+    // front right
+    new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45.0)),
+    // back left
+    new SwerveModuleState(0.0, Rotation2d.fromDegrees(135.0)),
+    // back right
+    new SwerveModuleState(0.0, Rotation2d.fromDegrees(-135.0))
+  }, false);
+}
+
+
+public void stop() {
+  this.drive(0,0,0,true,true);
+}
 /**
  * Sets States For Swerve Modules and Determines FeedbackLoop Type
  * 

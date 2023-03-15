@@ -53,13 +53,13 @@ public class Constants {
     public static final double kMinOutput = -1;
 
     //This is the max cruise velocity in RPM. This is the speed it travels at when going to the set position
-    public static final double kMaxV = 3000;
+    public static final double kMaxV = 4000;
     public static final double kMinV = 0;
 
     //This is the max acceleration when accelerating to the cruise velocity. In RPM
-    public static final double kMaxA = 3000;
+    public static final double kMaxA = 4000;
     //specific accel constant for the pivot
-    public static final double kMaxAccelArmPivot = 2000;
+    public static final double kMaxAccelArmPivot = 4000;
 
     // allowed closed loop error
     public static final double kAllE = 0;
