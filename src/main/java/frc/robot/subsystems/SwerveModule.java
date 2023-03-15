@@ -53,6 +53,12 @@ public class SwerveModule extends SubsystemBase {
           SwerveConstants.kvDriveVoltSecondsSquaredPerMeter,
           SwerveConstants.kaDriveVoltSecondsSquaredPerMeter);
 
+   SimpleMotorFeedforward slowfeedforward =
+          new SimpleMotorFeedforward(
+              SwerveConstants.ksSlowDriveVoltSecondsPerMeter,
+              SwerveConstants.kvSlowDriveVoltSecondsSquaredPerMeter,
+              SwerveConstants.kaSlowDriveVoltSecondsSquaredPerMeter);
+
   private final FlywheelSim m_turnMotorSim =
       new FlywheelSim(
           // Sim Values
@@ -212,8 +218,8 @@ public class SwerveModule extends SubsystemBase {
     //Feedback loop Type
 
     if (isOpenLoop) {
-      double percentOutput = 2* Math.min(filter.calculate(slewRateOutput.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond)), 0.25);
-      double percentOutput1 =  Math.max(percentOutput, -0.5);
+      double percentOutput = 2* Math.min(filter.calculate(slewRateOutput.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond)), 1);
+      double percentOutput1 =  Math.max(percentOutput, -1);
       m_driveMotor.set(ControlMode.PercentOutput, percentOutput1);
     } else {
       double velocity = (desiredState.speedMetersPerSecond / sensorVelocityCoefficient);
@@ -223,6 +229,40 @@ public class SwerveModule extends SubsystemBase {
           velocity,
           DemandType.ArbitraryFeedForward,
           feedforward.calculate(desiredState.speedMetersPerSecond) / nominalVoltage);
+    }
+
+    //Turn Motor Output Adjustment based on Angle
+    double angle =
+        (Math.abs(desiredState.speedMetersPerSecond) <= (SwerveConstants.kMaxRotationRadiansPerSecond * 0.01))
+            ? m_lastAngle
+            : desiredState.angle
+                .getDegrees(); // Prevent rotating module if speed is less then 1%.
+    m_turnMotor.set(ControlMode.Position, angle / SwerveConstants.kTurningEncoderDistancePerPulse);
+    m_lastAngle = angle;  
+
+    m_drivePercentOutput = m_driveMotor.getMotorOutputPercent();
+    m_turnPercentOutput = m_turnMotor.getMotorOutputPercent();
+  }
+
+
+  public void setSlowDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
+    desiredState = CtreUtils.optimize(desiredState, getHeadingRotation2d());
+
+
+    //Feedback loop Type
+
+    if (isOpenLoop) {
+      double percentOutput = 2* Math.min(filter.calculate(slewRateOutput.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond)), 1);
+      double percentOutput1 =  Math.max(percentOutput, -1);
+      m_driveMotor.set(ControlMode.PercentOutput, percentOutput1);
+    } else {
+      double velocity = (desiredState.speedMetersPerSecond / sensorVelocityCoefficient);
+    
+      m_driveMotor.set(
+          ControlMode.Velocity,
+          velocity,
+          DemandType.ArbitraryFeedForward,
+          slowfeedforward.calculate(desiredState.speedMetersPerSecond) / nominalVoltage);
     }
 
     //Turn Motor Output Adjustment based on Angle
@@ -315,6 +355,7 @@ public class SwerveModule extends SubsystemBase {
           "Module " + m_moduleNumber + " Position", getDriveMeters());
     SmartDashboard.putNumber(
             "Module " + m_moduleNumber + " Linear Velocity", getDriveMetersPerSecond());
+    
   
   }
  /**

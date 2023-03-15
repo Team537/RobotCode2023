@@ -33,6 +33,12 @@ import frc.robot.utils.ModuleMap;
  */
 public class Constants {
 
+  public static final class DriveSpeedConstants {
+    public static final double kMaxRobotSpeed = 1;
+    public static final double kBaseRobotSpeed = 0.2;
+
+  }
+
   public static final class SparkPIDFConstants {
 
     // This is the default PIDF for spark maxes. Perportional, Integral, Derivetive, Izone and Feed Forward. 
@@ -260,10 +266,13 @@ public class Constants {
     public static final double kVDrive = 2.3;
     public static final double kADrive = 0.517;
 
-    public static final double ksDriveVoltSecondsPerMeter = 0.18;
+    public static final double ksDriveVoltSecondsPerMeter = 0.08;
     public static final double kvDriveVoltSecondsSquaredPerMeter = 2.3;
     public static final double kaDriveVoltSecondsSquaredPerMeter = 0.52878;
 
+    public static final double ksSlowDriveVoltSecondsPerMeter = 0.5;
+    public static final double kvSlowDriveVoltSecondsSquaredPerMeter = 2.3;
+    public static final double kaSlowDriveVoltSecondsSquaredPerMeter = 0.52878;
 
     public static final double kTurningEncoderDistancePerPulse =
     

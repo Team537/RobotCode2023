@@ -5,18 +5,10 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSubsystem;
 
 public class BalanceChargeStation extends CommandBase {
-
-  private DriveSubsystem m_drive;
-  private boolean isReversed;
-  private boolean done;
   /** Creates a new BalanceChargeStation. */
-  public BalanceChargeStation( DriveSubsystem m_drive, boolean isReversed) {
-
-    this.m_drive = m_drive;
-    this.isReversed = isReversed;
+  public BalanceChargeStation() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -26,22 +18,7 @@ public class BalanceChargeStation extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    var accel = m_drive.getGyroVelocityXYZ()[1];
-    if (isReversed) {
-      accel *= -1;
-    }
-    if (accel  > 10 || done) {
-      done = true;
-      m_drive.setXShape();
-    } else {
-      var speed = 0.5;
-      if (isReversed) {
-        speed *= -1;
-      }
-      m_drive.drive(speed, 0, 0, true, true);
-    }
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

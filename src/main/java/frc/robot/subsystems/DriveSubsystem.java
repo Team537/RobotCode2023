@@ -171,7 +171,7 @@ public class DriveSubsystem extends SubsystemBase {
         ModuleMap.orderedValues(moduleStates, new SwerveModuleState[0]), SwerveConstants.kMaxSpeedMetersPerSecond);
 
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
-      module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
+      module.setSlowDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
 
       driveState = "Slow Drive";
   }
@@ -192,31 +192,6 @@ public class DriveSubsystem extends SubsystemBase {
          );
      
  }
-
-
- public double[] getGyroVelocityXYZ() {
-  double[] xyz = new double[3];
-  m_gyro.getRawGyro(xyz);
-  return xyz;
-}
-
-public void setXShape() {
-  setSwerveModuleStates(new SwerveModuleState[] {
-    // front left
-    new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),
-    // front right
-    new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45.0)),
-    // back left
-    new SwerveModuleState(0.0, Rotation2d.fromDegrees(135.0)),
-    // back right
-    new SwerveModuleState(0.0, Rotation2d.fromDegrees(-135.0))
-  }, false);
-}
-
-
-public void stop() {
-  this.drive(0,0,0,true,true);
-}
 /**
  * Sets States For Swerve Modules and Determines FeedbackLoop Type
  * 
@@ -416,6 +391,15 @@ public void stop() {
     return m_swerveModules.get(ModulePosition.FRONT_LEFT).getDriveMetersPerSecond();
   }
 
+
+  
+  public void setCoast(){
+    for (SwerveModule module : m_swerveModules.values()) {
+       module.setDriveNeutralMode(NeutralMode.Coast);
+
+    }
+    
+  }
   public void teleOpGyroReset(){
 
     double gyroAngle = m_gyro.getYaw();
