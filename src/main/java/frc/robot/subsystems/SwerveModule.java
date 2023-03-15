@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.SwerveConstants.ModulePosition;
+import frc.robot.utils.AccelerationLimiter;
 import frc.robot.utils.CtreUtils;
 import frc.robot.utils.SRXMagEncoder;
 
@@ -74,6 +75,7 @@ public class SwerveModule extends SubsystemBase {
   private double m_driveMotorSimDistance;
   private double m_turnMotorSimDistance;
   public SlewRateLimiter slewRateOutput = new SlewRateLimiter(100);
+  public AccelerationLimiter accel = new AccelerationLimiter(50,100);
   public LinearFilter filter = LinearFilter.movingAverage(2);
   private final double sensorPositionCoefficient = Math.PI * 2* SwerveConstants.kWheelRadius * SwerveConstants.kDriveMotorGearRatio / 2048;
   private final double sensorVelocityCoefficient =  sensorPositionCoefficient * 10.0;
@@ -218,10 +220,10 @@ public class SwerveModule extends SubsystemBase {
     //Feedback loop Type
 
     if (isOpenLoop) {
-      double percentOutput = 2* Math.min(filter.calculate(slewRateOutput.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond)), 1);
+      double percentOutput = 2* Math.min(filter.calculate(accel.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond)), 1);
       double percentOutput1 =  Math.max(percentOutput, -1);
       m_driveMotor.set(ControlMode.PercentOutput, percentOutput1);
-    } else {
+    } /*else {
       double velocity = (desiredState.speedMetersPerSecond / sensorVelocityCoefficient);
     
       m_driveMotor.set(
@@ -229,7 +231,7 @@ public class SwerveModule extends SubsystemBase {
           velocity,
           DemandType.ArbitraryFeedForward,
           feedforward.calculate(desiredState.speedMetersPerSecond) / nominalVoltage);
-    }
+    }*/
 
     //Turn Motor Output Adjustment based on Angle
     double angle =
