@@ -28,8 +28,27 @@ public class BalanceChargeStation extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     var gyroPitch = m_drive.getGyroPitch();
+    double speed = 0.1;
     
+      if (gyroPitch > 10){
+
+          speed = Math.abs(speed);
+
+      } else if (gyroPitch < -5){
+
+          speed = -Math.abs(speed);
+
+      } else if (gyroPitch < 10 || gyroPitch > -5){
+
+          speed = 0;
+          m_drive.setXShape();
+
+      }
+
+    m_drive.drive(speed, 0, 0, true, true);
+
     // if (isReversed) {
     //   gyroPitch *= -1;
     // }
@@ -44,9 +63,6 @@ public class BalanceChargeStation extends CommandBase {
     //   m_drive.drive(speed, 0, 0, true, true);
     // }
 
-    if(gyroPitch > 5){
-      
-    }
   }
 
   // Called once the command ends or is interrupted.
