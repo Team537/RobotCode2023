@@ -1,3 +1,8 @@
+/* THIS CODE WAS ADOPTED FROM 
+FRC TEAM 4607 C.I.S.
+(link) 
+https://github.com/FRC4607/Comp-Bot-2023/blob/Comp-Bot/src/main/java/frc/robot/lib/AccelerationLimiter.java
+*/
 package frc.robot.utils;
 
 import edu.wpi.first.math.MathUtil;
