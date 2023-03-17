@@ -43,7 +43,7 @@ public class SlowSwerveDriveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.print( " \n Slow Drive Started");
+    System.out.print( " \n Drive Started");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -57,12 +57,19 @@ public class SlowSwerveDriveCommand extends CommandBase {
 
     m_drive.slowDrive(drive, strafe, rotation, m_isFieldRelative, true);    // Forward/Back drive, Left/Right Strafe, Left/Right Turn
     if(Math.abs(m_drive.getVelocity()) > 0 && m_drive.driveState.equals("Drive") && DriverStation.isTeleop()) {
-      m_LED.setSlowDriving(true);
-      m_LED.setDriving(false);
+      m_LED.setDriving(true);
+      m_LED.setBoostDriving(false);
       
     } else{
-      m_LED.setSlowDriving(false);
+      m_LED.setDriving(false);
 
+    }
+
+    if(m_triggerInput.getAsDouble() > 0 ){
+      m_LED.setBoostDriving(true);
+      m_LED.setDriving(false);
+    } else {
+      m_LED.setBoostDriving(false);
     }
 
     //detects pitch and roll from the start position

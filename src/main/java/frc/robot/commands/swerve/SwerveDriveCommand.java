@@ -61,10 +61,10 @@ public class SwerveDriveCommand extends CommandBase {
     m_drive.drive(drive, strafe, rotation, m_isFieldRelative, false);    // Forward/Back Drive, Left/Right Strafe, Left/Right Turn
     
     if((Math.abs(m_drive.getVelocity()) > 0) && m_drive.driveState.equals("Boost Drive") && DriverStation.isTeleop()) {
-      m_LED.setDriving(true);
-      m_LED.setSlowDriving(false);
-    } else{
+      m_LED.setBoostDriving(true);
       m_LED.setDriving(false);
+    } else{
+      m_LED.setBoostDriving(false);
     }
 
   if(Math.abs(m_drive.getPitch()) > 75 || Math.abs(m_drive.getRoll()) > 75) {

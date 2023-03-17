@@ -133,23 +133,23 @@ public class SwerveModule extends SubsystemBase {
  *    
  * 
  */
-  // public void resetAngleToAbsolute() {
-  //   // TODO: Do we need to do 1 full revolution for the
-  //   // mag encoder to read the right value?
+  public void resetAngleToAbsolute() {
+    // TODO: Do we need to do 1 full revolution for the
+    // mag encoder to read the right value?
 
-  //   // Angle/Mag encoder position is always an absolute position - always sensing
-  //   // motor position is always 0 when code starts
-  //   // set motor position to opposite of mag, to make that mag angle 0
-  //   // add wanted position to -angle to make position what you want
-  //   var angle = Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
-  //   m_turnMotor.setSelectedSensorPosition((-angle+m_angleOffset)/SwerveConstants.kTurningEncoderDistancePerPulse);
+    // Angle/Mag encoder position is always an absolute position - always sensing
+    // motor position is always 0 when code starts
+    // set motor position to opposite of mag, to make that mag angle 0
+    // add wanted position to -angle to make position what you want
+    var angle = Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
+    m_turnMotor.setSelectedSensorPosition((-angle+m_angleOffset)/SwerveConstants.kTurningEncoderDistancePerPulse);
 
   
-  // //   double pos = 0;
-  // // double angle =  (m_SrxMagEncoder.getAbsolutePosition() - m_SrxMagEncoder.getPositionOffset());
+  //   double pos = 0;
+  // double angle =  (m_SrxMagEncoder.getAbsolutePosition() - m_SrxMagEncoder.getPositionOffset());
 
-  // //    m_turnMotor.setSelectedSensorPosition(angle+pos);
-  //  }
+  //    m_turnMotor.setSelectedSensorPosition(angle+pos);
+   }
 
 /**
  * Gets Heading in Degrees

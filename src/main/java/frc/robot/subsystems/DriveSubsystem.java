@@ -173,7 +173,7 @@ public class DriveSubsystem extends SubsystemBase {
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
       module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
 
-      driveState = "Slow Drive";
+      driveState = "Drive";
   }
   public Command followTrajectoryCommand(PathPlannerTrajectory traj) {
     
@@ -403,13 +403,13 @@ public void stop() {
   }
 
 
-  // public void resetEncoders(){
+  public void resetEncoders(){
 
-  //   for (SwerveModule module : m_swerveModules.values()) {
-  //     module.resetAngleToAbsolute();;
-  //   }
+    for (SwerveModule module : m_swerveModules.values()) {
+      module.resetAngleToAbsolute();;
+    }
 
-  // }
+  }
 
   public double getVelocity(){
 
