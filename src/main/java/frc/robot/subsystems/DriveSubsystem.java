@@ -206,7 +206,7 @@ public double getGyroPitch() {
 
 }
 
-public void setXShape() {
+public void setDiamondShape() {
   setSwerveModuleStates(new SwerveModuleState[] {
     // front left
     new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),

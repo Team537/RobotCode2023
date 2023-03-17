@@ -31,37 +31,26 @@ public class BalanceChargeStation extends CommandBase {
     double speed = 0.1;
     double angleDeadband = 5;
     
+      //If the angle of the robot is greater then the deadband, drive forward
       if (gyroPitch > angleDeadband){
 
           speed = Math.abs(speed);
 
+      //If the angle of the robot is less then the deadband, drive backward
       } else if (gyroPitch < -angleDeadband){
 
           speed = -Math.abs(speed);
 
+      //If the robot is within the deadband, stay still and set the drivetrain to a diamond shape to prevent movement
       } else if (gyroPitch < angleDeadband && gyroPitch > -angleDeadband){
 
           speed = 0;
-          m_drive.setXShape();
+          m_drive.setDiamondShape();
 
       }
 
+      //Drive with the speed previously set 
       m_drive.drive(speed, 0, 0, true, true);
-
-    // if (isReversed) {
-    //   gyroPitch *= -1;
-    // }
-    // if (gyroPitch  > 10 || done) {
-    //   done = true;
-    //   m_drive.setXShape();
-    // } else {
-    //   var speed = 0.5;
-    //   if (isReversed) {
-    //     speed *= -1;
-    //   }
-    //   m_drive.drive(speed, 0, 0, true, true);
-    // }
-
   }
 
   // Called once the command ends or is interrupted.
