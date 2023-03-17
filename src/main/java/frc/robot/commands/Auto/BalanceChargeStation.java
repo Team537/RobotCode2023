@@ -10,13 +10,11 @@ import frc.robot.subsystems.DriveSubsystem;
 public class BalanceChargeStation extends CommandBase {
 
   private DriveSubsystem m_drive;
-  private boolean isReversed;
-  private boolean done;
+
   /** Creates a new BalanceChargeStation. */
   public BalanceChargeStation( DriveSubsystem m_drive, boolean isReversed) {
 
     this.m_drive = m_drive;
-    this.isReversed = isReversed;
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -31,23 +29,24 @@ public class BalanceChargeStation extends CommandBase {
 
     var gyroPitch = m_drive.getGyroPitch();
     double speed = 0.1;
+    double angleDeadband = 10;
     
-      if (gyroPitch > 10){
+      if (gyroPitch > angleDeadband){
 
           speed = Math.abs(speed);
 
-      } else if (gyroPitch < -5){
+      } else if (gyroPitch < -angleDeadband){
 
           speed = -Math.abs(speed);
 
-      } else if (gyroPitch < 10 || gyroPitch > -5){
+      } else if (gyroPitch < angleDeadband && gyroPitch > -angleDeadband){
 
           speed = 0;
           m_drive.setXShape();
 
       }
 
-    m_drive.drive(speed, 0, 0, true, true);
+      m_drive.drive(speed, 0, 0, true, true);
 
     // if (isReversed) {
     //   gyroPitch *= -1;
@@ -67,11 +66,7 @@ public class BalanceChargeStation extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return done;
+  public void end(boolean interrupted) {
+    
   }
 }
