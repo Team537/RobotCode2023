@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LED extends SubsystemBase {
-  private static Spark m_blinkin = new Spark(4);
+  private static Spark m_blinkin = new Spark(0);
 
   // private AddressableLED addressableLED = new AddressableLED(1);
   // private AddressableLEDBuffer buffer = new AddressableLEDBuffer(LEDConstants.length);
