@@ -10,46 +10,53 @@ import frc.robot.subsystems.DriveSubsystem;
 public class BalanceChargeStation extends CommandBase {
 
   private DriveSubsystem m_drive;
-  private boolean isReversed;
-  private boolean done;
+
   /** Creates a new BalanceChargeStation. */
-  public BalanceChargeStation( DriveSubsystem m_drive, boolean isReversed) {
+  public BalanceChargeStation(DriveSubsystem m_drive, boolean isReversed) {
 
     this.m_drive = m_drive;
-    this.isReversed = isReversed;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    var accel = m_drive.getGyroVelocityXYZ()[1];
-    if (isReversed) {
-      accel *= -1;
+
+    var gyroPitch = m_drive.getGyroPitch();
+    double speed = 0.1;
+    double angleDeadband = 5;
+
+    // If the angle of the robot is greater then the deadband, drive forward
+    if (gyroPitch > angleDeadband) {
+
+      speed = Math.abs(speed);
+
+      // If the angle of the robot is less then the deadband, drive backward
+    } else if (gyroPitch < -angleDeadband) {
+
+      speed = -Math.abs(speed);
+
+      // If the robot is within the deadband, stay still and set the drivetrain to a
+      // diamond shape to prevent movement
+    } else if (gyroPitch < angleDeadband && gyroPitch > -angleDeadband) {
+
+      speed = 0;
+      m_drive.setDiamondShape();
+
     }
-    if (accel  > 10 || done) {
-      done = true;
-      m_drive.setXShape();
-    } else {
-      var speed = 0.5;
-      if (isReversed) {
-        speed *= -1;
-      }
-      m_drive.drive(speed, 0, 0, true, true);
-    }
+
+    // Drive with the speed previously set
+    m_drive.drive(speed, 0, 0, true, true);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
   }
 }
