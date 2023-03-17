@@ -29,7 +29,7 @@ public class BalanceChargeStation extends CommandBase {
 
     var gyroPitch = m_drive.getGyroPitch();
     double speed = 0.1;
-    double angleDeadband = 10;
+    double angleDeadband = 5;
     
       if (gyroPitch > angleDeadband){
 
