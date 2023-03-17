@@ -29,7 +29,10 @@
       "/LiveWindow/Ungrouped/Talon FX [5]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [6]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [7]": "Motor Controller",
+      "/SmartDashboard/Active / Toggle Cone": "Command",
+      "/SmartDashboard/Active / Toggle Cube": "Command",
       "/SmartDashboard/Auto Selector": "String Chooser",
+      "/SmartDashboard/Balance": "Command",
       "/SmartDashboard/Field2d": "Field2d",
       "/SmartDashboard/Scheduler": "Scheduler"
     },
