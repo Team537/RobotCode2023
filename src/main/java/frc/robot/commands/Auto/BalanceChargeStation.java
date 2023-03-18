@@ -21,6 +21,7 @@ public class BalanceChargeStation extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("Balance Auto");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -28,7 +29,7 @@ public class BalanceChargeStation extends CommandBase {
   public void execute() {
 
     var gyroPitch = m_drive.getGyroPitch();
-    double speed = 0.1;
+    double speed = 0.08;
     double angleDeadband = 5;
 
     // If the angle of the robot is greater then the deadband, drive forward
@@ -39,7 +40,7 @@ public class BalanceChargeStation extends CommandBase {
       // If the angle of the robot is less then the deadband, drive backward
     } else if (gyroPitch < -angleDeadband) {
 
-      speed = -Math.abs(speed);
+      speed = -Math.abs(0.08);
 
       // If the robot is within the deadband, stay still and set the drivetrain to a
       // diamond shape to prevent movement
@@ -57,6 +58,6 @@ public class BalanceChargeStation extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    m_drive.setDiamondShape();
   }
 }

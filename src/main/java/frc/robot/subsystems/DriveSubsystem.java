@@ -199,16 +199,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void setDiamondShape() {
-    setSwerveModuleStates(new SwerveModuleState[] {
-        // front left
-        new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),
-        // front right
-        new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45.0)),
-        // back left
-        new SwerveModuleState(0.0, Rotation2d.fromDegrees(135.0)),
-        // back right
-        new SwerveModuleState(0.0, Rotation2d.fromDegrees(-135.0))
-    }, false);
+    slowDrive(0, 0, 0.1, false, true);
   }
 
   public void stop() {
