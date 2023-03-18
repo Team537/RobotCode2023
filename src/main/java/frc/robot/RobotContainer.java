@@ -306,6 +306,7 @@ public class RobotContainer {
     }
 
     public void teleopInit() {
+        m_robotDrive.setBrakeMode(NeutralMode.Coast);
 
     }
 
