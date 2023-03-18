@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Auto;
 
+import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -29,30 +30,36 @@ public class BalanceChargeStation extends CommandBase {
   public void execute() {
 
     var gyroPitch = m_drive.getGyroPitch();
-    double speed = 0.08;
+    double slowSpeed = 0.1;
+    double fastSpeed = 0.4;
+    boolean shouldUseSlowSpeed = true;
     double angleDeadband = 5;
 
     // If the angle of the robot is greater then the deadband, drive forward
     if (gyroPitch > angleDeadband) {
-
-      speed = Math.abs(speed);
-
+      slowSpeed = Math.abs(slowSpeed);
+      fastSpeed = Math.abs(fastSpeed);
       // If the angle of the robot is less then the deadband, drive backward
     } else if (gyroPitch < -angleDeadband) {
-
-      speed = -Math.abs(0.08);
-
+      slowSpeed = -Math.abs(slowSpeed);
+      fastSpeed = -Math.abs(fastSpeed);
       // If the robot is within the deadband, stay still and set the drivetrain to a
       // diamond shape to prevent movement
     } else if (gyroPitch < angleDeadband && gyroPitch > -angleDeadband) {
-
-      speed = 0;
+      slowSpeed = 0;
+      fastSpeed = 0;
       m_drive.setDiamondShape();
-
+    }
+    if (Math.abs(gyroPitch) > 12) {
+      shouldUseSlowSpeed = true;
+    } else {
+      shouldUseSlowSpeed = false;
     }
 
+    WPIUtilJNI.getSystemTime();
+
     // Drive with the speed previously set
-    m_drive.drive(speed, 0, 0, true, true);
+    m_drive.drive(shouldUseSlowSpeed ? slowSpeed : fastSpeed, 0, 0, true, true);
   }
 
   // Called once the command ends or is interrupted.
