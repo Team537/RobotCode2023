@@ -5,9 +5,11 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.manipulator.ManipulatorGround;
+import frc.robot.commands.manipulator.ManipulatorGroundAuto;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.manipulator.ManipulatorZero;
 import frc.robot.simulation.FieldSim;
@@ -22,29 +24,28 @@ import frc.robot.subsystems.manipulator.Wrist;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 
-
 public class ScoreMidBalance extends SequentialCommandGroup {
   /** Creates a new ScoreMidDriveBack. */
 
-  //defineing the requirements for motors it needs to run. 
-  public ScoreMidBalance(DriveSubsystem m_drive, FieldSim m_fieldSim,  ArmInOut m_ArmInOut, ArmPivot m_ArmPivot, GripperIntake m_Gripper, Wrist m_Wrist, LED m_LED) {
+  // defineing the requirements for motors it needs to run.
+  public ScoreMidBalance(DriveSubsystem m_drive, FieldSim m_fieldSim, ArmInOut m_ArmInOut, ArmPivot m_ArmPivot,
+      GripperIntake m_Gripper, Wrist m_Wrist, LED m_LED) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
-    //adds commands to run sequentially when executed
+    // adds commands to run sequentially when executed
     addCommands(
-      //run instantly
-      new InstantCommand(m_LED::autoStart),
+        // run instantly
+        new InstantCommand(m_LED::autoStart),
 
-      
-      new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
-      new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(2),
-      new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1),
-      //new FollowTrajectory(m_drive, m_fieldSim, "Drive Backward", m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED),
-      new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
-      new RunCommand (() -> m_drive.drive(-0.3, 0, 0, false, true), m_drive).withTimeout(2),
-      //new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
-      new InstantCommand(m_LED::autoEnd)
-      );
+        new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
+        new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(2),
+        new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1),
+        new RunCommand(() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(0.1),
+        new ManipulatorGroundAuto(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(1),
+        new RunCommand(() -> m_drive.drive(0.1, 0, 0, false, true), m_drive).withTimeout(2),
+        new BalanceChargeStation(m_drive, false).withTimeout(5),
+        // new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
+        new InstantCommand(m_LED::autoEnd));
   }
 }

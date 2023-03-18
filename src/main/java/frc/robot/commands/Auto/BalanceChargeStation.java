@@ -59,5 +59,6 @@ public class BalanceChargeStation extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_drive.setDiamondShape();
+    System.out.println("Balance Auto Ended");
   }
 }
