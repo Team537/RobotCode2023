@@ -14,11 +14,13 @@ public class BalanceChargeStation extends CommandBase {
   private DriveSubsystem m_drive;
   private double lastTimeWhenBalancing = 0;
   private double lastTimeWhenMounting = 0;
+  private boolean isReversed;
 
   /** Creates a new BalanceChargeStation. */
   public BalanceChargeStation(DriveSubsystem m_drive, boolean isReversed) {
 
     this.m_drive = m_drive;
+    this.isReversed = isReversed;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -46,7 +48,7 @@ public class BalanceChargeStation extends CommandBase {
     var diff = currentTime - lastTimeWhenBalancing;
     if (diff >= 500) {
       double speed = gyroPitch > 0 ? 0.16 : -0.16;
-      m_drive.drive(speed, 0, 0, true, true);
+      m_drive.drive(isReversed ? -speed : speed, 0, 0, true, true);
       lastTimeWhenBalancing = System.currentTimeMillis();
     }
 

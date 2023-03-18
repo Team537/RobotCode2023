@@ -19,6 +19,7 @@ import frc.robot.commands.Auto.FollowTrajectory;
 import frc.robot.commands.Auto.ScoreHighCubeBalance;
 import frc.robot.commands.Auto.ScoreHighCubeDriveBack;
 import frc.robot.commands.Auto.ScoreMidDriveBack;
+import frc.robot.commands.Auto.ScoreMidDriveBalance;
 import frc.robot.commands.Auto.ScoreMidNoDrive;
 import frc.robot.commands.Auto.ScoreHighCubeNoDrive;
 import frc.robot.commands.Auto.ScoreMidBalance;
@@ -325,6 +326,8 @@ public class RobotContainer {
         m_Chooser.addOption("Score High Cube No Drive", scoreHighCubeNoDrive);
         m_Chooser.addOption("Score High Cube Drive Back", scoreHighCubeDriveBack);
         m_Chooser.addOption("Score High Cube Balance", scoreHighCubeBalance);
+        m_Chooser.addOption("Score Mid Dirve Balacne",
+                new ScoreMidDriveBalance(m_robotDrive, m_FieldSim, m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
 
         SmartDashboard.putData("Auto Selector", m_Chooser);
 
