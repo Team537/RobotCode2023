@@ -27,61 +27,64 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.SwerveConstants.ModulePosition;
+import frc.robot.utils.AccelerationLimiter;
 import frc.robot.utils.CtreUtils;
 import frc.robot.utils.SRXMagEncoder;
 
-
 public class SwerveModule extends SubsystemBase {
 
-
-  ModulePosition m_modulePosition; //Enum of Module Positions
+  ModulePosition m_modulePosition; // Enum of Module Positions
   int m_moduleNumber;
   WPI_TalonFX m_turnMotor;
-  WPI_TalonFX  m_driveMotor;
+  WPI_TalonFX m_driveMotor;
   // CANCoder m_angleEncoder; // Mag Encoder
-  double m_angleOffset; //Offset of Mag Encoder
+  double m_angleOffset; // Offset of Mag Encoder
   double m_lastAngle;
   double angle;
   double deg;
   Pose2d m_pose;
   SRXMagEncoder m_SrxMagEncoder;
 
+  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
+      SwerveConstants.ksDriveVoltSecondsPerMeter,
+      SwerveConstants.kvDriveVoltSecondsSquaredPerMeter,
+      SwerveConstants.kaDriveVoltSecondsSquaredPerMeter);
 
-  SimpleMotorFeedforward feedforward =
-      new SimpleMotorFeedforward(
-          SwerveConstants.ksDriveVoltSecondsPerMeter,
-          SwerveConstants.kvDriveVoltSecondsSquaredPerMeter,
-          SwerveConstants.kaDriveVoltSecondsSquaredPerMeter);
+  SimpleMotorFeedforward slowfeedforward = new SimpleMotorFeedforward(
+      SwerveConstants.ksSlowDriveVoltSecondsPerMeter,
+      SwerveConstants.kvSlowDriveVoltSecondsSquaredPerMeter,
+      SwerveConstants.kaSlowDriveVoltSecondsSquaredPerMeter);
 
-  private final FlywheelSim m_turnMotorSim =
-      new FlywheelSim(
-          // Sim Values
-          LinearSystemId.identifyVelocitySystem(0.1, 0.0008),  DCMotor.getFalcon500(1), SwerveConstants.kTurningMotorGearRatio);
+  private final FlywheelSim m_turnMotorSim = new FlywheelSim(
+      // Sim Values
+      LinearSystemId.identifyVelocitySystem(0.1, 0.0008), DCMotor.getFalcon500(1),
+      SwerveConstants.kTurningMotorGearRatio);
 
-  private final FlywheelSim m_driveMotorSim =
-      new FlywheelSim(
-          // Sim Values
-          LinearSystemId.identifyVelocitySystem(4, 1.24),DCMotor.getFalcon500(1), SwerveConstants.kDriveMotorGearRatio);
+  private final FlywheelSim m_driveMotorSim = new FlywheelSim(
+      // Sim Values
+      LinearSystemId.identifyVelocitySystem(4, 1.24), DCMotor.getFalcon500(1), SwerveConstants.kDriveMotorGearRatio);
 
   private double m_drivePercentOutput;
   private double m_turnPercentOutput;
   private double m_driveMotorSimDistance;
   private double m_turnMotorSimDistance;
   public SlewRateLimiter slewRateOutput = new SlewRateLimiter(100);
+  public AccelerationLimiter accel = new AccelerationLimiter(25, 100);
   public LinearFilter filter = LinearFilter.movingAverage(2);
-  private final double sensorPositionCoefficient = Math.PI * 2* SwerveConstants.kWheelRadius * SwerveConstants.kDriveMotorGearRatio / 2048;
-  private final double sensorVelocityCoefficient =  sensorPositionCoefficient * 10.0;
+  private final double sensorPositionCoefficient = Math.PI * 2 * SwerveConstants.kWheelRadius
+      * SwerveConstants.kDriveMotorGearRatio / 2048;
+  private final double sensorVelocityCoefficient = sensorPositionCoefficient * 10.0;
   private final double nominalVoltage = 12.0;
 
   public SwerveModule(
       ModulePosition modulePosition,
-      WPI_TalonFX  turnMotor,
-      WPI_TalonFX  driveMotor,
+      WPI_TalonFX turnMotor,
+      WPI_TalonFX driveMotor,
       int angleEncoder,
       double angleOffset,
       boolean isInverted) {
     m_modulePosition = modulePosition;
-    m_moduleNumber = m_modulePosition.ordinal(); //Returns Index of Enum
+    m_moduleNumber = m_modulePosition.ordinal(); // Returns Index of Enum
     m_turnMotor = turnMotor;
     m_driveMotor = driveMotor;
     // m_angleEncoder = angleEncoder;
@@ -89,7 +92,7 @@ public class SwerveModule extends SubsystemBase {
 
     m_driveMotor.setInverted(isInverted);
     // m_turnMotor.setInverted(isInverted);
-    //Uses CTRE Utils to Configure Swerve Module Components for Optimal Performance
+    // Uses CTRE Utils to Configure Swerve Module Components for Optimal Performance
 
     m_driveMotor.configFactoryDefault();
     m_driveMotor.configAllSettings(CtreUtils.generateDriveMotorConfig());
@@ -99,251 +102,295 @@ public class SwerveModule extends SubsystemBase {
     m_driveMotor.setNeutralMode(NeutralMode.Coast);
     m_SrxMagEncoder = new SRXMagEncoder(new DutyCycle(new DigitalInput(angleEncoder)), 0);
 
-
     m_SrxMagEncoder.setDistancePerRotation(360);
-
-
 
     m_turnMotor.configFactoryDefault();
     m_turnMotor.configAllSettings(CtreUtils.generateTurnMotorConfig());
-    // m_turnMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, angleEncoder, 10);
+    // m_turnMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,
+    // angleEncoder, 10);
     // m_turnMotor.configIntegratedSensorAbsoluteRange(AbsoluteSensorRange.Unsigned_0_to_360);
 
     // m_angleEncoder.configFactoryDefault();
     // m_angleEncoder.configAllSettings(CtreUtils.generateCanCoderConfig());
-    
-   
 
     // resetAngleToAbsolute();
   }
 
-/**
- * Gets Module Position
- * @return Module Position
- * 
- */
+  /**
+   * Gets Module Position
+   * 
+   * @return Module Position
+   * 
+   */
   public ModulePosition getModulePosition() {
     return m_modulePosition;
   }
 
+  /**
+   * Resets Angle to Absolute Position by subtracting angle offset
+   * and setting the Turn Motor to the Set Position
+   * 
+   * 
+   */
+  public void resetAngleToAbsolute() {
+    // TODO: Do we need to do 1 full revolution for the
+    // mag encoder to read the right value?
 
-/**
- * Resets Angle to Absolute Position by subtracting angle offset
- * and setting the Turn Motor to the Set Position
- *    
- * 
- */
-  // public void resetAngleToAbsolute() {
-  //   // TODO: Do we need to do 1 full revolution for the
-  //   // mag encoder to read the right value?
+    // Angle/Mag encoder position is always an absolute position - always sensing
+    // motor position is always 0 when code starts
+    // set motor position to opposite of mag, to make that mag angle 0
+    // add wanted position to -angle to make position what you want
+    var angle = Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
+    m_turnMotor.setSelectedSensorPosition((-angle + m_angleOffset) / SwerveConstants.kTurningEncoderDistancePerPulse);
 
-  //   // Angle/Mag encoder position is always an absolute position - always sensing
-  //   // motor position is always 0 when code starts
-  //   // set motor position to opposite of mag, to make that mag angle 0
-  //   // add wanted position to -angle to make position what you want
-  //   var angle = Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
-  //   m_turnMotor.setSelectedSensorPosition((-angle+m_angleOffset)/SwerveConstants.kTurningEncoderDistancePerPulse);
+    // double pos = 0;
+    // double angle = (m_SrxMagEncoder.getAbsolutePosition() -
+    // m_SrxMagEncoder.getPositionOffset());
 
-  
-  // //   double pos = 0;
-  // // double angle =  (m_SrxMagEncoder.getAbsolutePosition() - m_SrxMagEncoder.getPositionOffset());
+    // m_turnMotor.setSelectedSensorPosition(angle+pos);
+  }
 
-  // //    m_turnMotor.setSelectedSensorPosition(angle+pos);
-  //  }
-
-/**
- * Gets Heading in Degrees
- * @return Turn Motor Position
- * 
- * 
- */
+  /**
+   * Gets Heading in Degrees
+   * 
+   * @return Turn Motor Position
+   * 
+   * 
+   */
   public double getHeadingDegrees() {
     return m_turnMotor.getSelectedSensorPosition() * SwerveConstants.kTurningEncoderDistancePerPulse;
   };
-  
-/**
- * Gets {@link Rotation2d} from Heading
- * @return {@link Rotation2d}
- * 
- * 
- */
+
+  /**
+   * Gets {@link Rotation2d} from Heading
+   * 
+   * @return {@link Rotation2d}
+   * 
+   * 
+   */
   public Rotation2d getHeadingRotation2d() {
     return Rotation2d.fromDegrees(getHeadingDegrees());
   }
 
-
   /**
- * Get Drive Speed in Meters per Second
- * @return Drive Velocity
- * 
- * 
- */
+   * Get Drive Speed in Meters per Second
+   * 
+   * @return Drive Velocity
+   * 
+   * 
+   */
   public double getDriveMetersPerSecond() {
-    return m_driveMotor.getSelectedSensorVelocity() * SwerveConstants.kDriveEncoderDistancePerPulse * 10 ;
+    return m_driveMotor.getSelectedSensorVelocity() * SwerveConstants.kDriveEncoderDistancePerPulse * 10;
   }
 
   // public void setDriveInvertedt() {
-  //   m_driveMotor.setInverted(true);
+  // m_driveMotor.setInverted(true);
   // }
 
-/**
- * Get Drive Distance in Meters 
- * @return Drive Motor Encoder Position
- * 
- * 
- */
+  /**
+   * Get Drive Distance in Meters
+   * 
+   * @return Drive Motor Encoder Position
+   * 
+   * 
+   */
   public double getDriveMeters() {
     return m_driveMotor.getSelectedSensorPosition() * sensorPositionCoefficient;
   }
 
-
-/**
- * Sets Optimal State using CTRE Utils Optimization and sets Motor Percent Output using Gyro Angle
- * @param desiredState Sweve Module States
- * @param isOpenLoop Controls the feedback loop to be open or closed, Useful for Auto
- * 
- * 
- * 
- */
+  /**
+   * Sets Optimal State using CTRE Utils Optimization and sets Motor Percent
+   * Output using Gyro Angle
+   * 
+   * @param desiredState Sweve Module States
+   * @param isOpenLoop   Controls the feedback loop to be open or closed, Useful
+   *                     for Auto
+   * 
+   * 
+   * 
+   */
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
     desiredState = CtreUtils.optimize(desiredState, getHeadingRotation2d());
 
-
-    //Feedback loop Type
+    // Feedback loop Type
 
     if (isOpenLoop) {
-      double percentOutput = 2* Math.min(filter.calculate(slewRateOutput.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond)), 0.25);
-      double percentOutput1 =  Math.max(percentOutput, -0.5);
+      double percentOutput = 2 * Math.min(filter
+          .calculate(accel.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond)), 1);
+      double percentOutput1 = Math.max(percentOutput, -1);
       m_driveMotor.set(ControlMode.PercentOutput, percentOutput1);
-    } else {
-      double velocity = (desiredState.speedMetersPerSecond / sensorVelocityCoefficient);
-    
-      m_driveMotor.set(
-          ControlMode.Velocity,
-          velocity,
-          DemandType.ArbitraryFeedForward,
-          feedforward.calculate(desiredState.speedMetersPerSecond) / nominalVoltage);
-    }
+    } /*
+       * else {
+       * double velocity = (desiredState.speedMetersPerSecond /
+       * sensorVelocityCoefficient);
+       * 
+       * m_driveMotor.set(
+       * ControlMode.Velocity,
+       * velocity,
+       * DemandType.ArbitraryFeedForward,
+       * feedforward.calculate(desiredState.speedMetersPerSecond) / nominalVoltage);
+       * }
+       */
 
-    //Turn Motor Output Adjustment based on Angle
-    double angle =
-        (Math.abs(desiredState.speedMetersPerSecond) <= (SwerveConstants.kMaxRotationRadiansPerSecond * 0.01))
+    // Turn Motor Output Adjustment based on Angle
+    double angle = (Math
+        .abs(desiredState.speedMetersPerSecond) <= (SwerveConstants.kMaxRotationRadiansPerSecond * 0.01))
             ? m_lastAngle
             : desiredState.angle
                 .getDegrees(); // Prevent rotating module if speed is less then 1%.
     m_turnMotor.set(ControlMode.Position, angle / SwerveConstants.kTurningEncoderDistancePerPulse);
-    m_lastAngle = angle;  
+    m_lastAngle = angle;
+
+    m_drivePercentOutput = m_driveMotor.getMotorOutputPercent();
+    m_turnPercentOutput = m_turnMotor.getMotorOutputPercent();
+
+    SmartDashboard.putNumber("Module Angle", angle);
+  }
+
+  public void setSlowDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
+    desiredState = CtreUtils.optimize(desiredState, getHeadingRotation2d());
+
+    // Feedback loop Type
+
+    if (isOpenLoop) {
+      double percentOutput = 2 * Math.min(
+          filter.calculate(
+              slewRateOutput.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond)),
+          1);
+      double percentOutput1 = Math.max(percentOutput, -1);
+      m_driveMotor.set(ControlMode.PercentOutput, percentOutput1);
+    } else {
+      double velocity = (desiredState.speedMetersPerSecond / sensorVelocityCoefficient);
+
+      m_driveMotor.set(
+          ControlMode.Velocity,
+          velocity,
+          DemandType.ArbitraryFeedForward,
+          slowfeedforward.calculate(desiredState.speedMetersPerSecond) / nominalVoltage);
+    }
+
+    // Turn Motor Output Adjustment based on Angle
+    double angle = (Math
+        .abs(desiredState.speedMetersPerSecond) <= (SwerveConstants.kMaxRotationRadiansPerSecond * 0.01))
+            ? m_lastAngle
+            : desiredState.angle
+                .getDegrees(); // Prevent rotating module if speed is less then 1%.
+    m_turnMotor.set(ControlMode.Position, angle / SwerveConstants.kTurningEncoderDistancePerPulse);
+    m_lastAngle = angle;
 
     m_drivePercentOutput = m_driveMotor.getMotorOutputPercent();
     m_turnPercentOutput = m_turnMotor.getMotorOutputPercent();
   }
-  
+
   /**
- * Get Module State
- * @return {@link SwerveModuleState} 
- * 
- * 
- */
+   * Get Module State
+   * 
+   * @return {@link SwerveModuleState}
+   * 
+   * 
+   */
   public SwerveModuleState getState() {
     return new SwerveModuleState(getDriveMetersPerSecond(), getHeadingRotation2d());
   }
-/**
- * Get Module Position
- * @return {@link SwerveModulePosition} 
- * 
- * 
- */
+
+  /**
+   * Get Module Position
+   * 
+   * @return {@link SwerveModulePosition}
+   * 
+   * 
+   */
   public SwerveModulePosition getPosition() {
     return new SwerveModulePosition(getDriveMeters(), getHeadingRotation2d());
   }
-/**
- * Sets Module Pose
- * 
- * 
- * 
- */
+
+  /**
+   * Sets Module Pose
+   * 
+   * 
+   * 
+   */
   public void setModulePose(Pose2d pose) {
     m_pose = pose;
   }
-/**
- * Gets Module Pose
- * 
- * @return {@link Pose2d}
- * 
- */
+
+  /**
+   * Gets Module Pose
+   * 
+   * @return {@link Pose2d}
+   * 
+   */
   public Pose2d getModulePose() {
     return m_pose;
   }
-/**
- * Sets Drive Neutral Mode
- * 
- * 
- * 
- */
+
+  /**
+   * Sets Drive Neutral Mode
+   * 
+   * 
+   * 
+   */
   public void setDriveNeutralMode(NeutralMode Brake) {
     m_driveMotor.setNeutralMode(Brake);
   }
-/**
- * Sets Turn Neutral Mode
- * 
- * 
- * 
- */
+
+  /**
+   * Sets Turn Neutral Mode
+   * 
+   * 
+   * 
+   */
   public void setTurnNeutralMode(NeutralMode Brake) {
     m_turnMotor.setNeutralMode(Brake);
   }
 
-
- 
-
-   
-
-/**
- * Updates SmartDashboard
- * 
- * 
- * 
- */
+  /**
+   * Updates SmartDashboard
+   * 
+   * 
+   * 
+   */
   private void updateSmartDashboard() {
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Heading", getState().angle.getDegrees());
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Mag Coder Reading", Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle()));
-        SmartDashboard.putNumber(
-          "Module " + m_moduleNumber + " Integrated Sensor Reading", m_turnMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber(
-          "Module " + m_moduleNumber + " Position", getDriveMeters());
+        "Module " + m_moduleNumber + " Integrated Sensor Reading", m_turnMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber(
-            "Module " + m_moduleNumber + " Linear Velocity", getDriveMetersPerSecond());
-  
+        "Module " + m_moduleNumber + " Position", getDriveMeters());
+    SmartDashboard.putNumber(
+        "Module " + m_moduleNumber + " Linear Velocity", getDriveMetersPerSecond());
+
   }
- /**
- * Runs Periodically after Init
- * 
- * 
- * 
- */
+
+  /**
+   * Runs Periodically after Init
+   * 
+   * 
+   * 
+   */
   @Override
   public void periodic() {
     updateSmartDashboard();
     deg = m_SrxMagEncoder.getDistance();
-     angle = Math.toRadians(deg);
+    angle = Math.toRadians(deg);
     angle %= 2.0 * Math.PI;
     if (angle < 0.0) {
-        angle += 2.0 * Math.PI;
-        deg =+ 360;
+      angle += 2.0 * Math.PI;
+      deg = +360;
     }
   }
 
   /**
- * Runs Periodically during Simulation
- * 
- * 
- * 
- */
+   * Runs Periodically during Simulation
+   * 
+   * 
+   * 
+   */
   @Override
   public void simulationPeriodic() {
-    
+
     m_turnMotorSim.setInputVoltage(m_turnPercentOutput * RobotController.getBatteryVoltage());
     m_driveMotorSim.setInputVoltage(m_drivePercentOutput * RobotController.getBatteryVoltage());
 
@@ -362,9 +409,8 @@ public class SwerveModule extends SubsystemBase {
     m_turnMotor
         .getSimCollection()
         .setIntegratedSensorVelocity(
-            (int)
-                (m_turnMotorSim.getAngularVelocityRadPerSec()
-                    / (SwerveConstants.kTurningEncoderDistancePerPulse * 10)));
+            (int) (m_turnMotorSim.getAngularVelocityRadPerSec()
+                / (SwerveConstants.kTurningEncoderDistancePerPulse * 10)));
     m_driveMotor
         .getSimCollection()
         .setIntegratedSensorRawPosition(
@@ -372,25 +418,19 @@ public class SwerveModule extends SubsystemBase {
     m_driveMotor
         .getSimCollection()
         .setIntegratedSensorVelocity(
-            (int)
-                (m_driveMotorSim.getAngularVelocityRadPerSec()
-                    / (SwerveConstants.kDriveEncoderDistancePerPulse * 10)));
+            (int) (m_driveMotorSim.getAngularVelocityRadPerSec()
+                / (SwerveConstants.kDriveEncoderDistancePerPulse * 10)));
   }
 
+  public void resetEncoders() {
 
+    double position = m_SrxMagEncoder.getAbsolutePosition();
 
+    // double angle = position/(4096/360);
+    // Not needed for now, needed if frequency is used to determine position
 
-
-  public void resetEncoders(){
-
- double position = m_SrxMagEncoder.getAbsolutePosition();
-
-//  double angle = position/(4096/360);
-// Not needed for now, needed if frequency is used to determine position
-
- m_turnMotor.setSelectedSensorPosition(0);
+    m_turnMotor.setSelectedSensorPosition(0);
 
   }
 
-       
 }

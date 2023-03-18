@@ -22,7 +22,7 @@ public class SwerveDriveCommand extends CommandBase {
   
   private final DriveSubsystem m_drive;
   private final LED m_LED;
-  private final DoubleSupplier m_driveInput, m_strafeInput, m_rotationInput;
+  private final DoubleSupplier m_driveInput, m_strafeInput, m_rotationInput, m_triggerInput;
   private final boolean m_isFieldRelative;
 
   /**
@@ -30,11 +30,12 @@ public class SwerveDriveCommand extends CommandBase {
    *
    * 
    */
-  public SwerveDriveCommand(DriveSubsystem m_drive, DoubleSupplier driveInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, boolean isFieldRelative, LED m_LED) {
+  public SwerveDriveCommand(DriveSubsystem m_drive, DoubleSupplier driveInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, DoubleSupplier triggerInput, boolean isFieldRelative, LED m_LED) {
     this.m_drive = m_drive;
     m_driveInput = driveInput;
     m_strafeInput = strafeInput;
     m_rotationInput = rotationInput;
+    m_triggerInput = triggerInput;
     m_isFieldRelative = isFieldRelative;
     
     this.m_LED = m_LED;
@@ -54,17 +55,17 @@ public class SwerveDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double drive =  Math.abs(m_driveInput.getAsDouble()) > 0.05 ? m_driveInput.getAsDouble() : 0;
-    double strafe =   Math.abs(m_strafeInput.getAsDouble()) > 0.05 ? m_strafeInput.getAsDouble() : 0;
+    double drive = (30*m_triggerInput.getAsDouble() + 1) * (Math.abs(m_driveInput.getAsDouble())) > 0.05 ? m_driveInput.getAsDouble() : 0;
+    double strafe =   (30*m_triggerInput.getAsDouble() + 1) * Math.abs(m_strafeInput.getAsDouble()) > 0.05 ? m_strafeInput.getAsDouble() : 0;
     double rotation =  Math.abs(m_rotationInput.getAsDouble()) > 0.05 ? m_rotationInput.getAsDouble() : 0;
 
     m_drive.drive(drive, strafe, rotation, m_isFieldRelative, false);    // Forward/Back Drive, Left/Right Strafe, Left/Right Turn
     
     if((Math.abs(m_drive.getVelocity()) > 0) && m_drive.driveState.equals("Boost Drive") && DriverStation.isTeleop()) {
-      m_LED.setDriving(true);
-      m_LED.setSlowDriving(false);
-    } else{
+      m_LED.setBoostDriving(true);
       m_LED.setDriving(false);
+    } else{
+      m_LED.setBoostDriving(false);
     }
 
   if(Math.abs(m_drive.getPitch()) > 75 || Math.abs(m_drive.getRoll()) > 75) {
