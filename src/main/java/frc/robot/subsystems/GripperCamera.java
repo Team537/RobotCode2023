@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class GripperCamera extends SubsystemBase {
   /** Creates a new GripperCamera. */
 
-  UsbCamera cam =  new UsbCamera("Usb Camera 0", 0);
-  MjpegServer mjep = new MjpegServer("server_1", 1181);
-    
   public GripperCamera() {
+
+    UsbCamera cam = new UsbCamera("Usb Camera 0", 0);
+    MjpegServer mjep = new MjpegServer("server_1", 1181);
     CameraServer.startAutomaticCapture(0);
-    // mjep.setSource(cam);
+    mjep.setSource(cam);
 
   }
 

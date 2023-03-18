@@ -5,20 +5,13 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.util.WPIUtilJNI;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
-enum State {
-  Ground,
-  Mounting,
-  Balancing
-}
-
 public class BalanceChargeStation extends CommandBase {
-
   private DriveSubsystem m_drive;
-  private State state;
   private double lastTimeWhenBalancing = 0;
   private double lastTimeWhenMounting = 0;
 
@@ -26,7 +19,6 @@ public class BalanceChargeStation extends CommandBase {
   public BalanceChargeStation(DriveSubsystem m_drive, boolean isReversed) {
 
     this.m_drive = m_drive;
-    this.state = State.Ground;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -34,63 +26,26 @@ public class BalanceChargeStation extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("Balance Auto");
+    this.lastTimeWhenBalancing = System.currentTimeMillis();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
     var gyroPitch = m_drive.getGyroPitch();
-    double speed = 0.1;
 
-    boolean shouldUseSlowSpeed = true;
     double angleDeadband = 5;
 
-    SmartDashboard.putString("Balance state", state.toString());
+    if (Math.abs(gyroPitch) < angleDeadband) {
 
-    if (Math.abs(gyroPitch) > angleDeadband && this.state == State.Ground) {
-      this.state = State.Mounting;
-      lastTimeWhenMounting = System.currentTimeMillis();
-      speed = (gyroPitch < 0 ? -0.13 : 0.13);
-
-      m_drive.drive(speed, 0, 0, true, true);
+      m_drive.drive(0, 0, 0, true, true);
       return;
     }
-
-    if (this.state == State.Mounting && gyroPitch < 10) {
-      var hasElapsedMountingTimePassedThreshold = 2000 < System.currentTimeMillis() - lastTimeWhenMounting;
-      if (hasElapsedMountingTimePassedThreshold) {
-        this.state = State.Balancing;
-      } else {
-
-        shouldUseSlowSpeed = true;
-        speed = (gyroPitch < 0 ? -0.125 : 0.125);
-        m_drive.drive(speed, 0, 0, true, true);
-      }
-      return;
-    }
-
-    // State is balancing && we are stable
-    if (this.state != State.Balancing || gyroPitch < angleDeadband) {
-
-      speed = 0;
-      m_drive.drive(speed, 0, 0, true, true);
-      return;
-    }
-
-    // Check current time
-    // WHen compared to last time, if greater than some threshold:
-    // move forward
-    // set new current time
-    // else return
 
     var currentTime = System.currentTimeMillis();
-
     var diff = currentTime - lastTimeWhenBalancing;
-
-    // half a second
     if (diff >= 500) {
-
+      double speed = gyroPitch > 0 ? 0.16 : -0.16;
       m_drive.drive(speed, 0, 0, true, true);
       lastTimeWhenBalancing = System.currentTimeMillis();
     }

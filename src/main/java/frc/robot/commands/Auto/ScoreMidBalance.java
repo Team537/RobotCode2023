@@ -44,9 +44,10 @@ public class ScoreMidBalance extends SequentialCommandGroup {
         new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1),
         new RunCommand(() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(0.1),
         new ManipulatorGroundAuto(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(1),
-        new RunCommand(() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(3),
-        new BalanceChargeStation(m_drive, false).withTimeout(5),
-        // new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
-        new InstantCommand(m_LED::autoEnd));
+        new RunCommand(() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(4.7),
+        new InstantCommand(m_LED::autoEnd),
+        new BalanceChargeStation(m_drive, false)
+    // new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
+    );
   }
 }
