@@ -12,6 +12,7 @@ import frc.robot.commands.manipulator.ManipulatorGround;
 import frc.robot.commands.manipulator.ManipulatorGroundAuto;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.manipulator.ManipulatorZero;
+import frc.robot.commands.swerve.SetSwerveBrakeMode;
 import frc.robot.simulation.FieldSim;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
@@ -43,7 +44,7 @@ public class ScoreMidBalance extends SequentialCommandGroup {
         new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1),
         new RunCommand(() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(0.1),
         new ManipulatorGroundAuto(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(1),
-        new RunCommand(() -> m_drive.drive(0.1, 0, 0, false, true), m_drive).withTimeout(2),
+        new RunCommand(() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(3),
         new BalanceChargeStation(m_drive, false).withTimeout(5),
         // new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(2),
         new InstantCommand(m_LED::autoEnd));
