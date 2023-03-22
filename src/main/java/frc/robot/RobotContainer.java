@@ -43,8 +43,7 @@ import frc.robot.simulation.FieldSim;
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperCamera;
-// import frc.robot.subsystems.GripperCamera;
-// import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.BellyPanCamera;
 import frc.robot.subsystems.GripperIntake;
 import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.ArmPivot;
@@ -78,6 +77,7 @@ public class RobotContainer {
         private final DriveSubsystem m_robotDrive = new DriveSubsystem();
         private final GripperIntake m_Gripper = new GripperIntake();
         private final GripperCamera m_GripperCamera = new GripperCamera();
+        private final BellyPanCamera m_BellyPanCamera = new BellyPanCamera();
         private final ArmInOut m_ArmInOut = new ArmInOut();
         private final ArmPivot m_ArmPivot = new ArmPivot();
         private final Wrist m_Wrist = new Wrist();

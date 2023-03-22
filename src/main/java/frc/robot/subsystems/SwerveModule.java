@@ -354,7 +354,7 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Heading", getState().angle.getDegrees());
     SmartDashboard.putNumber(
-        "Module " + m_moduleNumber + " Mag Coder Reading", Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle()));
+        "Module " + m_moduleNumber + " Mag Coder Reading", m_SrxMagEncoder.getAbsoluteAngle());
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Integrated Sensor Reading", m_turnMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber(
