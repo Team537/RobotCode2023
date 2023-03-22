@@ -16,7 +16,7 @@ public class SRXMagEncoder extends DutyCycleEncoder {
     super(cycle);
     this.offset = offset;
     setDistancePerRotation(360);
-    setDutyCycleRange(offset, offset);
+
   }
 
   @Override
