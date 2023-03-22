@@ -38,7 +38,6 @@ public class ScoreMidDriveBack extends SequentialCommandGroup {
         new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(1),
         new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(2),
         new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1),
-
         new ManipulatorGroundAuto(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(0.1),
         new RunCommand(() -> m_drive.drive(0.3, 0, 0, true, true), m_drive).withTimeout(2)
 
