@@ -46,6 +46,7 @@ public class DriveSubsystem extends SubsystemBase {
               new WPI_TalonFX(SwerveConstants.kFrontLeftDrive),
               SwerveConstants.kFrontLeftSRXMagCoder,
               SwerveConstants.kFrontLeftSRXMagCoderOffset, false),
+
           ModulePosition.FRONT_RIGHT,
           new SwerveModule(
               ModulePosition.FRONT_RIGHT,
@@ -53,6 +54,7 @@ public class DriveSubsystem extends SubsystemBase {
               new WPI_TalonFX(SwerveConstants.kFrontRightDrive),
               SwerveConstants.kFrontRightSRXMagCoder,
               SwerveConstants.kFrontRightSRXMagCoderOffset, true),
+
           ModulePosition.BACK_LEFT,
           new SwerveModule(
               ModulePosition.BACK_LEFT,
@@ -60,6 +62,7 @@ public class DriveSubsystem extends SubsystemBase {
               new WPI_TalonFX(SwerveConstants.kBackLeftDrive),
               SwerveConstants.kBackLeftSRXMagCoder,
               SwerveConstants.kBackLeftSRXMagCoderOffset, true),
+
           ModulePosition.BACK_RIGHT,
           new SwerveModule(
               ModulePosition.BACK_RIGHT,
