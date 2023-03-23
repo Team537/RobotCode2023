@@ -313,6 +313,7 @@ public class RobotContainer {
 
         public void autoInit() {
                 m_robotDrive.setBrakeMode(NeutralMode.Brake);
+                m_LED.autoStart();
         }
 
         public void robotInit() {
