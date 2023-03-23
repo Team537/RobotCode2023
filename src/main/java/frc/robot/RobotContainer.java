@@ -38,9 +38,11 @@ import frc.robot.commands.swerve.SetSwerveBrakeMode;
 // import frc.robot.commands.swerve.BoostDriveCommand;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.commands.vision.ChaseTagCommand;
+import frc.robot.grip.Cube;
 import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.LED;
+import frc.robot.subsystems.LED.LedMode;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperCamera;
 import frc.robot.subsystems.BellyPanCamera;
@@ -140,6 +142,9 @@ public class RobotContainer {
         POVButton dPadLeftButton = new POVButton(m_driverController, 90);
         POVButton dPadRightButton = new POVButton(m_driverController, 270);
 
+        JoystickButton aButton2 = new JoystickButton(m_driverController2, Button.kA.value);
+        JoystickButton bButton2 = new JoystickButton(m_driverController2, Button.kB.value);
+
         public RobotContainer() {
 
                 /*
@@ -188,7 +193,9 @@ public class RobotContainer {
                  * StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
                  * 36
                  */
-                // LED COMMANDS
+                // LED COMMAND
+                aButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
+                bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
                 yButton.onTrue(high_goal);
                 xButton.onTrue(shelf_HuPL);
 

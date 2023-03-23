@@ -116,7 +116,7 @@ public class Constants {
     // the value for normal high goal is 225
 
     public static final double kArmInOutPositionMidGoal = 52;
-    public static final double kArmInOutPositionShelfHumanPL = 50;
+    public static final double kArmInOutPositionShelfHumanPL = 60;
     public static final double kArmInOutPositionShelfHigh = 50;
     public static final double kArmInOutPositionGround = 0.0;
 
@@ -157,7 +157,7 @@ public class Constants {
     // set positions for the wrist. known limits are 0 to -17(could be farther)
     public static final double kWristPositionHighGoal = -17;
     public static final double kWristPositionShelfHumanPL = -17;
-    public static final double kWristPositionMidGoal = -13;
+    public static final double kWristPositionMidGoal = -12;
     public static final double kWristPositionShelfHigh = -10;
 
     public static final double kWristPositionZero = 0;
