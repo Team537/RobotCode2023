@@ -54,11 +54,11 @@ public class Constants {
 
     // This is the max cruise velocity in RPM. This is the speed it travels at when
     // going to the set position
-    public static final double kMaxV = 2000;
+    public static final double kMaxV = 10000; // Can go faster, must test on full assembly first
     public static final double kMinV = 0;
 
     // This is the max acceleration when accelerating to the cruise velocity. In RPM
-    public static final double kMaxA = 1000;
+    public static final double kMaxA = 7000;
     // specific accel constant for the pivot
     public static final double kMaxAccelArmPivot = 4000;
 
@@ -115,7 +115,8 @@ public class Constants {
     public static final double kArmInOutPositionHighGoal = 50; // for "shooting" cones, it was 100
     // the value for normal high goal is 225
 
-    public static final double kArmInOutPositionMidGoal = 102; // 105 theoretical max; 102 is 39 5/16 inches
+    public static final double kArmInOutPositionMidGoal = 52; // 105 theoretical max; 102 is 39 5/16 inches; 52 is 33
+                                                              // 7/8 inches
     public static final double kArmInOutPositionShelfHumanPL = 60;
     public static final double kArmInOutPositionShelfHigh = 50;
     public static final double kArmInOutPositionGround = 0.0;
