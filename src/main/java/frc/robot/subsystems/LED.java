@@ -203,7 +203,7 @@ public class LED extends SubsystemBase {
 
       case FAST_OUTAKING:
         // setSolidColor(Color.kGold);
-        m_blinkin.set(0.13);
+        m_blinkin.set(0.19);
         break;
 
       case OUTAKING:
@@ -223,18 +223,18 @@ public class LED extends SubsystemBase {
 
       case HIGH_GOAL:
         // breath(Color.kRed, Color.kDarkGoldenrod);
-        m_blinkin.set(-0.25);
+        m_blinkin.set(-0.27);
         break;
 
       case SHELF:
         // breath(Color.kRed, Color.kCrimson);
-        m_blinkin.set(-0.25);
+        m_blinkin.set(-0.29);
         break;
 
       case BOOST_DRIVING:
         // wave(Color.kGreen, Color.kBlack, LEDConstants.waveAllianceFullLength,
         // LEDConstants. waveAllianceDuration);
-        m_blinkin.set(-0.37);
+        m_blinkin.set(-0.39);
         break;
 
       case DRIVING:
