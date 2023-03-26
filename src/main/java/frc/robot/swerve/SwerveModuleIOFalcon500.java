@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants.SwerveConstants;
+import frc.robot.Constants.SwerveConstants.ModulePosition;
 import frc.robot.utils.CtreUtils;
 
 public class SwerveModuleIOFalcon500 implements SwerveModuleIO {
@@ -46,7 +47,6 @@ public class SwerveModuleIOFalcon500 implements SwerveModuleIO {
         m_drive.setSensorPhase(true);
         m_drive.setSafetyEnabled(true);
         m_drive.enableVoltageCompensation(true);
-        m_drive.setNeutralMode(NeutralMode.Coast);
 
         m_turn.configFactoryDefault();
         m_turn.configAllSettings(CtreUtils.generateTurnMotorConfig());
@@ -100,10 +100,4 @@ public class SwerveModuleIOFalcon500 implements SwerveModuleIO {
         m_turn.setNeutralMode(brake ? NeutralMode.Brake : NeutralMode.Coast);
     }
 
-    public enum ModulePosition {
-        FRONT_LEFT,
-        FRONT_RIGHT,
-        BACK_LEFT,
-        BACK_RIGHT
-    }
 }

@@ -8,12 +8,14 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.util.sendable.SendableBuilder.BackendKind;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.SwerveConstants.ModulePosition;
 import frc.robot.commands.Auto.BalanceChargeStation;
 import frc.robot.commands.Auto.FollowTrajectory;
 import frc.robot.commands.Auto.ScoreHighCubeBalance;
@@ -34,6 +36,7 @@ import frc.robot.commands.manipulator.ManipulatorZero;
 // import frc.robot.commands.signal.SignalCone;
 // import frc.robot.commands.signal.SignalCube;
 import frc.robot.commands.swerve.SwerveDriveCommand;
+import frc.robot.commands.swerve.AdvantageSwerveDriveCommand;
 import frc.robot.commands.swerve.SetSwerveBrakeMode;
 // import frc.robot.commands.swerve.BoostDriveCommand;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
@@ -50,6 +53,10 @@ import frc.robot.subsystems.GripperIntake;
 import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.ArmPivot;
 import frc.robot.subsystems.manipulator.Wrist;
+import frc.robot.swerve.GyroIOPigeon2;
+import frc.robot.swerve.Swerve;
+import frc.robot.swerve.SwerveModuleIOFalcon500;
+import frc.robot.swerve.SwerveModuleIOSim;
 import frc.robot.subsystems.Camera;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -77,6 +84,7 @@ public class RobotContainer {
         // The robot's subsystems
         public static final LED m_LED = new LED();
         private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+
         private final GripperIntake m_Gripper = new GripperIntake();
         private final GripperCamera m_GripperCamera = new GripperCamera();
         private final BellyPanCamera m_BellyPanCamera = new BellyPanCamera();
@@ -84,9 +92,10 @@ public class RobotContainer {
         private final ArmPivot m_ArmPivot = new ArmPivot();
         private final Wrist m_Wrist = new Wrist();
         // private PhotonCamera camera = new PhotonCamera("USB Camera 0");
-        private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
-        private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
 
+        private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
+        private Swerve swerve;
+        private FieldSim m_FieldSim;
         Command high_goal = new ParallelCommandGroup(new LedHighGoal(m_LED),
                         new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
         Command mid_goal = new ParallelCommandGroup(new LedMidGoal(m_LED),
@@ -147,6 +156,22 @@ public class RobotContainer {
 
         public RobotContainer() {
 
+                if (Robot.isSimulation()) {
+                        swerve = new Swerve(new GyroIOPigeon2(),
+                                        new SwerveModuleIOSim(),
+                                        new SwerveModuleIOSim(),
+                                        new SwerveModuleIOSim(),
+                                        new SwerveModuleIOSim());
+
+                } else if (Robot.isReal()) {
+
+                        swerve = new Swerve(new GyroIOPigeon2(),
+                                        new SwerveModuleIOFalcon500(ModulePosition.FRONT_LEFT),
+                                        new SwerveModuleIOFalcon500(ModulePosition.FRONT_RIGHT),
+                                        new SwerveModuleIOFalcon500(ModulePosition.BACK_LEFT),
+                                        new SwerveModuleIOFalcon500(ModulePosition.BACK_RIGHT));
+                }
+                m_FieldSim = new FieldSim(swerve);
                 /*
                  * // NON LED COMMANDS
                  * //This is all commented out because we use a single button to order multiple
@@ -246,13 +271,18 @@ public class RobotContainer {
                 // bButton.onTrue(new InstantCommand(m_blinkin::setPurple));
                 // aButton.onTrue(new InstantCommand(m_blinkin::setYellow));
 
-                m_robotDrive.setDefaultCommand(new SlowSwerveDriveCommand(
-                                m_robotDrive,
-                                () -> -(m_driverController.getLeftY()) * 0.2,
-                                () -> m_driverController.getLeftX() * 0.2,
+                // m_robotDrive.setDefaultCommand(new SlowSwerveDriveCommand(
+                // m_robotDrive,
+                // () -> -(m_driverController.getLeftY()) * 0.2,
+                // () -> m_driverController.getLeftX() * 0.2,
+                // () -> -m_driverController.getRightX() * 0.2,
+                // () -> m_driverController.getRightTriggerAxis() * 0.8,
+                // true, m_LED));
+
+                swerve.setDefaultCommand(new AdvantageSwerveDriveCommand(swerve,
+                                () -> -(m_driverController.getLeftY()) * 0.2, () -> m_driverController.getLeftX() * 0.2,
                                 () -> -m_driverController.getRightX() * 0.2,
-                                () -> m_driverController.getRightTriggerAxis() * 0.8,
-                                true, m_LED));
+                                () -> m_driverController.getRightTriggerAxis() * 0.8, true, m_LED));
 
                 // Drive without Slew
                 // starButton.toggleOnTrue(

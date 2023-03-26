@@ -7,10 +7,15 @@ package frc.robot;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -31,6 +36,9 @@ import frc.robot.utils.ModuleMap;
  * constants are needed, to reduce verbosity.
  */
 public class Constants {
+
+  public static double loopPeriodSecs = 0.02;
+  public static final boolean tuningMode = false;
 
   public static final class DriveSpeedConstants {
     public static final double kMaxRobotSpeed = 1;
@@ -328,11 +336,18 @@ public class Constants {
         ModulePosition.FRONT_LEFT,
         new Translation2d(-DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
         ModulePosition.FRONT_RIGHT,
-        new Translation2d(-DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
+        new Translation2d(-DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
         ModulePosition.BACK_LEFT,
         new Translation2d(DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
         ModulePosition.BACK_RIGHT,
         new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2));
+
+    public static final Translation2d[] kModuleTranslations2d = new Translation2d[] {
+        new Translation2d(-DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
+        new Translation2d(-DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
+        new Translation2d(DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
+        new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2)
+    };
 
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         ModuleMap.orderedValues(kModuleTranslations, new Translation2d[0]));
@@ -349,5 +364,63 @@ public class Constants {
   // public HashMap<String, Command> autoMap = new HashMap<>();
 
   // }
+  public static class GeoConversions {
+
+    public static Transform2d translationToTransform2d(Translation2d translation2d) {
+      return new Transform2d(translation2d, new Rotation2d());
+    }
+
+    public static Transform2d translationToTransform2d(double x, double y) {
+      return new Transform2d(new Translation2d(x, y), new Rotation2d());
+    }
+
+    public static Transform2d rotationToTransform2d(Rotation2d rotation) {
+      return new Transform2d(new Translation2d(), rotation);
+    }
+
+    public static Transform2d pose2dToTransform2d(Pose2d pose2d) {
+      return new Transform2d(pose2d.getTranslation(), pose2d.getRotation());
+    }
+
+    public static Pose2d transform2dToPose2d(Transform2d transform2d) {
+      return new Pose2d(transform2d.getTranslation(), transform2d.getRotation());
+    }
+
+    public static Pose2d rotationToPose2d(Rotation2d rotation) {
+      return new Pose2d(new Translation2d(), rotation);
+    }
+
+    public static Twist2d multiplyTwist(Twist2d twist2d, double factor) {
+      return new Twist2d(twist2d.dx * factor, twist2d.dy * factor, twist2d.dtheta * factor);
+    }
+
+    public static Transform3d pose3dToTransform3d(Pose3d pose3d) {
+      return new Transform3d(pose3d.getTranslation(), pose3d.getRotation());
+    }
+
+    public static Pose3d transform3dToPose3d(Transform3d transform3d) {
+      return new Pose3d(transform3d.getTranslation(), transform3d.getRotation());
+    }
+
+    public static Translation2d translation3dTo2dXY(Translation3d translation3d) {
+      return new Translation2d(translation3d.getX(), translation3d.getY());
+    }
+
+    public static Translation2d translation3dTo2dXZ(Translation3d translation3d) {
+      return new Translation2d(translation3d.getX(), translation3d.getZ());
+    }
+
+  }
+
+  public static Mode getMode() {
+
+    return Robot.isReal() ? Mode.REAL : Mode.SIM;
+  }
+
+  public static enum Mode {
+    REAL,
+    REPLAY,
+    SIM
+  }
 
 }
