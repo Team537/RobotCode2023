@@ -14,8 +14,8 @@ public class GripperCamera extends SubsystemBase {
 
   public GripperCamera() {
 
-    UsbCamera cam = new UsbCamera("Usb Camera 0", 0);
-    MjpegServer mjep = new MjpegServer("server_1", 1181);
+    UsbCamera cam = new UsbCamera("Gripper Cam", 0);
+    MjpegServer mjep = new MjpegServer("server_1", 1180);
     CameraServer.startAutomaticCapture(0);
     mjep.setSource(cam);
 

@@ -14,9 +14,9 @@ public class BellyPanCamera extends SubsystemBase {
 
   public BellyPanCamera() {
 
-    UsbCamera cam1 = new UsbCamera("Usb Camera 1", 0);
-    MjpegServer mjep1 = new MjpegServer("server_2", 1182);
-    CameraServer.startAutomaticCapture(0);
+    UsbCamera cam1 = new UsbCamera("USB Camera 1", 1);
+    MjpegServer mjep1 = new MjpegServer("server_2", 1181);
+    CameraServer.startAutomaticCapture(1);
     mjep1.setSource(cam1);
 
   }
