@@ -51,15 +51,15 @@ public class FieldSim {
   }
 
   private void updateRobotPoses() {
-    m_field2d.setRobotPose(m_drive.getPose());
+    // m_field2d.setRobotPose(m_drive.getPose());
 
-    for (ModulePosition i : ModulePosition.values()) {
-      Translation2d updatedPositions = SwerveConstants.kModuleTranslations
-          .get(i)
-          .rotateBy(m_drive.getPose().getRotation())
-          .plus(m_drive.getPose().getTranslation());
+    // for (ModulePosition i : ModulePosition.values()) {
+    // Translation2d updatedPositions = SwerveConstants.kModuleTranslations
+    // .get(i)
+    // .rotateBy(m_drive.getPose().getRotation())
+    // .plus(m_drive.getPose().getTranslation());
 
-    }
+    // }
 
     m_field2d
         .getObject("Swerve Modules")

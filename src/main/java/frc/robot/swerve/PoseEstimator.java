@@ -128,8 +128,9 @@ public class PoseEstimator {
                 var twistMatrix = visionK.times(VecBuilder.fill(visionTwist.dx, visionTwist.dy, visionTwist.dtheta));
 
                 // Apply twist
-                pose = pose.exp(
-                        new Twist2d(twistMatrix.get(0, 0), twistMatrix.get(1, 0), twistMatrix.get(2, 0)));
+                // pose = pose.exp(
+                // new Twist2d(twistMatrix.get(0, 0), twistMatrix.get(1, 0), twistMatrix.get(2,
+                // 0)));
             }
 
             return pose;

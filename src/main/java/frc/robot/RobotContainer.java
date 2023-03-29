@@ -280,8 +280,8 @@ public class RobotContainer {
                 // true, m_LED));
 
                 swerve.setDefaultCommand(new AdvantageSwerveDriveCommand(swerve,
-                                () -> -(m_driverController.getLeftY()) * 0.2, () -> m_driverController.getLeftX() * 0.2,
-                                () -> -m_driverController.getRightX() * 0.2,
+                                () -> (m_driverController.getLeftY()) * 0.2, () -> m_driverController.getLeftX() * 0.2,
+                                () -> m_driverController.getRightX() * 0.2,
                                 () -> m_driverController.getRightTriggerAxis() * 0.8, true, m_LED));
 
                 // Drive without Slew

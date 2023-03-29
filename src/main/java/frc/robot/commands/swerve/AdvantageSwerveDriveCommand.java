@@ -89,8 +89,8 @@ public class AdvantageSwerveDriveCommand extends CommandBase {
     double strafe = calculateDrivePercentage(m_strafeInput.getAsDouble(), m_triggerInput.getAsDouble());
     double rotation = Math.abs(m_rotationInput.getAsDouble()) > 0.05 ? m_rotationInput.getAsDouble() : 0;
 
-    double linearMagnitude = Math.hypot(strafe, drive);
-    Rotation2d linearDirection = new Rotation2d(strafe, drive);
+    double linearMagnitude = Math.hypot(drive, strafe);
+    Rotation2d linearDirection = new Rotation2d(drive, strafe);
     linearMagnitude = Math.copySign(linearMagnitude * linearMagnitude, linearMagnitude);
     rotation = Math.copySign(rotation * rotation, rotation);
 
@@ -107,7 +107,7 @@ public class AdvantageSwerveDriveCommand extends CommandBase {
         linearVelocity.getY() * m_drive.getMaxLinearSpeedMetersPerSec(),
         rotation);
 
-    var driveRotation = m_drive.getRotation();
+    var driveRotation = m_drive.getHeadingRotation2d();
     if (DriverStation.getAlliance() == Alliance.Red) {
       driveRotation = driveRotation.plus(new Rotation2d(Math.PI));
     }

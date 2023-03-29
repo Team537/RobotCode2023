@@ -5,6 +5,8 @@
 package frc.robot;
 
 import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,10 +35,33 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void robotInit() {
+    Logger logger = Logger.getInstance();
+
+    logger.recordMetadata("TuningMode", Boolean.toString(Constants.tuningMode));
+    logger.recordMetadata("RuntimeType", getRuntimeType().toString());
+    logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
+    logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE);
+    logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA);
+    logger.recordMetadata("GitDate", BuildConstants.GIT_DATE);
+    logger.recordMetadata("GitBranch", BuildConstants.GIT_BRANCH);
+    switch (BuildConstants.DIRTY) {
+      case 0:
+        logger.recordMetadata("GitDirty", "All changes committed");
+        break;
+      case 1:
+        logger.recordMetadata("GitDirty", "Uncomitted changes");
+        break;
+      default:
+        logger.recordMetadata("GitDirty", "Unknown");
+        break;
+    }
     m_robotContainer = new RobotContainer();
 
     m_robotContainer.robotInit();
     m_robotContainer.getClass();
+
+    logger.addDataReceiver(new NT4Publisher()); // Currently Only for Sim
+    logger.start();
 
   }
 

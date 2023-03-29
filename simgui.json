@@ -34,16 +34,32 @@
         "window": {
           "visible": true
         }
-      },
-      "/SmartDashboard/Field2d": {
-        "window": {
-          "visible": true
-        }
       }
     }
   },
   "NetworkTables": {
     "transitory": {
+      "AdvantageKit": {
+        "RealOutputs": {
+          "Odometry": {
+            "open": true
+          },
+          "open": true
+        },
+        "Swerve": {
+          "ModuleBACK_RIGHT": {
+            "open": true
+          },
+          "ModuleFRONT_LEFT": {
+            "open": true
+          },
+          "open": true
+        },
+        "SystemStats": {
+          "open": true
+        },
+        "open": true
+      },
       "SmartDashboard": {
         "Auto Selector": {
           "open": true

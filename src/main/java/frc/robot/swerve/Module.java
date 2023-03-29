@@ -36,12 +36,12 @@ public class Module {
 
     static {
         wheelRadius.initDefault(Units.inchesToMeters(1.9193));
-        driveKp.initDefault(1.0);
+        driveKp.initDefault(0.1);
         driveKi.initDefault(0.0);
         driveKd.initDefault(0.0);
         driveKs.initDefault(0.18868);
         driveKv.initDefault(0.12825);
-        turnKp.initDefault(1.0);
+        turnKp.initDefault(0.5);
         turnKi.initDefault(0.0);
         turnKd.initDefault(0.0);
     }
