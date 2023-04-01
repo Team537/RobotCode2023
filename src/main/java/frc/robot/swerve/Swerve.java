@@ -58,7 +58,13 @@ public class Swerve extends SubsystemBase {
     private boolean isBrakeMode = false;
     private Timer lastMovementTimer = new Timer();
 
-    private HashMap<ModulePosition, Module> swerveModules;
+    private HashMap<ModulePosition, Module> swerveModules = new HashMap<>(
+            Map.of(ModulePosition.FRONT_LEFT, new Module(new SwerveModuleIOSim(), ModulePosition.FRONT_LEFT),
+                    ModulePosition.FRONT_RIGHT, new Module(new SwerveModuleIOSim(), ModulePosition.FRONT_RIGHT),
+                    ModulePosition.BACK_LEFT, new Module(new SwerveModuleIOSim(), ModulePosition.BACK_LEFT),
+                    ModulePosition.BACK_RIGHT, new Module(new SwerveModuleIOSim(), ModulePosition.BACK_RIGHT)
+
+            ));
 
     private final SwerveDrivePoseEstimator m_odometry = new SwerveDrivePoseEstimator(
             kinematics,
@@ -81,13 +87,15 @@ public class Swerve extends SubsystemBase {
             SwerveModuleIO blModuleIO,
             SwerveModuleIO brModuleIO) {
         this.gyroIO = gyroIO;
-        swerveModules = new HashMap<>(
-                Map.of(ModulePosition.FRONT_LEFT, new Module(flModuleIO, ModulePosition.FRONT_LEFT),
-                        ModulePosition.FRONT_RIGHT, new Module(frModuleIO, ModulePosition.FRONT_RIGHT),
-                        ModulePosition.BACK_LEFT, new Module(blModuleIO, ModulePosition.BACK_LEFT),
-                        ModulePosition.BACK_RIGHT, new Module(brModuleIO, ModulePosition.BACK_RIGHT)
+        // swerveModules = new HashMap<>(
+        // Map.of(ModulePosition.FRONT_LEFT, new Module(flModuleIO,
+        // ModulePosition.FRONT_LEFT),
+        // ModulePosition.FRONT_RIGHT, new Module(frModuleIO,
+        // ModulePosition.FRONT_RIGHT),
+        // ModulePosition.BACK_LEFT, new Module(blModuleIO, ModulePosition.BACK_LEFT),
+        // ModulePosition.BACK_RIGHT, new Module(brModuleIO, ModulePosition.BACK_RIGHT)
 
-                ));
+        // ));
 
         lastMovementTimer.start();
         for (var module : ModuleMap.orderedValuesList(swerveModules)) {
@@ -151,7 +159,14 @@ public class Swerve extends SubsystemBase {
 
         // Update brake mode
         boolean stillMoving = false;
-        Map<ModulePosition, Double> map = new HashMap<>();
+        Map<ModulePosition, Double> map = new HashMap<>(
+                Map.of(ModulePosition.FRONT_LEFT, 0.0,
+                        ModulePosition.FRONT_RIGHT, 1.0,
+                        ModulePosition.BACK_LEFT, 2.0,
+                        ModulePosition.BACK_RIGHT, 3.0)
+
+        );
+
         for (ModulePosition i : swerveModules.keySet()) {
             if (Math.abs(map.put(i, swerveModules.get(i).getVelocityMetersPerSec())) > coastThresholdMetersPerSec) {
                 stillMoving = true;
