@@ -248,10 +248,10 @@ public class RobotContainer {
 
                 m_robotDrive.setDefaultCommand(new SlowSwerveDriveCommand(
                                 m_robotDrive,
-                                () -> -(m_driverController.getLeftY()) * 0.2,
-                                () -> m_driverController.getLeftX() * 0.2,
-                                () -> -m_driverController.getRightX() * 0.2,
-                                () -> m_driverController.getRightTriggerAxis() * 0.8,
+                                () -> -(m_driverController.getLeftY()),
+                                () -> m_driverController.getLeftX(),
+                                () -> -m_driverController.getRightX(),
+                                () -> m_driverController.getRightTriggerAxis(),
                                 true, m_LED));
 
                 // Drive without Slew
