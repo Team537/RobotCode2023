@@ -268,8 +268,6 @@ public class SwerveModule extends SubsystemBase {
     } else {
       double velocity = (desiredState.speedMetersPerSecond / (SwerveConstants.kDriveEncoderDistancePerPulse * 10));
 
-      System.out.println(getDriveMetersPerSecond());
-
       m_driveMotor.set(
           ControlMode.Velocity,
           velocity,
