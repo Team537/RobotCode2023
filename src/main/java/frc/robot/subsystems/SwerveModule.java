@@ -21,7 +21,9 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycle;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -45,7 +47,8 @@ public class SwerveModule extends SubsystemBase {
   double deg;
   Pose2d m_pose;
   SRXMagEncoder m_SrxMagEncoder;
-
+  private final Timer m_simTimer = new Timer();
+  private double m_lastSimTime = 0;
   SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
       SwerveConstants.ksDriveVoltSecondsPerMeter,
       SwerveConstants.kvDriveVoltSecondsSquaredPerMeter,
@@ -96,6 +99,11 @@ public class SwerveModule extends SubsystemBase {
 
     if (Robot.isReal()) {
       m_driveMotor.setInverted(isInverted);
+    }
+
+    if (RobotBase.isSimulation()) {
+      m_simTimer.reset();
+      m_simTimer.start();
     }
     // m_turnMotor.setInverted(isInverted);
     // Uses CTRE Utils to Configure Swerve Module Components for Optimal Performance
@@ -367,7 +375,7 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Position", getDriveMeters());
     SmartDashboard.putNumber(
-        "Module " + m_moduleNumber + " Linear Velocity", getDriveMetersPerSecond());
+        "Module " + m_moduleNumber + " Linear Velocity", getState().speedMetersPerSecond);
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Angle", angle);
     SmartDashboard.putNumber(
@@ -401,14 +409,16 @@ public class SwerveModule extends SubsystemBase {
     m_driveMotorSim.setInputVoltage(m_drivePercentOutput *
         RobotController.getBatteryVoltage());
 
-    m_turnMotorSim.update(0.02);
-    m_driveMotorSim.update(0.02);
+    var currentTime = m_simTimer.get();
+    double dt = currentTime - m_lastSimTime;
+    m_turnMotorSim.update(dt);
+    m_driveMotorSim.update(dt);
 
     Unmanaged.feedEnable(20);
 
-    m_turnMotorSimDistance += m_turnMotorSim.getAngularVelocityRadPerSec() * 0.02;
-    m_driveMotorSimDistance += m_driveMotorSim.getAngularVelocityRadPerSec() * 0.02;
-
+    m_turnMotorSimDistance += m_turnMotorSim.getAngularVelocityRadPerSec() * dt;
+    m_driveMotorSimDistance += m_driveMotorSim.getAngularVelocityRadPerSec() * dt;
+    m_lastSimTime = currentTime;
     m_turnMotor
         .getSimCollection()
         .setIntegratedSensorRawPosition(m_turnEncoderSimSign *
