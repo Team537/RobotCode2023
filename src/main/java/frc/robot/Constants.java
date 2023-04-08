@@ -255,9 +255,6 @@ public class Constants {
     public static final int kEncoderResolution = 4096;
     public static final double kDriveMotorGearRatio = 7.13;
     public static final double kTurningMotorGearRatio = 15.428;
-    public static final double kMaxSpeed = 15.0;
-    public static final double kModuleMaxAngularVelocity = Math.PI * 4;
-    public static final double kModuleMaxAngularAcceleration = 3 * Math.PI;
 
     public static final double kPModuleTurningController = 0;
     public static final double kPModuleDriverController = 0;
@@ -284,8 +281,8 @@ public class Constants {
     public static final double kDriveEncoderDistancePerPulse = (2 * kWheelRadius * Math.PI)
         / (DriveConstants.kEncoderCPR * kDriveMotorGearRatio);
 
-    public static final double kMaxSpeedMetersPerSecond = 5;
-    public static final double kMaxRotationRadiansPerSecond = Math.PI * 4;
+    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(15);
+    public static final double kMaxRotationRadiansPerSecond = Math.PI * 2;
     public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 2;
 
     public static final double kSlowRotationRadiansPerSecond = Math.PI * 1;
@@ -315,7 +312,7 @@ public class Constants {
     public static final double kP_Y = 0.01;
     public static final double kI_Y = 0;
     public static final double kD_Y = 0.1;
-    public static final double kP_Rot = 0.001;
+    public static final double kP_Rot = 0.01;
     public static final double kI_Rot = 0;
     public static final double kD_Rot = 0.01;
 

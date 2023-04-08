@@ -23,23 +23,23 @@ import frc.robot.subsystems.DriveSubsystem;
 public class ExampleTrajectory extends SequentialCommandGroup {
   /** Creates a new ExampleTrajectory. */
   public ExampleTrajectory(DriveSubsystem m_drive, FieldSim m_fieldSim) {
-PathPlannerTrajectory trajectory = PathPlanner.loadPath("New Path", 1, 0.5, false);
+    PathPlannerTrajectory trajectory = PathPlanner.loadPath("New Path", 1, 0.5, false);
 
-PPSwerveControllerCommand command =
-new PPSwerveControllerCommand(
-  //pulls in trajectory path
-   trajectory,
-   m_drive::getPoseMeters, SwerveConstants.kDriveKinematics, m_drive.getXPidController(), m_drive.getYPidController(),
-    m_drive.getRotPidControllerAuto(), m_drive::setSwerveModuleStatesAuto, m_drive);
+    PPSwerveControllerCommand command = new PPSwerveControllerCommand(
+        // pulls in trajectory path
+        trajectory,
+        m_drive::getPoseMeters, SwerveConstants.kDriveKinematics, m_drive.getXPidController(),
+        m_drive.getYPidController(),
+        m_drive.getRotPidControllerAuto(), m_drive::setSwerveModuleStatesAuto, m_drive);
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
 
-      //these pull in other commands and schedule them to run
-      new PlotFieldTrajectory(m_fieldSim, trajectory),
-      new SetSwerveOdometry(m_drive, trajectory.getInitialPose(), m_fieldSim),
-      command,
-      new SetSwerveBrakeMode(m_drive, NeutralMode.Brake)
-          .andThen(() -> m_drive.drive(0, 0, 0, false, false)));
+        // these pull in other commands and schedule them to run
+        new PlotFieldTrajectory(m_fieldSim, trajectory),
+        new SetSwerveOdometry(m_drive, trajectory.getInitialPose(), m_fieldSim),
+        command,
+        new SetSwerveBrakeMode(m_drive, NeutralMode.Brake)
+            .andThen(() -> m_drive.drive(0, 0, 0, false, false)));
   }
 }

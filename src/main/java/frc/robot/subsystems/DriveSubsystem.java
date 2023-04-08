@@ -148,7 +148,9 @@ public class DriveSubsystem extends SubsystemBase {
       double rotation,
       boolean isFieldRelative,
       boolean isOpenLoop) {
-    // rotation *= SwerveConstants.kSlowRotationRadiansPerSecond;
+    drive *= SwerveConstants.kMaxSpeedMetersPerSecond;
+    strafe *= SwerveConstants.kMaxSpeedMetersPerSecond;
+    rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
 
     // Chassis Speed
     ChassisSpeeds chassisSpeeds = isFieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -393,6 +395,9 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Gyro Angle", getHeadingDegrees());
     SmartDashboard.putString("Drive State", driveState);
     SmartDashboard.putNumber("Gyro Pitch", getGyroPitch());
+    SmartDashboard.putNumber("Odo X", m_odometry.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("Odo Y", m_odometry.getEstimatedPosition().getY());
+    SmartDashboard.putNumber("Odo Yaw", m_odometry.getEstimatedPosition().getRotation().getDegrees());
   }
 
   /**
@@ -421,9 +426,9 @@ public class DriveSubsystem extends SubsystemBase {
     ChassisSpeeds chassisSpeed = SwerveConstants.kDriveKinematics.toChassisSpeeds(
         ModuleMap.orderedValues(getModuleStates(), new SwerveModuleState[0]));
 
-    // m_simYaw += chassisSpeed.omegaRadiansPerSecond * 0.06; //changed from .02
+    m_simYaw += chassisSpeed.omegaRadiansPerSecond * 0.02; // changed from .02
 
-    Unmanaged.feedEnable(2);
+    Unmanaged.feedEnable(20);
     m_gyro.getSimCollection().setRawHeading(-Units.radiansToDegrees(m_simYaw));
   }
 
