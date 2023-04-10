@@ -265,7 +265,7 @@ public class Constants {
         360 / (SwerveConstants.ENCODER_RESOLUTION * TURNING_MOTOR_GEAR_RATIO);
 
     public static final double DRIVE_ENCODER_METERS_PER_PULSE = (2 * WHEEL_RADIUS * Math.PI)
-        / (DriveConstants.kEncoderCPR * DRIVE_MOTOR_GEAR_RATIO);
+        / (SwerveConstants.ENCODER_RESOLUTION * DRIVE_MOTOR_GEAR_RATIO);
 
     public static final double MAX_SPEED_METERS_PER_SECOND = 5;
     public static final double MAX_ROTATION_RADIANS_PER_SECOND = Math.PI * 1;
