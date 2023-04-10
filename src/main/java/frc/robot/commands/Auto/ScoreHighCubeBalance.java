@@ -39,9 +39,9 @@ public class ScoreHighCubeBalance extends SequentialCommandGroup {
         new RunCommand(m_Gripper::GripperFast, m_Gripper).withTimeout(1),
         new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1),
         new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(0.1),
-        new RunCommand(() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(0.1),
+        new RunCommand(() -> m_drive.drive(0.1, 0, 0, true), m_drive).withTimeout(0.1),
         new ManipulatorGroundAuto(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(0.1),
-        new RunCommand(() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(4.7),
+        new RunCommand(() -> m_drive.drive(0.1, 0, 0, true), m_drive).withTimeout(4.7),
         new BalanceChargeStation(m_drive, false, m_LED)
 
     );
