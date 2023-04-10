@@ -40,6 +40,10 @@
           "arrows": false,
           "style": "Hidden"
         },
+        "trajectory": {
+          "arrows": false,
+          "style": "Hidden"
+        },
         "window": {
           "visible": true
         }

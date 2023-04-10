@@ -335,7 +335,11 @@ public class RobotContainer {
                 m_Chooser.addOption("Score High Cube No Drive", scoreHighCubeNoDrive);
                 m_Chooser.addOption("Score High Cube Drive Back", scoreHighCubeDriveBack);
                 m_Chooser.addOption("Score High Cube Balance", scoreHighCubeBalance);
-                m_Chooser.addOption("Test 1", new FollowTrajectory(m_robotDrive, m_FieldSim, "Test 1",
+                m_Chooser.addOption("Forward Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Forward Test",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+                m_Chooser.addOption("Strafe Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Strafe Test",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+                m_Chooser.addOption("Spline Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Spline Test",
                                 m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
                 SmartDashboard.putData("Auto Selector", m_Chooser);
 
