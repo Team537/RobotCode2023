@@ -256,34 +256,20 @@ public class Constants {
     public static final double DRIVE_MOTOR_GEAR_RATIO = 7.13;
     public static final double TURNING_MOTOR_GEAR_RATIO = 15.428;
 
-    public static final double kPModuleTurningController = 0;
-    public static final double kPModuleDriverController = 0;
-
-    public static final double kSTurn = 0.1;
-    public static final double kVTurn = 0.2;
-
-    public static final double kSDrive = 0.587;
-    public static final double kVDrive = 2.3;
-    public static final double kADrive = 0.517;
-
-    public static final double FFsDriveVoltSecondsPerMeter = 0.08;
-    public static final double FFvDriveVoltSecondsSquaredPerMeter = 2.3;
-    public static final double kaDriveVoltSecondsSquaredPerMeter = 0.52878;
-
     public static final double FEED_FORWARD_STATIC_GAIN = 0.605 / 12;
     public static final double FEED_FORWARD_VELOCITY_GAIN = 1.72 / 13.8;
     public static final double FEED_FORWARD_ACCELERATION_GAIN = 0.193 / 12;
 
     public static final double TURN_ENCODER_METERS_PER_PULSE =
 
-        360 / (DriveConstants.kEncoderCPR * TURNING_MOTOR_GEAR_RATIO);
+        360 / (SwerveConstants.ENCODER_RESOLUTION * TURNING_MOTOR_GEAR_RATIO);
 
     public static final double DRIVE_ENCODER_METERS_PER_PULSE = (2 * WHEEL_RADIUS * Math.PI)
         / (DriveConstants.kEncoderCPR * DRIVE_MOTOR_GEAR_RATIO);
 
     public static final double MAX_SPEED_METERS_PER_SECOND = 5;
     public static final double MAX_ROTATION_RADIANS_PER_SECOND = Math.PI * 1;
-    public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 1;
+    public static final double MAX_ROTATION_RADIANS_PER_SECOND_SQUARED = Math.PI * 1;
 
     public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 0;
     public static final int FRONT_LEFT_TURN_MOTOR_ID = 1;
@@ -317,7 +303,7 @@ public class Constants {
     public static final int PIGEON_ID = 10;
 
     public static final TrapezoidProfile.Constraints ROTATION_CONTROLLER_CONSTRAINTS = new TrapezoidProfile.Constraints(
-        MAX_ROTATION_RADIANS_PER_SECOND, kMaxRotationRadiansPerSecondSquared);
+        MAX_ROTATION_RADIANS_PER_SECOND, MAX_ROTATION_RADIANS_PER_SECOND_SQUARED);
 
     public static final Map<ModulePosition, Translation2d> MODULE_TRANSLATIONS = Map.of(
         ModulePosition.FRONT_LEFT,
