@@ -30,7 +30,7 @@ public class ExampleTrajectory extends SequentialCommandGroup {
         trajectory,
         m_drive::getPoseMeters, SwerveConstants.kDriveKinematics, m_drive.getXPidController(),
         m_drive.getYPidController(),
-        m_drive.getRotPidControllerAuto(), m_drive::setSwerveModuleStatesAuto, m_drive);
+        m_drive.getRotPidControllerAuto(), m_drive::setSwerveModuleStates, m_drive);
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

@@ -176,14 +176,14 @@ public class DriveSubsystem extends SubsystemBase {
         traj,
         this::getPoseMeters, // Pose supplier
         SwerveConstants.kDriveKinematics, // SwerveDriveKinematics
-        new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use
-                                    // feedforwards.
-        new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
-        new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will
-                                    // only use feedforwards.
+        getXPidController(), // X controller. Tune these values for your robot. Leaving them 0 will only use
+                             // feedforwards.
+        getYPidController(), // Y controller (usually the same values as X controller)
+        getRotPidControllerAuto(), // Rotation controller. Tune these values for your robot. Leaving them 0 will
+                                   // only use feedforwards.
 
         // refers to the class its in, calls the swerve module
-        this::setSwerveModuleStatesAuto, // Module states consumer
+        this::setSwerveModuleStates, // Module states consumer
         true, // Should the path be automatically mirrored depending on alliance color.
               // Optional, defaults to true
         this // Requires this drive subsystem
@@ -231,16 +231,16 @@ public class DriveSubsystem extends SubsystemBase {
    * @param states
    * @param isOpenLoop
    */
-  public void setSwerveModuleStates(SwerveModuleState[] states, boolean isOpenLoop) {
+  public void setSwerveModuleStates(SwerveModuleState[] states) {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, SwerveConstants.kMaxSpeedMetersPerSecond);
 
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
-      module.setDesiredState(states[module.getModulePosition().ordinal()], isOpenLoop);
+      module.setSlowDesiredState(states[module.getModulePosition().ordinal()], false);
   }
 
-  public void setSwerveModuleStatesAuto(SwerveModuleState[] states) {
-    setSwerveModuleStates(states, false);
-  }
+  // public void setSwerveModuleStatesAuto(SwerveModuleState[] states) {
+  // setSwerveModuleStates(states, false);
+  // }
 
   /**
    * Sets Odometry, Used in Auto

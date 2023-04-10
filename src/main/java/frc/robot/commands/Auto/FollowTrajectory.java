@@ -67,7 +67,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
     // new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(2),
     // new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1)));
 
-    PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, 0.5, 0.1, false);
+    PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, 4.0, 3.0, false);
 
     FollowPathWithEvents command = new FollowPathWithEvents(
         // uses the drive method to follow the trajectory.

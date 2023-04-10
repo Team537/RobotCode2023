@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.util.sendable.SendableBuilder.BackendKind;
@@ -334,7 +335,8 @@ public class RobotContainer {
                 m_Chooser.addOption("Score High Cube No Drive", scoreHighCubeNoDrive);
                 m_Chooser.addOption("Score High Cube Drive Back", scoreHighCubeDriveBack);
                 m_Chooser.addOption("Score High Cube Balance", scoreHighCubeBalance);
-
+                m_Chooser.addOption("Test 1", new FollowTrajectory(m_robotDrive, m_FieldSim, "Test 1",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
                 SmartDashboard.putData("Auto Selector", m_Chooser);
 
         }
