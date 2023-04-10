@@ -304,10 +304,10 @@ public class Constants {
     public static final double kBackLeftSRXMagCoderOffset = 0.;
     public static final double kBackRightSRXMagCoderOffset = 0.;
 
-    public static final double kP_X = 0.7;
+    public static final double kP_X = 1;
     public static final double kI_X = 0;
     public static final double kD_X = 0;
-    public static final double kP_Y = 0.6;
+    public static final double kP_Y = 1;
     public static final double kI_Y = 0;
     public static final double kD_Y = 0.1;
     public static final double kP_Rot = 0.01;
