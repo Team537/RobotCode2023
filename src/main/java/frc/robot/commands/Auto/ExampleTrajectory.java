@@ -28,7 +28,7 @@ public class ExampleTrajectory extends SequentialCommandGroup {
     PPSwerveControllerCommand command = new PPSwerveControllerCommand(
         // pulls in trajectory path
         trajectory,
-        m_drive::getPoseMeters, SwerveConstants.kDriveKinematics, m_drive.getXPidController(),
+        m_drive::getPoseMeters, SwerveConstants.SWERVE_KINEMATICS, m_drive.getXPidController(),
         m_drive.getYPidController(),
         m_drive.getRotPidControllerAuto(), m_drive::setSwerveModuleStates, m_drive);
     // Add your commands in the addCommands() call, e.g.
@@ -40,6 +40,6 @@ public class ExampleTrajectory extends SequentialCommandGroup {
         new SetSwerveOdometry(m_drive, trajectory.getInitialPose(), m_fieldSim),
         command,
         new SetSwerveBrakeMode(m_drive, NeutralMode.Brake)
-            .andThen(() -> m_drive.drive(0, 0, 0, false, false)));
+            .andThen(() -> m_drive.drive(0, 0, 0, false)));
   }
 }

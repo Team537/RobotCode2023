@@ -80,7 +80,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
         new SetSwerveOdometry(m_drive, trajectory.getInitialPose(), m_fieldSim),
         command,
         new SetSwerveBrakeMode(m_drive, NeutralMode.Brake)
-            .andThen(() -> m_drive.slowDrive(0, 0, 0, false, false)));
+            .andThen(() -> m_drive.drive(0, 0, 0, false, false)));
   }
 
   // Add your commands in the addCommands() call, e.g.

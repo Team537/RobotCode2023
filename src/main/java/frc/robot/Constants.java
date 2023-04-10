@@ -251,10 +251,10 @@ public class Constants {
   }
 
   public static class SwerveConstants {
-    public static final double kWheelRadius = 1.75;
-    public static final int kEncoderResolution = 4096;
-    public static final double kDriveMotorGearRatio = 7.13;
-    public static final double kTurningMotorGearRatio = 15.428;
+    public static final double WHEEL_RADIUS = 1.75;
+    public static final int ENCODER_RESOLUTION = 2048;
+    public static final double DRIVE_MOTOR_GEAR_RATIO = 7.13;
+    public static final double TURNING_MOTOR_GEAR_RATIO = 15.428;
 
     public static final double kPModuleTurningController = 0;
     public static final double kPModuleDriverController = 0;
@@ -266,60 +266,60 @@ public class Constants {
     public static final double kVDrive = 2.3;
     public static final double kADrive = 0.517;
 
-    public static final double ksDriveVoltSecondsPerMeter = 0.08;
-    public static final double kvDriveVoltSecondsSquaredPerMeter = 2.3;
+    public static final double FFsDriveVoltSecondsPerMeter = 0.08;
+    public static final double FFvDriveVoltSecondsSquaredPerMeter = 2.3;
     public static final double kaDriveVoltSecondsSquaredPerMeter = 0.52878;
 
-    public static final double ksSlowDriveVoltSecondsPerMeter = 0.605 / 12;
-    public static final double kvSlowDriveVoltSecondsSquaredPerMeter = 1.72 / 13.8;
-    public static final double kaSlowDriveVoltSecondsSquaredPerMeter = 0.193 / 12;
+    public static final double FEED_FORWARD_STATIC_GAIN = 0.605 / 12;
+    public static final double FEED_FORWARD_VELOCITY_GAIN = 1.72 / 13.8;
+    public static final double FEED_FORWARD_ACCELERATION_GAIN = 0.193 / 12;
 
-    public static final double kTurningEncoderDistancePerPulse =
+    public static final double TURN_ENCODER_METERS_PER_PULSE =
 
-        360 / (DriveConstants.kEncoderCPR * kTurningMotorGearRatio);
+        360 / (DriveConstants.kEncoderCPR * TURNING_MOTOR_GEAR_RATIO);
 
-    public static final double kDriveEncoderDistancePerPulse = (2 * kWheelRadius * Math.PI)
-        / (DriveConstants.kEncoderCPR * kDriveMotorGearRatio);
+    public static final double DRIVE_ENCODER_METERS_PER_PULSE = (2 * WHEEL_RADIUS * Math.PI)
+        / (DriveConstants.kEncoderCPR * DRIVE_MOTOR_GEAR_RATIO);
 
-    public static final double kMaxSpeedMetersPerSecond = 5;
-    public static final double kMaxRotationRadiansPerSecond = Math.PI * 1;
+    public static final double MAX_SPEED_METERS_PER_SECOND = 5;
+    public static final double MAX_ROTATION_RADIANS_PER_SECOND = Math.PI * 1;
     public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 1;
 
-    public static final int kFrontLeftDrive = 0;
-    public static final int kFrontLeftTurn = 1;
-    public static final int kFrontRightDrive = 2;
-    public static final int kFrontRightTurn = 3;
-    public static final int kBackLeftDrive = 4;
-    public static final int kBackLeftTurn = 5;
-    public static final int kBackRightDrive = 6;
-    public static final int kBackRightTurn = 7;
+    public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 0;
+    public static final int FRONT_LEFT_TURN_MOTOR_ID = 1;
+    public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 2;
+    public static final int FRONT_RIGHT_TURN_MOTOR_ID = 3;
+    public static final int BACK_LEFT_DRIVE_MOTOR_ID = 4;
+    public static final int BACK_LEFT_TURN_MOTOR_ID = 5;
+    public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 6;
+    public static final int BACK_RIGHT_TURN_MOTOR_ID = 7;
 
-    public static final int kFrontLeftSRXMagCoder = 4; // 0
-    public static final int kFrontRightSRXMagCoder = 5; // 1
-    public static final int kBackLeftSRXMagCoder = 6; // 2
-    public static final int kBackRightSRXMagCoder = 7; // 3
+    public static final int FRONT_LEFT_SRX_MAG_ENCODER_ID = 4; // 0
+    public static final int FRONT_RIGHT_SRX_MAG_ENCODER_ID = 5; // 1
+    public static final int BACK_LEFT_SRX_MAG_ENCODER_ID = 6; // 2
+    public static final int BACK_RIGHT_SRX_MAG_ENCODER_ID = 7; // 3
 
-    public static final double kFrontLeftSRXMagCoderOffset = 320;// 175;
-    public static final double kFrontRightSRXMagCoderOffset = 0;
-    public static final double kBackLeftSRXMagCoderOffset = 0.;
-    public static final double kBackRightSRXMagCoderOffset = 0.;
+    public static final double FRONT_LEFT_SRX_MAG_ENCODER_OFFSET = 320;// 175;
+    public static final double FRONT_RIGHT_SRX_MAG_ENCODER_OFFSET = 0;
+    public static final double BACK_LEFT_SRX_MAG_ENCODER_OFFSET = 0.;
+    public static final double BACK_RIGHT_SRX_MAG_ENCODER_OFFSET = 0.;
 
-    public static final double kP_X = 1;
-    public static final double kI_X = 0;
-    public static final double kD_X = 0;
-    public static final double kP_Y = 1;
-    public static final double kI_Y = 0;
-    public static final double kD_Y = 0.1;
-    public static final double kP_Rot = 0.01;
-    public static final double kI_Rot = 0;
-    public static final double kD_Rot = 0.01;
+    public static final double P_X = 1;
+    public static final double I_X = 0;
+    public static final double D_X = 0;
+    public static final double P_Y = 1;
+    public static final double I_Y = 0;
+    public static final double D_Y = 0.1;
+    public static final double P_ROTATION = 0.01;
+    public static final double I_ROTATION = 0;
+    public static final double D_ROTATION = 0.01;
 
-    public static final int kPigeonID = 10;
+    public static final int PIGEON_ID = 10;
 
-    public static final TrapezoidProfile.Constraints kRotControllerConstraints = new TrapezoidProfile.Constraints(
-        kMaxRotationRadiansPerSecond, kMaxRotationRadiansPerSecondSquared);
+    public static final TrapezoidProfile.Constraints ROTATION_CONTROLLER_CONSTRAINTS = new TrapezoidProfile.Constraints(
+        MAX_ROTATION_RADIANS_PER_SECOND, kMaxRotationRadiansPerSecondSquared);
 
-    public static final Map<ModulePosition, Translation2d> kModuleTranslations = Map.of(
+    public static final Map<ModulePosition, Translation2d> MODULE_TRANSLATIONS = Map.of(
         ModulePosition.FRONT_LEFT,
         new Translation2d(-DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
         ModulePosition.FRONT_RIGHT,
@@ -329,8 +329,8 @@ public class Constants {
         ModulePosition.BACK_RIGHT,
         new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2));
 
-    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-        ModuleMap.orderedValues(kModuleTranslations, new Translation2d[0]));
+    public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
+        ModuleMap.orderedValues(MODULE_TRANSLATIONS, new Translation2d[0]));
 
     public enum ModulePosition {
       FRONT_LEFT,
