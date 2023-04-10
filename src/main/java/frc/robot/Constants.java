@@ -307,9 +307,9 @@ public class Constants {
     public static final double P_X = 1;
     public static final double I_X = 0;
     public static final double D_X = 0;
-    public static final double P_Y = 1;
+    public static final double P_Y = 1.5;
     public static final double I_Y = 0;
-    public static final double D_Y = 0.1;
+    public static final double D_Y = 0;
     public static final double P_ROTATION = 0.01;
     public static final double I_ROTATION = 0;
     public static final double D_ROTATION = 0.01;

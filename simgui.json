@@ -36,6 +36,10 @@
         }
       },
       "/SmartDashboard/Field2d": {
+        "Swerve Modules": {
+          "arrows": false,
+          "style": "Hidden"
+        },
         "window": {
           "visible": true
         }
