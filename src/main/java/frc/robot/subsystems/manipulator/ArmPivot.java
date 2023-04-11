@@ -19,11 +19,8 @@ public class ArmPivot extends SubsystemBase {
   private RelativeEncoder m_encoderPivot1 = m_ArmPivot1.getEncoder();
   private String armPivotState = "Default";
 
-
-
-
   /** Creates a new ArmPivot. */
-  public  ArmPivot() {
+  public ArmPivot() {
 
   }
 
@@ -33,16 +30,16 @@ public class ArmPivot extends SubsystemBase {
     m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
     m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
     m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
+    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
+        Constants.SparkPIDFConstants.kMaxOutput);
     m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxAccelArmPivot, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionMidGoal, CANSparkMax.ControlType.kSmartMotion);
-    // SmartDashboard.putBoolean("Arm Down", true);
-    // SmartDashboard.putBoolean("Arm Up", false);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionMidGoal,
+        CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "Mid Goal";
-   
+
   }
 
   public void ArmPositionHighGoal() {
@@ -52,16 +49,16 @@ public class ArmPivot extends SubsystemBase {
     m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
     m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
     m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
+    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
+        Constants.SparkPIDFConstants.kMaxOutput);
     m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxAccelArmPivot, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionHighGoal, CANSparkMax.ControlType.kSmartMotion);
-    // SmartDashboard.putBoolean("Arm Down", false);
-    // SmartDashboard.putBoolean("Arm Up", true);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionHighGoal,
+        CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "High Goal";
-    
+
   }
 
   public void ArmPositionShelfHumanPL() {
@@ -70,16 +67,16 @@ public class ArmPivot extends SubsystemBase {
     m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
     m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
     m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
+    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
+        Constants.SparkPIDFConstants.kMaxOutput);
     m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxAccelArmPivot, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionShelfHumanPL, CANSparkMax.ControlType.kSmartMotion);
-    // SmartDashboard.putBoolean("Arm Down", true);
-    // SmartDashboard.putBoolean("Arm Up", false);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionShelfHumanPL,
+        CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "ShelfMid";
-   
+
   }
 
   public void ArmPositionZero() {
@@ -88,16 +85,16 @@ public class ArmPivot extends SubsystemBase {
     m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
     m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
     m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
+    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
+        Constants.SparkPIDFConstants.kMaxOutput);
     m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxAccelArmPivot, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionZero, CANSparkMax.ControlType.kSmartMotion);
-    // SmartDashboard.putBoolean("Arm Down", true);
-    // SmartDashboard.putBoolean("Arm Up", false);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionZero,
+        CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "Zero";
-   
+
   }
 
   public void ArmPositionGround() {
@@ -106,41 +103,41 @@ public class ArmPivot extends SubsystemBase {
     m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
     m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
     m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
+    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
+        Constants.SparkPIDFConstants.kMaxOutput);
     m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxAccelArmPivot, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionGround, CANSparkMax.ControlType.kSmartMotion);
-    // SmartDashboard.putBoolean("Arm Down", true);
-    // SmartDashboard.putBoolean("Arm Up", false);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionGround,
+        CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "Ground";
-   
+
   }
 
-   public void ArmPositionMidDown() {
+  public void ArmPositionMidDown() {
     m_pidControllerPivot1.setP(Constants.SparkPIDFConstants.kP);
     m_pidControllerPivot1.setI(Constants.SparkPIDFConstants.kI);
     m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
     m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
     m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
+    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
+        Constants.SparkPIDFConstants.kMaxOutput);
     m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxAccelArmPivot, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionMidDown, CANSparkMax.ControlType.kSmartMotion);
-    // SmartDashboard.putBoolean("Arm Down", true);
-    // SmartDashboard.putBoolean("Arm Up", false);
+    m_pidControllerPivot1.setReference(Constants.ArmPivotConstants.kArmPivotPositionMidDown,
+        CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "Test";
-   
+
   }
 
   @Override
   public void periodic() {
 
     SmartDashboard.putNumber(" Pivot Position", m_encoderPivot1.getPosition());
-    SmartDashboard.putNumber("Pivot Velocity",m_encoderPivot1.getVelocity());
+    SmartDashboard.putNumber("Pivot Velocity", m_encoderPivot1.getVelocity());
     SmartDashboard.putString("Arm Pivot State", armPivotState);
     // This method will be called once per scheduler run
   }
