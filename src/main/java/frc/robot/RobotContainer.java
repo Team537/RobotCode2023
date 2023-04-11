@@ -341,6 +341,7 @@ public class RobotContainer {
                                 m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
                 m_Chooser.addOption("Spline Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Spline Test",
                                 m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+
                 SmartDashboard.putData("Auto Selector", m_Chooser);
 
         }
