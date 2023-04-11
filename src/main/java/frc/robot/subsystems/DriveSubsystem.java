@@ -26,93 +26,87 @@ import frc.robot.utils.ModuleMap;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.unmanaged.Unmanaged;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-  
 
 public class DriveSubsystem extends SubsystemBase {
 
   // Hash Map for All Swerve Modules
 
-  private final HashMap<ModulePosition, SwerveModule> m_swerveModules =
-      new HashMap<>(
-          Map.of(
+  private final HashMap<ModulePosition, SwerveModule> m_swerveModules = new HashMap<>(
+      Map.of(
+          ModulePosition.FRONT_LEFT,
+          new SwerveModule(
               ModulePosition.FRONT_LEFT,
-                  new SwerveModule(
-                      ModulePosition.FRONT_LEFT,
-                      new WPI_TalonFX(SwerveConstants.kFrontLeftTurn),
-                      new WPI_TalonFX(SwerveConstants.kFrontLeftDrive),
-                      SwerveConstants.kFrontLeftSRXMagCoder,
-                      SwerveConstants.kFrontLeftSRXMagCoderOffset, false),
+              new WPI_TalonFX(SwerveConstants.kFrontLeftTurn),
+              new WPI_TalonFX(SwerveConstants.kFrontLeftDrive),
+              SwerveConstants.kFrontLeftSRXMagCoder,
+              SwerveConstants.kFrontLeftSRXMagCoderOffset, false),
+
+          ModulePosition.FRONT_RIGHT,
+          new SwerveModule(
               ModulePosition.FRONT_RIGHT,
-                  new SwerveModule(
-                      ModulePosition.FRONT_RIGHT,
-                      new WPI_TalonFX(SwerveConstants.kFrontRightTurn),
-                      new WPI_TalonFX(SwerveConstants.kFrontRightDrive),
-                      SwerveConstants.kFrontRightSRXMagCoder,
-                      SwerveConstants.kFrontRightSRXMagCoderOffset, true),
+              new WPI_TalonFX(SwerveConstants.kFrontRightTurn),
+              new WPI_TalonFX(SwerveConstants.kFrontRightDrive),
+              SwerveConstants.kFrontRightSRXMagCoder,
+              SwerveConstants.kFrontRightSRXMagCoderOffset, true),
+
+          ModulePosition.BACK_LEFT,
+          new SwerveModule(
               ModulePosition.BACK_LEFT,
-                  new SwerveModule(
-                      ModulePosition.BACK_LEFT,
-                      new WPI_TalonFX(SwerveConstants.kBackLeftTurn),
-                      new WPI_TalonFX(SwerveConstants.kBackLeftDrive),
-                      SwerveConstants.kBackLeftSRXMagCoder,
-                     SwerveConstants.kBackLeftSRXMagCoderOffset, true),
+              new WPI_TalonFX(SwerveConstants.kBackLeftTurn),
+              new WPI_TalonFX(SwerveConstants.kBackLeftDrive),
+              SwerveConstants.kBackLeftSRXMagCoder,
+              SwerveConstants.kBackLeftSRXMagCoderOffset, true),
+
+          ModulePosition.BACK_RIGHT,
+          new SwerveModule(
               ModulePosition.BACK_RIGHT,
-                  new SwerveModule(
-                      ModulePosition.BACK_RIGHT,
-                      new WPI_TalonFX(SwerveConstants.kBackRightTurn),
-                      new WPI_TalonFX(SwerveConstants.kBackRightDrive),
-                      SwerveConstants.kBackRightSRXMagCoder,
-                      SwerveConstants.kBackRightSRXMagCoderOffset, false)));
+              new WPI_TalonFX(SwerveConstants.kBackRightTurn),
+              new WPI_TalonFX(SwerveConstants.kBackRightDrive),
+              SwerveConstants.kBackRightSRXMagCoder,
+              SwerveConstants.kBackRightSRXMagCoderOffset, false)));
 
+  // Gyro and Simulated Gyro
 
-  //Gyro and Simulated Gyro  
-                    
   private final Pigeon2 m_gyro = new Pigeon2(SwerveConstants.kPigeonID);
   public String driveState = "Drive";
 
-  //old gyro
-//   private final ADXRS450_GyroSim m_gyroSim = new ADXRS450_GyroSim(m_gyro);
+  // old gyro
+  // private final ADXRS450_GyroSim m_gyroSim = new ADXRS450_GyroSim(m_gyro);
 
+  // Swerve Odometry
 
+  private final SwerveDrivePoseEstimator m_odometry = new SwerveDrivePoseEstimator(
+      SwerveConstants.kDriveKinematics,
+      getHeadingRotation2d(),
+      getModulePositions(),
+      new Pose2d());
 
-  //Swerve Odometry 
+  // PID Controllers for X, Y, and Rotation
+  // Rotation is Profiled to limit Uncontrollable Rotation
 
-  private final SwerveDrivePoseEstimator m_odometry =
-      new SwerveDrivePoseEstimator(
-          SwerveConstants.kDriveKinematics,
-          getHeadingRotation2d(),
-          getModulePositions(),
-          new Pose2d());
+  private PIDController m_XController = new PIDController(SwerveConstants.kP_X, SwerveConstants.kI_X,
+      SwerveConstants.kD_X);
+  private PIDController m_YController = new PIDController(SwerveConstants.kP_Y, SwerveConstants.kI_Y,
+      SwerveConstants.kD_Y);
+  private ProfiledPIDController m_turnController = new ProfiledPIDController(SwerveConstants.kP_Rot,
+      SwerveConstants.kI_Rot, SwerveConstants.kD_Rot, SwerveConstants.kRotControllerConstraints);
+  private PIDController m_turnControllerAuto = new PIDController(SwerveConstants.kP_Rot, SwerveConstants.kI_Rot,
+      SwerveConstants.kD_Rot);
 
-  //PID Controllers for X, Y, and Rotation
-  //Rotation is Profiled to limit Uncontrollable Rotation
-
-  private PIDController m_XController = new PIDController(SwerveConstants.kP_X, SwerveConstants.kI_X,  SwerveConstants.kD_X);
-  private PIDController m_YController = new PIDController(SwerveConstants.kP_Y, SwerveConstants.kI_Y,  SwerveConstants.kD_Y);
-  private ProfiledPIDController m_turnController =
-      new ProfiledPIDController(SwerveConstants.kP_Rot, SwerveConstants.kI_Rot,SwerveConstants.kD_Rot , SwerveConstants.kRotControllerConstraints);
-      private PIDController m_turnControllerAuto =
-      new PIDController(SwerveConstants.kP_Rot, SwerveConstants.kI_Rot,SwerveConstants.kD_Rot);
-
-  //Simulated Yaw, Only used in Sim
+  // Simulated Yaw, Only used in Sim
   private double m_simYaw;
 
   public DriveSubsystem() {
-    m_gyro.setYaw(0);
-  
+    m_gyro.setYaw(180);
+
     // m_gyro.configMountPose(-90, -0.219727 , 0.615234);
-  
-    
-    
-    
+
   }
 
   public void drive(
@@ -121,83 +115,120 @@ public class DriveSubsystem extends SubsystemBase {
       double rotation,
       boolean isFieldRelative,
       boolean isOpenLoop) {
-        // d = d * s
+    // d = d * s
     drive *= SwerveConstants.kMaxSpeedMetersPerSecond;
     strafe *= SwerveConstants.kMaxSpeedMetersPerSecond;
     rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
 
-    //Chassis Speed
-    ChassisSpeeds chassisSpeeds =
-        isFieldRelative ?
-            ChassisSpeeds.fromFieldRelativeSpeeds(
-                drive, strafe, rotation, getHeadingRotation2d())
-                : new ChassisSpeeds(drive, strafe, rotation);
-            //  new ChassisSpeeds(drive*Math.cos(Math.toRadians(m_gyro.getYaw())) + strafe*Math.sin(Math.toRadians(m_gyro.getYaw())),
-            //  -drive*Math.sin(Math.toRadians(m_gyro.getYaw())) + strafe*Math.cos(Math.toRadians(m_gyro.getYaw())), 
-            //  rotation);
+    // Chassis Speed
+    ChassisSpeeds chassisSpeeds = isFieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
+        drive, strafe, rotation, getHeadingRotation2d())
+        : new ChassisSpeeds(drive, strafe, rotation);
+    // new ChassisSpeeds(drive*Math.cos(Math.toRadians(m_gyro.getYaw())) +
+    // strafe*Math.sin(Math.toRadians(m_gyro.getYaw())),
+    // -drive*Math.sin(Math.toRadians(m_gyro.getYaw())) +
+    // strafe*Math.cos(Math.toRadians(m_gyro.getYaw())),
+    // rotation);
 
-    //Module States
-    Map<ModulePosition, SwerveModuleState> moduleStates =
-        ModuleMap.of(SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
+    // Module States
+    Map<ModulePosition, SwerveModuleState> moduleStates = ModuleMap
+        .of(SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
 
     SwerveDriveKinematics.desaturateWheelSpeeds(
         ModuleMap.orderedValues(moduleStates, new SwerveModuleState[0]), SwerveConstants.kMaxSpeedMetersPerSecond);
 
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
       module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
-      driveState = "Drive";
+    driveState = "Drive";
   }
+
   public void slowDrive(
       double drive,
       double strafe,
       double rotation,
       boolean isFieldRelative,
       boolean isOpenLoop) {
-        rotation *= SwerveConstants.kSlowRotationRadiansPerSecond;
+    rotation *= SwerveConstants.kSlowRotationRadiansPerSecond;
 
+    // Chassis Speed
+    ChassisSpeeds chassisSpeeds = isFieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
+        drive, strafe, rotation, getHeadingRotation2d())
+        : new ChassisSpeeds(drive, strafe, rotation);
 
-    //Chassis Speed
-    ChassisSpeeds chassisSpeeds =
-        isFieldRelative ?
-             ChassisSpeeds.fromFieldRelativeSpeeds(
-                drive, strafe, rotation, getHeadingRotation2d())
-            : new ChassisSpeeds(drive, strafe, rotation);
-
-    //Module States
-    Map<ModulePosition, SwerveModuleState> moduleStates =
-        ModuleMap.of(SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
+    // Module States
+    Map<ModulePosition, SwerveModuleState> moduleStates = ModuleMap
+        .of(SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
 
     SwerveDriveKinematics.desaturateWheelSpeeds(
         ModuleMap.orderedValues(moduleStates, new SwerveModuleState[0]), SwerveConstants.kMaxSpeedMetersPerSecond);
 
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
-      module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
+      module.setSlowDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
 
-      driveState = "Slow Drive";
+    driveState = "Drive";
   }
-  public Command followTrajectoryCommand(PathPlannerTrajectory traj) {
-    
-         return new PPSwerveControllerCommand(
-             traj, 
-             this::getPoseMeters, // Pose supplier
-             SwerveConstants.kDriveKinematics, // SwerveDriveKinematics
-             new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-             new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
-             new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
 
-             //refers to the class its in, calls the swerve module
-             this::setSwerveModuleStatesAuto, // Module states consumer
-             true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-             this // Requires this drive subsystem
-         );
-     
- }
-/**
- * Sets States For Swerve Modules and Determines FeedbackLoop Type
- * 
- * @param states
- * @param isOpenLoop
- */
+  public Command followTrajectoryCommand(PathPlannerTrajectory traj) {
+
+    return new PPSwerveControllerCommand(
+        traj,
+        this::getPoseMeters, // Pose supplier
+        SwerveConstants.kDriveKinematics, // SwerveDriveKinematics
+        new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use
+                                    // feedforwards.
+        new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
+        new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will
+                                    // only use feedforwards.
+
+        // refers to the class its in, calls the swerve module
+        this::setSwerveModuleStatesAuto, // Module states consumer
+        true, // Should the path be automatically mirrored depending on alliance color.
+              // Optional, defaults to true
+        this // Requires this drive subsystem
+    );
+
+  }
+
+  public double[] getGyroVelocityXYZ() {
+    double[] xyz = new double[3];
+    m_gyro.getRawGyro(xyz);
+    return xyz;
+  }
+
+  public double getGyroPitch() {
+
+    return m_gyro.getPitch();
+
+  }
+
+  public void setDiamondShape() {
+
+    Map<ModulePosition, SwerveModuleState> moduleState = ModuleMap.of(new SwerveModuleState[] {
+        // front left
+        new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),
+        // front right
+        new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45.0)),
+        // back left
+        new SwerveModuleState(0.0, Rotation2d.fromDegrees(135.0)),
+        // back right
+        new SwerveModuleState(0.0, Rotation2d.fromDegrees(-135.0))
+    });
+
+    for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
+      module.setSlowDesiredState(moduleState.get(module.getModulePosition()), true);
+
+  }
+
+  public void stop() {
+    this.drive(0, 0, 0, true, true);
+  }
+
+  /**
+   * Sets States For Swerve Modules and Determines FeedbackLoop Type
+   * 
+   * @param states
+   * @param isOpenLoop
+   */
   public void setSwerveModuleStates(SwerveModuleState[] states, boolean isOpenLoop) {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, SwerveConstants.kMaxSpeedMetersPerSecond);
 
@@ -211,21 +242,25 @@ public class DriveSubsystem extends SubsystemBase {
 
   /**
    * Sets Odometry, Used in Auto
-   * @param pose 
+   * 
+   * @param pose
    */
 
-   // calls from the setswerveodometry command
-   //only used in auto
+  // calls from the setswerveodometry command
+  // only used in auto
   public void setOdometry(Pose2d pose) {
     m_odometry.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
     m_gyro.setYaw(pose.getRotation().getDegrees());
   }
+
   public void resetGyro() {
     m_gyro.setYaw(0);
     m_gyro.setAccumZAngle(0);
   }
-   /**
+
+  /**
    * Gets Drive Heading
+   * 
    * @return Adjusted Gyro Heading
    */
   public double getHeadingDegrees() {
@@ -235,34 +270,42 @@ public class DriveSubsystem extends SubsystemBase {
   public double getRoll() {
     return m_gyro.getRoll();
   }
-  
+
   public double getPitch() {
     return m_gyro.getPitch();
   }
-  /** 
+
+  /**
    * Gets {@link Rotation2d} from Heading
+   * 
    * @return {@link Rotation2d} from Drive Heading
    */
   public Rotation2d getHeadingRotation2d() {
     return Rotation2d.fromDegrees(getHeadingDegrees());
   }
-/**
+
+  /**
    * Gets Robot Position on the Field in Meters
-   * @return Position of the Robot in XY Coordinates 
+   * 
+   * @return Position of the Robot in XY Coordinates
    */
   public Pose2d getPoseMeters() {
     return m_odometry.getEstimatedPosition();
   }
-/**
+
+  /**
    * Gets Swerve Module From Module Position
+   * 
    * @param {@link ModulePosition}
    * @return Swerve Module
    */
   public SwerveModule getSwerveModule(ModulePosition modulePosition) {
     return m_swerveModules.get(modulePosition);
   }
-/**
+
+  /**
    * Gets Module States
+   * 
    * @return {@link Map Map ofModule Position and SwerveModuleState}
    */
   public Map<ModulePosition, SwerveModuleState> getModuleStates() {
@@ -272,8 +315,10 @@ public class DriveSubsystem extends SubsystemBase {
     }
     return map;
   }
-/**
+
+  /**
    * Gets Module Positions
+   * 
    * @return {@link SwerveModulePosition SwerveModulePosition Array}
    */
   public SwerveModulePosition[] getModulePositions() {
@@ -285,8 +330,7 @@ public class DriveSubsystem extends SubsystemBase {
     };
   }
 
-
-// Returns PID Controllers, Used in Auto
+  // Returns PID Controllers, Used in Auto
 
   public PIDController getXPidController() {
     return m_XController;
@@ -310,66 +354,72 @@ public class DriveSubsystem extends SubsystemBase {
       module.setTurnNeutralMode(mode);
     }
   }
-/**
- * Gets Drive Odometry
- * @return {@link SwerveDriveOdometry}
- */
+
+  /**
+   * Gets Drive Odometry
+   * 
+   * @return {@link SwerveDriveOdometry}
+   */
   public SwerveDrivePoseEstimator getOdometry() {
     return m_odometry;
   }
-/**
- * Updates Drive Odometry
- * 
- */
+
+  /**
+   * Updates Drive Odometry
+   * 
+   */
   public void updateOdometry() {
     m_odometry.update(
         getHeadingRotation2d(),
         getModulePositions());
 
     for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules)) {
-      Translation2d modulePositionFromChassis =
-          SwerveConstants.kModuleTranslations
-              .get(module.getModulePosition())
-              .rotateBy(getHeadingRotation2d())
-              .plus(getPoseMeters().getTranslation());
+      Translation2d modulePositionFromChassis = SwerveConstants.kModuleTranslations
+          .get(module.getModulePosition())
+          .rotateBy(getHeadingRotation2d())
+          .plus(getPoseMeters().getTranslation());
       module.setModulePose(
           new Pose2d(
               modulePositionFromChassis,
               module.getHeadingRotation2d().plus(getHeadingRotation2d())));
     }
   }
+
   // public void setLeds(LED leds) {
-  //   this.m_LED = leds;
+  // this.m_LED = leds;
   // }
   private void updateSmartDashboard() {
 
     SmartDashboard.putNumber("Gyro Angle", getHeadingDegrees());
     SmartDashboard.putString("Drive State", driveState);
+    SmartDashboard.putNumber("Gyro Pitch", getGyroPitch());
   }
-/**s
- * Runs Periodically after Init
- * 
- * 
- * 
- */
+
+  /**
+   * s
+   * Runs Periodically after Init
+   * 
+   * 
+   * 
+   */
   @Override
   public void periodic() {
     updateOdometry();
     updateSmartDashboard();
 
-   
   }
- /**
- * Runs Periodically during Simulation
- * 
- * 
-//  * 
-//  */
+
+  /**
+   * Runs Periodically during Simulation
+   * 
+   * 
+   * // *
+   * //
+   */
   @Override
   public void simulationPeriodic() {
-    ChassisSpeeds chassisSpeed =
-        SwerveConstants.kDriveKinematics.toChassisSpeeds(
-            ModuleMap.orderedValues(getModuleStates(), new SwerveModuleState[0]));
+    ChassisSpeeds chassisSpeed = SwerveConstants.kDriveKinematics.toChassisSpeeds(
+        ModuleMap.orderedValues(getModuleStates(), new SwerveModuleState[0]));
 
     // m_simYaw += chassisSpeed.omegaRadiansPerSecond * 0.06; //changed from .02
 
@@ -377,20 +427,34 @@ public class DriveSubsystem extends SubsystemBase {
     m_gyro.getSimCollection().setRawHeading(-Units.radiansToDegrees(m_simYaw));
   }
 
-
-  public void resetEncoders(){
+  public void resetEncoders() {
 
     for (SwerveModule module : m_swerveModules.values()) {
-      module.resetAngleToAbsolute();;
+      module.resetAngleToAbsolute();
+      ;
     }
 
   }
 
-  public double getVelocity(){
+  public double getVelocity() {
 
     return m_swerveModules.get(ModulePosition.FRONT_LEFT).getDriveMetersPerSecond();
   }
 
+  public void setCoast() {
+    for (SwerveModule module : m_swerveModules.values()) {
+      module.setDriveNeutralMode(NeutralMode.Coast);
 
+    }
+
+  }
+
+  public void teleOpGyroReset() {
+
+    double gyroAngle = m_gyro.getYaw();
+
+    m_gyro.setYaw(180);
+
+  }
 
 }

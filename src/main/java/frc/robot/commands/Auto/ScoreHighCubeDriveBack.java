@@ -23,11 +23,11 @@ import frc.robot.subsystems.manipulator.Wrist;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 
-public class ScoreMidDriveBack extends SequentialCommandGroup {
+public class ScoreHighCubeDriveBack extends SequentialCommandGroup {
   /** Creates a new ScoreMidDriveBack. */
 
   // defineing the requirements for motors it needs to run.
-  public ScoreMidDriveBack(DriveSubsystem m_drive, FieldSim m_fieldSim, ArmInOut m_ArmInOut, ArmPivot m_ArmPivot,
+  public ScoreHighCubeDriveBack(DriveSubsystem m_drive, FieldSim m_fieldSim, ArmInOut m_ArmInOut, ArmPivot m_ArmPivot,
       GripperIntake m_Gripper, Wrist m_Wrist, LED m_LED) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -36,10 +36,12 @@ public class ScoreMidDriveBack extends SequentialCommandGroup {
     addCommands(
 
         new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(1),
-        new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(2),
+        new RunCommand(m_Gripper::GripperFast, m_Gripper).withTimeout(1),
         new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1),
+        new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(0.1),
+        new RunCommand(() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(1),
         new ManipulatorGroundAuto(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(0.1),
-        new RunCommand(() -> m_drive.drive(0.3, 0, 0, true, true), m_drive).withTimeout(2)
+        new RunCommand(() -> m_drive.drive(0.2, 0, 0, true, true), m_drive).withTimeout(2)
 
     );
   }

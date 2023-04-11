@@ -1,11 +1,4 @@
 {
-  "HALProvider": {
-    "Timing": {
-      "window": {
-        "visible": false
-      }
-    }
-  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
@@ -29,11 +22,19 @@
       "/LiveWindow/Ungrouped/Talon FX [5]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [6]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [7]": "Motor Controller",
+      "/SmartDashboard/Active / Toggle Cone": "Command",
+      "/SmartDashboard/Active / Toggle Cube": "Command",
       "/SmartDashboard/Auto Selector": "String Chooser",
+      "/SmartDashboard/Balance": "Command",
       "/SmartDashboard/Field2d": "Field2d",
       "/SmartDashboard/Scheduler": "Scheduler"
     },
     "windows": {
+      "/SmartDashboard/Auto Selector": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field2d": {
         "window": {
           "visible": true
@@ -44,6 +45,9 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "Auto Selector": {
+          "open": true
+        },
         "open": true
       }
     }

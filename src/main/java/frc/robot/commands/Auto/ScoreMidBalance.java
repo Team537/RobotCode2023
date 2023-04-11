@@ -5,12 +5,14 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.manipulator.ManipulatorGround;
 import frc.robot.commands.manipulator.ManipulatorGroundAuto;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.manipulator.ManipulatorZero;
+import frc.robot.commands.swerve.SetSwerveBrakeMode;
 import frc.robot.simulation.FieldSim;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
@@ -23,11 +25,11 @@ import frc.robot.subsystems.manipulator.Wrist;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 
-public class ScoreMidDriveBack extends SequentialCommandGroup {
+public class ScoreMidBalance extends SequentialCommandGroup {
   /** Creates a new ScoreMidDriveBack. */
 
   // defineing the requirements for motors it needs to run.
-  public ScoreMidDriveBack(DriveSubsystem m_drive, FieldSim m_fieldSim, ArmInOut m_ArmInOut, ArmPivot m_ArmPivot,
+  public ScoreMidBalance(DriveSubsystem m_drive, FieldSim m_fieldSim, ArmInOut m_ArmInOut, ArmPivot m_ArmPivot,
       GripperIntake m_Gripper, Wrist m_Wrist, LED m_LED) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -38,8 +40,10 @@ public class ScoreMidDriveBack extends SequentialCommandGroup {
         new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(1),
         new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(2),
         new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1),
+        new RunCommand(() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(0.1),
         new ManipulatorGroundAuto(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(0.1),
-        new RunCommand(() -> m_drive.drive(0.3, 0, 0, true, true), m_drive).withTimeout(2)
+        new RunCommand(() -> m_drive.drive(0.1, 0, 0, true, true), m_drive).withTimeout(4.7),
+        new BalanceChargeStation(m_drive, false, m_LED)
 
     );
   }

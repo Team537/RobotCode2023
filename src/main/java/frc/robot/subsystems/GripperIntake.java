@@ -31,8 +31,8 @@ public class GripperIntake extends SubsystemBase {
   }
   public void GripperIn() {
 
-    m_Gripper.set(0.25);
-    m_Gripper2.set(-0.25);
+    m_Gripper.set(0.36);
+    m_Gripper2.set(-0.36);
     gripperState = "Intaking";
   }
   public void GripperStop() {
@@ -41,13 +41,13 @@ public class GripperIntake extends SubsystemBase {
     gripperState = "Stopped";
   }
   public void GripperOut() {
-    m_Gripper.set(-0.05);
-    m_Gripper2.set(0.05);
+    m_Gripper.set(-0.072);
+    m_Gripper2.set(0.072);
     gripperState = "Outaking";
   }
   public void GripperFast() {
-    m_Gripper.set(-0.8);
-    m_Gripper2.set(0.8);
+    m_Gripper.set(-1);
+    m_Gripper2.set(1);
     gripperState = "SuperSpeed";
   }
 
