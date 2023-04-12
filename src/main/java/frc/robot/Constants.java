@@ -292,10 +292,10 @@ public class Constants {
 
     public static final double P_X = 2;
     public static final double I_X = 0;
-    public static final double D_X = 0;
+    public static final double D_X = 0.2;
     public static final double P_Y = 2;
     public static final double I_Y = 0;
-    public static final double D_Y = 0;
+    public static final double D_Y = 0.2;
     public static final double P_ROTATION = 0.5;
     public static final double I_ROTATION = 0;
     public static final double D_ROTATION = 0.01;
