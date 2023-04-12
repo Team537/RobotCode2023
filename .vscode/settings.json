@@ -43,5 +43,6 @@
     "editor.renderWhitespace": "none",
     "editor.autoClosingBrackets": "always",
     "editor.autoIndent": "full",
+    "editor.bracketPairColorization.enabled" : true,
   }
 } 
