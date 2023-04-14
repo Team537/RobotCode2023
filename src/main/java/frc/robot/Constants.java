@@ -251,14 +251,14 @@ public class Constants {
   }
 
   public static class SwerveConstants {
-    public static final double WHEEL_RADIUS = 1.75;
+    public static final double WHEEL_RADIUS = Units.inchesToMeters(1.75);
     public static final int ENCODER_RESOLUTION = 2048;
     public static final double DRIVE_MOTOR_GEAR_RATIO = 7.13;
     public static final double TURNING_MOTOR_GEAR_RATIO = 15.428;
 
-    public static final double FEED_FORWARD_STATIC_GAIN = 0.605 / 12;
-    public static final double FEED_FORWARD_VELOCITY_GAIN = 1.72 / 13.8;
-    public static final double FEED_FORWARD_ACCELERATION_GAIN = 0.193 / 12;
+    public static final double FEED_FORWARD_STATIC_GAIN = 0.1;
+    public static final double FEED_FORWARD_VELOCITY_GAIN = 0.7;
+    public static final double FEED_FORWARD_ACCELERATION_GAIN = 0.1;
 
     public static final double TURN_ENCODER_METERS_PER_PULSE =
 
