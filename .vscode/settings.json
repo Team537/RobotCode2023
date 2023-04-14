@@ -13,7 +13,7 @@
     "**/.settings": true,
     "**/.factorypath": true,
     "**/*~": true
-  },
+  },  
 
   "java.test.config": [
     {
@@ -34,7 +34,7 @@
   "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable",
   
   "[JAVA]": {
-    
+
     //"editor.formatOnSave": true: This option tells VSCode to format the code automatically when you save the file.
     "editor.formatOnSave": true,
 
@@ -66,10 +66,10 @@
     "editor.autoClosingBrackets": "always",
 
     //"editor.autoIndent": "full",: This option tells VSCode to automatically indent the code as you type.
-    "editor.autoIndent": "full",
+    "editor.autoIndent": "none",
 
     //"editor.bracketPairColorization.enabled" : true,: This option enables bracket pair colorization, which highlights matching brackets and parentheses with different colors to make it easier to see where a block of code begins and ends.
     "editor.bracketPairColorization.enabled" : true,
 
   }
-} 
+}
