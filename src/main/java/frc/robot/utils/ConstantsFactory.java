@@ -11,12 +11,12 @@ public class ConstantsFactory {
         this.filename = filename;
     }
 
-    public Object getConstants(Class aClass) {
+    public Constants getConstants(Constants aClass) {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.findAndRegisterModules();
 
         try {
-            return mapper.readValue(new File(filename), aClass);
+            return (Constants) mapper.readValue(new File(filename), aClass);
         } catch (Exception e) {
             return null;
         }
