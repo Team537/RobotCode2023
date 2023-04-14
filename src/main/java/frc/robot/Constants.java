@@ -257,7 +257,7 @@ public class Constants {
     public static final double TURNING_MOTOR_GEAR_RATIO = 15.428;
 
     public static final double FEED_FORWARD_STATIC_GAIN = 0.605 / 12;
-    public static final double FEED_FORWARD_VELOCITY_GAIN = 0.1;
+    public static final double FEED_FORWARD_VELOCITY_GAIN = 0.5;
     public static final double FEED_FORWARD_ACCELERATION_GAIN = 0.1;
 
     public static final double TURN_ENCODER_METERS_PER_PULSE =
@@ -267,7 +267,7 @@ public class Constants {
     public static final double DRIVE_ENCODER_METERS_PER_PULSE = (2 * WHEEL_RADIUS * Math.PI)
         / (SwerveConstants.ENCODER_RESOLUTION * DRIVE_MOTOR_GEAR_RATIO);
 
-    public static final double MAX_SPEED_METERS_PER_SECOND = 5;
+    public static final double MAX_SPEED_METERS_PER_SECOND = 1;
     public static final double MAX_ROTATION_RADIANS_PER_SECOND = Math.PI * 1;
     public static final double MAX_ROTATION_RADIANS_PER_SECOND_SQUARED = Math.PI * 1;
 
