@@ -13,7 +13,7 @@
     "**/.settings": true,
     "**/.factorypath": true,
     "**/*~": true
-  },
+  },  
 
   "java.test.config": [
     {
@@ -33,8 +33,7 @@
   "wpilib.stopSimulationOnEntry": false,
   "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable",
   
-  "[JAVA]": {
-    
+ "[java]": {
     //"editor.formatOnSave": true: This option tells VSCode to format the code automatically when you save the file.
     "editor.formatOnSave": true,
 
@@ -45,13 +44,13 @@
     "editor.tabSize": 2,
 
     //"editor.rulers" : [125],: This option shows a vertical line at column 125, which is a common guideline for keeping code within a certain width to improve readability.
-    "editor.rulers" : [125],
+    "editor.rulers" : [136],
+
+    //"editor.wordWrapColumn": 125: This option sets the column number at which to wrap the line.
+    "editor.wordWrapColumn": 140,
 
     //"editor.wordWrap" : "on",: This option tells VSCode to wrap long lines of code to the next line.
     "editor.wordWrap" : "bounded",
-
-    //"editor.wordWrapColumn": 125: This option sets the column number at which to wrap the line.
-    "editor.wordWrapColumn": 125,
 
     //"editor.wrappingIndent": "same",: This option sets the indentation level for wrapped lines to be the same as the original line.
     "editor.wrappingIndent": "same",
@@ -70,6 +69,5 @@
 
     //"editor.bracketPairColorization.enabled" : true,: This option enables bracket pair colorization, which highlights matching brackets and parentheses with different colors to make it easier to see where a block of code begins and ends.
     "editor.bracketPairColorization.enabled" : true,
-
-  }
-} 
+ }
+}
