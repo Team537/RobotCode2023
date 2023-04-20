@@ -107,6 +107,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     // m_gyro.configMountPose(-90, -0.219727 , 0.615234);
 
+    // resetEncoders();
+    setEncoders(0);
+
   }
 
   public void drive(
@@ -166,6 +169,7 @@ public class DriveSubsystem extends SubsystemBase {
       module.setSlowDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
 
     driveState = "Drive";
+
   }
 
   public Command followTrajectoryCommand(PathPlannerTrajectory traj) {
@@ -404,6 +408,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   @Override
   public void periodic() {
+
     updateOdometry();
     updateSmartDashboard();
 
@@ -428,12 +433,19 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void resetEncoders() {
+    double setEncoderDegrees;
 
     for (SwerveModule module : m_swerveModules.values()) {
       module.resetAngleToAbsolute();
       ;
     }
 
+  }
+
+  public void setEncoders(double setAngle) {
+    for (SwerveModule module : m_swerveModules.values()) {
+      module.setEncoderAngle(setAngle);
+    }
   }
 
   public double getVelocity() {

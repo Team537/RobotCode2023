@@ -44,6 +44,7 @@ public class SwerveModule extends SubsystemBase {
   double deg;
   Pose2d m_pose;
   SRXMagEncoder m_SrxMagEncoder;
+  double m_enterAngle;
 
   SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
       SwerveConstants.ksDriveVoltSecondsPerMeter,
@@ -136,18 +137,24 @@ public class SwerveModule extends SubsystemBase {
     // TODO: Do we need to do 1 full revolution for the
     // mag encoder to read the right value?
 
-    // Angle/Mag encoder position is always an absolute position - always sensing
-    // motor position is always 0 when code starts
-    // set motor position to opposite of mag, to make that mag angle 0
-    // add wanted position to -angle to make position what you want
-    var angle = Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
-    m_turnMotor.setSelectedSensorPosition((-angle + m_angleOffset) / SwerveConstants.kTurningEncoderDistancePerPulse);
+    /**
+     * Angle/Mag encoder position is always an absolute position - always sensing
+     * motor position is always 0 when code starts
+     * set motor position to opposite of mag, to make that mag angle 0
+     * add wanted position to -angle to make position what you want
+     */
+    double angle = Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
+    m_turnMotor.setSelectedSensorPosition((m_angleOffset) / SwerveConstants.kTurningEncoderDistancePerPulse);
 
     // double pos = 0;
     // double angle = (m_SrxMagEncoder.getAbsolutePosition() -
     // m_SrxMagEncoder.getPositionOffset());
 
     // m_turnMotor.setSelectedSensorPosition(angle+pos);
+  }
+
+  public void setEncoderAngle(double setAngle) {
+    m_turnMotor.setSelectedSensorPosition((m_enterAngle) / SwerveConstants.kTurningEncoderDistancePerPulse);
   }
 
   /**
@@ -346,9 +353,6 @@ public class SwerveModule extends SubsystemBase {
 
   /**
    * Updates SmartDashboard
-   * 
-   * 
-   * 
    */
   private void updateSmartDashboard() {
     SmartDashboard.putNumber(
@@ -365,19 +369,22 @@ public class SwerveModule extends SubsystemBase {
         "Module " + m_moduleNumber + " Angle", angle);
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Last Angle", m_lastAngle);
+    SmartDashboard.putNumber(
+        "Module " + m_moduleNumber + " enter angle", m_enterAngle);
 
   }
 
   /**
    * Runs Periodically after Init
    * 
-   * 
-   * 
    */
   @Override
   public void periodic() {
+    m_enterAngle = SmartDashboard.getNumber(
+        "Module " + m_moduleNumber + " enter angle", m_enterAngle);
     updateSmartDashboard();
 
+    setEncoderAngle(0);
   }
 
   /**
