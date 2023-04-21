@@ -147,53 +147,6 @@ public class RobotContainer {
 
         public RobotContainer() {
 
-                /*
-                 * // NON LED COMMANDS
-                 * //This is all commented out because we use a single button to order multiple
-                 * commands, using commands made
-                 * //for each part of the manipulator. they were then merged into multiple
-                 * action commands, which send multiple
-                 * //objects to multiple positions with one button press
-                 * dPadLeftButton.onTrue(new
-                 * StartEndCommand(m_ArmInOut::armGround,m_ArmInOut::armLowGoal,m_ArmInOut));
-                 * dPadRightButton.onTrue(new
-                 * StartEndCommand(m_ArmInOut::armZero,m_ArmInOut::armMidGoal,m_ArmInOut));
-                 * leftBumper.onTrue(new
-                 * StartEndCommand(m_ArmInOut::armTest,m_ArmInOut::armMidGoal,m_ArmInOut));
-                 * 
-                 * // // dPadUpButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementUp,
-                 * m_ArmInOut::armIncrementDown, m_ArmInOut));
-                 * // // dPadDownButton.onTrue(new StartEndCommand(m_ArmInOut::armIncrementDown,
-                 * m_ArmInOut::armIncrementUp, m_ArmInOut));
-                 * //^^ for incrementing the position of the arm in-out
-                 * 
-                 * yButton.onTrue(new
-                 * StartEndCommand(m_ArmPivot::ArmPositionZero,m_ArmPivot::ArmPositionHighGoal,
-                 * m_ArmPivot));
-                 * xButton.onTrue(new
-                 * StartEndCommand(m_ArmPivot::ArmPositionGround,m_ArmPivot::ArmPositionLowGoal,
-                 * m_ArmPivot));
-                 * backButton.onTrue(new
-                 * StartEndCommand(m_ArmPivot::ArmPositionTest,m_ArmPivot::ArmPositionLowGoal,
-                 * m_ArmPivot));
-                 * 
-                 * dPadDownButton.onTrue(new
-                 * StartEndCommand(m_Wrist::WristPositionTest,m_Wrist::WristPositionHighGoal,
-                 * m_Wrist));
-                 * dPadUpButton.onTrue(new
-                 * StartEndCommand(m_Wrist::WristPositionGround,m_Wrist::WristPositionMidGoal,
-                 * m_Wrist));
-                 * rightBumper.onTrue(new
-                 * StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionHighGoal,
-                 * m_Wrist));
-                 * 
-                 * aButton.toggleOnTrue(new
-                 * StartEndCommand(m_Gripper::GripperIn,m_Gripper::GripperStop,m_Gripper));
-                 * bButton.toggleOnTrue(new
-                 * StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
-                 * 36
-                 */
-                // LED COMMAND
                 aButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
                 bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
                 yButton.onTrue(high_goal);
