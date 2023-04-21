@@ -19,24 +19,18 @@ import frc.robot.subsystems.manipulator.Wrist;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ManipulatorMidGoal extends SequentialCommandGroup {
 
-
   /** Creates a new ManipulatorHighGoal. */
   public ManipulatorMidGoal(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
 
-    
-     
-   //m_encoderExtension.getPosition();
-    
-     
+    // m_encoderExtension.getPosition();
+
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      
-      new ParallelCommandGroup(
-        new StartEndCommand(m_ArmInOut::armMidGoal,m_ArmInOut::armMidGoal,m_ArmInOut),
-        new StartEndCommand(m_ArmPivot::ArmPositionMidGoal,m_ArmPivot::ArmPositionMidGoal,m_ArmPivot),
-        new StartEndCommand(m_Wrist::WristPositionMidGoal,m_Wrist::WristPositionMidGoal,m_Wrist)
-      )
-    );
+
+        new ParallelCommandGroup(
+            new StartEndCommand(m_ArmInOut::ArmInOutMidGoal, m_ArmInOut::ArmInOutMidGoal, m_ArmInOut),
+            new StartEndCommand(m_ArmPivot::ArmPositionMidGoal, m_ArmPivot::ArmPositionMidGoal, m_ArmPivot),
+            new StartEndCommand(m_Wrist::WristPositionMidGoal, m_Wrist::WristPositionMidGoal, m_Wrist)));
   }
 }

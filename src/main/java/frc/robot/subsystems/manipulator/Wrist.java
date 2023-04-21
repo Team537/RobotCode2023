@@ -16,132 +16,84 @@ import frc.robot.Constants;
 
 public class Wrist extends SubsystemBase {
   private CANSparkMax m_Wrist = new CANSparkMax(Constants.WristConstants.kWrist, MotorType.kBrushless);
-  private SparkMaxPIDController m_pidControllerPivot1 = m_Wrist.getPIDController();
-  // private ArmPivot m_ArmPivot =  new ArmPivot();
-  private RelativeEncoder m_encoderPivot1 = m_Wrist.getEncoder();
-  // public double armAngle = m_ArmPivot.getArmAngle();
+  private SparkMaxPIDController m_WristPidController = m_Wrist.getPIDController();
+  private RelativeEncoder m_WristEncoder = m_Wrist.getEncoder();
   private String wristState = "Default";
 
-
   /** Creates a new ArmPivot. */
-  public  Wrist() {
+  public Wrist() {
 
   }
 
+  public void WristPidDefaults() {
+    m_WristPidController.setP(Constants.SparkPIDFConstants.kP);
+    m_WristPidController.setI(Constants.SparkPIDFConstants.kI);
+    m_WristPidController.setD(Constants.SparkPIDFConstants.kD);
+    m_WristPidController.setIZone(Constants.SparkPIDFConstants.kIz);
+    m_WristPidController.setFF(Constants.SparkPIDFConstants.kFF);
+    m_WristPidController.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
+        Constants.SparkPIDFConstants.kMaxOutput);
+    m_WristPidController.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxVelocityWrist, 0);
+    m_WristPidController.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
+    m_WristPidController.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxAccelWrist, 0);
+    m_WristPidController.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
+  }
+
   public void WristPositionMidGoal() {
-    m_pidControllerPivot1.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerPivot1.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionMidGoal, CANSparkMax.ControlType.kSmartMotion);
+    WristPidDefaults();
+    m_WristPidController.setReference(Constants.WristConstants.kWristPositionMidGoal,
+        CANSparkMax.ControlType.kSmartMotion);
     wristState = "Mid Goal";
 
   }
 
   public void WristPositionHighGoal() {
-    m_pidControllerPivot1.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerPivot1.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionHighGoal, CANSparkMax.ControlType.kSmartMotion);
+    WristPidDefaults();
+    m_WristPidController.setReference(Constants.WristConstants.kWristPositionHighGoal,
+        CANSparkMax.ControlType.kSmartMotion);
     wristState = "High Goal";
-   
+
   }
 
   public void WristPositionShelfHumanPL() {
-    m_pidControllerPivot1.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerPivot1.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionShelfHumanPL, CANSparkMax.ControlType.kSmartMotion);
+    WristPidDefaults();
+    m_WristPidController.setReference(Constants.WristConstants.kWristPositionShelfHumanPL,
+        CANSparkMax.ControlType.kSmartMotion);
     wristState = "ShelfMid";
   }
-  
+
   public void WristPositionZero() {
-    m_pidControllerPivot1.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerPivot1.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionZero, CANSparkMax.ControlType.kSmartMotion);
+    WristPidDefaults();
+    m_WristPidController.setReference(Constants.WristConstants.kWristPositionZero,
+        CANSparkMax.ControlType.kSmartMotion);
     wristState = "Zero";
   }
 
   public void WristPositionGround() {
-    m_pidControllerPivot1.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerPivot1.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionGround, CANSparkMax.ControlType.kSmartMotion);
+    WristPidDefaults();
+    m_WristPidController.setReference(Constants.WristConstants.kWristPositionGround,
+        CANSparkMax.ControlType.kSmartMotion);
     wristState = "Ground";
   }
 
   public void WristPositionManualUp() {
-    m_pidControllerPivot1.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerPivot1.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionManualUp, CANSparkMax.ControlType.kSmartMotion);
+    WristPidDefaults();
+    m_WristPidController.setReference(Constants.WristConstants.kWristPositionManualUp,
+        CANSparkMax.ControlType.kSmartMotion);
     wristState = "ManualUp";
   }
 
   public void WristPositionManualDown() {
-    m_pidControllerPivot1.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerPivot1.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerPivot1.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerPivot1.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerPivot1.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerPivot1.setOutputRange(Constants.SparkPIDFConstants.kMinOutput, Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerPivot1.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionManualDown, CANSparkMax.ControlType.kSmartMotion);
+    WristPidDefaults();
+    m_WristPidController.setReference(Constants.WristConstants.kWristPositionManualDown,
+        CANSparkMax.ControlType.kSmartMotion);
     wristState = "ManualUp";
   }
 
-
-  
-
   @Override
   public void periodic() {
-    SmartDashboard.putNumber(" Wrist Position", m_encoderPivot1.getPosition());
-    SmartDashboard.putNumber("Wrist Velocity",m_encoderPivot1.getVelocity());
+    SmartDashboard.putNumber(" Wrist Position", m_WristEncoder.getPosition());
+    SmartDashboard.putNumber("Wrist Velocity", m_WristEncoder.getVelocity());
     SmartDashboard.putString("Wrist State", wristState);
     // This method will be called once per scheduler run
   }

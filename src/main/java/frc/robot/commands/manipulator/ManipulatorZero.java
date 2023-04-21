@@ -23,14 +23,10 @@ public class ManipulatorZero extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
-
-
     addCommands(
-      new ParallelCommandGroup(
-      new StartEndCommand(m_ArmInOut::armZero,m_ArmInOut::armZero,m_ArmInOut),
-      new StartEndCommand(m_ArmPivot::ArmPositionZero,m_ArmPivot::ArmPositionZero,m_ArmPivot),
-      new StartEndCommand(m_Wrist::WristPositionZero,m_Wrist::WristPositionZero,m_Wrist)
-      )
-    );
+        new ParallelCommandGroup(
+            new StartEndCommand(m_ArmInOut::ArmInOutZero, m_ArmInOut::ArmInOutZero, m_ArmInOut),
+            new StartEndCommand(m_ArmPivot::ArmPositionZero, m_ArmPivot::ArmPositionZero, m_ArmPivot),
+            new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero, m_Wrist)));
   }
 }

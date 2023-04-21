@@ -19,25 +19,16 @@ import frc.robot.subsystems.manipulator.Wrist;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ManipulatorShelfHumanPL extends SequentialCommandGroup {
 
-
-
-  
   /** Creates a new ManipulatorHighGoal. */
   public ManipulatorShelfHumanPL(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
 
-    
-     
-   
-    
-     
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new ParallelCommandGroup(
-      new StartEndCommand(m_ArmInOut::armShelfHumanPL,m_ArmInOut::armShelfHumanPL,m_ArmInOut),
-      new StartEndCommand(m_ArmPivot::ArmPositionShelfHumanPL,m_ArmPivot::ArmPositionShelfHumanPL,m_ArmPivot),
-      new StartEndCommand(m_Wrist::WristPositionShelfHumanPL,m_Wrist::WristPositionShelfHumanPL,m_Wrist)
-    )
-    
+        new StartEndCommand(m_ArmInOut::ArmInOutShelfHumanPL, m_ArmInOut::ArmInOutShelfHumanPL, m_ArmInOut),
+        new StartEndCommand(m_ArmPivot::ArmPositionShelfHumanPL, m_ArmPivot::ArmPositionShelfHumanPL, m_ArmPivot),
+        new StartEndCommand(m_Wrist::WristPositionShelfHumanPL, m_Wrist::WristPositionShelfHumanPL, m_Wrist))
+
     );
   }
 }

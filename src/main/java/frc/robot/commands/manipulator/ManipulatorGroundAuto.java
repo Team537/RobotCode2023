@@ -27,7 +27,7 @@ public class ManipulatorGroundAuto extends SequentialCommandGroup {
     addCommands(new ParallelCommandGroup(
 
         // calls them from the subsystem class
-        new StartEndCommand(m_ArmInOut::armGround, m_ArmInOut::armGround, m_ArmInOut),
+        new StartEndCommand(m_ArmInOut::ArmInOutGround, m_ArmInOut::ArmInOutGround, m_ArmInOut),
         new StartEndCommand(m_ArmPivot::ArmPositionGround, m_ArmPivot::ArmPositionGround, m_ArmPivot),
         new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero, m_Wrist)));
   }

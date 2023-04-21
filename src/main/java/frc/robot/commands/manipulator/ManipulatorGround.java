@@ -17,21 +17,18 @@ import frc.robot.subsystems.manipulator.Wrist;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ManipulatorGround extends SequentialCommandGroup {
 
-
   /** Creates a new ManipulatorHighGoal. */
   public ManipulatorGround(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
-    
+
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
-    //schedules commands to run
-    addCommands( new ParallelCommandGroup(
+    // schedules commands to run
+    addCommands(new ParallelCommandGroup(
 
-      //calls them from the subsystem class
-      new StartEndCommand(m_ArmInOut::armGround,m_ArmInOut::armGround,m_ArmInOut),
-      new StartEndCommand(m_ArmPivot::ArmPositionGround,m_ArmPivot::ArmPositionGround,m_ArmPivot),
-      new StartEndCommand(m_Wrist::WristPositionGround,m_Wrist::WristPositionGround,m_Wrist)
-    )
-    );
+        // calls them from the subsystem class
+        new StartEndCommand(m_ArmInOut::ArmInOutGround, m_ArmInOut::ArmInOutGround, m_ArmInOut),
+        new StartEndCommand(m_ArmPivot::ArmPositionGround, m_ArmPivot::ArmPositionGround, m_ArmPivot),
+        new StartEndCommand(m_Wrist::WristPositionGround, m_Wrist::WristPositionGround, m_Wrist)));
   }
 }
