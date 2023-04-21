@@ -25,15 +25,6 @@ public class ArmInOut extends SubsystemBase {
   private RelativeEncoder m_ArmInOutEncoder = m_ArmInOut.getEncoder();
   private String armInOutState = "Default";
 
-  @Override
-  public void periodic() {
-    SmartDashboard.putNumber(" Extend Position", m_ArmInOutEncoder.getPosition());
-    SmartDashboard.putNumber("Extension Velocity", m_ArmInOutEncoder.getVelocity());
-    SmartDashboard.putString("Arm In Out State", armInOutState);
-
-    // This method will be called once per scheduler run
-  }
-
   public void ArmInOutPidDefaults() {
     m_ArmInOutPidController.setP(Constants.SparkPIDFConstants.kP);
     m_ArmInOutPidController.setI(Constants.SparkPIDFConstants.kI);
@@ -78,12 +69,28 @@ public class ArmInOut extends SubsystemBase {
     armInOutState = "Zero";
   }
 
-  public void ArmInOutGround() {
+  public void ArmInOutGroundForward() {
     ArmInOutPidDefaults();
-    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.kArmInOutPositionGround,
+    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.kArmInOutPositionGroundForward,
         CANSparkMax.ControlType.kSmartMotion);
-    armInOutState = "Ground";
+    armInOutState = "GroundForward";
 
+  }
+
+  public void ArmInOutGroundBack() {
+    ArmInOutPidDefaults();
+    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.kArmInOutPositionGroundBack,
+        CANSparkMax.ControlType.kSmartMotion);
+    armInOutState = "GroundBack";
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber(" Extend Position", m_ArmInOutEncoder.getPosition());
+    SmartDashboard.putNumber("Extension Velocity", m_ArmInOutEncoder.getVelocity());
+    SmartDashboard.putString("Arm In Out State", armInOutState);
+
+    // This method will be called once per scheduler run
   }
 
 }

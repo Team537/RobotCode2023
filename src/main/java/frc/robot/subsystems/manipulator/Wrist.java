@@ -69,11 +69,11 @@ public class Wrist extends SubsystemBase {
     wristState = "Zero";
   }
 
-  public void WristPositionGround() {
+  public void WristPositionGroundForward() {
     WristPidDefaults();
-    m_WristPidController.setReference(Constants.WristConstants.kWristPositionGround,
+    m_WristPidController.setReference(Constants.WristConstants.kWristPositionGroundForward,
         CANSparkMax.ControlType.kSmartMotion);
-    wristState = "Ground";
+    wristState = "GroundForward";
   }
 
   public void WristPositionManualUp() {
@@ -88,6 +88,13 @@ public class Wrist extends SubsystemBase {
     m_WristPidController.setReference(Constants.WristConstants.kWristPositionManualDown,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "ManualUp";
+  }
+
+  public void WristPositionGroundBack() {
+    WristPidDefaults();
+    m_WristPidController.setReference(Constants.WristConstants.kWristPositionGroundBack,
+        CANSparkMax.ControlType.kSmartMotion);
+    wristState = "GroundBack";
   }
 
   @Override

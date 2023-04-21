@@ -15,10 +15,10 @@ import frc.robot.subsystems.manipulator.Wrist;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ManipulatorGround extends SequentialCommandGroup {
+public class ManipulatorGroundForward extends SequentialCommandGroup {
 
   /** Creates a new ManipulatorHighGoal. */
-  public ManipulatorGround(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
+  public ManipulatorGroundForward(ArmPivot m_ArmPivot, ArmInOut m_ArmInOut, Wrist m_Wrist, LED m_LED) {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -27,8 +27,8 @@ public class ManipulatorGround extends SequentialCommandGroup {
     addCommands(new ParallelCommandGroup(
 
         // calls them from the subsystem class
-        new StartEndCommand(m_ArmInOut::ArmInOutGround, m_ArmInOut::ArmInOutGround, m_ArmInOut),
-        new StartEndCommand(m_ArmPivot::ArmPositionGround, m_ArmPivot::ArmPositionGround, m_ArmPivot),
-        new StartEndCommand(m_Wrist::WristPositionGround, m_Wrist::WristPositionGround, m_Wrist)));
+        new StartEndCommand(m_ArmInOut::ArmInOutGroundForward, m_ArmInOut::ArmInOutGroundForward, m_ArmInOut),
+        new StartEndCommand(m_ArmPivot::ArmPositionGroundForward, m_ArmPivot::ArmPositionGroundForward, m_ArmPivot),
+        new StartEndCommand(m_Wrist::WristPositionGroundForward, m_Wrist::WristPositionGroundForward, m_Wrist)));
   }
 }

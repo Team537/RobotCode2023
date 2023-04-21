@@ -70,11 +70,11 @@ public class ArmPivot extends SubsystemBase {
 
   }
 
-  public void ArmPositionGround() {
+  public void ArmPositionGroundForward() {
     ArmPivotPidDefaults();
-    m_ArmPivotPidController.setReference(Constants.ArmPivotConstants.kArmPivotPositionGround,
+    m_ArmPivotPidController.setReference(Constants.ArmPivotConstants.kArmPivotPositionGroundForward,
         CANSparkMax.ControlType.kSmartMotion);
-    armPivotState = "Ground";
+    armPivotState = "GroundForward";
 
   }
 
@@ -84,6 +84,13 @@ public class ArmPivot extends SubsystemBase {
         CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "Test";
 
+  }
+
+  public void ArmPivotGroundBack() {
+    ArmPivotPidDefaults();
+    m_ArmPivotPidController.setReference(Constants.ArmPivotConstants.kArmPivotPositionGroundBack,
+        CANSparkMax.ControlType.kSmartMotion);
+    armPivotState = "GroundBack";
   }
 
   @Override

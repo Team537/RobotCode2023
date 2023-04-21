@@ -27,7 +27,8 @@ import frc.robot.commands.led.LedLowGoal;
 import frc.robot.commands.led.LedMidGoal;
 import frc.robot.commands.led.LedShelf;
 import frc.robot.commands.manipulator.ManipulatorHighGoal;
-import frc.robot.commands.manipulator.ManipulatorGround;
+import frc.robot.commands.manipulator.ManipulatorGroundBack;
+import frc.robot.commands.manipulator.ManipulatorGroundForward;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.manipulator.ManipulatorShelfHumanPL;
 import frc.robot.commands.manipulator.ManipulatorZero;
@@ -91,8 +92,10 @@ public class RobotContainer {
                         new ManipulatorHighGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
         Command mid_goal = new ParallelCommandGroup(new LedMidGoal(m_LED),
                         new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
-        Command ground = new ParallelCommandGroup(new LedLowGoal(m_LED),
-                        new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
+        Command ground_forward = new ParallelCommandGroup(new LedLowGoal(m_LED),
+                        new ManipulatorGroundForward(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
+        Command ground_back = new ParallelCommandGroup(new LedLowGoal(m_LED),
+                        new ManipulatorGroundBack(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
         Command shelf_HuPL = new ParallelCommandGroup(new LedShelf(m_LED),
                         new ManipulatorShelfHumanPL(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
         Command zeros = new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED);
@@ -152,8 +155,9 @@ public class RobotContainer {
                 yButton.onTrue(high_goal);
                 xButton.onTrue(shelf_HuPL);
 
-                aButton.onTrue(ground);
+                aButton.onTrue(ground_forward);
                 bButton.onTrue(mid_goal);
+                // nonExistantButton.onTrue(ground_back);
 
                 leftBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
                                 new StartEndCommand(m_Gripper::GripperOut, m_Gripper::GripperStop, m_Gripper)));
