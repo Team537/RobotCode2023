@@ -107,8 +107,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     // m_gyro.configMountPose(-90, -0.219727 , 0.615234);
 
-    // resetEncoders();
-    setEncoders(0);
+    resetEncoders();
 
   }
 

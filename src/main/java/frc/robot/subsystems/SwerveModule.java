@@ -114,7 +114,9 @@ public class SwerveModule extends SubsystemBase {
     // m_angleEncoder.configFactoryDefault();
     // m_angleEncoder.configAllSettings(CtreUtils.generateCanCoderConfig());
 
-    // resetAngleToAbsolute();
+    resetAngleToAbsolute();
+
+    resetEncoders();
   }
 
   /**
@@ -154,7 +156,7 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void setEncoderAngle(double setAngle) {
-    m_turnMotor.setSelectedSensorPosition((m_enterAngle) / SwerveConstants.kTurningEncoderDistancePerPulse);
+    m_turnMotor.setSelectedSensorPosition(m_enterAngle);
   }
 
   /**
@@ -384,7 +386,6 @@ public class SwerveModule extends SubsystemBase {
         "Module " + m_moduleNumber + " enter angle", m_enterAngle);
     updateSmartDashboard();
 
-    setEncoderAngle(0);
   }
 
   /**
