@@ -106,7 +106,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_gyro.setYaw(180);
 
     // m_gyro.configMountPose(-90, -0.219727 , 0.615234);
-
+    // setEncoders(0);
     resetEncoders();
 
   }
@@ -435,7 +435,7 @@ public class DriveSubsystem extends SubsystemBase {
     double setEncoderDegrees;
 
     for (SwerveModule module : m_swerveModules.values()) {
-      module.resetAngleToAbsolute();
+      module.resetEncoders();
       ;
     }
 

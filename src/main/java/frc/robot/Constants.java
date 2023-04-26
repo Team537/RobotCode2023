@@ -305,7 +305,7 @@ public class Constants {
     public static final int kBackRightSRXMagCoder = 7; // 3
 
     // offsets are defined 0 to 1
-    public static final double kFrontLeftSRXMagCoderOffset = 0.5;
+    public static final double kFrontLeftSRXMagCoderOffset = 0;
     public static final double kFrontRightSRXMagCoderOffset = 0;
     public static final double kBackLeftSRXMagCoderOffset = 0;
     public static final double kBackRightSRXMagCoderOffset = 0;

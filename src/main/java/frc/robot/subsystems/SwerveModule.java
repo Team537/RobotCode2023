@@ -114,9 +114,9 @@ public class SwerveModule extends SubsystemBase {
     // m_angleEncoder.configFactoryDefault();
     // m_angleEncoder.configAllSettings(CtreUtils.generateCanCoderConfig());
 
-    resetAngleToAbsolute();
+    // resetAngleToAbsolute();
 
-    resetEncoders();
+    // resetEncoders();
   }
 
   /**
@@ -145,7 +145,7 @@ public class SwerveModule extends SubsystemBase {
      * set motor position to opposite of mag, to make that mag angle 0
      * add wanted position to -angle to make position what you want
      */
-    double angle = Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
+    double angle = 0;// Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle());
     m_turnMotor.setSelectedSensorPosition((m_angleOffset) / SwerveConstants.kTurningEncoderDistancePerPulse);
 
     // double pos = 0;
@@ -360,7 +360,7 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Heading", getState().angle.getDegrees());
     SmartDashboard.putNumber(
-        "Module " + m_moduleNumber + " Mag Coder Reading", m_SrxMagEncoder.getAbsoluteAngle());
+        "Module " + m_moduleNumber + " Mag Coder Reading", m_SrxMagEncoder.getAbsolutePosition());
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Integrated Sensor Reading", m_turnMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber(
@@ -430,12 +430,12 @@ public class SwerveModule extends SubsystemBase {
 
   public void resetEncoders() {
 
-    double position = m_SrxMagEncoder.getAbsolutePosition();
+    double position = m_angleOffset;// + m_SrxMagEncoder.getAbsolutePosition();
 
     // double angle = position/(4096/360);
     // Not needed for now, needed if frequency is used to determine position
 
-    m_turnMotor.setSelectedSensorPosition(0);
+    m_turnMotor.setSelectedSensorPosition(position * 360);
 
   }
 
