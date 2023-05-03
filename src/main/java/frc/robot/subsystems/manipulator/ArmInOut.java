@@ -24,6 +24,7 @@ public class ArmInOut extends SubsystemBase {
   private SparkMaxPIDController m_ArmInOutPidController = m_ArmInOut.getPIDController();
   private RelativeEncoder m_ArmInOutEncoder = m_ArmInOut.getEncoder();
   private String armInOutState = "Default";
+  double ArmInOutPositionEnter = 0;
 
   public void ArmInOutPidDefaults() {
     m_ArmInOutPidController.setP(Constants.SparkPIDFConstants.kP);
@@ -89,8 +90,21 @@ public class ArmInOut extends SubsystemBase {
     SmartDashboard.putNumber(" Extend Position", m_ArmInOutEncoder.getPosition());
     SmartDashboard.putNumber("Extension Velocity", m_ArmInOutEncoder.getVelocity());
     SmartDashboard.putString("Arm In Out State", armInOutState);
-
+    ArmInOutPositionEnter = SmartDashboard.getNumber("arm inout get set pos", ArmInOutPositionEnter);
+    SmartDashboard.putNumber("arm inout get set pos", ArmInOutPositionEnter);
     // This method will be called once per scheduler run
   }
 
+  public void ArmInOutSetSmartDash() {
+    ArmInOutPidDefaults();
+    m_ArmInOutPidController.setReference(ArmInOutPositionEnter,
+        CANSparkMax.ControlType.kSmartMotion);
+    armInOutUpdatePosition();
+
+  }
+
+  public void armInOutUpdatePosition() {
+    ArmInOutPositionEnter = SmartDashboard.getNumber("arm inout get set pos", ArmInOutPositionEnter);
+
+  }
 }

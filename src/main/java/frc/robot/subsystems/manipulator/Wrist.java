@@ -19,6 +19,7 @@ public class Wrist extends SubsystemBase {
   private SparkMaxPIDController m_WristPidController = m_Wrist.getPIDController();
   private RelativeEncoder m_WristEncoder = m_Wrist.getEncoder();
   private String wristState = "Default";
+  double wristPositionEnter = 0;
 
   /** Creates a new ArmPivot. */
   public Wrist() {
@@ -103,5 +104,20 @@ public class Wrist extends SubsystemBase {
     SmartDashboard.putNumber("Wrist Velocity", m_WristEncoder.getVelocity());
     SmartDashboard.putString("Wrist State", wristState);
     // This method will be called once per scheduler run
+    wristPositionEnter = SmartDashboard.getNumber("wrist get set pos", wristPositionEnter);
+    SmartDashboard.putNumber("wrist get set pos", wristPositionEnter);
+  }
+
+  public void WristSetSmartDash() {
+    WristPidDefaults();
+    m_WristPidController.setReference(wristPositionEnter,
+        CANSparkMax.ControlType.kSmartMotion);
+    wristUpdatePosition();
+
+  }
+
+  public void wristUpdatePosition() {
+    wristPositionEnter = SmartDashboard.getNumber("wrist get set pos", wristPositionEnter);
+
   }
 }

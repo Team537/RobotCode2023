@@ -18,6 +18,7 @@ public class ArmPivot extends SubsystemBase {
   private SparkMaxPIDController m_ArmPivotPidController = m_ArmPivot.getPIDController();
   private RelativeEncoder m_ArmPivotEncoder = m_ArmPivot.getEncoder();
   private String armPivotState = "Default";
+  double ArmPivotPositionEnter = 0;
 
   /** Creates a new ArmPivot. */
   public ArmPivot() {
@@ -99,6 +100,22 @@ public class ArmPivot extends SubsystemBase {
     SmartDashboard.putNumber("Pivot Position", m_ArmPivotEncoder.getPosition());
     SmartDashboard.putNumber("Pivot Velocity", m_ArmPivotEncoder.getVelocity());
     SmartDashboard.putString("Arm Pivot State", armPivotState);
+    ArmPivotPositionEnter = SmartDashboard.getNumber("arm pivot get set pos", ArmPivotPositionEnter);
+    SmartDashboard.putNumber("arm pivot get set pos", ArmPivotPositionEnter);
+
     // This method will be called once per scheduler run
+  }
+
+  public void ArmPivotSetSmartDash() {
+    ArmPivotPidDefaults();
+    m_ArmPivotPidController.setReference(ArmPivotPositionEnter,
+        CANSparkMax.ControlType.kSmartMotion);
+    armPivotUpdatePosition();
+
+  }
+
+  public void armPivotUpdatePosition() {
+    ArmPivotPositionEnter = SmartDashboard.getNumber("arm pivot get set pos", ArmPivotPositionEnter);
+
   }
 }
