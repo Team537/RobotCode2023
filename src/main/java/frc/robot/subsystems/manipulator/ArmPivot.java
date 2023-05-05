@@ -87,12 +87,15 @@ public class ArmPivot extends SubsystemBase {
 
   }
 
-  public void ArmPivotGroundBack() {
-    ArmPivotPidDefaults();
-    m_ArmPivotPidController.setReference(Constants.ArmPivotConstants.kArmPivotPositionGroundBack,
-        CANSparkMax.ControlType.kSmartMotion);
-    armPivotState = "GroundBack";
-  }
+  /*
+   * public void ArmPivotGroundBack() {
+   * ArmPivotPidDefaults();
+   * m_ArmPivotPidController.setReference(Constants.ArmPivotConstants.
+   * kArmPivotPositionGroundBack,
+   * CANSparkMax.ControlType.kSmartMotion);
+   * armPivotState = "GroundBack";
+   * }
+   */
 
   @Override
   public void periodic() {

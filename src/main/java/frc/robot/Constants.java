@@ -118,24 +118,20 @@ public class Constants {
     // motor.
     // current limits are (+-)(it is +- because the string can get flipped) 300 to 0
 
-    public static final double kArmInOutPositionHighGoal = 50; // for "shooting" cones, it was 100
+    public static final double kArmInOutPositionHighGoal = -110; // for "shooting" cones, it was 100
     // the value for normal high goal is 225
 
-    public static final double kArmInOutPositionMidGoal = 52;
-    public static final double kArmInOutPositionShelfHumanPL = 60;
-    public static final double kArmInOutPositionShelfHigh = 50;
+    public static final double kArmInOutPositionMidGoal = -50;
+    public static final double kArmInOutPositionShelfHigh = -40;
     public static final double kArmInOutPositionGroundForward = 0.0;
-    public static final double kArmInOutPositionGroundBack = 0.0;
+
+    // public static final double kArmInOutPositionShelfHumanPL = 60;
+    // public static final double kArmInOutPositionGroundBack = 0.0;
 
     // used for setting the robot to zero (and accounts for the string rolling up
     // different)
-    public static final double kArmInOutPositionZero = -1;
 
     // positions used to increment inout positions
-    /*
-     * public static final double kIncrementUp = -10;
-     * public static final double kIncrementDown = 10;
-     */
   }
 
   public static final class ArmPivotConstants {
@@ -143,14 +139,13 @@ public class Constants {
     public static final int kArmPivot1 = 19;
 
     // these are the setpositions for the armpivot. current limits are 0 to 58
-    public static final double kArmPivotPositionHighGoal = 7;
-    public static final double kArmPivotPositionShelfHumanPL = 15;
-    public static final double kArmPivotPositionMidGoal = 18;
-    public static final double kArmPivotPositionShelfHigh = 25;
+    public static final double kArmPivotPositionHighGoal = -45;
+    public static final double kArmPivotPositionMidGoal = -43;
+    public static final double kArmPivotPositionShelfHigh = -40;
+    public static final double kArmPivotPositionGroundForward = 0;
 
-    public static final double kArmPivotPositionZero = 0.0;
-    public static final double kArmPivotPositionGroundForward = 58.0;
-    public static final double kArmPivotPositionGroundBack = 0.0;
+    // public static final double kArmPivotPositionShelfHumanPL = 0;
+    // public static final double kArmPivotPositionGroundBack = 0.0;
 
     // this is the position for moving tht arm down a bit when scoring mid. via
     // tylers prefrences
@@ -163,18 +158,18 @@ public class Constants {
     public static final int kWrist = 11;
 
     // set positions for the wrist. known limits are 0 to -17(could be farther)
-    public static final double kWristPositionHighGoal = -17;
-    public static final double kWristPositionShelfHumanPL = -17;
-    public static final double kWristPositionMidGoal = -12;
-    public static final double kWristPositionShelfHigh = -10;
+    public static final double kWristPositionHighGoal = -3;
+    public static final double kWristPositionMidGoal = -3;
+    public static final double kWristPositionShelfHigh = 0;
 
-    public static final double kWristPositionZero = 0;
-    public static final double kWristPositionGroundForward = -6;
-    public static final double kWristPositionGroundBack = 0.0;
+    public static final double kWristPositionGroundForward = 3;
+
+    // public static final double kWristPositionShelfHumanPL = -17;
+    // public static final double kWristPositionGroundBack = 0.0;
 
     // when carrying cones and cubes on the ground, they currently hit
     // the ground, need to add something to bring the wrist up 1 rotation
-    public static final double kWristPositionManualUp = -3;
+    public static final double kWristPositionManualUp = 9;
     public static final double kWristPositionManualDown = -15;
 
   }

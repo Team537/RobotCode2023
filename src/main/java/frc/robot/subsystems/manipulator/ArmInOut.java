@@ -78,12 +78,15 @@ public class ArmInOut extends SubsystemBase {
 
   }
 
-  public void ArmInOutGroundBack() {
-    ArmInOutPidDefaults();
-    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.kArmInOutPositionGroundBack,
-        CANSparkMax.ControlType.kSmartMotion);
-    armInOutState = "GroundBack";
-  }
+  /*
+   * public void ArmInOutGroundBack() {
+   * ArmInOutPidDefaults();
+   * m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.
+   * kArmInOutPositionGroundBack,
+   * CANSparkMax.ControlType.kSmartMotion);
+   * armInOutState = "GroundBack";
+   * }
+   */
 
   @Override
   public void periodic() {

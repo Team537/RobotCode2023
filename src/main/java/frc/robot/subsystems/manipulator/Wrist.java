@@ -91,12 +91,15 @@ public class Wrist extends SubsystemBase {
     wristState = "ManualUp";
   }
 
-  public void WristPositionGroundBack() {
-    WristPidDefaults();
-    m_WristPidController.setReference(Constants.WristConstants.kWristPositionGroundBack,
-        CANSparkMax.ControlType.kSmartMotion);
-    wristState = "GroundBack";
-  }
+  /*
+   * public void WristPositionGroundBack() {
+   * WristPidDefaults();
+   * m_WristPidController.setReference(Constants.WristConstants.
+   * kWristPositionGroundBack,
+   * CANSparkMax.ControlType.kSmartMotion);
+   * wristState = "GroundBack";
+   * }
+   */
 
   @Override
   public void periodic() {
