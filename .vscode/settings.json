@@ -41,7 +41,7 @@
     "editor.tabSize": 2,
     //"editor.rulers" : [125],: This option shows a vertical line at column 125, which is a common guideline for keeping code within a certain width to improve readability.
     "editor.rulers": [
-      13
+      136
     ],
     //"editor.wordWrapColumn": 125: This option sets the column number at which to wrap the line.
     "editor.wordWrapColumn": 140,
