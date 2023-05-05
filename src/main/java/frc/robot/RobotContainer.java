@@ -154,28 +154,33 @@ public class RobotContainer {
                 bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
                 yButton.onTrue(high_goal);
                 xButton.onTrue(shelf_HuPL);
-
-                // aButton.onTrue(ground_forward);
-                // bButton.onTrue(mid_goal);
-                // nonExistantButton.onTrue(ground_back);
-
+                aButton.onTrue(ground_forward);
+                bButton.onTrue(mid_goal);
+                // nonExistantButton.onTrue(ground_back)
                 leftBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
                                 new StartEndCommand(m_Gripper::GripperOut, m_Gripper::GripperStop, m_Gripper)));
                 rightBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
                                 new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop, m_Gripper)));
+                backButton.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),
+                                new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop, m_Gripper)));
 
+                backButton.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
+                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
                 leftBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
                                 new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
                 rightBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
                                 new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
 
                 backButton.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),
-                                new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop, m_Gripper)));
+                                new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop,
+                                                m_Gripper)));
                 backButton.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
+                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                                                m_Gripper)));
 
                 dPadUpButton.onTrue(
-                                new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero, m_Wrist));
+                                new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero,
+                                                m_Wrist));
                 dPadRightButton
                                 .onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp,
                                                 m_Wrist::WristPositionManualUp, m_Wrist));
