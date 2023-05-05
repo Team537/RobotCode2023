@@ -152,20 +152,17 @@ public class RobotContainer {
 
                 aButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
                 bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
-                yButton.onTrue(high_goal);
-                xButton.onTrue(shelf_HuPL);
-                aButton.onTrue(ground_forward);
-                bButton.onTrue(mid_goal);
+                // yButton.onTrue(high_goal);
+                // xButton.onTrue(shelf_HuPL);
+                // aButton.onTrue(ground_forward);
+                // bButton.onTrue(mid_goal);
+
                 // nonExistantButton.onTrue(ground_back)
                 leftBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
                                 new StartEndCommand(m_Gripper::GripperOut, m_Gripper::GripperStop, m_Gripper)));
                 rightBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
                                 new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop, m_Gripper)));
-                backButton.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),
-                                new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop, m_Gripper)));
 
-                backButton.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
                 leftBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
                                 new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
                 rightBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
@@ -183,36 +180,36 @@ public class RobotContainer {
                  * new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero,
                  * m_Wrist));
                  */
-                /*
-                 * dPadRightButton
-                 * .onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp,
-                 * m_Wrist::WristPositionManualUp, m_Wrist));
-                 */
-                dPadLeftButton
-                                .onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidDown,
-                                                m_ArmPivot::ArmPositionMidDown,
-                                                m_ArmPivot));
+
+                dPadRightButton
+                                .onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp,
+                                                m_Wrist::WristPositionManualUp, m_Wrist));
 
                 /*
-                 * aButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPivotSetSmartDash,
-                 * m_ArmPivot::ArmPivotSetSmartDash,
+                 * dPadLeftButton
+                 * .onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidDown,
+                 * m_ArmPivot::ArmPositionMidDown,
                  * m_ArmPivot));
-                 * bButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPivotSetSmartDash,
-                 * m_ArmPivot::ArmPivotSetSmartDash,
-                 * m_ArmPivot));
-                 * aButton.onTrue(new StartEndCommand(m_ArmInOut::ArmInOutSetSmartDash,
-                 * m_ArmInOut::ArmInOutSetSmartDash,
-                 * m_ArmInOut));
-                 * bButton.onTrue(new StartEndCommand(m_ArmInOut::ArmInOutSetSmartDash,
-                 * m_ArmInOut::ArmInOutSetSmartDash,
-                 * m_ArmInOut));
-                 * aButton.onTrue(new StartEndCommand(m_Wrist::WristSetSmartDash,
-                 * m_Wrist::WristSetSmartDash,
-                 * m_Wrist));
-                 * bButton.onTrue(new StartEndCommand(m_Wrist::WristSetSmartDash,
-                 * m_Wrist::WristSetSmartDash,
-                 * m_Wrist));
                  */
+
+                aButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPivotSetSmartDash,
+                                m_ArmPivot::ArmPivotSetSmartDash,
+                                m_ArmPivot));
+                bButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPivotSetSmartDash,
+                                m_ArmPivot::ArmPivotSetSmartDash,
+                                m_ArmPivot));
+                aButton.onTrue(new StartEndCommand(m_ArmInOut::ArmInOutSetSmartDash,
+                                m_ArmInOut::ArmInOutSetSmartDash,
+                                m_ArmInOut));
+                bButton.onTrue(new StartEndCommand(m_ArmInOut::ArmInOutSetSmartDash,
+                                m_ArmInOut::ArmInOutSetSmartDash,
+                                m_ArmInOut));
+                aButton.onTrue(new StartEndCommand(m_Wrist::WristSetSmartDash,
+                                m_Wrist::WristSetSmartDash,
+                                m_Wrist));
+                bButton.onTrue(new StartEndCommand(m_Wrist::WristSetSmartDash,
+                                m_Wrist::WristSetSmartDash,
+                                m_Wrist));
 
                 // dPadDownButton.onTrue(zeros);
 

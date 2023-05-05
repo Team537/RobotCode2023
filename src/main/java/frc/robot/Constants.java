@@ -124,8 +124,9 @@ public class Constants {
     public static final double kArmInOutPositionMidGoal = -50;
     public static final double kArmInOutPositionShelfHigh = -40;
     public static final double kArmInOutPositionGroundForward = 0.0;
+    public static final double kArmInOutPositionZero = 0;
 
-    // public static final double kArmInOutPositionShelfHumanPL = 60;
+    public static final double kArmInOutPositionShelfHumanPL = 0;
     // public static final double kArmInOutPositionGroundBack = 0.0;
 
     // used for setting the robot to zero (and accounts for the string rolling up
@@ -144,8 +145,9 @@ public class Constants {
     public static final double kArmPivotPositionShelfHigh = -40;
     public static final double kArmPivotPositionGroundForward = 0;
 
-    // public static final double kArmPivotPositionShelfHumanPL = 0;
-    // public static final double kArmPivotPositionGroundBack = 0.0;
+    public static final double kArmPivotPositionZero = 0;
+    public static final double kArmPivotPositionShelfHumanPL = 0;
+    public static final double kArmPivotPositionGroundBack = 0.0;
 
     // this is the position for moving tht arm down a bit when scoring mid. via
     // tylers prefrences
@@ -164,8 +166,9 @@ public class Constants {
 
     public static final double kWristPositionGroundForward = 3;
 
-    // public static final double kWristPositionShelfHumanPL = -17;
-    // public static final double kWristPositionGroundBack = 0.0;
+    public static final double kWristPositionShelfHumanPL = 3;
+    public static final double kWristPositionGroundBack = 0.0;
+    public static final double kWristPositionZero = 0;
 
     // when carrying cones and cubes on the ground, they currently hit
     // the ground, need to add something to bring the wrist up 1 rotation
