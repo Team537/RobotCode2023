@@ -61,6 +61,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.config.ConstantsFactory;
+import frc.robot.config.Constants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -138,6 +140,8 @@ public class RobotContainer {
     POVButton dPadDownButton = new POVButton(m_driverController, 180);
     POVButton dPadLeftButton = new POVButton(m_driverController, 90);
     POVButton dPadRightButton = new POVButton(m_driverController, 270);
+
+    private Constants m_constants;
 
     public RobotContainer() {
 
@@ -223,6 +227,11 @@ public class RobotContainer {
 
         SmartDashboard.putData("Active / Toggle Cone", new InstantCommand(m_LED::toggleCone));
         SmartDashboard.putData("Active / Toggle Cube", new InstantCommand(m_LED::toggleCube));
+
+        ConstantsFactory factory = new ConstantsFactory("src/main/resources/driveConstants.yaml");
+        m_constants = factory.getConstants(Constants.class);
+        
+        SmartDashboard.putString("Constant Name", m_constants.getName());
 
         // final ChaseTagCommand chaseTagCommand = new ChaseTagCommand(m_camera,
         // m_robotDrive,
@@ -328,6 +337,8 @@ public class RobotContainer {
 
         SmartDashboard.putData("Auto Selector", m_Chooser);
 
+
+        
     }
 
     public Command getAutoCommand() {

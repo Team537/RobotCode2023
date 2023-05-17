@@ -13,6 +13,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 public class SwerveModuleTest {
     private SwerveModule m_swerve;
 

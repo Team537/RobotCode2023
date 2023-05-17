@@ -10,4 +10,6 @@ public class Constants {
     public void setName(String aName) {
         this.name = aName;
     }
+
+    
 }
