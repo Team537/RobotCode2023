@@ -1,7 +1,8 @@
-package frc.robot.utils;
+package frc.robot.config;
 
 import java.io.File;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConstantsFactory {
@@ -11,12 +12,12 @@ public class ConstantsFactory {
         this.filename = filename;
     }
 
-    public Constants getConstants() {
+    public Constants getConstants(Class aClass) {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.findAndRegisterModules();
 
         try {
-            return (Constants) mapper.readValue(new File(filename), Constants.class);
+            return (Constants) mapper.readValue(new File(filename), aClass);
         } catch (Exception e) {
             return null;
         }

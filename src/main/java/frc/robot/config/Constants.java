@@ -1,4 +1,4 @@
-package frc.robot.utils;
+package frc.robot.config;
 
 public class Constants {
     private String name;
