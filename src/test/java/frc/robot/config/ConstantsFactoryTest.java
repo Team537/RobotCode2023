@@ -7,7 +7,7 @@ public class ConstantsFactoryTest {
 
     @Test
     void testLoadConstants() {
-        ConstantsFactory factory = new ConstantsFactory("src/main/resources/driveConstants.yaml");
+        ConstantsFactory factory = new ConstantsFactory("src/main/deploy/resources/driveConstants.yaml");
         Constants myConstants = (Constants) factory.getConstants(Constants.class);
 
         assertEquals("aName", myConstants.getName());

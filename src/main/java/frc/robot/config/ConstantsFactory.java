@@ -17,9 +17,22 @@ public class ConstantsFactory {
         mapper.findAndRegisterModules();
 
         try {
-            return (Constants) mapper.readValue(new File(filename), aClass);
+            Constants newConstants = (Constants) mapper.readValue(new File(filename), aClass);
+            newConstants.setFactory(this);
+            return newConstants;
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    public void saveConstants(Object anObject) {
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        mapper.findAndRegisterModules();
+
+        try {
+            mapper.writeValue(new File(filename), anObject);
+        } catch (Exception e) {
+
         }
     }
 }
