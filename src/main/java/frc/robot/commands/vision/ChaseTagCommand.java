@@ -4,6 +4,7 @@
 
 package frc.robot.commands.vision;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Camera;
@@ -35,25 +36,25 @@ public class ChaseTagCommand extends CommandBase {
     @Override
     public void execute() {
         // var gyroPitch = m_drive.getGyroPitch();
+        double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
         var tagPosition = m_camera.tagPosX;
-        // double angleDeadband = 5;
-        SmartDashboard.putNumberArray("tagPosition", tagPosition);
-        /*
-         * if (Math.abs(gyroPitch) < angleDeadband) {
-         * 
-         * m_drive.drive(0, 0, 0, true);
-         * m_LED.autoEnd();
-         * return;
-         * }
-         * 
-         * var currentTime = System.currentTimeMillis();
-         * var diff = currentTime - lastTimeWhenFollowing;
-         * if (diff >= 500) {
-         * double speed = gyroPitch > 0 ? 0.16 : -0.16;
-         * m_drive.drive(speed, 0, 0, true);
-         * lastTimeWhenFollowing = System.currentTimeMillis();
-         * }
-         */
+        double angleDeadband = 5;
+        double speed = 0;
+
+        if (Math.abs(tx) < angleDeadband) {
+
+            m_drive.drive(0, 0, 0, true);
+            m_LED.autoEnd();
+            return;
+        }
+        var currentTime = System.currentTimeMillis();
+        var diff = currentTime - lastTimeWhenFollowing;
+
+        speed = tx > 0 ? 0.05 : -0.05;
+        m_drive.drive(0, speed, 0, true);
+        lastTimeWhenFollowing = System.currentTimeMillis();
+
+        SmartDashboard.putNumber("Chase Strafe Speed", speed);
     }
 
     // Called once the command ends or is interrupted.
