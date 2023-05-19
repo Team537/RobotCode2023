@@ -1,3 +1,69 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.commands.vision;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Camera;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LED;
+
+public class ChaseTagCommand extends CommandBase {
+    private DriveSubsystem m_drive;
+    private double lastTimeWhenFollowing = 0;
+    private Camera m_camera;
+    private LED m_LED;
+
+    /** Creates a new BalanceChargeStation. */
+    public ChaseTagCommand(DriveSubsystem m_drive, boolean isReversed, LED m_LED, Camera m_camera) {
+        this.m_drive = m_drive;
+        this.m_LED = m_LED;
+        this.m_camera = m_camera;
+        // Use addRequirements() here to declare subsystem dependencies.
+    }
+
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        System.out.println("Chase AprilTag");
+        this.lastTimeWhenFollowing = System.currentTimeMillis();
+    }
+
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        // var gyroPitch = m_drive.getGyroPitch();
+        var tagPosition = m_camera.tagPosX;
+        // double angleDeadband = 5;
+        SmartDashboard.putNumberArray("tagPosition", tagPosition);
+        /*
+         * if (Math.abs(gyroPitch) < angleDeadband) {
+         * 
+         * m_drive.drive(0, 0, 0, true);
+         * m_LED.autoEnd();
+         * return;
+         * }
+         * 
+         * var currentTime = System.currentTimeMillis();
+         * var diff = currentTime - lastTimeWhenFollowing;
+         * if (diff >= 500) {
+         * double speed = gyroPitch > 0 ? 0.16 : -0.16;
+         * m_drive.drive(speed, 0, 0, true);
+         * lastTimeWhenFollowing = System.currentTimeMillis();
+         * }
+         */
+    }
+
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        m_drive.setDiamondShape();
+        System.out.println("Chase AprilTag Ended");
+    }
+}
+
 // package frc.robot.commands.vision;
 
 // import java.util.function.Supplier;

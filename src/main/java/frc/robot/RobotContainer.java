@@ -38,7 +38,7 @@ import frc.robot.commands.manipulator.ManipulatorZero;
 import frc.robot.commands.swerve.SetSwerveBrakeMode;
 // import frc.robot.commands.swerve.BoostDriveCommand;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
-
+import frc.robot.commands.vision.ChaseTagCommand;
 import frc.robot.grip.Cube;
 import frc.robot.simulation.FieldSim;
 
@@ -84,6 +84,7 @@ public class RobotContainer {
         private final ArmInOut m_ArmInOut = new ArmInOut();
         private final ArmPivot m_ArmPivot = new ArmPivot();
         private final Wrist m_Wrist = new Wrist();
+        private final Camera m_Camera = new Camera(m_robotDrive);
         // private PhotonCamera camera = new PhotonCamera("USB Camera 0");
         private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
         private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
@@ -204,7 +205,7 @@ public class RobotContainer {
                 bButton.onTrue(mid_goal);
 
                 leftBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
-                                new StartEndCommand(m_Gripper::GripperOut, m_Gripper::GripperStop, m_Gripper)));
+                                new ChaseTagCommand(m_robotDrive, false, m_LED, m_Camera)));
                 rightBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
                                 new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop, m_Gripper)));
 
