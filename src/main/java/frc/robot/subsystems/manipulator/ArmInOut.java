@@ -100,9 +100,9 @@ public class ArmInOut extends SubsystemBase {
 
   public void ArmInOutSetSmartDash() {
     ArmInOutPidDefaults();
+    armInOutUpdatePosition();
     m_ArmInOutPidController.setReference(ArmInOutPositionEnter,
         CANSparkMax.ControlType.kSmartMotion);
-    armInOutUpdatePosition();
 
   }
 

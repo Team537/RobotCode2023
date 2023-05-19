@@ -118,10 +118,10 @@ public class Constants {
     // motor.
     // current limits are (+-)(it is +- because the string can get flipped) 300 to 0
 
-    public static final double kArmInOutPositionHighGoal = -110; // for "shooting" cones, it was 100
+    public static final double kArmInOutPositionHighGoal = -50; // for "shooting" cones, it was 100
     // the value for normal high goal is 225
 
-    public static final double kArmInOutPositionMidGoal = -50;
+    public static final double kArmInOutPositionMidGoal = 0;
     public static final double kArmInOutPositionShelfHigh = -40;
     public static final double kArmInOutPositionGroundForward = 0.0;
     public static final double kArmInOutPositionZero = 0;
@@ -160,8 +160,8 @@ public class Constants {
     public static final int kWrist = 11;
 
     // set positions for the wrist. known limits are 0 to -17(could be farther)
-    public static final double kWristPositionHighGoal = -3;
-    public static final double kWristPositionMidGoal = -3;
+    public static final double kWristPositionHighGoal = -4;
+    public static final double kWristPositionMidGoal = -4;
     public static final double kWristPositionShelfHigh = 0;
 
     public static final double kWristPositionGroundForward = 3;

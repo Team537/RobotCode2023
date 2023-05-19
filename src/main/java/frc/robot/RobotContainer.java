@@ -152,10 +152,10 @@ public class RobotContainer {
 
                 aButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
                 bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
-                // yButton.onTrue(high_goal);
-                // xButton.onTrue(shelf_HuPL);
-                // aButton.onTrue(ground_forward);
-                // bButton.onTrue(mid_goal);
+                yButton.onTrue(high_goal);
+                xButton.onTrue(shelf_HuPL);
+                aButton.onTrue(ground_forward);
+                bButton.onTrue(mid_goal);
 
                 // nonExistantButton.onTrue(ground_back)
                 leftBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
@@ -192,24 +192,24 @@ public class RobotContainer {
                  * m_ArmPivot));
                  */
 
-                aButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPivotSetSmartDash,
-                                m_ArmPivot::ArmPivotSetSmartDash,
-                                m_ArmPivot));
-                bButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPivotSetSmartDash,
-                                m_ArmPivot::ArmPivotSetSmartDash,
-                                m_ArmPivot));
-                aButton.onTrue(new StartEndCommand(m_ArmInOut::ArmInOutSetSmartDash,
-                                m_ArmInOut::ArmInOutSetSmartDash,
-                                m_ArmInOut));
-                bButton.onTrue(new StartEndCommand(m_ArmInOut::ArmInOutSetSmartDash,
-                                m_ArmInOut::ArmInOutSetSmartDash,
-                                m_ArmInOut));
-                aButton.onTrue(new StartEndCommand(m_Wrist::WristSetSmartDash,
-                                m_Wrist::WristSetSmartDash,
-                                m_Wrist));
-                bButton.onTrue(new StartEndCommand(m_Wrist::WristSetSmartDash,
-                                m_Wrist::WristSetSmartDash,
-                                m_Wrist));
+                // aButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPivotSetSmartDash,
+                // m_ArmPivot::ArmPivotSetSmartDash,
+                // m_ArmPivot));
+                // bButton.onTrue(new StartEndCommand(m_ArmPivot::ArmPivotSetSmartDash,
+                // m_ArmPivot::ArmPivotSetSmartDash,
+                // m_ArmPivot));
+                // aButton.onTrue(new StartEndCommand(m_ArmInOut::ArmInOutSetSmartDash,
+                // m_ArmInOut::ArmInOutSetSmartDash,
+                // m_ArmInOut));
+                // bButton.onTrue(new StartEndCommand(m_ArmInOut::ArmInOutSetSmartDash,
+                // m_ArmInOut::ArmInOutSetSmartDash,
+                // m_ArmInOut));
+                // aButton.onTrue(new StartEndCommand(m_Wrist::WristSetSmartDash,
+                // m_Wrist::WristSetSmartDash,
+                // m_Wrist));
+                // bButton.onTrue(new StartEndCommand(m_Wrist::WristSetSmartDash,
+                // m_Wrist::WristSetSmartDash,
+                // m_Wrist));
 
                 // dPadDownButton.onTrue(zeros);
 
