@@ -204,7 +204,7 @@ public class RobotContainer {
                 aButton.onTrue(ground);
                 bButton.onTrue(mid_goal);
 
-                leftBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
+                leftBumper.toggleOnTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
                                 new ChaseTagCommand(m_robotDrive, false, m_LED, m_Camera)));
                 rightBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
                                 new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop, m_Gripper)));
