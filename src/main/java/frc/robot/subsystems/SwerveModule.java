@@ -72,7 +72,15 @@ public class SwerveModule extends SubsystemBase {
   private final int driveEncoderSimSign;
   private final int turnEncoderSimSign;
   public SlewRateLimiter slewRateOutput = new SlewRateLimiter(100);
-  public AccelerationLimiter accel = new AccelerationLimiter(25, 100);
+  // to calculate speed
+  // 1 meter per second = 5228.38(continues) encoder ticks per second
+  // acceleration = Ticks per second acceleration
+  // so to accelerate 1000 ticks in a second, set acceleration limit to 1000
+  // deceleration is the same, exept it decelerates
+  // get ticks per second from
+  // round to 2 decimals
+  double ModuleTicksPerSecond;
+  public AccelerationLimiter accel = new AccelerationLimiter(41827.04, 27884.69);
   public LinearFilter filter = LinearFilter.movingAverage(2);
 
   public SwerveModule(
@@ -215,8 +223,9 @@ public class SwerveModule extends SubsystemBase {
 
   public void setDriveState(SwerveModuleState desiredState) {
 
-    double velocity = (desiredState.speedMetersPerSecond / (SwerveConstants.DRIVE_ENCODER_METERS_PER_PULSE * 10));
-
+    double velocity = accel
+        .calculate(desiredState.speedMetersPerSecond / (SwerveConstants.DRIVE_ENCODER_METERS_PER_PULSE * 10));
+    ModuleTicksPerSecond = velocity;
     driveMotor.set(
         ControlMode.Velocity,
         velocity,
@@ -318,6 +327,8 @@ public class SwerveModule extends SubsystemBase {
         "Module " + moduleNumber + " Angle", angle);
     SmartDashboard.putNumber(
         "Module " + moduleNumber + " Last Angle", lastAngle);
+
+    SmartDashboard.putNumber("Module" + moduleNumber + "Module Ticks Per Second (Output)", ModuleTicksPerSecond);
 
   }
 

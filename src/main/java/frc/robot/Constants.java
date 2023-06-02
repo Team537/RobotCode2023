@@ -267,7 +267,7 @@ public class Constants {
     public static final double DRIVE_ENCODER_METERS_PER_PULSE = (2 * WHEEL_RADIUS * Math.PI)
         / (SwerveConstants.ENCODER_RESOLUTION * DRIVE_MOTOR_GEAR_RATIO);
 
-    public static final double MAX_SPEED_METERS_PER_SECOND = 1;
+    public static final double MAX_SPEED_METERS_PER_SECOND = 8;
     public static final double MAX_ROTATION_RADIANS_PER_SECOND = Math.PI * 1;
     public static final double MAX_ROTATION_RADIANS_PER_SECOND_SQUARED = Math.PI * 1;
 
