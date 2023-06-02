@@ -233,6 +233,11 @@ public class RobotContainer {
 
                 SmartDashboard.putData("Active / Toggle Cone", new InstantCommand(m_LED::toggleCone));
                 SmartDashboard.putData("Active / Toggle Cube", new InstantCommand(m_LED::toggleCube));
+                SmartDashboard.putData("Limelight / April Tag Pipeline",
+                                new InstantCommand(m_Camera::CameraToAprilTag));
+                SmartDashboard.putData("Limelight / Limelight Pipeline",
+                                new InstantCommand(m_Camera::CameraToLimelight));
+                SmartDashboard.putData("Limelight / Driver Pipeline", new InstantCommand(m_Camera::CameraPipeline));
 
                 // final ChaseTagCommand chaseTagCommand = new ChaseTagCommand(m_camera,
                 // m_robotDrive,
