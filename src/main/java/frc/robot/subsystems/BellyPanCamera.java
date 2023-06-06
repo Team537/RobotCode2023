@@ -9,15 +9,15 @@ import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class GripperCamera extends SubsystemBase {
+public class BellyPanCamera extends SubsystemBase {
   /** Creates a new GripperCamera. */
 
-  public GripperCamera() {
+  public BellyPanCamera() {
 
-    UsbCamera cam = new UsbCamera("Gripper Cam", 0);
-    MjpegServer mjep = new MjpegServer("server_1", 1180);
-    CameraServer.startAutomaticCapture(0);
-    mjep.setSource(cam);
+    UsbCamera cam1 = new UsbCamera("USB Camera 1", 1);
+    MjpegServer mjep1 = new MjpegServer("server_2", 1181);
+    CameraServer.startAutomaticCapture(1);
+    mjep1.setSource(cam1);
 
   }
 

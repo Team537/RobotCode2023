@@ -9,16 +9,19 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LED;
 
 public class BalanceChargeStation extends CommandBase {
   private DriveSubsystem m_drive;
   private double lastTimeWhenBalancing = 0;
   private double lastTimeWhenMounting = 0;
+  private LED m_LED;
 
   /** Creates a new BalanceChargeStation. */
-  public BalanceChargeStation(DriveSubsystem m_drive, boolean isReversed) {
+  public BalanceChargeStation(DriveSubsystem m_drive, boolean isReversed, LED m_LED) {
 
     this.m_drive = m_drive;
+    this.m_LED = m_LED;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -39,6 +42,7 @@ public class BalanceChargeStation extends CommandBase {
     if (Math.abs(gyroPitch) < angleDeadband) {
 
       m_drive.drive(0, 0, 0, true, true);
+      m_LED.autoEnd();
       return;
     }
 

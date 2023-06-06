@@ -39,13 +39,14 @@ import frc.robot.commands.swerve.SetSwerveBrakeMode;
 // import frc.robot.commands.swerve.BoostDriveCommand;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.commands.vision.ChaseTagCommand;
+import frc.robot.grip.Cube;
 import frc.robot.simulation.FieldSim;
 
 import frc.robot.subsystems.LED;
+import frc.robot.subsystems.LED.LedMode;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperCamera;
-// import frc.robot.subsystems.GripperCamera;
-// import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.BellyPanCamera;
 import frc.robot.subsystems.GripperIntake;
 import frc.robot.subsystems.manipulator.ArmInOut;
 import frc.robot.subsystems.manipulator.ArmPivot;
@@ -81,6 +82,7 @@ public class RobotContainer {
         private final DriveSubsystem m_robotDrive = new DriveSubsystem();
         private final GripperIntake m_Gripper = new GripperIntake();
         private final GripperCamera m_GripperCamera = new GripperCamera();
+        private final BellyPanCamera m_BellyPanCamera = new BellyPanCamera();
         private final ArmInOut m_ArmInOut = new ArmInOut();
         private final ArmPivot m_ArmPivot = new ArmPivot();
         private final Wrist m_Wrist = new Wrist();
@@ -145,6 +147,9 @@ public class RobotContainer {
 
         private Constants m_constants;
 
+        JoystickButton aButton2 = new JoystickButton(m_driverController2, Button.kA.value);
+        JoystickButton bButton2 = new JoystickButton(m_driverController2, Button.kB.value);
+
         public RobotContainer() {
 
                 /*
@@ -193,7 +198,11 @@ public class RobotContainer {
                  * StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
                  * 36
                  */
-                // LED COMMANDS
+
+                // LED COMMAND
+                aButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
+                bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
+
                 yButton.onTrue(high_goal);
                 xButton.onTrue(shelf_HuPL);
 
@@ -241,6 +250,7 @@ public class RobotContainer {
                 // m_camera::getRobotPose2d);
 
                 // starButton.toggleOnTrue(new BalanceChargeStation(m_robotDrive, true));
+
                 // rightStick.toggleOnTrue(
                 // new StartEndCommand(m_camera::CameraToAprilTag, m_camera::CameraPipeline,
                 // m_camera));
@@ -328,6 +338,7 @@ public class RobotContainer {
 
         public void autoInit() {
                 m_robotDrive.setBrakeMode(NeutralMode.Brake);
+                m_LED.autoStart();
         }
 
         public void robotInit() {

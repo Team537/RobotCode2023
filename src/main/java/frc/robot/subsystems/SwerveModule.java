@@ -257,7 +257,7 @@ public class SwerveModule extends SubsystemBase {
     }
 
     // Turn Motor Output Adjustment based on Angle
-    double angle = (Math
+    angle = (Math
         .abs(desiredState.speedMetersPerSecond) <= (SwerveConstants.kMaxRotationRadiansPerSecond * 0.01))
             ? m_lastAngle
             : desiredState.angle
@@ -341,13 +341,17 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Heading", getState().angle.getDegrees());
     SmartDashboard.putNumber(
-        "Module " + m_moduleNumber + " Mag Coder Reading", Units.radiansToDegrees(m_SrxMagEncoder.getAbsoluteAngle()));
+        "Module " + m_moduleNumber + " Mag Coder Reading", m_SrxMagEncoder.getAbsoluteAngle());
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Integrated Sensor Reading", m_turnMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Position", getDriveMeters());
     SmartDashboard.putNumber(
         "Module " + m_moduleNumber + " Linear Velocity", getDriveMetersPerSecond());
+    SmartDashboard.putNumber(
+        "Module " + m_moduleNumber + " Angle", angle);
+    SmartDashboard.putNumber(
+        "Module " + m_moduleNumber + " Last Angle", m_lastAngle);
 
   }
 
@@ -360,13 +364,7 @@ public class SwerveModule extends SubsystemBase {
   @Override
   public void periodic() {
     updateSmartDashboard();
-    deg = m_SrxMagEncoder.getDistance();
-    angle = Math.toRadians(deg);
-    angle %= 2.0 * Math.PI;
-    if (angle < 0.0) {
-      angle += 2.0 * Math.PI;
-      deg = +360;
-    }
+
   }
 
   /**

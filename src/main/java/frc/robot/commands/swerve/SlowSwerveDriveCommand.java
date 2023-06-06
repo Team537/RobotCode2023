@@ -8,6 +8,7 @@
 package frc.robot.commands.swerve;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LED;
@@ -63,7 +64,7 @@ public class SlowSwerveDriveCommand extends CommandBase {
       // OutputSpeedPercent = (JoystickPercent * DriveSpeedConstants.kBaseRobotSpeed)
       // + (JoystickPercent * (TriggerPercent * (DriveSpeedConstants.kMaxRobotSpeed -
       // DriveSpeedConstants.kMaxRobotSpeed)));
-      OutputSpeedPercent = JoystickPercent + TriggerPercent;
+      OutputSpeedPercent = JoystickPercent + (Math.abs(JoystickPercent / 0.2) * TriggerPercent);
     } else {
       // when it is lower than the deadband, it sets it to zero
       OutputSpeedPercent = 0;
@@ -105,6 +106,10 @@ public class SlowSwerveDriveCommand extends CommandBase {
     } else {
       m_LED.setFallen(false);
     }
+
+    SmartDashboard.putNumber("Drive ", drive);
+    SmartDashboard.putNumber("Strafe", strafe);
+    SmartDashboard.putNumber("Rotation", rotation);
   }
 
   // Called once the command ends or is interrupted.
