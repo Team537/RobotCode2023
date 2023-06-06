@@ -137,36 +137,36 @@ public class Constants {
 
     // these are the setpositions for the armpivot. current limits are 0 to 58
     public static final double kArmPivotPositionHighGoal = 7;
-    public static final double kArmPivotPositionShelfHumanPL = 15;
-    public static final double kArmPivotPositionMidGoal = 18;
-    public static final double kArmPivotPositionShelfHigh = 25;
+    public static final double ARM_PIVOT_POS_SHELF_HUMAN_PL = 15;
+    public static final double ARM_PIVOT_POS_MID_GOAL = 18;
+    public static final double ARM_PIVOT_POS_SHELF_HIGH = 25;
 
-    public static final double kArmPivotPositionZero = 0.0;
-    public static final double kArmPivotPositionGround = 58.0;
+    public static final double ARM_PIVOT_POS_ZERO = 0.0;
+    public static final double ARM_PIVOT_POS_GROUND = 58.0;
 
     // this is the position for moving tht arm down a bit when scoring mid. via
     // tylers prefrences
-    public static final double kArmPivotPositionMidDown = 23;
+    public static final double ARM_PIVOT_POS_MID_DOWN = 23;
 
   }
 
   public static final class WristConstants {
     // motor id for wrist
-    public static final int kWrist = 11;
+    public static final int WRIST = 11;
 
     // set positions for the wrist. known limits are 0 to -17(could be farther)
-    public static final double kWristPositionHighGoal = -17;
-    public static final double kWristPositionShelfHumanPL = -17;
-    public static final double kWristPositionMidGoal = -12;
-    public static final double kWristPositionShelfHigh = -10;
+    public static final double WRIST_POS_HIGH_GOAL = -17;
+    public static final double WRIST_POS_SHELF_HUMAN_PL = -17;
+    public static final double WRIST_POS_MID_GOAL = -12;
+    public static final double WRIST_POS_SHELF_HIGH = -10;
 
-    public static final double kWristPositionZero = 0;
-    public static final double kWristPositionGround = -6;
+    public static final double WRIST_POS_ZERO = 0;
+    public static final double WRIST_POS_GROUND = -6;
 
     // when carrying cones and cubes on the ground, they currently hit
     // the ground, need to add something to bring the wrist up 1 rotation
-    public static final double kWristPositionManualUp = -3;
-    public static final double kWristPositionManualDown = -15;
+    public static final double WRIST_POS_MANUAL_UP = -3;
+    public static final double WRIST_POS_MANUAL_DOWN = -15;
 
   }
 
@@ -174,8 +174,8 @@ public class Constants {
 
     // these are the ports for each controller. the controller ports can be switched
     // in the driver station
-    public static final int kDriverControllerPort = 0;
-    public static final int kDriverControllerPort1 = 1;
+    public static final int DRIVER_CONTROLLER_PORT = 0;
+    public static final int DRIVER_CONTROLLER_PORT1 = 1;
   }
 
   public final static class Conversions {
@@ -222,32 +222,32 @@ public class Constants {
   }
 
   public static class limelight {
-    public static final int kCamera = 0;
-    public static final int kLimelight = 1;
-    public static final int kAprilTagRed = 2;
-    public static final int kAprilTagBlue = 3;
+    public static final int CAMERA = 0;
+    public static final int LIMELIGHT = 1;
+    public static final int APRIL_TAG_RED = 2;
+    public static final int APRIL_TAG_BLUE = 3;
 
   }
 
   public static class LEDConstants {
-    public static final int length = 59;
-    public static final int centerLed = 29;
-    public static final int halfLength = (int) Math.ceil(length / 2.0);
-    public static final int batteryStartIndex = 72;
-    public static final int batteryEndIndex = 118;
-    public static final double strobeDuration = 0.2;
-    public static final double rainbowFastFullLength = 40.0;
-    public static final double rainbowFastDuration = 0.25;
-    public static final double rainbowSlowFullLength = 80.0;
-    public static final double rainbowSlowDuration = 4.0;
-    public static final double breathDuration = 2.0;
-    public static final double waveExponent = 0.4;
-    public static final double waveFastFullLength = 40.0;
-    public static final double waveFastDuration = 0.25;
-    public static final double waveAllianceFullLength = 15.0;
-    public static final double waveAllianceDuration = 2.0;
-    public static final double waveSlowFullLength = 40.0;
-    public static final double waveSlowDuration = 3.0;
+    public static final int LENGTH = 59;
+    public static final int CENTER_LED = 29;
+    public static final int HALF_LENGTH = (int) Math.ceil(LENGTH / 2.0);
+    public static final int BATTERY_START_INDEX = 72;
+    public static final int BATTERY_END_INDEX = 118;
+    public static final double STROBE_DURATION = 0.2;
+    public static final double RAINBOW_FAST_FULL_LENGTH = 40.0;
+    public static final double RAINBOW_FAST_DURATION = 0.25;
+    public static final double RAINBOW_SLOW_FULL_LENGTH = 80.0;
+    public static final double RAINBOW_SLOW_DURATION = 4.0;
+    public static final double BREATH_DURATION = 2.0;
+    public static final double WAVE_EXPONENT = 0.4;
+    public static final double WAVE_FAST_FULL_LENGTH = 40.0;
+    public static final double WAVE_FAST_DURATION = 0.25;
+    public static final double WAVE_ALLIANCE_FULL_LENGTH = 15.0;
+    public static final double WAVE_ALLIANCE_DURATION = 2.0;
+    public static final double WAVE_SLOW_FULL_LENGTH = 40.0;
+    public static final double WAVE_SLOW_DURATION = 3.0;
   }
 
   public static class SwerveConstants {

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Wrist extends SubsystemBase {
-  private CANSparkMax m_Wrist = new CANSparkMax(Constants.WristConstants.kWrist, MotorType.kBrushless);
+  private CANSparkMax m_Wrist = new CANSparkMax(Constants.WristConstants.WRIST, MotorType.kBrushless);
   private SparkMaxPIDController m_pidControllerPivot1 = m_Wrist.getPIDController();
   private RelativeEncoder m_encoderPivot1 = m_Wrist.getEncoder();
   private String wristState = "Default";
@@ -37,7 +37,7 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionMidGoal,
+    m_pidControllerPivot1.setReference(Constants.WristConstants.WRIST_POS_MID_GOAL,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "Mid Goal";
 
@@ -55,7 +55,7 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionHighGoal,
+    m_pidControllerPivot1.setReference(Constants.WristConstants.WRIST_POS_HIGH_GOAL,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "High Goal";
 
@@ -73,7 +73,7 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionShelfHumanPL,
+    m_pidControllerPivot1.setReference(Constants.WristConstants.WRIST_POS_SHELF_HUMAN_PL,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "ShelfMid";
   }
@@ -90,7 +90,7 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionZero,
+    m_pidControllerPivot1.setReference(Constants.WristConstants.WRIST_POS_ZERO,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "Zero";
   }
@@ -107,7 +107,7 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionGround,
+    m_pidControllerPivot1.setReference(Constants.WristConstants.WRIST_POS_GROUND,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "Ground";
   }
@@ -124,7 +124,7 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionManualUp,
+    m_pidControllerPivot1.setReference(Constants.WristConstants.WRIST_POS_MANUAL_UP,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "ManualUp";
   }
@@ -141,7 +141,7 @@ public class Wrist extends SubsystemBase {
     m_pidControllerPivot1.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
     m_pidControllerPivot1.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
     m_pidControllerPivot1.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerPivot1.setReference(Constants.WristConstants.kWristPositionManualDown,
+    m_pidControllerPivot1.setReference(Constants.WristConstants.WRIST_POS_MANUAL_DOWN,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "ManualUp";
   }

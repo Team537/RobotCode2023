@@ -125,8 +125,8 @@ public class RobotContainer {
 
         // The driver controllers
 
-        XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-        XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort1);
+        XboxController m_driverController = new XboxController(OIConstants.DRIVER_CONTROLLER_PORT);
+        XboxController m_driverController2 = new XboxController(OIConstants.DRIVER_CONTROLLER_PORT1);
 
         JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
         JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
