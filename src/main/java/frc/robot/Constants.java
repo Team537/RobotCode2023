@@ -33,8 +33,8 @@ import frc.robot.utils.ModuleMap;
 public class Constants {
 
   public static final class DriveSpeedConstants {
-    public static final double kMaxRobotSpeed = 1;
-    public static final double kBaseRobotSpeed = 0.2;
+    public static final double MAX_ROBOT_SPEED = 1;
+    public static final double BASE_ROBOT_SPEED = 0.2;
 
   }
 
@@ -42,87 +42,87 @@ public class Constants {
 
     // This is the default PIDF for spark maxes. Perportional, Integral, Derivetive,
     // Izone and Feed Forward.
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
-    public static final double kIz = 0;
-    public static final double kFF = 0.000156;
+    public static final double P = 0;
+    public static final double I = 0;
+    public static final double D = 0;
+    public static final double IZONE = 0;
+    public static final double FF = 0.000156;
 
     // This is the max output based on percent output forward and backward
-    public static final double kMaxOutput = 1;
-    public static final double kMinOutput = -1;
+    public static final double MAX_OUTPUT = 1;
+    public static final double MIN_OUTPUT = -1;
 
     // This is the max cruise velocity in RPM. This is the speed it travels at when
     // going to the set position
-    public static final double kMaxV = 4000;
-    public static final double kMinV = 0;
+    public static final double MAX_VELOCITY = 4000;
+    public static final double MIN_VELOCITY = 0;
 
     // This is the max acceleration when accelerating to the cruise velocity. In RPM
-    public static final double kMaxA = 4000;
+    public static final double MAX_ACCEL = 4000;
     // specific accel constant for the pivot
-    public static final double kMaxAccelArmPivot = 4000;
+    public static final double MAX_ACCEL_ARM_PIVOT = 4000;
 
     // allowed closed loop error
-    public static final double kAllE = 0;
+    public static final double ALL_E = 0;
 
   }
 
   public static final class DriveConstants {
 
-    public static final double kTrackwidthMeters = 0.415;
-    public static final double kWheelBase = 0.415;
-    public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
-        kTrackwidthMeters);
+    public static final double TRACK_WIDTH_METERS = 0.415;
+    public static final double WHEEL_BASE = 0.415;
+    public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(
+        TRACK_WIDTH_METERS);
 
-    public static final int kEncoderCPR = 2048;
-    public static final double kWheelDiameterMeters = 0.1524;
-    public static final double kEncoderDistancePerPulse =
+    public static final int ENCODER_CPR = 2048;
+    public static final double WHEEL_DIAMETER_METERS = 0.1524;
+    public static final double ENCODER_DISTANCE_PER_PULS =
         // Assumes the encoders are directly mounted on the wheel shafts
-        (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
+        (WHEEL_DIAMETER_METERS * Math.PI) / (double) ENCODER_CPR;
 
-    public static final double ksVolts = 0.305;
-    public static final double kvVoltSecondsPerMeter = 2.29;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.0131;
+    public static final double VOLTS = 0.305;
+    public static final double VOLT_SECONDS_PER_METER = 2.29;
+    public static final double VOLT_SECONDS_SQUARED_PER_METER = 0.0131;
 
-    public static final double kPDriveVel = 8.5;
+    public static final double DRIVE_VELOCITY = 8.5;
 
     // Gyro Command Constants
-    public static final double kTurnP = 8.5;
-    public static final double kTurnI = 0;
-    public static final double kTurnD = 0;
-    public static final double kTurnToleranceDeg = 4;
-    public static final double kTurnRateToleranceDegPerS = 1;
+    public static final double TURN_P = 8.5;
+    public static final double TURN_I = 0;
+    public static final double TURN_D = 0;
+    public static final double TURN_TOLERANCE_DEG = 4;
+    public static final double TURN_RATE_TOLERANCE_DEG_PER_SEC = 1;
 
   }
 
   public static final class GripperConstants {
 
     // These are the ids for each gripper motor
-    public static final int kGripper = 15;
-    public static final int kGripper2 = 17;
+    public static final int GRIPPER = 15;
+    public static final int GRIPPER_2 = 17;
 
   }
 
   public static final class ArmInOutConstants {
 
     // motor id for inout
-    public static final int kArmInOut = 14;
+    public static final int ARM_INOUT = 14;
 
     // These are the set positions for the differnt scoring heights on the arm inout
     // motor.
     // current limits are (+-)(it is +- because the string can get flipped) 300 to 0
 
-    public static final double kArmInOutPositionHighGoal = 50; // for "shooting" cones, it was 100
+    public static final double ARM_INOUT_POS_HIGH_GOAL = 50; // for "shooting" cones, it was 100
     // the value for normal high goal is 225
 
-    public static final double kArmInOutPositionMidGoal = 52;
-    public static final double kArmInOutPositionShelfHumanPL = 60;
-    public static final double kArmInOutPositionShelfHigh = 50;
-    public static final double kArmInOutPositionGround = 0.0;
+    public static final double ARM_INOUT_POS_MID_GOAL = 52;
+    public static final double ARM_INOUT_POS_SHELF_HUMANPL = 60;
+    public static final double ARM_INOUT_POS_SHELF_HIGH = 50;
+    public static final double ARM_INOUT_POS_GROUND = 0.0;
 
     // used for setting the robot to zero (and accounts for the string rolling up
     // different)
-    public static final double kArmInOutPositionZero = -1;
+    public static final double ARM_INOUT_POS_ZERO = -1;
 
     // positions used to increment inout positions
     /*
@@ -133,10 +133,10 @@ public class Constants {
 
   public static final class ArmPivotConstants {
     // the id for the arm pivot constant.
-    public static final int kArmPivot1 = 19;
+    public static final int ARM_PIVOT = 19;
 
     // these are the setpositions for the armpivot. current limits are 0 to 58
-    public static final double kArmPivotPositionHighGoal = 7;
+    public static final double ARM_PIVOT_POS_HIGH_GOAL = 7;
     public static final double ARM_PIVOT_POS_SHELF_HUMAN_PL = 15;
     public static final double ARM_PIVOT_POS_MID_GOAL = 18;
     public static final double ARM_PIVOT_POS_SHELF_HIGH = 25;
@@ -165,7 +165,7 @@ public class Constants {
 
     // when carrying cones and cubes on the ground, they currently hit
     // the ground, need to add something to bring the wrist up 1 rotation
-    public static final double WRIST_POS_MANUAL_UP = -3;
+    public static final double WRIST_POS_MANUAL_UP = 9;
     public static final double WRIST_POS_MANUAL_DOWN = -15;
 
   }
@@ -307,13 +307,13 @@ public class Constants {
 
     public static final Map<ModulePosition, Translation2d> MODULE_TRANSLATIONS = Map.of(
         ModulePosition.FRONT_LEFT,
-        new Translation2d(-DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2),
+        new Translation2d(-DriveConstants.WHEEL_BASE / 2, DriveConstants.TRACK_WIDTH_METERS / 2),
         ModulePosition.FRONT_RIGHT,
-        new Translation2d(-DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
+        new Translation2d(-DriveConstants.WHEEL_BASE / 2, -DriveConstants.TRACK_WIDTH_METERS / 2),
         ModulePosition.BACK_LEFT,
-        new Translation2d(DriveConstants.kWheelBase / 2, -DriveConstants.kTrackwidthMeters / 2),
+        new Translation2d(DriveConstants.WHEEL_BASE / 2, -DriveConstants.TRACK_WIDTH_METERS / 2),
         ModulePosition.BACK_RIGHT,
-        new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackwidthMeters / 2));
+        new Translation2d(DriveConstants.WHEEL_BASE / 2, DriveConstants.TRACK_WIDTH_METERS / 2));
 
     public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
         ModuleMap.orderedValues(MODULE_TRANSLATIONS, new Translation2d[0]));

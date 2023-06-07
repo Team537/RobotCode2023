@@ -94,7 +94,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double simYaw;
 
   public DriveSubsystem() {
-    pigeon.setYaw(180);
+    // pigeon.setYaw(180);
 
   }
 

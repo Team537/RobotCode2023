@@ -197,38 +197,51 @@ public class RobotContainer {
                 // LED COMMAND
                 aButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
                 bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
-                yButton.onTrue(high_goal);
-                xButton.onTrue(shelf_HuPL);
+                // yButton.onTrue(high_goal);
+                // xButton.onTrue(shelf_HuPL);
 
-                aButton.onTrue(ground);
-                bButton.onTrue(mid_goal);
+                // aButton.onTrue(ground);
+                // bButton.onTrue(mid_goal);
 
-                leftBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
-                                new StartEndCommand(m_Gripper::GripperOut, m_Gripper::GripperStop, m_Gripper)));
-                rightBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
-                                new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop, m_Gripper)));
+                // leftBumper.onTrue(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleOutake),
+                // new StartEndCommand(m_Gripper::GripperOut, m_Gripper::GripperStop,
+                // m_Gripper)));
+                // rightBumper.onTrue(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleIntake),
+                // new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop,
+                // m_Gripper)));
 
-                leftBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
-                rightBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
+                // leftBumper.onFalse(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleOutake),
+                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                // m_Gripper)));
+                // rightBumper.onFalse(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleIntake),
+                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                // m_Gripper)));
 
-                backButton.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),
-                                new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop, m_Gripper)));
-                backButton.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
+                // backButton.onTrue(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleFastOutake),
+                // new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop,
+                // m_Gripper)));
+                // backButton.onFalse(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleFastOutake),
+                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                // m_Gripper)));
 
-                dPadUpButton.onTrue(
-                                new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero, m_Wrist));
+                // dPadUpButton.onTrue(
+                // new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero,
+                // m_Wrist));
                 dPadRightButton
                                 .onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp,
                                                 m_Wrist::WristPositionManualUp, m_Wrist));
-                dPadLeftButton
-                                .onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidDown,
-                                                m_ArmPivot::ArmPositionMidDown,
-                                                m_ArmPivot));
+                // dPadLeftButton
+                // .onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidDown,
+                // m_ArmPivot::ArmPositionMidDown,
+                // m_ArmPivot));
 
-                dPadDownButton.onTrue(zeros);
+                // dPadDownButton.onTrue(zeros);
 
                 SmartDashboard.putData("Active / Toggle Cone", new InstantCommand(m_LED::toggleCone));
                 SmartDashboard.putData("Active / Toggle Cube", new InstantCommand(m_LED::toggleCube));
@@ -249,10 +262,10 @@ public class RobotContainer {
 
                 m_robotDrive.setDefaultCommand(new SlowSwerveDriveCommand(
                                 m_robotDrive,
-                                () -> -(m_driverController.getLeftY()),
-                                () -> m_driverController.getLeftX(),
-                                () -> -m_driverController.getRightX(),
-                                () -> m_driverController.getRightTriggerAxis(),
+                                () -> -(m_driverController.getLeftY()) * 0.2,
+                                () -> m_driverController.getLeftX() * 0.2,
+                                () -> -m_driverController.getRightX() * 0.2,
+                                () -> m_driverController.getRightTriggerAxis() * 0.8,
                                 true, m_LED));
 
                 // Drive without Slew

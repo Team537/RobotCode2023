@@ -35,88 +35,88 @@ public class ArmInOut extends SubsystemBase {
   }
 
   public boolean armMidGoal() {
-    m_pidControllerExtension.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerExtension.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerExtension.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerExtension.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerExtension.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerExtension.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
-        Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmInOutPositionMidGoal,
+    m_pidControllerExtension.setP(Constants.SparkPIDFConstants.P);
+    m_pidControllerExtension.setI(Constants.SparkPIDFConstants.I);
+    m_pidControllerExtension.setD(Constants.SparkPIDFConstants.D);
+    m_pidControllerExtension.setIZone(Constants.SparkPIDFConstants.IZONE);
+    m_pidControllerExtension.setFF(Constants.SparkPIDFConstants.FF);
+    m_pidControllerExtension.setOutputRange(Constants.SparkPIDFConstants.MIN_OUTPUT,
+        Constants.SparkPIDFConstants.MAX_OUTPUT);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.MAX_VELOCITY, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.MIN_VELOCITY, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.MAX_ACCEL, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.ALL_E, 0);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.ARM_INOUT_POS_MID_GOAL,
         CANSparkMax.ControlType.kSmartMotion);
     armInOutState = "Mid Goal";
     return true;
   }
 
   public void armHighGoal() {
-    m_pidControllerExtension.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerExtension.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerExtension.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerExtension.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerExtension.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerExtension.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
-        Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmInOutPositionHighGoal,
+    m_pidControllerExtension.setP(Constants.SparkPIDFConstants.P);
+    m_pidControllerExtension.setI(Constants.SparkPIDFConstants.I);
+    m_pidControllerExtension.setD(Constants.SparkPIDFConstants.D);
+    m_pidControllerExtension.setIZone(Constants.SparkPIDFConstants.IZONE);
+    m_pidControllerExtension.setFF(Constants.SparkPIDFConstants.FF);
+    m_pidControllerExtension.setOutputRange(Constants.SparkPIDFConstants.MIN_OUTPUT,
+        Constants.SparkPIDFConstants.MAX_OUTPUT);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.MAX_VELOCITY, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.MIN_VELOCITY, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.MAX_ACCEL, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.ALL_E, 0);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.ARM_INOUT_POS_HIGH_GOAL,
         CANSparkMax.ControlType.kSmartMotion);
     armInOutState = "High Goal";
 
   }
 
   public void armShelfHumanPL() {
-    m_pidControllerExtension.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerExtension.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerExtension.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerExtension.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerExtension.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerExtension.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
-        Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmInOutPositionShelfHumanPL,
+    m_pidControllerExtension.setP(Constants.SparkPIDFConstants.P);
+    m_pidControllerExtension.setI(Constants.SparkPIDFConstants.I);
+    m_pidControllerExtension.setD(Constants.SparkPIDFConstants.D);
+    m_pidControllerExtension.setIZone(Constants.SparkPIDFConstants.IZONE);
+    m_pidControllerExtension.setFF(Constants.SparkPIDFConstants.FF);
+    m_pidControllerExtension.setOutputRange(Constants.SparkPIDFConstants.MIN_OUTPUT,
+        Constants.SparkPIDFConstants.MAX_OUTPUT);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.MAX_VELOCITY, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.MIN_VELOCITY, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.MAX_ACCEL, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.ALL_E, 0);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.ARM_INOUT_POS_SHELF_HUMANPL,
         CANSparkMax.ControlType.kSmartMotion);
     armInOutState = "ShelfMid";
   }
 
   public void armZero() {
-    m_pidControllerExtension.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerExtension.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerExtension.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerExtension.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerExtension.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerExtension.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
-        Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmInOutPositionZero,
+    m_pidControllerExtension.setP(Constants.SparkPIDFConstants.P);
+    m_pidControllerExtension.setI(Constants.SparkPIDFConstants.I);
+    m_pidControllerExtension.setD(Constants.SparkPIDFConstants.D);
+    m_pidControllerExtension.setIZone(Constants.SparkPIDFConstants.IZONE);
+    m_pidControllerExtension.setFF(Constants.SparkPIDFConstants.FF);
+    m_pidControllerExtension.setOutputRange(Constants.SparkPIDFConstants.MIN_OUTPUT,
+        Constants.SparkPIDFConstants.MAX_OUTPUT);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.MAX_VELOCITY, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.MIN_VELOCITY, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.MAX_ACCEL, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.ALL_E, 0);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.ARM_INOUT_POS_ZERO,
         CANSparkMax.ControlType.kSmartMotion);
     armInOutState = "Zero";
   }
 
   public void armGround() {
-    m_pidControllerExtension.setP(Constants.SparkPIDFConstants.kP);
-    m_pidControllerExtension.setI(Constants.SparkPIDFConstants.kI);
-    m_pidControllerExtension.setD(Constants.SparkPIDFConstants.kD);
-    m_pidControllerExtension.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_pidControllerExtension.setFF(Constants.SparkPIDFConstants.kFF);
-    m_pidControllerExtension.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
-        Constants.SparkPIDFConstants.kMaxOutput);
-    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxV, 0);
-    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxA, 0);
-    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.kArmInOutPositionGround,
+    m_pidControllerExtension.setP(Constants.SparkPIDFConstants.P);
+    m_pidControllerExtension.setI(Constants.SparkPIDFConstants.I);
+    m_pidControllerExtension.setD(Constants.SparkPIDFConstants.D);
+    m_pidControllerExtension.setIZone(Constants.SparkPIDFConstants.IZONE);
+    m_pidControllerExtension.setFF(Constants.SparkPIDFConstants.FF);
+    m_pidControllerExtension.setOutputRange(Constants.SparkPIDFConstants.MIN_OUTPUT,
+        Constants.SparkPIDFConstants.MAX_OUTPUT);
+    m_pidControllerExtension.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.MAX_VELOCITY, 0);
+    m_pidControllerExtension.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.MIN_VELOCITY, 0);
+    m_pidControllerExtension.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.MAX_ACCEL, 0);
+    m_pidControllerExtension.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.ALL_E, 0);
+    m_pidControllerExtension.setReference(Constants.ArmInOutConstants.ARM_INOUT_POS_GROUND,
         CANSparkMax.ControlType.kSmartMotion);
     armInOutState = "Ground";
 
