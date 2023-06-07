@@ -212,25 +212,12 @@ public class SwerveModule extends SubsystemBase {
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
     desiredState = CtreUtils.optimize(desiredState, getHeadingRotation2d());
 
-    // Feedback loop Type
-
     if (isOpenLoop) {
       double percentOutput = 2 * Math.min(filter
           .calculate(accel.calculate(desiredState.speedMetersPerSecond / SwerveConstants.kMaxSpeedMetersPerSecond)), 1);
       double percentOutput1 = Math.max(percentOutput, -1);
       m_driveMotor.set(ControlMode.PercentOutput, percentOutput1);
-    } /*
-       * else {
-       * double velocity = (desiredState.speedMetersPerSecond /
-       * sensorVelocityCoefficient);
-       * 
-       * m_driveMotor.set(
-       * ControlMode.Velocity,
-       * velocity,
-       * DemandType.ArbitraryFeedForward,
-       * feedforward.calculate(desiredState.speedMetersPerSecond) / nominalVoltage);
-       * }
-       */
+    }
 
     // Turn Motor Output Adjustment based on Angle
     double angle = (Math

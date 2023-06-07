@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import edu.wpi.first.wpilibj.Filesystem;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.util.sendable.SendableBuilder.BackendKind;
@@ -62,6 +63,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.config.ConstantsFactory;
+import frc.robot.config.Constants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -142,6 +145,8 @@ public class RobotContainer {
         POVButton dPadLeftButton = new POVButton(m_driverController, 90);
         POVButton dPadRightButton = new POVButton(m_driverController, 270);
 
+        private Constants m_constants;
+
         JoystickButton aButton2 = new JoystickButton(m_driverController2, Button.kA.value);
         JoystickButton bButton2 = new JoystickButton(m_driverController2, Button.kB.value);
 
@@ -193,9 +198,11 @@ public class RobotContainer {
                  * StartEndCommand(m_Gripper::GripperOut,m_Gripper::GripperStop,m_Gripper));
                  * 36
                  */
+
                 // LED COMMAND
                 aButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
                 bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
+
                 yButton.onTrue(high_goal);
                 xButton.onTrue(shelf_HuPL);
 
@@ -232,6 +239,12 @@ public class RobotContainer {
                 SmartDashboard.putData("Active / Toggle Cone", new InstantCommand(m_LED::toggleCone));
                 SmartDashboard.putData("Active / Toggle Cube", new InstantCommand(m_LED::toggleCube));
 
+                String filename = Filesystem.getDeployDirectory() + "/resources/driveConstants.yaml";
+                ConstantsFactory factory = new ConstantsFactory(filename);
+                m_constants = factory.getConstants(Constants.class);
+
+                SmartDashboard.putString("Constant Name", m_constants.getName());
+
                 // final ChaseTagCommand chaseTagCommand = new ChaseTagCommand(m_camera,
                 // m_robotDrive,
                 // m_camera::getRobotPose2d);
@@ -244,6 +257,7 @@ public class RobotContainer {
                 // Toggle Booleans
                 // LED Light Trigger COntrol Code
                 // bButton.onTrue(new InstantCommand(m_blinkin::setPurple));
+
                 // aButton.onTrue(new InstantCommand(m_blinkin::setYellow));
 
                 m_robotDrive.setDefaultCommand(new SlowSwerveDriveCommand(
@@ -283,6 +297,10 @@ public class RobotContainer {
                 // Reset it to 0 when joystick = 0
                 // dont let it go over 1
                 SmartDashboard.putNumber("Left Joystick", m_driverController.getLeftY());
+
+                String name = SmartDashboard.getString("Constant Name", m_constants.getName());
+                m_constants.setName(name);
+                m_constants.saveConstants();
         }
 
         /*

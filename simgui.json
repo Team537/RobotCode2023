@@ -45,9 +45,6 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
-        "Auto Selector": {
-          "open": true
-        },
         "open": true
       }
     }
