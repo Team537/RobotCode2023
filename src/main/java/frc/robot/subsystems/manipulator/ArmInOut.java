@@ -20,7 +20,7 @@ public class ArmInOut extends SubsystemBase {
   public ArmInOut() {
   }
 
-  private CANSparkMax m_extension = new CANSparkMax(Constants.ArmInOutConstants.kArmInOut, MotorType.kBrushless);
+  private CANSparkMax m_extension = new CANSparkMax(Constants.ArmInOutConstants.ARM_INOUT, MotorType.kBrushless);
   private SparkMaxPIDController m_pidControllerExtension = m_extension.getPIDController();
   private RelativeEncoder m_encoderExtension = m_extension.getEncoder();
   private String armInOutState = "Default";
