@@ -29,7 +29,7 @@ import frc.robot.subsystems.manipulator.Wrist;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class FollowTrajectory extends SequentialCommandGroup{
+public class FollowTrajectory extends SequentialCommandGroup {
   private final DriveSubsystem m_drive;
   private final ArmInOut m_ArmInOut;
   private final ArmPivot m_ArmPivot;
@@ -39,58 +39,51 @@ public class FollowTrajectory extends SequentialCommandGroup{
   private final FieldSim m_fieldSim;
   private final String pathName;
 
-  public FollowTrajectory(DriveSubsystem m_drive, FieldSim m_fieldSim, String pathName, ArmInOut m_ArmInOut, ArmPivot m_ArmPivot, GripperIntake m_Gripper, Wrist m_Wrist, LED m_LED) {
-    //setting the subsytem to the one in the drive subsystem, so no duplicates
-   this.m_drive = m_drive;
-   this.m_fieldSim = m_fieldSim;
-   this.pathName = pathName;
-   this.m_ArmInOut = m_ArmInOut;
-   this.m_ArmPivot = m_ArmPivot;
-   this.m_Gripper = m_Gripper;
-   this.m_Wrist = m_Wrist;
-   this.m_LED = m_LED;
+  public FollowTrajectory(DriveSubsystem m_drive, FieldSim m_fieldSim, String pathName, ArmInOut m_ArmInOut,
+      ArmPivot m_ArmPivot, GripperIntake m_Gripper, Wrist m_Wrist, LED m_LED) {
+    // setting the subsytem to the one in the drive subsystem, so no duplicates
+    this.m_drive = m_drive;
+    this.m_fieldSim = m_fieldSim;
+    this.pathName = pathName;
+    this.m_ArmInOut = m_ArmInOut;
+    this.m_ArmPivot = m_ArmPivot;
+    this.m_Gripper = m_Gripper;
+    this.m_Wrist = m_Wrist;
+    this.m_LED = m_LED;
 
-   HashMap<String, Command> eventMap = new HashMap<>();
-   //prints a status message once it completes a action
-eventMap.put("1",new PrintCommand("Passed marker 1"));
-eventMap.put("2",new PrintCommand("Passed marker 2"));
-eventMap.put("3",new PrintCommand("Passed marker 3"));
-eventMap.put("4",new PrintCommand("Passed marker 4"));
+    HashMap<String, Command> eventMap = new HashMap<>();
+    // prints a status message once it completes a action
+    eventMap.put("1", new PrintCommand("Passed marker 1"));
+    eventMap.put("2", new PrintCommand("Passed marker 2"));
+    eventMap.put("3", new PrintCommand("Passed marker 3"));
+    eventMap.put("4", new PrintCommand("Passed marker 4"));
 
+    // eventMap.put("autoStart", );
+    // eventMap.put("autoEnd", new InstantCommand(m_LED::autoEnd));
+    // eventMap.put("scoreMid", new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut,
+    // m_Wrist, m_LED).withTimeout(5));
+    eventMap.put("returnGround", new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
+    // eventMap.put("gripperOut", new SequentialCommandGroup(
+    // new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(2),
+    // new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1)));
 
-// eventMap.put("autoStart", );
-// eventMap.put("autoEnd", new InstantCommand(m_LED::autoEnd));
-// eventMap.put("scoreMid", new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(5));
-eventMap.put("returnGround",new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
-// eventMap.put("gripperOut", new SequentialCommandGroup(
-//   new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(2), 
-//   new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1)));
+    PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, 3, 2.25, false);
 
+    FollowPathWithEvents command = new FollowPathWithEvents(
+        // uses the drive method to follow the trajectory.
+        m_drive.followTrajectoryCommand(trajectory),
+        trajectory.getMarkers(),
+        eventMap);
 
-
-   PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, 0.5, 0.1, false);
-
-   FollowPathWithEvents command = new FollowPathWithEvents(
-    //uses the drive method to follow the trajectory.
-    m_drive.followTrajectoryCommand(trajectory),
-    trajectory.getMarkers(),
-    eventMap
-);
-
-addCommands(
-      new PlotFieldTrajectory(m_fieldSim, trajectory),
-      new SetSwerveOdometry(m_drive, trajectory.getInitialPose(), m_fieldSim),
-      command,
-      new SetSwerveBrakeMode(m_drive, NeutralMode.Brake)
-          .andThen(() -> m_drive.drive(0, 0, 0, false, false)));
+    addCommands(
+        new PlotFieldTrajectory(m_fieldSim, trajectory),
+        new SetSwerveOdometry(m_drive, trajectory.getInitialPose(), m_fieldSim),
+        command,
+        new SetSwerveBrakeMode(m_drive, NeutralMode.Brake)
+            .andThen(() -> m_drive.drive(0, 0, 0, false)));
   }
 
-  
+  // Add your commands in the addCommands() call, e.g.
+  // addCommands(new FooCommand(), new BarCommand());
 
-
-
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-  
-  }
-
+}

@@ -38,7 +38,7 @@ public class ProfiledBalanceChargeStation extends CommandBase {
     speed = MathUtil.clamp(pitchController.calculate(gyroPitch), -0.1, 0.1);
 
     // Drive with the speed previously set
-    m_drive.drive(speed, 0, 0, true, true);
+    m_drive.drive(speed, 0, 0, true);
   }
 
   // Called once the command ends or is interrupted.

@@ -24,15 +24,15 @@ public class SwerveModuleTest {
 
     @Test
     void testFrontLeftModule() {
-        WPI_TalonFX frontLeft = new WPI_TalonFX(SwerveConstants.kFrontLeftTurn);
-        WPI_TalonFX frontLeftDrive = new WPI_TalonFX(SwerveConstants.kFrontLeftDrive);
+        WPI_TalonFX frontLeft = new WPI_TalonFX(SwerveConstants.FRONT_LEFT_TURN_MOTOR_ID);
+        WPI_TalonFX frontLeftDrive = new WPI_TalonFX(SwerveConstants.FRONT_LEFT_DRIVE_MOTOR_ID);
 
         m_swerve = new SwerveModule(
                 ModulePosition.FRONT_LEFT,
                 frontLeft,
                 frontLeftDrive,
-                SwerveConstants.kFrontLeftSRXMagCoder,
-                SwerveConstants.kFrontLeftSRXMagCoderOffset,
+                SwerveConstants.FRONT_LEFT_SRX_MAG_ENCODER_ID,
+                SwerveConstants.FRONT_LEFT_SRX_MAG_ENCODER_OFFSET,
                 false);
 
         double randomPosition = Math.random() * 42;

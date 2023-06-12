@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
 import edu.wpi.first.wpilibj.Filesystem;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -34,11 +35,11 @@ import frc.robot.commands.manipulator.ManipulatorShelfHumanPL;
 import frc.robot.commands.manipulator.ManipulatorZero;
 // import frc.robot.commands.signal.SignalCone;
 // import frc.robot.commands.signal.SignalCube;
-import frc.robot.commands.swerve.SwerveDriveCommand;
+
 import frc.robot.commands.swerve.SetSwerveBrakeMode;
 // import frc.robot.commands.swerve.BoostDriveCommand;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
-import frc.robot.commands.vision.ChaseTagCommand;
+
 import frc.robot.grip.Cube;
 import frc.robot.simulation.FieldSim;
 
@@ -127,8 +128,8 @@ public class RobotContainer {
 
         // The driver controllers
 
-        XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-        XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort1);
+        XboxController m_driverController = new XboxController(OIConstants.DRIVER_CONTROLLER_PORT);
+        XboxController m_driverController2 = new XboxController(OIConstants.DRIVER_CONTROLLER_PORT1);
 
         JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
         JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
@@ -202,39 +203,51 @@ public class RobotContainer {
                 // LED COMMAND
                 aButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
                 bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
+                // yButton.onTrue(high_goal);
+                // xButton.onTrue(shelf_HuPL);
 
-                yButton.onTrue(high_goal);
-                xButton.onTrue(shelf_HuPL);
+                // aButton.onTrue(ground);
+                // bButton.onTrue(mid_goal);
 
-                aButton.onTrue(ground);
-                bButton.onTrue(mid_goal);
+                // leftBumper.onTrue(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleOutake),
+                // new StartEndCommand(m_Gripper::GripperOut, m_Gripper::GripperStop,
+                // m_Gripper)));
+                // rightBumper.onTrue(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleIntake),
+                // new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop,
+                // m_Gripper)));
 
-                leftBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
-                                new StartEndCommand(m_Gripper::GripperOut, m_Gripper::GripperStop, m_Gripper)));
-                rightBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
-                                new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop, m_Gripper)));
+                // leftBumper.onFalse(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleOutake),
+                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                // m_Gripper)));
+                // rightBumper.onFalse(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleIntake),
+                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                // m_Gripper)));
 
-                leftBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
-                rightBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
+                // backButton.onTrue(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleFastOutake),
+                // new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop,
+                // m_Gripper)));
+                // backButton.onFalse(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleFastOutake),
+                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                // m_Gripper)));
 
-                backButton.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),
-                                new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop, m_Gripper)));
-                backButton.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
-
-                dPadUpButton.onTrue(
-                                new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero, m_Wrist));
+                // dPadUpButton.onTrue(
+                // new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero,
+                // m_Wrist));
                 dPadRightButton
                                 .onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp,
                                                 m_Wrist::WristPositionManualUp, m_Wrist));
-                dPadLeftButton
-                                .onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidDown,
-                                                m_ArmPivot::ArmPositionMidDown,
-                                                m_ArmPivot));
+                // dPadLeftButton
+                // .onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidDown,
+                // m_ArmPivot::ArmPositionMidDown,
+                // m_ArmPivot));
 
-                dPadDownButton.onTrue(zeros);
+                // dPadDownButton.onTrue(zeros);
 
                 SmartDashboard.putData("Active / Toggle Cone", new InstantCommand(m_LED::toggleCone));
                 SmartDashboard.putData("Active / Toggle Cube", new InstantCommand(m_LED::toggleCube));
@@ -352,6 +365,14 @@ public class RobotContainer {
                 m_Chooser.addOption("Score High Cube No Drive", scoreHighCubeNoDrive);
                 m_Chooser.addOption("Score High Cube Drive Back", scoreHighCubeDriveBack);
                 m_Chooser.addOption("Score High Cube Balance", scoreHighCubeBalance);
+                m_Chooser.addOption("Forward Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "High Cube Auto ",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+                m_Chooser.addOption("Forward Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Two Piece",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+                m_Chooser.addOption("Strafe Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Strafe Test",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+                m_Chooser.addOption("Spline Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Spline Test",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
 
                 SmartDashboard.putData("Auto Selector", m_Chooser);
 
