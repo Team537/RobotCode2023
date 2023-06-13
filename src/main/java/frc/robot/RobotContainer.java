@@ -218,14 +218,14 @@ public class RobotContainer {
                 // new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop,
                 // m_Gripper)));
 
-                // leftBumper.onFalse(new ParallelCommandGroup(new
-                // InstantCommand(m_LED::toggleOutake),
-                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
-                // m_Gripper)));
-                // rightBumper.onFalse(new ParallelCommandGroup(new
-                // InstantCommand(m_LED::toggleIntake),
-                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
-                // m_Gripper)));
+                leftBumper.onFalse(new ParallelCommandGroup(new
+                InstantCommand(m_LED::toggleOutake),
+                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                m_Gripper)));
+                rightBumper.onFalse(new ParallelCommandGroup(new
+                InstantCommand(m_LED::toggleIntake),
+                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                m_Gripper)));
 
                 // backButton.onTrue(new ParallelCommandGroup(new
                 // InstantCommand(m_LED::toggleFastOutake),
