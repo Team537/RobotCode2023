@@ -5,6 +5,8 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
+import edu.wpi.first.wpilibj.Filesystem;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.util.sendable.SendableBuilder.BackendKind;
@@ -34,11 +36,11 @@ import frc.robot.commands.manipulator.ManipulatorShelfHumanPL;
 import frc.robot.commands.manipulator.ManipulatorZero;
 // import frc.robot.commands.signal.SignalCone;
 // import frc.robot.commands.signal.SignalCube;
-import frc.robot.commands.swerve.SwerveDriveCommand;
+
 import frc.robot.commands.swerve.SetSwerveBrakeMode;
 // import frc.robot.commands.swerve.BoostDriveCommand;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
-import frc.robot.commands.vision.ChaseTagCommand;
+
 import frc.robot.grip.Cube;
 import frc.robot.simulation.FieldSim;
 
@@ -63,6 +65,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.config.ConstantsFactory;
+import frc.robot.config.Constants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -127,8 +131,8 @@ public class RobotContainer {
 
         // The driver controllers
 
-        XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-        XboxController m_driverController2 = new XboxController(OIConstants.kDriverControllerPort1);
+        XboxController m_driverController = new XboxController(OIConstants.DRIVER_CONTROLLER_PORT);
+        XboxController m_driverController2 = new XboxController(OIConstants.DRIVER_CONTROLLER_PORT1);
 
         JoystickButton starButton = new JoystickButton(m_driverController, Button.kStart.value);
         JoystickButton backButton = new JoystickButton(m_driverController, Button.kBack.value);
@@ -144,6 +148,8 @@ public class RobotContainer {
         POVButton dPadDownButton = new POVButton(m_driverController, 180);
         POVButton dPadLeftButton = new POVButton(m_driverController, 90);
         POVButton dPadRightButton = new POVButton(m_driverController, 270);
+
+        private Constants m_constants;
 
         JoystickButton aButton2 = new JoystickButton(m_driverController2, Button.kA.value);
         JoystickButton bButton2 = new JoystickButton(m_driverController2, Button.kB.value);
@@ -164,9 +170,11 @@ public class RobotContainer {
                                 new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop, m_Gripper)));
 
                 leftBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
+                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                                                m_Gripper)));
                 rightBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
+                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                                                m_Gripper)));
 
                 backButton.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),
                                 new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop,
@@ -216,6 +224,12 @@ public class RobotContainer {
                 SmartDashboard.putData("Active / Toggle Cone", new InstantCommand(m_LED::toggleCone));
                 SmartDashboard.putData("Active / Toggle Cube", new InstantCommand(m_LED::toggleCube));
 
+                String filename = Filesystem.getDeployDirectory() + "/resources/driveConstants.yaml";
+                ConstantsFactory factory = new ConstantsFactory(filename);
+                m_constants = factory.getConstants(Constants.class);
+
+                SmartDashboard.putString("Constant Name", m_constants.getName());
+
                 // final ChaseTagCommand chaseTagCommand = new ChaseTagCommand(m_camera,
                 // m_robotDrive,
                 // m_camera::getRobotPose2d);
@@ -228,6 +242,7 @@ public class RobotContainer {
                 // Toggle Booleans
                 // LED Light Trigger COntrol Code
                 // bButton.onTrue(new InstantCommand(m_blinkin::setPurple));
+
                 // aButton.onTrue(new InstantCommand(m_blinkin::setYellow));
 
                 m_robotDrive.setDefaultCommand(new SlowSwerveDriveCommand(
@@ -266,6 +281,10 @@ public class RobotContainer {
                 // Reset it to 0 when joystick = 0
                 // dont let it go over 1
                 SmartDashboard.putNumber("Left Joystick", m_driverController.getLeftY());
+
+                String name = SmartDashboard.getString("Constant Name", m_constants.getName());
+                m_constants.setName(name);
+                m_constants.saveConstants();
         }
 
         /*
@@ -317,6 +336,14 @@ public class RobotContainer {
                 m_Chooser.addOption("Score High Cube No Drive", scoreHighCubeNoDrive);
                 m_Chooser.addOption("Score High Cube Drive Back", scoreHighCubeDriveBack);
                 m_Chooser.addOption("Score High Cube Balance", scoreHighCubeBalance);
+                m_Chooser.addOption("Forward Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "High Cube Auto ",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+                m_Chooser.addOption("Forward Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Two Piece",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+                m_Chooser.addOption("Strafe Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Strafe Test",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+                m_Chooser.addOption("Spline Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Spline Test",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
 
                 SmartDashboard.putData("Auto Selector", m_Chooser);
 

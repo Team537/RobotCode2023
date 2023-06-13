@@ -15,14 +15,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Wrist extends SubsystemBase {
-  private CANSparkMax m_Wrist = new CANSparkMax(Constants.WristConstants.kWrist, MotorType.kBrushless);
-  private SparkMaxPIDController m_WristPidController = m_Wrist.getPIDController();
-  private RelativeEncoder m_WristEncoder = m_Wrist.getEncoder();
+  private CANSparkMax wristMotor = new CANSparkMax(Constants.WristConstants.WRIST, MotorType.kBrushless);
+  private SparkMaxPIDController wristPIDController = wristMotor.getPIDController();
+  private RelativeEncoder wristEncoder = wristMotor.getEncoder();
   private String wristState = "Default";
-  double wristPositionEnter = 0;
 
   /** Creates a new ArmPivot. */
   public Wrist() {
+    wristPIDController.setP(Constants.SparkPIDFConstants.P);
+    wristPIDController.setI(Constants.SparkPIDFConstants.I);
+    wristPIDController.setD(Constants.SparkPIDFConstants.D);
+    wristPIDController.setIZone(Constants.SparkPIDFConstants.IZONE);
+    wristPIDController.setFF(Constants.SparkPIDFConstants.FF);
+    wristPIDController.setOutputRange(Constants.SparkPIDFConstants.MIN_OUTPUT,
+        Constants.SparkPIDFConstants.MAX_OUTPUT);
+    wristPIDController.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.MAX_VELOCITY, 0);
+    wristPIDController.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.MIN_VELOCITY, 0);
+    wristPIDController.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.MAX_ACCEL, 0);
+    wristPIDController.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.ALL_E, 0);
 
   }
 

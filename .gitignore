@@ -160,3 +160,12 @@ bin/
 
 # Simulation GUI and other tools window save file
 *-window.json
+.idea/.gitignore
+.idea/aws.xml
+.idea/dbnavigator.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/libraries/gradle_wrapper.xml
+.idea/libraries/RobotCode2023.xml
+RobotCode2023.iml

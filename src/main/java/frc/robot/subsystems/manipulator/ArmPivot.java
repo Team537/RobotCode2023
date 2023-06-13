@@ -14,74 +14,84 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmPivot extends SubsystemBase {
-  private CANSparkMax m_ArmPivot = new CANSparkMax(Constants.ArmPivotConstants.kArmPivot1, MotorType.kBrushless);
-  private SparkMaxPIDController m_ArmPivotPidController = m_ArmPivot.getPIDController();
-  private RelativeEncoder m_ArmPivotEncoder = m_ArmPivot.getEncoder();
+  private CANSparkMax armPivot = new CANSparkMax(Constants.ArmPivotConstants.ARM_PIVOT, MotorType.kBrushless);
+  private SparkMaxPIDController armPivotPIDController = armPivot.getPIDController();
+  private RelativeEncoder armPivotEncoder = armPivot.getEncoder();
   private String armPivotState = "Default";
-  double ArmPivotPositionEnter = 0;
 
   /** Creates a new ArmPivot. */
   public ArmPivot() {
+    armPivotPIDController.setP(Constants.SparkPIDFConstants.P);
+    armPivotPIDController.setI(Constants.SparkPIDFConstants.I);
+    armPivotPIDController.setD(Constants.SparkPIDFConstants.D);
+    armPivotPIDController.setIZone(Constants.SparkPIDFConstants.IZONE);
+    armPivotPIDController.setFF(Constants.SparkPIDFConstants.FF);
+    armPivotPIDController.setOutputRange(Constants.SparkPIDFConstants.MIN_OUTPUT,
+        Constants.SparkPIDFConstants.MAX_OUTPUT);
+    armPivotPIDController.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.MAX_VELOCITY, 0);
+    armPivotPIDController.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.MIN_VELOCITY, 0);
+    armPivotPIDController.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.MAX_ACCEL_ARM_PIVOT, 0);
+    armPivotPIDController.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.ALL_E, 0);
 
   }
 
   public void ArmPivotPidDefaults() {
-    m_ArmPivotPidController.setP(Constants.SparkPIDFConstants.kP);
-    m_ArmPivotPidController.setI(Constants.SparkPIDFConstants.kI);
-    m_ArmPivotPidController.setD(Constants.SparkPIDFConstants.kD);
-    m_ArmPivotPidController.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_ArmPivotPidController.setFF(Constants.SparkPIDFConstants.kFF);
-    m_ArmPivotPidController.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
+    armPivotPIDController.setP(Constants.SparkPIDFConstants.kP);
+    armPivotPIDController.setI(Constants.SparkPIDFConstants.kI);
+    armPivotPIDController.setD(Constants.SparkPIDFConstants.kD);
+    armPivotPIDController.setIZone(Constants.SparkPIDFConstants.kIz);
+    armPivotPIDController.setFF(Constants.SparkPIDFConstants.kFF);
+    armPivotPIDController.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
         Constants.SparkPIDFConstants.kMaxOutput);
-    m_ArmPivotPidController.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxVelocityArmPivot, 0);
-    m_ArmPivotPidController.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_ArmPivotPidController.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxAccelArmPivot, 0);
-    m_ArmPivotPidController.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
+    armPivotPIDController.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxVelocityArmPivot, 0);
+    armPivotPIDController.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
+    armPivotPIDController.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxAccelArmPivot, 0);
+    armPivotPIDController.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
   }
 
   public void ArmPositionMidGoal() {
-    ArmPivotPidDefaults();
-    m_ArmPivotPidController.setReference(Constants.ArmPivotConstants.kArmPivotPositionMidGoal,
+
+    armPivotPIDController.setReference(Constants.ArmPivotConstants.ARM_PIVOT_POS_MID_GOAL,
         CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "Mid Goal";
 
   }
 
   public void ArmPositionHighGoal() {
-    ArmPivotPidDefaults();
-    m_ArmPivotPidController.setReference(Constants.ArmPivotConstants.kArmPivotPositionHighGoal,
+
+    armPivotPIDController.setReference(Constants.ArmPivotConstants.ARM_PIVOT_POS_HIGH_GOAL,
         CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "High Goal";
 
   }
 
   public void ArmPositionShelfHumanPL() {
-    ArmPivotPidDefaults();
-    m_ArmPivotPidController.setReference(Constants.ArmPivotConstants.kArmPivotPositionShelfHumanPL,
+
+    armPivotPIDController.setReference(Constants.ArmPivotConstants.ARM_PIVOT_POS_SHELF_HUMAN_PL,
         CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "ShelfMid";
 
   }
 
   public void ArmPositionZero() {
-    ArmPivotPidDefaults();
-    m_ArmPivotPidController.setReference(Constants.ArmPivotConstants.kArmPivotPositionZero,
+
+    armPivotPIDController.setReference(Constants.ArmPivotConstants.ARM_PIVOT_POS_ZERO,
         CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "Zero";
 
   }
 
-  public void ArmPositionGroundForward() {
-    ArmPivotPidDefaults();
-    m_ArmPivotPidController.setReference(Constants.ArmPivotConstants.kArmPivotPositionGroundForward,
+  public void ArmPositionGround() {
+
+    armPivotPIDController.setReference(Constants.ArmPivotConstants.ARM_PIVOT_POS_GROUND,
         CANSparkMax.ControlType.kSmartMotion);
-    armPivotState = "GroundForward";
+    armPivotState = "Ground";
 
   }
 
   public void ArmPositionMidDown() {
-    ArmPivotPidDefaults();
-    m_ArmPivotPidController.setReference(Constants.ArmPivotConstants.kArmPivotPositionMidDown,
+
+    armPivotPIDController.setReference(Constants.ArmPivotConstants.ARM_PIVOT_POS_MID_DOWN,
         CANSparkMax.ControlType.kSmartMotion);
     armPivotState = "Test";
 
@@ -100,8 +110,8 @@ public class ArmPivot extends SubsystemBase {
   @Override
   public void periodic() {
 
-    SmartDashboard.putNumber("Pivot Position", m_ArmPivotEncoder.getPosition());
-    SmartDashboard.putNumber("Pivot Velocity", m_ArmPivotEncoder.getVelocity());
+    SmartDashboard.putNumber(" Pivot Position", armPivotEncoder.getPosition());
+    SmartDashboard.putNumber("Pivot Velocity", armPivotEncoder.getVelocity());
     SmartDashboard.putString("Arm Pivot State", armPivotState);
     ArmPivotPositionEnter = SmartDashboard.getNumber("arm pivot get set pos", ArmPivotPositionEnter);
     SmartDashboard.putNumber("arm pivot get set pos", ArmPivotPositionEnter);

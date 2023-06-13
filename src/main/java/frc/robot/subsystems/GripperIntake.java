@@ -12,8 +12,8 @@ import frc.robot.Constants.GripperConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class GripperIntake extends SubsystemBase {
-  CANSparkMax m_Gripper = new CANSparkMax(GripperConstants.kGripper, MotorType.kBrushless);
-  CANSparkMax m_Gripper2 = new CANSparkMax(GripperConstants.kGripper2, MotorType.kBrushless);
+  CANSparkMax m_Gripper = new CANSparkMax(GripperConstants.GRIPPER, MotorType.kBrushless);
+  CANSparkMax m_Gripper2 = new CANSparkMax(GripperConstants.GRIPPER_2, MotorType.kBrushless);
 
   private String gripperState = "Stopped";
 

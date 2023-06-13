@@ -36,6 +36,14 @@
         }
       },
       "/SmartDashboard/Field2d": {
+        "Swerve Modules": {
+          "arrows": false,
+          "style": "Hidden"
+        },
+        "trajectory": {
+          "arrows": false,
+          "style": "Hidden"
+        },
         "window": {
           "visible": true
         }
@@ -46,6 +54,9 @@
     "transitory": {
       "SmartDashboard": {
         "Auto Selector": {
+          "open": true
+        },
+        "PPSwerveControllerCommand": {
           "open": true
         },
         "open": true

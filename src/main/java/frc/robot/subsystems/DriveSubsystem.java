@@ -37,75 +37,64 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Hash Map for All Swerve Modules
 
-  private final HashMap<ModulePosition, SwerveModule> m_swerveModules = new HashMap<>(
+  private final HashMap<ModulePosition, SwerveModule> swerveModules = new HashMap<>(
       Map.of(
           ModulePosition.FRONT_LEFT,
           new SwerveModule(
               ModulePosition.FRONT_LEFT,
-              new WPI_TalonFX(SwerveConstants.kFrontLeftTurn),
-              new WPI_TalonFX(SwerveConstants.kFrontLeftDrive),
-              SwerveConstants.kFrontLeftSRXMagCoder,
-              SwerveConstants.kFrontLeftSRXMagCoderOffset, false),
+              new WPI_TalonFX(SwerveConstants.FRONT_LEFT_TURN_MOTOR_ID),
+              new WPI_TalonFX(SwerveConstants.FRONT_LEFT_DRIVE_MOTOR_ID),
+              SwerveConstants.FRONT_LEFT_SRX_MAG_ENCODER_ID,
+              SwerveConstants.FRONT_LEFT_SRX_MAG_ENCODER_OFFSET, false),
 
           ModulePosition.FRONT_RIGHT,
           new SwerveModule(
               ModulePosition.FRONT_RIGHT,
-              new WPI_TalonFX(SwerveConstants.kFrontRightTurn),
-              new WPI_TalonFX(SwerveConstants.kFrontRightDrive),
-              SwerveConstants.kFrontRightSRXMagCoder,
-              SwerveConstants.kFrontRightSRXMagCoderOffset, true),
+              new WPI_TalonFX(SwerveConstants.FRONT_RIGHT_TURN_MOTOR_ID),
+              new WPI_TalonFX(SwerveConstants.FRONT_RIGHT_DRIVE_MOTOR_ID),
+              SwerveConstants.FRONT_RIGHT_SRX_MAG_ENCODER_ID,
+              SwerveConstants.FRONT_RIGHT_SRX_MAG_ENCODER_OFFSET, true),
 
           ModulePosition.BACK_LEFT,
           new SwerveModule(
               ModulePosition.BACK_LEFT,
-              new WPI_TalonFX(SwerveConstants.kBackLeftTurn),
-              new WPI_TalonFX(SwerveConstants.kBackLeftDrive),
-              SwerveConstants.kBackLeftSRXMagCoder,
-              SwerveConstants.kBackLeftSRXMagCoderOffset, true),
+              new WPI_TalonFX(SwerveConstants.BACK_LEFT_TURN_MOTOR_ID),
+              new WPI_TalonFX(SwerveConstants.BACK_LEFT_DRIVE_MOTOR_ID),
+              SwerveConstants.BACK_LEFT_SRX_MAG_ENCODER_ID,
+              SwerveConstants.BACK_LEFT_SRX_MAG_ENCODER_OFFSET, true),
 
           ModulePosition.BACK_RIGHT,
           new SwerveModule(
               ModulePosition.BACK_RIGHT,
-              new WPI_TalonFX(SwerveConstants.kBackRightTurn),
-              new WPI_TalonFX(SwerveConstants.kBackRightDrive),
-              SwerveConstants.kBackRightSRXMagCoder,
-              SwerveConstants.kBackRightSRXMagCoderOffset, false)));
+              new WPI_TalonFX(SwerveConstants.BACK_RIGHT_TURN_MOTOR_ID),
+              new WPI_TalonFX(SwerveConstants.BACK_RIGHT_DRIVE_MOTOR_ID),
+              SwerveConstants.BACK_RIGHT_SRX_MAG_ENCODER_ID,
+              SwerveConstants.BACK_RIGHT_SRX_MAG_ENCODER_OFFSET, false)));
 
   // Gyro and Simulated Gyro
 
-  private final Pigeon2 m_gyro = new Pigeon2(SwerveConstants.kPigeonID);
+  private final Pigeon2 pigeon = new Pigeon2(SwerveConstants.PIGEON_ID);
   public String driveState = "Drive";
 
-  // old gyro
-  // private final ADXRS450_GyroSim m_gyroSim = new ADXRS450_GyroSim(m_gyro);
-
-  // Swerve Odometry
-
-  private final SwerveDrivePoseEstimator m_odometry = new SwerveDrivePoseEstimator(
-      SwerveConstants.kDriveKinematics,
+  private final SwerveDrivePoseEstimator odometry = new SwerveDrivePoseEstimator(
+      SwerveConstants.SWERVE_KINEMATICS,
       getHeadingRotation2d(),
       getModulePositions(),
       new Pose2d());
 
-  // PID Controllers for X, Y, and Rotation
-  // Rotation is Profiled to limit Uncontrollable Rotation
+  private PIDController xPIDController = new PIDController(SwerveConstants.P_X, SwerveConstants.I_X,
+      SwerveConstants.D_X);
+  private PIDController yPIDController = new PIDController(SwerveConstants.P_Y, SwerveConstants.I_Y,
+      SwerveConstants.D_Y);
+  private ProfiledPIDController profiledTurnController = new ProfiledPIDController(SwerveConstants.P_ROTATION,
+      SwerveConstants.I_ROTATION, SwerveConstants.D_ROTATION, SwerveConstants.ROTATION_CONTROLLER_CONSTRAINTS);
+  private PIDController turnController = new PIDController(SwerveConstants.P_ROTATION, SwerveConstants.I_ROTATION,
+      SwerveConstants.D_ROTATION);
 
-  private PIDController m_XController = new PIDController(SwerveConstants.kP_X, SwerveConstants.kI_X,
-      SwerveConstants.kD_X);
-  private PIDController m_YController = new PIDController(SwerveConstants.kP_Y, SwerveConstants.kI_Y,
-      SwerveConstants.kD_Y);
-  private ProfiledPIDController m_turnController = new ProfiledPIDController(SwerveConstants.kP_Rot,
-      SwerveConstants.kI_Rot, SwerveConstants.kD_Rot, SwerveConstants.kRotControllerConstraints);
-  private PIDController m_turnControllerAuto = new PIDController(SwerveConstants.kP_Rot, SwerveConstants.kI_Rot,
-      SwerveConstants.kD_Rot);
-
-  // Simulated Yaw, Only used in Sim
-  private double m_simYaw;
+  private double simYaw;
 
   public DriveSubsystem() {
-    m_gyro.setYaw(180);
-
-    // m_gyro.configMountPose(-90, -0.219727 , 0.615234);
+    // pigeon.setYaw(180);
 
   }
 
@@ -113,42 +102,10 @@ public class DriveSubsystem extends SubsystemBase {
       double drive,
       double strafe,
       double rotation,
-      boolean isFieldRelative,
-      boolean isOpenLoop) {
-    // d = d * s
-    drive *= SwerveConstants.kMaxSpeedMetersPerSecond;
-    strafe *= SwerveConstants.kMaxSpeedMetersPerSecond;
-    rotation *= SwerveConstants.kMaxRotationRadiansPerSecond;
-
-    // Chassis Speed
-    ChassisSpeeds chassisSpeeds = isFieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-        drive, strafe, rotation, getHeadingRotation2d())
-        : new ChassisSpeeds(drive, strafe, rotation);
-    // new ChassisSpeeds(drive*Math.cos(Math.toRadians(m_gyro.getYaw())) +
-    // strafe*Math.sin(Math.toRadians(m_gyro.getYaw())),
-    // -drive*Math.sin(Math.toRadians(m_gyro.getYaw())) +
-    // strafe*Math.cos(Math.toRadians(m_gyro.getYaw())),
-    // rotation);
-
-    // Module States
-    Map<ModulePosition, SwerveModuleState> moduleStates = ModuleMap
-        .of(SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
-
-    SwerveDriveKinematics.desaturateWheelSpeeds(
-        ModuleMap.orderedValues(moduleStates, new SwerveModuleState[0]), SwerveConstants.kMaxSpeedMetersPerSecond);
-
-    for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
-      module.setDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
-    driveState = "Drive";
-  }
-
-  public void slowDrive(
-      double drive,
-      double strafe,
-      double rotation,
-      boolean isFieldRelative,
-      boolean isOpenLoop) {
-    rotation *= SwerveConstants.kSlowRotationRadiansPerSecond;
+      boolean isFieldRelative) {
+    drive *= SwerveConstants.MAX_SPEED_METERS_PER_SECOND;
+    strafe *= SwerveConstants.MAX_SPEED_METERS_PER_SECOND;
+    rotation *= SwerveConstants.MAX_ROTATION_RADIANS_PER_SECOND;
 
     // Chassis Speed
     ChassisSpeeds chassisSpeeds = isFieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -157,13 +114,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     // Module States
     Map<ModulePosition, SwerveModuleState> moduleStates = ModuleMap
-        .of(SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
+        .of(SwerveConstants.SWERVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds));
 
-    SwerveDriveKinematics.desaturateWheelSpeeds(
-        ModuleMap.orderedValues(moduleStates, new SwerveModuleState[0]), SwerveConstants.kMaxSpeedMetersPerSecond);
-
-    for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
-      module.setSlowDesiredState(moduleStates.get(module.getModulePosition()), isOpenLoop);
+    setSwerveModuleStatesMap(moduleStates);
 
     driveState = "Drive";
   }
@@ -172,55 +125,48 @@ public class DriveSubsystem extends SubsystemBase {
 
     return new PPSwerveControllerCommand(
         traj,
-        this::getPoseMeters, // Pose supplier
-        SwerveConstants.kDriveKinematics, // SwerveDriveKinematics
-        new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use
-                                    // feedforwards.
-        new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
-        new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will
-                                    // only use feedforwards.
-
-        // refers to the class its in, calls the swerve module
-        this::setSwerveModuleStatesAuto, // Module states consumer
-        true, // Should the path be automatically mirrored depending on alliance color.
-              // Optional, defaults to true
-        this // Requires this drive subsystem
-    );
+        this::getPoseMeters,
+        SwerveConstants.SWERVE_KINEMATICS,
+        getXPidController(),
+        getYPidController(),
+        getRotPidControllerAuto(),
+        this::setSwerveModuleStates,
+        true,
+        this);
 
   }
 
   public double[] getGyroVelocityXYZ() {
     double[] xyz = new double[3];
-    m_gyro.getRawGyro(xyz);
+    pigeon.getRawGyro(xyz);
     return xyz;
   }
 
   public double getGyroPitch() {
 
-    return m_gyro.getPitch();
+    return pigeon.getPitch();
 
   }
 
   public void setDiamondShape() {
 
-    Map<ModulePosition, SwerveModuleState> moduleState = ModuleMap.of(new SwerveModuleState[] {
-        // front left
+    Map<ModulePosition, SwerveModuleState> moduleStates = ModuleMap.of(new SwerveModuleState[] {
+
         new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),
-        // front right
+
         new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45.0)),
-        // back left
+
         new SwerveModuleState(0.0, Rotation2d.fromDegrees(135.0)),
-        // back right
+
         new SwerveModuleState(0.0, Rotation2d.fromDegrees(-135.0))
     });
 
-    for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
-      module.setSlowDesiredState(moduleState.get(module.getModulePosition()), true);
+    setSwerveModuleStatesMap(moduleStates);
 
   }
 
   public void stop() {
-    this.drive(0, 0, 0, true, true);
+    this.drive(0, 0, 0, true);
   }
 
   /**
@@ -229,15 +175,20 @@ public class DriveSubsystem extends SubsystemBase {
    * @param states
    * @param isOpenLoop
    */
-  public void setSwerveModuleStates(SwerveModuleState[] states, boolean isOpenLoop) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(states, SwerveConstants.kMaxSpeedMetersPerSecond);
+  public void setSwerveModuleStates(SwerveModuleState[] states) {
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, SwerveConstants.MAX_SPEED_METERS_PER_SECOND);
 
-    for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules))
-      module.setDesiredState(states[module.getModulePosition().ordinal()], isOpenLoop);
+    for (SwerveModule module : ModuleMap.orderedValuesList(swerveModules))
+      module.setDesiredState(states[module.getModulePosition().ordinal()]);
   }
 
-  public void setSwerveModuleStatesAuto(SwerveModuleState[] states) {
-    setSwerveModuleStates(states, false);
+  public void setSwerveModuleStatesMap(Map<ModulePosition, SwerveModuleState> moduleStates) {
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        ModuleMap.orderedValues(moduleStates, new SwerveModuleState[0]), SwerveConstants.MAX_SPEED_METERS_PER_SECOND);
+
+    for (SwerveModule module : ModuleMap.orderedValuesList(swerveModules))
+      module.setDesiredState(moduleStates.get(module.getModulePosition()));
+
   }
 
   /**
@@ -246,16 +197,14 @@ public class DriveSubsystem extends SubsystemBase {
    * @param pose
    */
 
-  // calls from the setswerveodometry command
-  // only used in auto
   public void setOdometry(Pose2d pose) {
-    m_odometry.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
-    m_gyro.setYaw(pose.getRotation().getDegrees());
+    odometry.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
+    pigeon.setYaw(pose.getRotation().getDegrees());
   }
 
   public void resetGyro() {
-    m_gyro.setYaw(0);
-    m_gyro.setAccumZAngle(0);
+    pigeon.setYaw(0);
+    pigeon.setAccumZAngle(0);
   }
 
   /**
@@ -264,15 +213,15 @@ public class DriveSubsystem extends SubsystemBase {
    * @return Adjusted Gyro Heading
    */
   public double getHeadingDegrees() {
-    return Math.IEEEremainder(-(m_gyro.getYaw()), 360);
+    return Math.IEEEremainder(-(pigeon.getYaw()), 360);
   }
 
   public double getRoll() {
-    return m_gyro.getRoll();
+    return pigeon.getRoll();
   }
 
   public double getPitch() {
-    return m_gyro.getPitch();
+    return pigeon.getPitch();
   }
 
   /**
@@ -290,7 +239,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return Position of the Robot in XY Coordinates
    */
   public Pose2d getPoseMeters() {
-    return m_odometry.getEstimatedPosition();
+    return odometry.getEstimatedPosition();
   }
 
   /**
@@ -300,7 +249,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return Swerve Module
    */
   public SwerveModule getSwerveModule(ModulePosition modulePosition) {
-    return m_swerveModules.get(modulePosition);
+    return swerveModules.get(modulePosition);
   }
 
   /**
@@ -310,8 +259,8 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public Map<ModulePosition, SwerveModuleState> getModuleStates() {
     Map<ModulePosition, SwerveModuleState> map = new HashMap<>();
-    for (ModulePosition i : m_swerveModules.keySet()) {
-      map.put(i, m_swerveModules.get(i).getState());
+    for (ModulePosition i : swerveModules.keySet()) {
+      map.put(i, swerveModules.get(i).getState());
     }
     return map;
   }
@@ -323,33 +272,31 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public SwerveModulePosition[] getModulePositions() {
     return new SwerveModulePosition[] {
-        m_swerveModules.get(ModulePosition.FRONT_LEFT).getPosition(),
-        m_swerveModules.get(ModulePosition.FRONT_RIGHT).getPosition(),
-        m_swerveModules.get(ModulePosition.BACK_LEFT).getPosition(),
-        m_swerveModules.get(ModulePosition.BACK_RIGHT).getPosition()
+        swerveModules.get(ModulePosition.FRONT_LEFT).getPosition(),
+        swerveModules.get(ModulePosition.FRONT_RIGHT).getPosition(),
+        swerveModules.get(ModulePosition.BACK_LEFT).getPosition(),
+        swerveModules.get(ModulePosition.BACK_RIGHT).getPosition()
     };
   }
 
-  // Returns PID Controllers, Used in Auto
-
   public PIDController getXPidController() {
-    return m_XController;
+    return xPIDController;
   }
 
   public PIDController getYPidController() {
-    return m_YController;
+    return yPIDController;
   }
 
   public ProfiledPIDController getRotPidController() {
-    return m_turnController;
+    return profiledTurnController;
   }
 
   public PIDController getRotPidControllerAuto() {
-    return m_turnControllerAuto;
+    return turnController;
   }
 
   public void setBrakeMode(NeutralMode mode) {
-    for (SwerveModule module : m_swerveModules.values()) {
+    for (SwerveModule module : swerveModules.values()) {
       module.setDriveNeutralMode(mode);
       module.setTurnNeutralMode(mode);
     }
@@ -361,7 +308,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return {@link SwerveDriveOdometry}
    */
   public SwerveDrivePoseEstimator getOdometry() {
-    return m_odometry;
+    return odometry;
   }
 
   /**
@@ -369,12 +316,12 @@ public class DriveSubsystem extends SubsystemBase {
    * 
    */
   public void updateOdometry() {
-    m_odometry.update(
+    odometry.update(
         getHeadingRotation2d(),
         getModulePositions());
 
-    for (SwerveModule module : ModuleMap.orderedValuesList(m_swerveModules)) {
-      Translation2d modulePositionFromChassis = SwerveConstants.kModuleTranslations
+    for (SwerveModule module : ModuleMap.orderedValuesList(swerveModules)) {
+      Translation2d modulePositionFromChassis = SwerveConstants.MODULE_TRANSLATIONS
           .get(module.getModulePosition())
           .rotateBy(getHeadingRotation2d())
           .plus(getPoseMeters().getTranslation());
@@ -393,6 +340,9 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Gyro Angle", getHeadingDegrees());
     SmartDashboard.putString("Drive State", driveState);
     SmartDashboard.putNumber("Gyro Pitch", getGyroPitch());
+    SmartDashboard.putNumber("Odo X", odometry.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("Odo Y", odometry.getEstimatedPosition().getY());
+    SmartDashboard.putNumber("Odo Yaw", odometry.getEstimatedPosition().getRotation().getDegrees());
   }
 
   /**
@@ -418,18 +368,18 @@ public class DriveSubsystem extends SubsystemBase {
    */
   @Override
   public void simulationPeriodic() {
-    ChassisSpeeds chassisSpeed = SwerveConstants.kDriveKinematics.toChassisSpeeds(
+    ChassisSpeeds chassisSpeed = SwerveConstants.SWERVE_KINEMATICS.toChassisSpeeds(
         ModuleMap.orderedValues(getModuleStates(), new SwerveModuleState[0]));
 
-    // m_simYaw += chassisSpeed.omegaRadiansPerSecond * 0.06; //changed from .02
+    simYaw += chassisSpeed.omegaRadiansPerSecond * 0.02; // changed from .02
 
-    Unmanaged.feedEnable(2);
-    m_gyro.getSimCollection().setRawHeading(-Units.radiansToDegrees(m_simYaw));
+    Unmanaged.feedEnable(20);
+    pigeon.getSimCollection().setRawHeading(-Units.radiansToDegrees(simYaw));
   }
 
   public void resetEncoders() {
 
-    for (SwerveModule module : m_swerveModules.values()) {
+    for (SwerveModule module : swerveModules.values()) {
       module.resetAngleToAbsolute();
       ;
     }
@@ -438,22 +388,14 @@ public class DriveSubsystem extends SubsystemBase {
 
   public double getVelocity() {
 
-    return m_swerveModules.get(ModulePosition.FRONT_LEFT).getDriveMetersPerSecond();
+    return swerveModules.get(ModulePosition.FRONT_LEFT).getDriveMetersPerSecond();
   }
 
   public void setCoast() {
-    for (SwerveModule module : m_swerveModules.values()) {
+    for (SwerveModule module : swerveModules.values()) {
       module.setDriveNeutralMode(NeutralMode.Coast);
 
     }
-
-  }
-
-  public void teleOpGyroReset() {
-
-    double gyroAngle = m_gyro.getYaw();
-
-    m_gyro.setYaw(180);
 
   }
 

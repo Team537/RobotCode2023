@@ -41,7 +41,7 @@ public class BalanceChargeStation extends CommandBase {
 
     if (Math.abs(gyroPitch) < angleDeadband) {
 
-      m_drive.drive(0, 0, 0, true, true);
+      m_drive.drive(0, 0, 0, true);
       m_LED.autoEnd();
       return;
     }
@@ -50,7 +50,7 @@ public class BalanceChargeStation extends CommandBase {
     var diff = currentTime - lastTimeWhenBalancing;
     if (diff >= 500) {
       double speed = gyroPitch > 0 ? 0.16 : -0.16;
-      m_drive.drive(speed, 0, 0, true, true);
+      m_drive.drive(speed, 0, 0, true);
       lastTimeWhenBalancing = System.currentTimeMillis();
     }
 

@@ -16,6 +16,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.utils.ModuleMap;
 
 import java.util.Map;
+
 /**
  * 
  * Simulates Field in Simulations
@@ -26,14 +27,15 @@ public class FieldSim {
 
   private final Field2d m_field2d = new Field2d();
 
-  private final Map<ModulePosition, Pose2d> m_swerveModulePoses =
-      ModuleMap.of(new Pose2d(), new Pose2d(), new Pose2d(), new Pose2d());
+  private final Map<ModulePosition, Pose2d> m_swerveModulePoses = ModuleMap.of(new Pose2d(), new Pose2d(), new Pose2d(),
+      new Pose2d());
 
   public FieldSim(DriveSubsystem m_drive) {
     this.m_drive = m_drive;
   }
 
-  public void initSim() {}
+  public void initSim() {
+  }
 
   public Field2d getField2d() {
     return m_field2d;
@@ -46,17 +48,15 @@ public class FieldSim {
   public void resetRobotPose(Pose2d pose) {
     m_field2d.setRobotPose(pose);
   }
-  
-  
+
   private void updateRobotPoses() {
     m_field2d.setRobotPose(m_drive.getPoseMeters());
 
     for (ModulePosition i : ModulePosition.values()) {
-      Translation2d updatedPositions =
-          SwerveConstants.kModuleTranslations
-              .get(i)
-              .rotateBy(m_drive.getPoseMeters().getRotation())
-              .plus(m_drive.getPoseMeters().getTranslation());
+      Translation2d updatedPositions = SwerveConstants.MODULE_TRANSLATIONS
+          .get(i)
+          .rotateBy(m_drive.getPoseMeters().getRotation())
+          .plus(m_drive.getPoseMeters().getTranslation());
       m_swerveModulePoses.put(
           i,
           new Pose2d(
@@ -75,10 +75,12 @@ public class FieldSim {
   public void periodic() {
     updateRobotPoses();
 
-    if (RobotBase.isSimulation()) simulationPeriodic();
+    if (RobotBase.isSimulation())
+      simulationPeriodic();
 
     SmartDashboard.putData("Field2d", m_field2d);
   }
 
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+  }
 }
