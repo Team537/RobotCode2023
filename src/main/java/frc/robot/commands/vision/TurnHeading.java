@@ -39,7 +39,7 @@ public class TurnHeading extends CommandBase {
   public void execute() {
     var gyroYaw = m_drive.getHeadingDegrees();
 
-    double angleDeadband = 10;
+    double angleDeadband = 5;
 
     if (Math.abs(heading - gyroYaw) < angleDeadband) {
 
@@ -50,11 +50,10 @@ public class TurnHeading extends CommandBase {
 
     var currentTime = System.currentTimeMillis();
     var diff = currentTime - lastTimeWhenBalancing;
-    if (diff >= 500) {
-      double speed = gyroYaw > 0 ? 0.1 : -0.1;
-      m_drive.drive(0, 0, speed, true);
-      lastTimeWhenBalancing = System.currentTimeMillis();
-    }
+
+    double speed = gyroYaw > 0 ? 0.3 : -0.3;
+    m_drive.drive(0, 0, speed, true);
+    lastTimeWhenBalancing = System.currentTimeMillis();
 
     // if (lastTimeWhenBalancing == 0) {
     // // move

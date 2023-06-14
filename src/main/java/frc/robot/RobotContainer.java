@@ -206,33 +206,44 @@ public class RobotContainer {
                 aButton.onTrue(ground);
                 bButton.onTrue(mid_goal);
 
-                leftBumper.toggleOnTrue(new SequentialCommandGroup(new TurnHeading(m_robotDrive, 0).withTimeout(1),
+                leftBumper.toggleOnTrue(new SequentialCommandGroup(new TurnHeading(m_robotDrive, 0).withTimeout(5),
                                 new ChaseTagCommand(m_robotDrive, false, m_LED, m_Camera)));
 
-                rightBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
-                                new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop, m_Gripper)));
+                // rightBumper.onTrue(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleIntake),
+                // new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop,
+                // m_Gripper)));
 
-                leftBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
-                rightBumper.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
+                // leftBumper.onFalse(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleOutake),
+                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                // m_Gripper)));
+                // rightBumper.onFalse(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleIntake),
+                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                // m_Gripper)));
 
-                backButton.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),
-                                new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop, m_Gripper)));
-                backButton.onFalse(new ParallelCommandGroup(new InstantCommand(m_LED::toggleFastOutake),
-                                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop, m_Gripper)));
+                // backButton.onTrue(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleFastOutake),
+                // new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop,
+                // m_Gripper)));
+                // backButton.onFalse(new ParallelCommandGroup(new
+                // InstantCommand(m_LED::toggleFastOutake),
+                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                // m_Gripper)));
 
-                dPadUpButton.onTrue(
-                                new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero, m_Wrist));
+                // dPadUpButton.onTrue(
+                // new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero,
+                // m_Wrist));
                 dPadRightButton
                                 .onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp,
                                                 m_Wrist::WristPositionManualUp, m_Wrist));
-                dPadLeftButton
-                                .onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidDown,
-                                                m_ArmPivot::ArmPositionMidDown,
-                                                m_ArmPivot));
+                // dPadLeftButton
+                // .onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidDown,
+                // m_ArmPivot::ArmPositionMidDown,
+                // m_ArmPivot));
 
-                dPadDownButton.onTrue(zeros);
+                // dPadDownButton.onTrue(zeros);
 
                 SmartDashboard.putData("Active / Toggle Cone", new InstantCommand(m_LED::toggleCone));
                 SmartDashboard.putData("Active / Toggle Cube", new InstantCommand(m_LED::toggleCube));

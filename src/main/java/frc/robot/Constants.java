@@ -165,7 +165,7 @@ public class Constants {
 
     // when carrying cones and cubes on the ground, they currently hit
     // the ground, need to add something to bring the wrist up 1 rotation
-    public static final double kWristPositionManualUp = -3;
+    public static final double kWristPositionManualUp = 9;
     public static final double kWristPositionManualDown = -15;
 
   }
