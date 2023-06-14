@@ -39,6 +39,7 @@ import frc.robot.commands.swerve.SetSwerveBrakeMode;
 // import frc.robot.commands.swerve.BoostDriveCommand;
 import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.commands.vision.ChaseTagCommand;
+import frc.robot.commands.vision.TurnHeading;
 import frc.robot.grip.Cube;
 import frc.robot.simulation.FieldSim;
 
@@ -57,6 +58,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -204,8 +206,9 @@ public class RobotContainer {
                 aButton.onTrue(ground);
                 bButton.onTrue(mid_goal);
 
-                leftBumper.toggleOnTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleOutake),
+                leftBumper.toggleOnTrue(new SequentialCommandGroup(new TurnHeading(m_robotDrive, 0).withTimeout(1),
                                 new ChaseTagCommand(m_robotDrive, false, m_LED, m_Camera)));
+
                 rightBumper.onTrue(new ParallelCommandGroup(new InstantCommand(m_LED::toggleIntake),
                                 new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop, m_Gripper)));
 
