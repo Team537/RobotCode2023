@@ -6,6 +6,7 @@ package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import frc.robot.commands.manipulator.ManipulatorGround;
+import frc.robot.commands.manipulator.ManipulatorMidGoal;
 import frc.robot.commands.swerve.SetSwerveBrakeMode;
 import frc.robot.commands.swerve.SetSwerveOdometry;
 import frc.robot.simulation.FieldSim;
@@ -60,12 +62,16 @@ public class FollowTrajectory extends SequentialCommandGroup {
 
     // eventMap.put("autoStart", );
     // eventMap.put("autoEnd", new InstantCommand(m_LED::autoEnd));
-    // eventMap.put("scoreMid", new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut,
-    // m_Wrist, m_LED).withTimeout(5));
-    eventMap.put("returnGround", new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
-    // eventMap.put("gripperOut", new SequentialCommandGroup(
-    // new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(2),
-    // new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(1)));
+    eventMap.put("armMid", new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut,
+    m_Wrist, m_LED));
+    eventMap.put("armGround", new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
+    eventMap.put("intakeOut", new SequentialCommandGroup(
+    new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(1.25),
+    new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1)));
+    eventMap.put("intakeIn", new SequentialCommandGroup(
+    new RunCommand(m_Gripper::GripperIn, m_Gripper).withTimeout(1.75),
+    new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1)));
+
 
     PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, 3, 2.25, false);
 

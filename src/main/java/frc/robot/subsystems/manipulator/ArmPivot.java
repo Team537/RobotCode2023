@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmPivot extends SubsystemBase {
-  private CANSparkMax armPivot = new CANSparkMax(Constants.ArmPivotConstants.ARM_PIVOT, MotorType.kBrushless);
-  private SparkMaxPIDController armPivotPIDController = armPivot.getPIDController();
-  private RelativeEncoder armPivotEncoder = armPivot.getEncoder();
+  private CANSparkMax armPivotMotor = new CANSparkMax(Constants.ArmPivotConstants.ARM_PIVOT, MotorType.kBrushless);
+  private SparkMaxPIDController armPivotPIDController = armPivotMotor.getPIDController();
+  private RelativeEncoder armPivotEncoder = armPivotMotor.getEncoder();
   private String armPivotState = "Default";
 
   /** Creates a new ArmPivot. */

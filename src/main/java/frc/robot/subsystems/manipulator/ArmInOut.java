@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmInOut extends SubsystemBase {
-  private CANSparkMax armExtension = new CANSparkMax(Constants.ArmInOutConstants.ARM_INOUT, MotorType.kBrushless);
-  private SparkMaxPIDController armExtensionsPIDController = armExtension.getPIDController();
-  private RelativeEncoder armExtensionEncoder = armExtension.getEncoder();
+  private CANSparkMax armExtensionMotor = new CANSparkMax(Constants.ArmInOutConstants.ARM_INOUT, MotorType.kBrushless);
+  private SparkMaxPIDController armExtensionsPIDController = armExtensionMotor.getPIDController();
+  private RelativeEncoder armExtensionEncoder = armExtensionMotor.getEncoder();
   private String armInOutState = "Default";
   /** Creates a new ArmInOut. */
   public ArmInOut() {
