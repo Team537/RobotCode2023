@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.manipulator.ManipulatorGroundForward;
 import frc.robot.commands.manipulator.ManipulatorMidGoal;
-import frc.robot.commands.manipulator.ManipulatorZero;
 import frc.robot.simulation.FieldSim;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GripperIntake;
@@ -36,10 +35,11 @@ public class ScoreHighCubeNoDrive extends SequentialCommandGroup {
 
         new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(1),
         new RunCommand(m_Gripper::GripperFast, m_Gripper).withTimeout(1),
-        new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1),
-        new ManipulatorZero(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED).withTimeout(0.1)
+        new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1)
 
     );
   }
 }
-//ondna oaijwdoawiod aiowhd aw doaod aowdh oadio wiod hio oidiowdoesfibsrib sif iei efi sif ifies fiusheiufhseiuf sieh fiuseh fiush  jnndjoaendou hwiu ahdouahdoahwwodhao
+// ondna oaijwdoawiod aiowhd aw doaod aowdh oadio wiod hio oidiowdoesfibsrib sif
+// iei efi sif ifies fiusheiufhseiuf sieh fiuseh fiush jnndjoaendou hwiu
+// ahdouahdoahwwodhao

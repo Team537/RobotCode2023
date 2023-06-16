@@ -20,37 +20,37 @@ public class ArmInOut extends SubsystemBase {
   public ArmInOut() {
   }
 
-  private CANSparkMax m_ArmInOut = new CANSparkMax(Constants.ArmInOutConstants.kArmInOut, MotorType.kBrushless);
+  private CANSparkMax m_ArmInOut = new CANSparkMax(Constants.ArmInOutConstants.ARM_INOUT, MotorType.kBrushless);
   private SparkMaxPIDController m_ArmInOutPidController = m_ArmInOut.getPIDController();
   private RelativeEncoder m_ArmInOutEncoder = m_ArmInOut.getEncoder();
   private String armInOutState = "Default";
   double ArmInOutPositionEnter = 0;
 
   public void ArmInOutPidDefaults() {
-    m_ArmInOutPidController.setP(Constants.SparkPIDFConstants.kP);
-    m_ArmInOutPidController.setI(Constants.SparkPIDFConstants.kI);
-    m_ArmInOutPidController.setD(Constants.SparkPIDFConstants.kD);
-    m_ArmInOutPidController.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_ArmInOutPidController.setFF(Constants.SparkPIDFConstants.kFF);
-    m_ArmInOutPidController.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
-        Constants.SparkPIDFConstants.kMaxOutput);
-    m_ArmInOutPidController.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_ArmInOutPidController.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
-    m_ArmInOutPidController.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxVelocityArmInOut, 0);
-    m_ArmInOutPidController.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxAccelArmInOut, 0);
+    m_ArmInOutPidController.setP(Constants.SparkPIDFConstants.P);
+    m_ArmInOutPidController.setI(Constants.SparkPIDFConstants.I);
+    m_ArmInOutPidController.setD(Constants.SparkPIDFConstants.D);
+    m_ArmInOutPidController.setIZone(Constants.SparkPIDFConstants.IZONE);
+    m_ArmInOutPidController.setFF(Constants.SparkPIDFConstants.FF);
+    m_ArmInOutPidController.setOutputRange(Constants.SparkPIDFConstants.MIN_OUTPUT,
+        Constants.SparkPIDFConstants.MAX_OUTPUT);
+    m_ArmInOutPidController.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.MIN_VELOCITY, 0);
+    m_ArmInOutPidController.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.ALL_E, 0);
+    m_ArmInOutPidController.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.MAX_VELOCITY, 0);
+    m_ArmInOutPidController.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.MAX_ACCEL, 0);
 
   }
 
   public void ArmInOutMidGoal() {
     ArmInOutPidDefaults();
-    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.kArmInOutPositionMidGoal,
+    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.ARM_INOUT_POS_MID_GOAL,
         CANSparkMax.ControlType.kSmartMotion);
     armInOutState = "Mid Goal";
   }
 
   public void ArmInOutHighGoal() {
     ArmInOutPidDefaults();
-    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.kArmInOutPositionHighGoal,
+    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.ARM_INOUT_POS_HIGH_GOAL,
         CANSparkMax.ControlType.kSmartMotion);
     armInOutState = "High Goal";
 
@@ -58,35 +58,18 @@ public class ArmInOut extends SubsystemBase {
 
   public void ArmInOutShelfHumanPL() {
     ArmInOutPidDefaults();
-    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.kArmInOutPositionShelfHumanPL,
+    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.ARM_INOUT_POS_SHELF_HUMANPL,
         CANSparkMax.ControlType.kSmartMotion);
     armInOutState = "ShelfMid";
   }
 
-  public void ArmInOutZero() {
-    ArmInOutPidDefaults();
-    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.kArmInOutPositionZero,
-        CANSparkMax.ControlType.kSmartMotion);
-    armInOutState = "Zero";
-  }
-
   public void ArmInOutGroundForward() {
     ArmInOutPidDefaults();
-    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.kArmInOutPositionGroundForward,
+    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.ARM_INOUT_POS_GROUND,
         CANSparkMax.ControlType.kSmartMotion);
     armInOutState = "GroundForward";
 
   }
-
-  /*
-   * public void ArmInOutGroundBack() {
-   * ArmInOutPidDefaults();
-   * m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.
-   * kArmInOutPositionGroundBack,
-   * CANSparkMax.ControlType.kSmartMotion);
-   * armInOutState = "GroundBack";
-   * }
-   */
 
   @Override
   public void periodic() {
@@ -98,6 +81,7 @@ public class ArmInOut extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  // used for testing, set in out to position from smart dashboard
   public void ArmInOutSetSmartDash() {
     ArmInOutPidDefaults();
     armInOutUpdatePosition();
@@ -107,7 +91,8 @@ public class ArmInOut extends SubsystemBase {
   }
 
   public void armInOutUpdatePosition() {
-    ArmInOutPositionEnter = SmartDashboard.getNumber("arm inout get set pos", ArmInOutPositionEnter);
+    ArmInOutPositionEnter = SmartDashboard.getNumber("arm inout get set pos",
+        ArmInOutPositionEnter);
 
   }
 }

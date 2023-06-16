@@ -61,6 +61,7 @@ public class Constants {
     public static final double MAX_ACCEL = 4000;
     // specific accel constant for the pivot
     public static final double MAX_ACCEL_ARM_PIVOT = 4000;
+    public static final double MAX_ACCEL_WRIST = 2000;
 
     // allowed closed loop error
     public static final double ALL_E = 0;
@@ -112,19 +113,14 @@ public class Constants {
     // motor.
     // current limits are (+-)(it is +- because the string can get flipped) 300 to 0
 
-    public static final double ARM_INOUT_POS_HIGH_GOAL = 50; // for "shooting" cones, it was 100
+    public static final double ARM_INOUT_POS_HIGH_GOAL = -50; // for "shooting" cones, it was 100
     // the value for normal high goal is 225
 
-    public static final double ARM_INOUT_POS_MID_GOAL = 52;
-    public static final double ARM_INOUT_POS_SHELF_HUMANPL = 60;
-    public static final double ARM_INOUT_POS_SHELF_HIGH = 50;
+    public static final double ARM_INOUT_POS_MID_GOAL = 0;
+    public static final double ARM_INOUT_POS_SHELF_HUMANPL = 0;
+    public static final double ARM_INOUT_POS_SHELF_HIGH = -50;
     public static final double ARM_INOUT_POS_GROUND = 0.0;
 
-    // used for setting the robot to zero (and accounts for the string rolling up
-    // different)
-    public static final double ARM_INOUT_POS_ZERO = -1;
-
-    // positions used to increment inout positions
   }
 
   public static final class ArmPivotConstants {
@@ -132,13 +128,12 @@ public class Constants {
     public static final int ARM_PIVOT = 19;
 
     // these are the setpositions for the armpivot. current limits are 0 to 58
-    public static final double ARM_PIVOT_POS_HIGH_GOAL = 7;
-    public static final double ARM_PIVOT_POS_SHELF_HUMAN_PL = 15;
-    public static final double ARM_PIVOT_POS_MID_GOAL = 18;
-    public static final double ARM_PIVOT_POS_SHELF_HIGH = 25;
+    public static final double ARM_PIVOT_POS_HIGH_GOAL = -53;
+    public static final double ARM_PIVOT_POS_SHELF_HUMAN_PL = -48;
+    public static final double ARM_PIVOT_POS_MID_GOAL = -49;
+    public static final double ARM_PIVOT_POS_SHELF_HIGH = -48;
 
-    public static final double ARM_PIVOT_POS_ZERO = 0.0;
-    public static final double ARM_PIVOT_POS_GROUND = 58.0;
+    public static final double ARM_PIVOT_POS_GROUND = 0;
 
     // this is the position for moving tht arm down a bit when scoring mid. via
     // tylers prefrences
@@ -151,13 +146,13 @@ public class Constants {
     public static final int WRIST = 11;
 
     // set positions for the wrist. known limits are 0 to -17(could be farther)
-    public static final double WRIST_POS_HIGH_GOAL = -17;
-    public static final double WRIST_POS_SHELF_HUMAN_PL = -17;
-    public static final double WRIST_POS_MID_GOAL = -12;
-    public static final double WRIST_POS_SHELF_HIGH = -10;
+    public static final double WRIST_POS_HIGH_GOAL = -6;
+    public static final double WRIST_POS_SHELF_HUMAN_PL = -10;
+    public static final double WRIST_POS_MID_GOAL = -6;
+    public static final double WRIST_POS_SHELF_HIGH = 0;
 
     public static final double WRIST_POS_ZERO = 0;
-    public static final double WRIST_POS_GROUND = -6;
+    public static final double WRIST_POS_GROUND = 3;
 
     // when carrying cones and cubes on the ground, they currently hit
     // the ground, need to add something to bring the wrist up 1 rotation

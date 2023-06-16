@@ -43,8 +43,8 @@ public class GripperIntake extends SubsystemBase {
 
   // 0.072 old val
   public void GripperOut() {
-    m_Gripper.set(-0.35);
-    m_Gripper2.set(0.35);
+    m_Gripper.set(-0.30);
+    m_Gripper2.set(0.30);
     gripperState = "Outaking";
   }
 

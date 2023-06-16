@@ -28,7 +28,8 @@ public class ManipulatorGroundForward extends SequentialCommandGroup {
 
         // calls them from the subsystem class
         new StartEndCommand(m_ArmInOut::ArmInOutGroundForward, m_ArmInOut::ArmInOutGroundForward, m_ArmInOut),
-        new StartEndCommand(m_ArmPivot::ArmPositionGroundForward, m_ArmPivot::ArmPositionGroundForward, m_ArmPivot),
+        new StartEndCommand(m_ArmPivot::ArmPositionGround,
+            m_ArmPivot::ArmPositionGround, m_ArmPivot),
         new StartEndCommand(m_Wrist::WristPositionGroundForward, m_Wrist::WristPositionGroundForward, m_Wrist)));
   }
 }

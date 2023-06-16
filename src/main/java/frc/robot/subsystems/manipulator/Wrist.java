@@ -15,10 +15,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Wrist extends SubsystemBase {
-  private CANSparkMax wristMotor = new CANSparkMax(Constants.WristConstants.WRIST, MotorType.kBrushless);
+  public CANSparkMax wristMotor = new CANSparkMax(Constants.WristConstants.WRIST, MotorType.kBrushless);
   private SparkMaxPIDController wristPIDController = wristMotor.getPIDController();
   private RelativeEncoder wristEncoder = wristMotor.getEncoder();
   private String wristState = "Default";
+  double wristPositionEnter = 0;
 
   /** Creates a new ArmPivot. */
   public Wrist() {
@@ -37,22 +38,22 @@ public class Wrist extends SubsystemBase {
   }
 
   public void WristPidDefaults() {
-    m_WristPidController.setP(Constants.SparkPIDFConstants.kP);
-    m_WristPidController.setI(Constants.SparkPIDFConstants.kI);
-    m_WristPidController.setD(Constants.SparkPIDFConstants.kD);
-    m_WristPidController.setIZone(Constants.SparkPIDFConstants.kIz);
-    m_WristPidController.setFF(Constants.SparkPIDFConstants.kFF);
-    m_WristPidController.setOutputRange(Constants.SparkPIDFConstants.kMinOutput,
-        Constants.SparkPIDFConstants.kMaxOutput);
-    m_WristPidController.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.kMaxVelocityWrist, 0);
-    m_WristPidController.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.kMinV, 0);
-    m_WristPidController.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.kMaxAccelWrist, 0);
-    m_WristPidController.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.kAllE, 0);
+    wristPIDController.setP(Constants.SparkPIDFConstants.P);
+    wristPIDController.setI(Constants.SparkPIDFConstants.I);
+    wristPIDController.setD(Constants.SparkPIDFConstants.D);
+    wristPIDController.setIZone(Constants.SparkPIDFConstants.IZONE);
+    wristPIDController.setFF(Constants.SparkPIDFConstants.FF);
+    wristPIDController.setOutputRange(Constants.SparkPIDFConstants.MIN_OUTPUT,
+        Constants.SparkPIDFConstants.MAX_OUTPUT);
+    wristPIDController.setSmartMotionMaxVelocity(Constants.SparkPIDFConstants.MAX_VELOCITY, 0);
+    wristPIDController.setSmartMotionMinOutputVelocity(Constants.SparkPIDFConstants.MIN_VELOCITY, 0);
+    wristPIDController.setSmartMotionMaxAccel(Constants.SparkPIDFConstants.MAX_ACCEL_WRIST, 0);
+    wristPIDController.setSmartMotionAllowedClosedLoopError(Constants.SparkPIDFConstants.ALL_E, 0);
   }
 
   public void WristPositionMidGoal() {
     WristPidDefaults();
-    m_WristPidController.setReference(Constants.WristConstants.kWristPositionMidGoal,
+    wristPIDController.setReference(Constants.WristConstants.WRIST_POS_MID_GOAL,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "Mid Goal";
 
@@ -60,7 +61,7 @@ public class Wrist extends SubsystemBase {
 
   public void WristPositionHighGoal() {
     WristPidDefaults();
-    m_WristPidController.setReference(Constants.WristConstants.kWristPositionHighGoal,
+    wristPIDController.setReference(Constants.WristConstants.WRIST_POS_HIGH_GOAL,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "High Goal";
 
@@ -68,69 +69,54 @@ public class Wrist extends SubsystemBase {
 
   public void WristPositionShelfHumanPL() {
     WristPidDefaults();
-    m_WristPidController.setReference(Constants.WristConstants.kWristPositionShelfHumanPL,
+    wristPIDController.setReference(Constants.WristConstants.WRIST_POS_SHELF_HUMAN_PL,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "ShelfMid";
   }
 
-  public void WristPositionZero() {
-    WristPidDefaults();
-    m_WristPidController.setReference(Constants.WristConstants.kWristPositionZero,
-        CANSparkMax.ControlType.kSmartMotion);
-    wristState = "Zero";
-  }
-
   public void WristPositionGroundForward() {
     WristPidDefaults();
-    m_WristPidController.setReference(Constants.WristConstants.kWristPositionGroundForward,
+    wristPIDController.setReference(Constants.WristConstants.WRIST_POS_GROUND,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "GroundForward";
   }
 
   public void WristPositionManualUp() {
     WristPidDefaults();
-    m_WristPidController.setReference(Constants.WristConstants.kWristPositionManualUp,
+    wristPIDController.setReference(Constants.WristConstants.WRIST_POS_MANUAL_UP,
         CANSparkMax.ControlType.kSmartMotion);
     wristState = "ManualUp";
   }
 
-  public void WristPositionManualDown() {
-    WristPidDefaults();
-    m_WristPidController.setReference(Constants.WristConstants.kWristPositionManualDown,
-        CANSparkMax.ControlType.kSmartMotion);
-    wristState = "ManualUp";
-  }
-
-  /*
-   * public void WristPositionGroundBack() {
-   * WristPidDefaults();
-   * m_WristPidController.setReference(Constants.WristConstants.
-   * kWristPositionGroundBack,
-   * CANSparkMax.ControlType.kSmartMotion);
-   * wristState = "GroundBack";
-   * }
-   */
+  // public void WristPositionManualDown() {
+  // WristPidDefaults();
+  // wristPIDController.setReference(Constants.WristConstants.WRIST_POS_MANUAL_DOWN,
+  // CANSparkMax.ControlType.kSmartMotion);
+  // wristState = "ManualUp";
+  // }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber(" Wrist Position", m_WristEncoder.getPosition());
-    SmartDashboard.putNumber("Wrist Velocity", m_WristEncoder.getVelocity());
+    SmartDashboard.putNumber(" Wrist Position", wristEncoder.getPosition());
+    SmartDashboard.putNumber("Wrist Velocity", wristEncoder.getVelocity());
     SmartDashboard.putString("Wrist State", wristState);
     // This method will be called once per scheduler run
     wristPositionEnter = SmartDashboard.getNumber("wrist get set pos", wristPositionEnter);
     SmartDashboard.putNumber("wrist get set pos", wristPositionEnter);
   }
 
+  // used for testing, sets wrist position from smart dashboard
   public void WristSetSmartDash() {
     WristPidDefaults();
-    m_WristPidController.setReference(wristPositionEnter,
+    wristPIDController.setReference(wristPositionEnter,
         CANSparkMax.ControlType.kSmartMotion);
     wristUpdatePosition();
 
   }
 
   public void wristUpdatePosition() {
-    wristPositionEnter = SmartDashboard.getNumber("wrist get set pos", wristPositionEnter);
+    wristPositionEnter = SmartDashboard.getNumber("wrist get set pos",
+        wristPositionEnter);
 
   }
 }

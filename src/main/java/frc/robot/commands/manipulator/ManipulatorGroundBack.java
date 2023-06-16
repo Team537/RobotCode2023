@@ -24,7 +24,8 @@ public class ManipulatorGroundBack extends SequentialCommandGroup {
 
     addCommands(new ParallelCommandGroup(
         new StartEndCommand(m_ArmInOut::ArmInOutGroundForward, m_ArmInOut::ArmInOutGroundForward, m_ArmInOut),
-        new StartEndCommand(m_ArmPivot::ArmPositionGroundForward, m_ArmPivot::ArmPositionGroundForward, m_ArmPivot),
+        // new StartEndCommand(m_ArmPivot::ArmPositionGroundForward,
+        // m_ArmPivot::ArmPositionGroundForward, m_ArmPivot),
         new StartEndCommand(m_Wrist::WristPositionGroundForward, m_Wrist::WristPositionGroundForward, m_Wrist)));
   }
 }
