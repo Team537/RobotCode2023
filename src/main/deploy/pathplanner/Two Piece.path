@@ -21,8 +21,8 @@
           "intakeOut"
         ],
         "executionBehavior": "sequential",
-        "waitBehavior": "after",
-        "waitTime": 0
+        "waitBehavior": "before",
+        "waitTime": 0.2
       }
     },
     {
@@ -45,9 +45,9 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [],
-        "executionBehavior": "parallel",
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
-        "waitTime": 0
+        "waitTime": 0.2
       }
     },
     {
@@ -70,27 +70,25 @@
           "armMid",
           "intakeOut"
         ],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
+        "executionBehavior": "sequential",
+        "waitBehavior": "after",
+        "waitTime": 0.2
       }
     }
   ],
-  "maxVelocity": 2.0,
+  "maxVelocity": 1.0,
   "maxAcceleration": 1.0,
   "isReversed": null,
   "markers": [
     {
-      "position": 0.7636363636363637,
+      "position": 0.4945454545454713,
       "names": [
-        "event",
         "armGround"
       ]
     },
     {
-      "position": 1.0181818181818183,
+      "position": 1.1054545454545284,
       "names": [
-        "event",
         "intakeIn"
       ]
     }

@@ -65,12 +65,12 @@ public class FollowTrajectory extends SequentialCommandGroup {
     eventMap.put("armMid", new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut,
     m_Wrist, m_LED));
     eventMap.put("armGround", new ManipulatorGround(m_ArmPivot, m_ArmInOut, m_Wrist, m_LED));
-    eventMap.put("intakeOut", new SequentialCommandGroup(
-    new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(1.25),
-    new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1)));
-    eventMap.put("intakeIn", new SequentialCommandGroup(
-    new RunCommand(m_Gripper::GripperIn, m_Gripper).withTimeout(1.75),
-    new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1)));
+    // eventMap.put("intakeOut", new SequentialCommandGroup(
+    // new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(1.25),
+    // new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1)));
+    // eventMap.put("intakeIn", new SequentialCommandGroup(
+    // new RunCommand(m_Gripper::GripperIn, m_Gripper).withTimeout(1.25),
+    // new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1)));
 
 
     PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, 3, 2.25, false);

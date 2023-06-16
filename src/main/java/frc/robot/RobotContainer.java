@@ -5,67 +5,57 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.pathplanner.lib.commands.FollowPathWithEvents;
-import edu.wpi.first.wpilibj.Filesystem;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.util.sendable.SendableBuilder.BackendKind;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import frc.robot.Constants.OIConstants;
-import frc.robot.commands.Auto.BalanceChargeStation;
-import frc.robot.commands.Auto.FollowTrajectory;
-import frc.robot.commands.Auto.ScoreHighCubeBalance;
-import frc.robot.commands.Auto.ScoreHighCubeDriveBack;
-import frc.robot.commands.Auto.ScoreMidDriveBack;
-import frc.robot.commands.Auto.ScoreMidNoDrive;
-import frc.robot.commands.Auto.ScoreHighCubeNoDrive;
-import frc.robot.commands.Auto.ScoreMidBalance;
-import frc.robot.commands.led.LedHighGoal;
-import frc.robot.commands.led.LedLowGoal;
-import frc.robot.commands.led.LedMidGoal;
-import frc.robot.commands.led.LedShelf;
-import frc.robot.commands.manipulator.ManipulatorHighGoal;
-import frc.robot.commands.manipulator.ManipulatorGround;
-import frc.robot.commands.manipulator.ManipulatorMidGoal;
-import frc.robot.commands.manipulator.ManipulatorShelfHumanPL;
-import frc.robot.commands.manipulator.ManipulatorZero;
-// import frc.robot.commands.signal.SignalCone;
-// import frc.robot.commands.signal.SignalCube;
-
-import frc.robot.commands.swerve.SetSwerveBrakeMode;
-// import frc.robot.commands.swerve.BoostDriveCommand;
-import frc.robot.commands.swerve.SlowSwerveDriveCommand;
-
-import frc.robot.grip.Cube;
-import frc.robot.simulation.FieldSim;
-
-import frc.robot.subsystems.LED;
-import frc.robot.subsystems.LED.LedMode;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.GripperCamera;
-import frc.robot.subsystems.BellyPanCamera;
-import frc.robot.subsystems.GripperIntake;
-import frc.robot.subsystems.manipulator.ArmInOut;
-import frc.robot.subsystems.manipulator.ArmPivot;
-import frc.robot.subsystems.manipulator.Wrist;
-import frc.robot.subsystems.Camera;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.config.ConstantsFactory;
+import frc.robot.Constants.OIConstants;
+import frc.robot.commands.Auto.FollowTrajectory;
+import frc.robot.commands.Auto.ScoreHighCubeBalance;
+import frc.robot.commands.Auto.ScoreHighCubeDriveBack;
+import frc.robot.commands.Auto.ScoreHighCubeNoDrive;
+import frc.robot.commands.Auto.ScoreMidBalance;
+import frc.robot.commands.Auto.ScoreMidDriveBack;
+import frc.robot.commands.Auto.ScoreMidNoDrive;
+import frc.robot.commands.led.LedHighGoal;
+import frc.robot.commands.led.LedLowGoal;
+import frc.robot.commands.led.LedMidGoal;
+import frc.robot.commands.led.LedShelf;
+import frc.robot.commands.manipulator.ManipulatorGround;
+import frc.robot.commands.manipulator.ManipulatorHighGoal;
+import frc.robot.commands.manipulator.ManipulatorMidGoal;
+import frc.robot.commands.manipulator.ManipulatorShelfHumanPL;
+import frc.robot.commands.manipulator.ManipulatorZero;
+// import frc.robot.commands.signal.SignalCone;
+// import frc.robot.commands.signal.SignalCube;
+// import frc.robot.commands.swerve.BoostDriveCommand;
+import frc.robot.commands.swerve.SlowSwerveDriveCommand;
 import frc.robot.config.Constants;
+import frc.robot.config.ConstantsFactory;
+import frc.robot.simulation.FieldSim;
+import frc.robot.subsystems.BellyPanCamera;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.GripperCamera;
+import frc.robot.subsystems.GripperIntake;
+import frc.robot.subsystems.LED;
+import frc.robot.subsystems.manipulator.ArmInOut;
+import frc.robot.subsystems.manipulator.ArmPivot;
+import frc.robot.subsystems.manipulator.Wrist;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -146,10 +136,22 @@ public class RobotContainer {
         POVButton dPadLeftButton = new POVButton(m_driverController, 90);
         POVButton dPadRightButton = new POVButton(m_driverController, 270);
 
-        private Constants m_constants;
+        // private Constants m_constants;
 
         JoystickButton aButton2 = new JoystickButton(m_driverController2, Button.kA.value);
         JoystickButton bButton2 = new JoystickButton(m_driverController2, Button.kB.value);
+
+        Command twoPiece = new SequentialCommandGroup(new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut,
+    m_Wrist, m_LED).withTimeout(5),
+//     new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(1.25),
+//     new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1),
+    new FollowTrajectory(m_robotDrive, m_FieldSim, "Two Piece",
+                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED),
+new ManipulatorMidGoal(m_ArmPivot, m_ArmInOut,
+                                m_Wrist, m_LED).withTimeout(0.1)
+// new RunCommand(m_Gripper::GripperOut, m_Gripper).withTimeout(1.25),
+//     new RunCommand(m_Gripper::GripperStop, m_Gripper).withTimeout(0.1)
+);
 
         public RobotContainer() {
 
@@ -254,9 +256,9 @@ public class RobotContainer {
 
                 String filename = Filesystem.getDeployDirectory() + "/resources/driveConstants.yaml";
                 ConstantsFactory factory = new ConstantsFactory(filename);
-                m_constants = factory.getConstants(Constants.class);
+               // m_constants = factory.getConstants(Constants.class);
 
-                SmartDashboard.putString("Constant Name", m_constants.getName());
+                // SmartDashboard.putString("Constant Name", m_constants.getName());
 
                 // final ChaseTagCommand chaseTagCommand = new ChaseTagCommand(m_camera,
                 // m_robotDrive,
@@ -311,9 +313,9 @@ public class RobotContainer {
                 // dont let it go over 1
                 SmartDashboard.putNumber("Left Joystick", m_driverController.getLeftY());
 
-                String name = SmartDashboard.getString("Constant Name", m_constants.getName());
-                m_constants.setName(name);
-                m_constants.saveConstants();
+              //  String name = SmartDashboard.getString("Constant Name", m_constants.getName());
+               // m_constants.setName(name);
+                //_constants.saveConstants();
         }
 
         /*
@@ -355,7 +357,7 @@ public class RobotContainer {
         }
 
         public void robotInit() {
-
+                //m_robotDrive.setOdometry(new Pose2d(0, 0,new Rotation2d(2*Math.PI)));
                 // m_robotDrive.resetEncoders();
                 // m_Chooser.addOption("Score Mid Drive Back", scoreMidDriveBack);
                 m_Chooser.addOption("Do Nothing", new WaitCommand(1));
@@ -365,10 +367,8 @@ public class RobotContainer {
                 m_Chooser.addOption("Score High Cube No Drive", scoreHighCubeNoDrive);
                 m_Chooser.addOption("Score High Cube Drive Back", scoreHighCubeDriveBack);
                 m_Chooser.addOption("Score High Cube Balance", scoreHighCubeBalance);
-                m_Chooser.addOption("Forward Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "High Cube Auto ",
-                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
-                m_Chooser.addOption("Forward Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Two Piece",
-                                m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
+             
+                m_Chooser.addOption("Two Piece", twoPiece);
                 m_Chooser.addOption("Strafe Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Strafe Test",
                                 m_ArmInOut, m_ArmPivot, m_Gripper, m_Wrist, m_LED));
                 m_Chooser.addOption("Spline Test", new FollowTrajectory(m_robotDrive, m_FieldSim, "Spline Test",
