@@ -108,7 +108,7 @@ public class Constants {
 
     // motor id for inout
     public static final int ARM_INOUT = 14;
-
+    // .12625 inches per rotation
     // These are the set positions for the differnt scoring heights on the arm inout
     // motor.
     // current limits are (+-)(it is +- because the string can get flipped) 300 to 0
@@ -116,8 +116,8 @@ public class Constants {
     public static final double ARM_INOUT_POS_HIGH_GOAL = -50; // for "shooting" cones, it was 100
     // the value for normal high goal is 225
 
-    public static final double ARM_INOUT_POS_MID_GOAL = 0;
-    public static final double ARM_INOUT_POS_SHELF_HUMANPL = 0;
+    public static final double ARM_INOUT_POS_MID_GOAL = -12;
+    public static final double ARM_INOUT_POS_SHELF_HUMANPL = -5;
     public static final double ARM_INOUT_POS_SHELF_HIGH = -50;
     public static final double ARM_INOUT_POS_GROUND = 0.0;
 
@@ -129,7 +129,7 @@ public class Constants {
 
     // these are the setpositions for the armpivot. current limits are 0 to 58
     public static final double ARM_PIVOT_POS_HIGH_GOAL = -53;
-    public static final double ARM_PIVOT_POS_SHELF_HUMAN_PL = -48;
+    public static final double ARM_PIVOT_POS_SHELF_HUMAN_PL = -50;
     public static final double ARM_PIVOT_POS_MID_GOAL = -49;
     public static final double ARM_PIVOT_POS_SHELF_HIGH = -48;
 
@@ -147,7 +147,7 @@ public class Constants {
 
     // set positions for the wrist. known limits are 0 to -17(could be farther)
     public static final double WRIST_POS_HIGH_GOAL = -6;
-    public static final double WRIST_POS_SHELF_HUMAN_PL = -10;
+    public static final double WRIST_POS_SHELF_HUMAN_PL = -8;
     public static final double WRIST_POS_MID_GOAL = -6;
     public static final double WRIST_POS_SHELF_HIGH = 0;
 

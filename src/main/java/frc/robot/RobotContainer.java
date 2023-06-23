@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import org.apache.commons.lang3.ObjectUtils.Null;
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -90,6 +88,7 @@ public class RobotContainer {
         public final ArmPivot m_ArmPivot = new ArmPivot();
         public final Wrist m_Wrist = new Wrist();
         // private PhotonCamera camera = new PhotonCamera("USB Camera 0");
+        private final Camera m_Camera = new Camera(m_robotDrive);
         private FieldSim m_FieldSim = new FieldSim(m_robotDrive);
         private SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
 
