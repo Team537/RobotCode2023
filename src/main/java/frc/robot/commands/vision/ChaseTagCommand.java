@@ -38,10 +38,10 @@ public class ChaseTagCommand extends CommandBase {
         // var gyroPitch = m_drive.getGyroPitch();
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
         var tagPosition = m_camera.tagPosX;
-        double angleDeadband = 5;
+        double angleDeadband = 2;
         double speed = 0;
 
-        if (Math.abs(tx) < angleDeadband) {
+        if (Math.abs(tx) - 0.4 < angleDeadband) {
 
             m_drive.drive(0, 0, 0, true);
             m_LED.autoEnd();
@@ -50,7 +50,7 @@ public class ChaseTagCommand extends CommandBase {
         var currentTime = System.currentTimeMillis();
         var diff = currentTime - lastTimeWhenFollowing;
 
-        speed = tx > 0 ? 0.05 : -0.05;
+        speed = Math.abs(tx) - 0.4 > 0 ? 0.05 : -0.05;
         m_drive.drive(0, speed, 0, true);
         lastTimeWhenFollowing = System.currentTimeMillis();
 

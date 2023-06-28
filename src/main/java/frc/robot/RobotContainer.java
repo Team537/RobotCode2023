@@ -206,7 +206,8 @@ public class RobotContainer {
                 aButton.onTrue(ground);
                 bButton.onTrue(mid_goal);
 
-                leftBumper.toggleOnTrue(new SequentialCommandGroup(new TurnHeading(m_robotDrive, 0).withTimeout(5),
+                leftBumper.toggleOnTrue(new SequentialCommandGroup(new TurnHeading(m_robotDrive, 0).withTimeout(4),
+                                new WaitCommand(1),
                                 new ChaseTagCommand(m_robotDrive, false, m_LED, m_Camera)));
 
                 // rightBumper.onTrue(new ParallelCommandGroup(new
