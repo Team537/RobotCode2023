@@ -88,6 +88,13 @@ public class Wrist extends SubsystemBase {
     wristState = "ManualUp";
   }
 
+  public void WristPositionManualDown() {
+    WristPidDefaults();
+    wristPIDController.setReference(wristEncoder.getPosition() + 3,
+        CANSparkMax.ControlType.kSmartMotion);
+    wristState = "ManualDown";
+  }
+
   // public void WristPositionManualDown() {
   // WristPidDefaults();
   // wristPIDController.setReference(Constants.WristConstants.WRIST_POS_MANUAL_DOWN,

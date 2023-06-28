@@ -64,8 +64,9 @@ public class SlowSwerveDriveCommand extends CommandBase {
       // OutputSpeedPercent = (JoystickPercent * DriveSpeedConstants.kBaseRobotSpeed)
       // + (JoystickPercent * (TriggerPercent * (DriveSpeedConstants.kMaxRobotSpeed -
       // DriveSpeedConstants.kMaxRobotSpeed)));
-      // OutputSpeedPercent = JoystickPercent + (Math.abs(JoystickPercent / 0.2) * TriggerPercent);
-      OutputSpeedPercent = (JoystickPercent * 0.2) + (TriggerPercent * 0.8);
+      // OutputSpeedPercent = JoystickPercent + (Math.abs(JoystickPercent / 0.2) *
+      // TriggerPercent);
+      OutputSpeedPercent = (JoystickPercent * 0.5) + (TriggerPercent);
     } else {
       // when it is lower than the deadband, it sets it to zero
       OutputSpeedPercent = 0;
@@ -79,16 +80,18 @@ public class SlowSwerveDriveCommand extends CommandBase {
   public void execute() {
     // 0.05 are the joystick deadbands. if the joystick is less than that value, is
     // makes it equal to 0
-    // double drive = (Math.abs(m_driveInput.getAsDouble())) > 0.05 ? m_driveInput.getAsDouble() : 0;
+    // double drive = (Math.abs(m_driveInput.getAsDouble())) > 0.05 ?
+    // m_driveInput.getAsDouble() : 0;
     double drive = calculateDrivePercentage(m_driveInput.getAsDouble(),
-    m_triggerInput.getAsDouble());
-    // double strafe = Math.abs(m_strafeInput.getAsDouble()) > 0.05 ? m_strafeInput.getAsDouble() : 0;
+        m_triggerInput.getAsDouble());
+    // double strafe = Math.abs(m_strafeInput.getAsDouble()) > 0.05 ?
+    // m_strafeInput.getAsDouble() : 0;
     double strafe = calculateDrivePercentage(m_strafeInput.getAsDouble(),
-    m_triggerInput.getAsDouble());
+        m_triggerInput.getAsDouble());
     double rotation = Math.abs(m_rotationInput.getAsDouble()) > 0.05 ? m_rotationInput.getAsDouble() : 0;
 
     m_drive.drive(drive, strafe, rotation, m_isFieldRelative); // Forward/Back drive, Left/Right Strafe,
-                                                               // Left/Right Turn
+    // Left/Right Turn
     if (Math.abs(m_drive.getVelocity()) > 0 && m_drive.driveState.equals("Drive") && DriverStation.isTeleop()) {
       m_LED.setDriving(true);
       m_LED.setBoostDriving(false);

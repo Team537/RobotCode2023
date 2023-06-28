@@ -188,6 +188,10 @@ public class RobotContainer {
                                 .onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp,
                                                 m_Wrist::WristPositionManualUp, m_Wrist));
 
+                dPadLeftButton
+                                .onTrue(new StartEndCommand(m_Wrist::WristPositionManualDown,
+                                                m_Wrist::WristPositionManualDown, m_Wrist));
+
                 // dPadLeftButton
                 // .onTrue(new StartEndCommand(m_ArmPivot::ArmPositionMidDown,
                 // m_ArmPivot::ArmPositionMidDown,
@@ -225,7 +229,7 @@ public class RobotContainer {
                                 m_robotDrive,
                                 () -> -(m_driverController.getLeftY()) * 0.2,
                                 () -> m_driverController.getLeftX() * 0.2,
-                                () -> -m_driverController.getRightX() * 0.2,
+                                () -> -m_driverController.getRightX(),
                                 () -> m_driverController.getRightTriggerAxis() * 0.8,
                                 true, m_LED));
 
@@ -292,6 +296,7 @@ public class RobotContainer {
         public void autoInit() {
                 m_robotDrive.setBrakeMode(NeutralMode.Brake);
                 m_LED.autoStart();
+
         }
 
         public void robotInit() {

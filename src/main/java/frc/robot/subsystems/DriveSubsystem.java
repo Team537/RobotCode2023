@@ -34,7 +34,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 public class DriveSubsystem extends SubsystemBase {
-
+  public boolean didAutoRun = false;
   // Hash Map for All Swerve Modules
 
   private final HashMap<ModulePosition, SwerveModule> swerveModules = new HashMap<>(
@@ -94,7 +94,8 @@ public class DriveSubsystem extends SubsystemBase {
   private double simYaw;
 
   public DriveSubsystem() {
-    // pigeon.setYaw(180);
+
+    pigeon.setYaw(180);
 
   }
 

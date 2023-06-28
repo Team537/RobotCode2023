@@ -50,7 +50,7 @@ public class ArmInOut extends SubsystemBase {
 
   public void ArmInOutHighGoal() {
     ArmInOutPidDefaults();
-    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.ARM_INOUT_POS_HIGH_GOAL,
+    m_ArmInOutPidController.setReference(Constants.ArmInOutConstants.ARM_INOUT_POS_HIGH,
         CANSparkMax.ControlType.kSmartMotion);
     armInOutState = "High Goal";
 
