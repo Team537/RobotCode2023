@@ -162,7 +162,7 @@ public class Constants {
     public static final double WRIST_POS_SHELF_HIGH = -10;
 
     public static final double WRIST_POS_ZERO = 0;
-    public static final double WRIST_POS_GROUND = 9;//-6 was og value 
+    public static final double WRIST_POS_GROUND = -6;
 
     // when carrying cones and cubes on the ground, they currently hit
     // the ground, need to add something to bring the wrist up 1 rotation
