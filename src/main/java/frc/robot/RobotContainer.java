@@ -207,20 +207,20 @@ public class RobotContainer {
                 // LED COMMAND
                 if(manipulator == true){
                 aButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
-                bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
-                yButton.onTrue(high_goal);
-                xButton.onTrue(shelf_HuPL);
+                // bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
+                // yButton.onTrue(high_goal);
+                // xButton.onTrue(shelf_HuPL);
 
                 aButton.onTrue(ground);
-                bButton.onTrue(mid_goal);
-                } else {
-                        aButton2.toggleOnTrue(null);
-                        bButton2.toggleOnTrue(null);
-                        yButton.onTrue(null);
-                        xButton.onTrue(null);
+               // bButton.onTrue(mid_goal);
+                // } else {
+                //         aButton2.toggleOnTrue(null);
+                //         bButton2.toggleOnTrue(null);
+                //         yButton.onTrue(null);
+                //         xButton.onTrue(null);
         
-                        aButton.onTrue(null);
-                        bButton.onTrue(null);
+                //         aButton.onTrue(null);
+                //         bButton.onTrue(null);
 
                 }
 
