@@ -112,12 +112,13 @@ public class Constants {
     // motor.
     // current limits are (+-)(it is +- because the string can get flipped) 300 to 0
 
-    public static final double ARM_INOUT_POS_HIGH_GOAL = 50; // for "shooting" cones, it was 100
+    public static final double ARM_INOUT_POS_HIGH_GOAL = -50; // for "shooting" cones, it was 100
     // the value for normal high goal is 225
+    //Motor is flipped
 
-    public static final double ARM_INOUT_POS_MID_GOAL = 52;
-    public static final double ARM_INOUT_POS_SHELF_HUMANPL = 60;
-    public static final double ARM_INOUT_POS_SHELF_HIGH = 50;
+    public static final double ARM_INOUT_POS_MID_GOAL = -20;
+    public static final double ARM_INOUT_POS_SHELF_HUMANPL = -20;
+    public static final double ARM_INOUT_POS_SHELF_HIGH = -20;
     public static final double ARM_INOUT_POS_GROUND = 0.0;
 
     // used for setting the robot to zero (and accounts for the string rolling up
@@ -136,7 +137,7 @@ public class Constants {
     public static final int ARM_PIVOT = 19;
 
     // these are the setpositions for the armpivot. current limits are 0 to 58
-    public static final double ARM_PIVOT_POS_HIGH_GOAL = 7;
+    public static final double ARM_PIVOT_POS_HIGH_GOAL = 10;
     public static final double ARM_PIVOT_POS_SHELF_HUMAN_PL = 15;
     public static final double ARM_PIVOT_POS_MID_GOAL = 18;
     public static final double ARM_PIVOT_POS_SHELF_HIGH = 25;

@@ -26,8 +26,12 @@
       "/SmartDashboard/Active / Toggle Cube": "Command",
       "/SmartDashboard/Auto Selector": "String Chooser",
       "/SmartDashboard/Balance": "Command",
+      "/SmartDashboard/Disnable Manipulator": "Command",
+      "/SmartDashboard/Enable Manipulator": "Command",
       "/SmartDashboard/Field2d": "Field2d",
-      "/SmartDashboard/Scheduler": "Scheduler"
+      "/SmartDashboard/Normal Mode": "Command",
+      "/SmartDashboard/Scheduler": "Scheduler",
+      "/SmartDashboard/Slow Mode": "Command"
     },
     "windows": {
       "/SmartDashboard/Auto Selector": {
@@ -51,6 +55,9 @@
     }
   },
   "NetworkTables": {
+    "Transitory Values": {
+      "open": false
+    },
     "transitory": {
       "SmartDashboard": {
         "Auto Selector": {
@@ -70,5 +77,8 @@
     "Server": {
       "open": true
     }
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }

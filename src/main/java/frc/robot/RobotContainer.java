@@ -58,6 +58,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -125,6 +126,9 @@ public class RobotContainer {
         private final SlewRateLimiter m_xSpeedLimiter = new SlewRateLimiter(0.1);
         private final SlewRateLimiter m_ySpeedLimiter = new SlewRateLimiter(0.1);
         private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(30);
+        private  double joystickPercent  = 0.2;
+        private  double triggerPercent  = 0.8;
+        private boolean manipulator = true;
 
         // The driver controllers
 
@@ -201,44 +205,55 @@ public class RobotContainer {
                  */
 
                 // LED COMMAND
+                if(manipulator == true){
                 aButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCone));
                 bButton2.toggleOnTrue(new InstantCommand(m_LED::toggleCube));
-                // yButton.onTrue(high_goal);
-                // xButton.onTrue(shelf_HuPL);
+                yButton.onTrue(high_goal);
+                xButton.onTrue(shelf_HuPL);
 
-                // aButton.onTrue(ground);
-                // bButton.onTrue(mid_goal);
+                aButton.onTrue(ground);
+                bButton.onTrue(mid_goal);
+                } else {
+                        aButton2.toggleOnTrue(null);
+                        bButton2.toggleOnTrue(null);
+                        yButton.onTrue(null);
+                        xButton.onTrue(null);
+        
+                        aButton.onTrue(null);
+                        bButton.onTrue(null);
 
-                // leftBumper.onTrue(new ParallelCommandGroup(new
-                // InstantCommand(m_LED::toggleOutake),
-                // new StartEndCommand(m_Gripper::GripperOut, m_Gripper::GripperStop,
-                // m_Gripper)));
-                // rightBumper.onTrue(new ParallelCommandGroup(new
-                // InstantCommand(m_LED::toggleIntake),
-                // new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop,
-                // m_Gripper)));
+                }
 
-                // leftBumper.onFalse(new ParallelCommandGroup(new
-                // InstantCommand(m_LED::toggleOutake),
-                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
-                // m_Gripper)));
-                // rightBumper.onFalse(new ParallelCommandGroup(new
-                // InstantCommand(m_LED::toggleIntake),
-                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
-                // m_Gripper)));
+                leftBumper.onTrue(new ParallelCommandGroup(new
+                InstantCommand(m_LED::toggleOutake),
+                new StartEndCommand(m_Gripper::GripperOut, m_Gripper::GripperStop,
+                m_Gripper)));
+                rightBumper.onTrue(new ParallelCommandGroup(new
+                InstantCommand(m_LED::toggleIntake),
+                new StartEndCommand(m_Gripper::GripperIn, m_Gripper::GripperStop,
+                m_Gripper)));
 
-                // backButton.onTrue(new ParallelCommandGroup(new
-                // InstantCommand(m_LED::toggleFastOutake),
-                // new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop,
-                // m_Gripper)));
-                // backButton.onFalse(new ParallelCommandGroup(new
-                // InstantCommand(m_LED::toggleFastOutake),
-                // new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
-                // m_Gripper)));
+                leftBumper.onFalse(new ParallelCommandGroup(new
+                InstantCommand(m_LED::toggleOutake),
+                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                m_Gripper)));
+                rightBumper.onFalse(new ParallelCommandGroup(new
+                InstantCommand(m_LED::toggleIntake),
+                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                m_Gripper)));
 
-                // dPadUpButton.onTrue(
-                // new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero,
-                // m_Wrist));
+                backButton.onTrue(new ParallelCommandGroup(new
+                InstantCommand(m_LED::toggleFastOutake),
+                new StartEndCommand(m_Gripper::GripperFast, m_Gripper::GripperStop,
+                m_Gripper)));
+                backButton.onFalse(new ParallelCommandGroup(new
+                InstantCommand(m_LED::toggleFastOutake),
+                new StartEndCommand(m_Gripper::GripperStop, m_Gripper::GripperStop,
+                m_Gripper)));
+
+                dPadUpButton.onTrue(
+                new StartEndCommand(m_Wrist::WristPositionZero, m_Wrist::WristPositionZero,
+                m_Wrist));
                 dPadRightButton
                                 .onTrue(new StartEndCommand(m_Wrist::WristPositionManualUp,
                                                 m_Wrist::WristPositionManualUp, m_Wrist));
@@ -251,6 +266,11 @@ public class RobotContainer {
 
                 SmartDashboard.putData("Active / Toggle Cone", new InstantCommand(m_LED::toggleCone));
                 SmartDashboard.putData("Active / Toggle Cube", new InstantCommand(m_LED::toggleCube));
+                SmartDashboard.putData("Slow Mode", new InstantCommand(this::setSlowMode)); 
+                SmartDashboard.putData("Normal Mode", new InstantCommand(this::setNormalMode));     
+                SmartDashboard.putData("Enable Manipulator", new InstantCommand(this::manipulatorTrue));
+                SmartDashboard.putData("Disnable Manipulator", new InstantCommand(this::manipulatorFalse));
+                SmartDashboard.putBoolean("Manipulator Boolean", manipulator);
 
                 String filename = Filesystem.getDeployDirectory() + "/resources/driveConstants.yaml";
                 ConstantsFactory factory = new ConstantsFactory(filename);
@@ -275,10 +295,11 @@ public class RobotContainer {
 
                 m_robotDrive.setDefaultCommand(new SlowSwerveDriveCommand(
                                 m_robotDrive,
-                                () -> -(m_driverController.getLeftY()) * 0.2,
-                                () -> m_driverController.getLeftX() * 0.2,
-                                () -> -m_driverController.getRightX() * 0.2,
-                                () -> m_driverController.getRightTriggerAxis() * 0.8,
+                                () -> -(m_driverController.getLeftY()) * joystickPercent,
+                                () -> m_driverController.getLeftX() * joystickPercent,
+                                () -> -m_driverController.getRightX() * joystickPercent,
+                                () -> m_driverController.getRightTriggerAxis() * triggerPercent,
+
                                 true, m_LED));
 
                 // Drive without Slew
@@ -310,7 +331,7 @@ public class RobotContainer {
                 // Reset it to 0 when joystick = 0
                 // dont let it go over 1
                 SmartDashboard.putNumber("Left Joystick", m_driverController.getLeftY());
-
+                
                 String name = SmartDashboard.getString("Constant Name", m_constants.getName());
                 m_constants.setName(name);
                 m_constants.saveConstants();
@@ -382,5 +403,27 @@ public class RobotContainer {
 
                 return m_Chooser.getSelected();
         }
+
+        public void setSlowMode(){
+                joystickPercent = 0.08;
+                triggerPercent = 0;
+        }
+
+        public void setNormalMode(){
+                joystickPercent = 0.2;
+                triggerPercent = 0.8;
+        }
+
+        public void manipulatorTrue(){
+                manipulator = true;
+        }
+
+        public void manipulatorFalse(){
+                manipulator = false;
+        }
+
+      
+
+        
 
 }
