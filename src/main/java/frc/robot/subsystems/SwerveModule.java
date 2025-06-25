@@ -114,7 +114,7 @@ public class SwerveModule extends SubsystemBase {
     driveMotor.setSensorPhase(true);
     driveMotor.setSafetyEnabled(true);
     driveMotor.enableVoltageCompensation(true);
-
+    
     SrxMagEncoder = new SRXMagEncoder(new DutyCycle(new DigitalInput(angleEncoder)), 0);
     SrxMagEncoder.setDistancePerRotation(360);
 
@@ -241,6 +241,7 @@ public class SwerveModule extends SubsystemBase {
                 .getDegrees(); // Prevent rotating module if speed is less then 1%.
     turnMotor.set(ControlMode.Position, angle / SwerveConstants.TURN_ENCODER_METERS_PER_PULSE);
     lastAngle = angle;
+    system.out
 
   }
 
